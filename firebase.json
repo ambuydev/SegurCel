@@ -1,0 +1,38 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "segurcel-45c92",
+          "appId": "1:542504421127:android:60d3d084b36a6d02e327a2",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "segurcel-45c92",
+          "configurations": {
+            "android": "1:542504421127:android:60d3d084b36a6d02e327a2",
+            "ios": "1:542504421127:ios:e3573b816146a51ce327a2",
+            "web": "1:542504421127:web:5e868063f1311b78e327a2",
+            "windows": "1:542504421127:web:e82fc4623aea9e4ae327a2"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

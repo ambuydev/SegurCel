@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "542504421127",
+    "project_id": "segurcel-45c92",
+    "storage_bucket": "segurcel-45c92.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542504421127:android:60d3d084b36a6d02e327a2",
+        "android_client_info": {
+          "package_name": "com.segurcel.segurcel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB21H7Nvb67yddWT1dzFV68pVDOxI15qfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
