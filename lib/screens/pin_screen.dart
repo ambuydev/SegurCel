@@ -150,9 +150,11 @@ class _PinScreenState extends State<PinScreen> {
       tooltip: _loc.text('language'),
       color: const Color(0xFF1E2538),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      onSelected: (String code) {
-        _loc.changeLanguage(code);
-        setState(() {});
+      onSelected: (String code) async {
+        await _loc.changeLanguage(code);
+        if (mounted) {
+          setState(() {});
+        }
       },
       itemBuilder: (BuildContext context) {
         return languages.map((lang) {
@@ -186,124 +188,120 @@ class _PinScreenState extends State<PinScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF10141D),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          _buildLanguagePicker(),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, top: 4.0),
-                child: _buildLanguagePicker(),
-              ),
-            ),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight - 32),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 16),
-                          const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
-                          const SizedBox(height: 10),
-                          Text(
-                            _loc.text('app_title'),
-                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            _loc.text('enter_pin'),
-                            style: const TextStyle(color: Colors.white70, fontSize: 14),
-                          ),
-                          const SizedBox(height: 24),
-
-                          // Indicador de Puntos (Exactamente 4 Puntos)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(4, (index) {
-                              final isFilled = index < _pin.length;
-                              return Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 8),
-                                width: 16,
-                                height: 16,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: isFilled ? const Color(0xFF6C63FF) : Colors.white24,
-                                  border: Border.all(
-                                    color: isFilled ? const Color(0xFF6C63FF) : Colors.white38,
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // Mensaje de Error / Intentos restantes
-                          if (_errorMessage != null) ...[
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                _errorMessage!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                          ],
-
-                          if (widget.vaultService.failedAttempts > 0)
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.red.withAlpha(38),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Colors.redAccent.withAlpha(76)),
-                              ),
-                              child: Text(
-                                '${_loc.text("attempts_remaining")}: $remaining / ${VaultService.maxAttempts}',
-                                style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12),
-                              ),
-                            ),
-
-                          const Spacer(),
-
-                          // Teclado Numérico
-                          if (_isLoading)
-                            const Padding(
-                              padding: EdgeInsets.all(24.0),
-                              child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
-                            )
-                          else
-                            _buildNumericKeypad(),
-
-                          const SizedBox(height: 12),
-
-                          // Botón "Olvidé mi PIN"
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => RecoveryScreen(vaultService: widget.vaultService),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              _loc.text('forgot_pin'),
-                              style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight - 16),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
+                      const SizedBox(height: 10),
+                      Text(
+                        _loc.text('app_title'),
+                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
-                    ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _loc.text('enter_pin'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 14),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Indicador de Puntos (Exactamente 4 Puntos)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(4, (index) {
+                          final isFilled = index < _pin.length;
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            width: 16,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: isFilled ? const Color(0xFF6C63FF) : Colors.white24,
+                              border: Border.all(
+                                color: isFilled ? const Color(0xFF6C63FF) : Colors.white38,
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      // Mensaje de Error / Intentos restantes
+                      if (_errorMessage != null) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            _errorMessage!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+
+                      if (widget.vaultService.failedAttempts > 0)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withAlpha(38),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.redAccent.withAlpha(76)),
+                          ),
+                          child: Text(
+                            '${_loc.text("attempts_remaining")}: $remaining / ${VaultService.maxAttempts}',
+                            style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                          ),
+                        ),
+
+                      const Spacer(),
+
+                      // Teclado Numérico
+                      if (_isLoading)
+                        const Padding(
+                          padding: EdgeInsets.all(24.0),
+                          child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+                        )
+                      else
+                        _buildNumericKeypad(),
+
+                      const SizedBox(height: 12),
+
+                      // Botón "Olvidé mi PIN"
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => RecoveryScreen(vaultService: widget.vaultService),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          _loc.text('forgot_pin'),
+                          style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
                   ),
-                );
-              },
-            ),
-          ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

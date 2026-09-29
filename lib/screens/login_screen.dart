@@ -131,9 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
       tooltip: _loc.text('language'),
       color: const Color(0xFF1E2538),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      onSelected: (String code) {
-        _loc.changeLanguage(code);
-        setState(() {});
+      onSelected: (String code) async {
+        await _loc.changeLanguage(code);
+        if (mounted) {
+          setState(() {});
+        }
       },
       itemBuilder: (BuildContext context) {
         return languages.map((lang) {
@@ -165,137 +167,134 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF10141D),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          _buildLanguagePicker(),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, top: 4.0),
-                child: _buildLanguagePicker(),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 10),
+              const Icon(Icons.cloud_sync_outlined, size: 80, color: Color(0xFF6C63FF)),
+              const SizedBox(height: 16),
+              Text(
+                _loc.text('login_title'),
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
               ),
-            ),
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              const SizedBox(height: 8),
+              Text(
+                _isLoginMode
+                    ? _loc.text('login_subtitle')
+                    : _loc.text('register_subtitle'),
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
+              ),
+              const SizedBox(height: 32),
+
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: _loc.text('email_label'),
+                  labelStyle: const TextStyle(color: Colors.white70),
+                  prefixIcon: const Icon(Icons.email_outlined, color: Color(0xFF6C63FF)),
+                  filled: true,
+                  fillColor: const Color(0xFF1E2538),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              TextField(
+                controller: _passwordController,
+                obscureText: _obscurePassword,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: _loc.text('account_pass_label'),
+                  labelStyle: const TextStyle(color: Colors.white70),
+                  prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF6C63FF)),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                      color: Colors.white54,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFF1E2538),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+
+              if (_errorMessage != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  _errorMessage!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+              ],
+
+              const SizedBox(height: 24),
+
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6C63FF),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                onPressed: _isLoading ? null : _submit,
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        _isLoginMode ? _loc.text('login_button') : _loc.text('register_button'),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+              ),
+
+              const SizedBox(height: 12),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 30),
-                  const Icon(Icons.cloud_sync_outlined, size: 80, color: Color(0xFF6C63FF)),
-                  const SizedBox(height: 16),
-                  Text(
-                    _loc.text('login_title'),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _isLoginMode
-                        ? _loc.text('login_subtitle')
-                        : _loc.text('register_subtitle'),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white70, fontSize: 14),
-                  ),
-                  const SizedBox(height: 32),
-
-                  TextField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelText: _loc.text('email_label'),
-                      labelStyle: const TextStyle(color: Colors.white70),
-                      prefixIcon: const Icon(Icons.email_outlined, color: Color(0xFF6C63FF)),
-                      filled: true,
-                      fillColor: const Color(0xFF1E2538),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _isLoginMode = !_isLoginMode;
+                        _errorMessage = null;
+                      });
+                    },
+                    child: Text(
+                      _isLoginMode ? _loc.text('no_account_register') : _loc.text('has_account_login'),
+                      style: const TextStyle(color: Color(0xFF6C63FF), fontSize: 13),
                     ),
                   ),
-
-                  const SizedBox(height: 16),
-
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelText: _loc.text('account_pass_label'),
-                      labelStyle: const TextStyle(color: Colors.white70),
-                      prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF6C63FF)),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                          color: Colors.white54,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
+                  if (_isLoginMode)
+                    TextButton(
+                      onPressed: _resetPassword,
+                      child: Text(
+                        _loc.text('forgot_account_pass'),
+                        style: const TextStyle(color: Colors.white54, fontSize: 13),
                       ),
-                      filled: true,
-                      fillColor: const Color(0xFF1E2538),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                  ),
-
-                  if (_errorMessage != null) ...[
-                    const SizedBox(height: 12),
-                    Text(
-                      _errorMessage!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-
-                  const SizedBox(height: 24),
-
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF6C63FF),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    ),
-                    onPressed: _isLoading ? null : _submit,
-                    child: _isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(
-                            _isLoginMode ? _loc.text('login_button') : _loc.text('register_button'),
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _isLoginMode = !_isLoginMode;
-                            _errorMessage = null;
-                          });
-                        },
-                        child: Text(
-                          _isLoginMode ? _loc.text('no_account_register') : _loc.text('has_account_login'),
-                          style: const TextStyle(color: Color(0xFF6C63FF), fontSize: 13),
-                        ),
-                      ),
-                      if (_isLoginMode)
-                        TextButton(
-                          onPressed: _resetPassword,
-                          child: Text(
-                            _loc.text('forgot_account_pass'),
-                            style: const TextStyle(color: Colors.white54, fontSize: 13),
-                          ),
-                        ),
-                    ],
-                  ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
