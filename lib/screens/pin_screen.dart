@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'home_screen.dart';
 import 'login_screen.dart';
@@ -15,6 +16,7 @@ class PinScreen extends StatefulWidget {
 }
 
 class _PinScreenState extends State<PinScreen> {
+  final _loc = LocalizationService();
   String _pin = '';
   bool _isLoading = false;
   bool _isAuthenticatingBiometrics = false;
@@ -97,16 +99,15 @@ class _PinScreenState extends State<PinScreen> {
           _isLoading = false;
         });
 
-        // Si la bóveda fue autodestruida tras superar los 3 intentos fallidos
         if (!widget.vaultService.isInitialized) {
           await AuthService().signOut();
 
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('¡Bóveda autodestruida por seguridad! Sesión cerrada.'),
+              SnackBar(
+                content: Text(_loc.text('vault_destroyed_logout')),
                 backgroundColor: Colors.red,
-                duration: Duration(seconds: 4),
+                duration: const Duration(seconds: 4),
               ),
             );
 
@@ -153,14 +154,14 @@ class _PinScreenState extends State<PinScreen> {
                       const SizedBox(height: 16),
                       const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
                       const SizedBox(height: 10),
-                      const Text(
-                        'SegurCel',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                      Text(
+                        _loc.text('app_title'),
+                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       const SizedBox(height: 4),
-                      const Text(
-                        'Ingresa tu PIN de 4 dígitos',
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                      Text(
+                        _loc.text('enter_pin'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                       const SizedBox(height: 24),
 
@@ -208,14 +209,14 @@ class _PinScreenState extends State<PinScreen> {
                             border: Border.all(color: Colors.redAccent.withAlpha(76)),
                           ),
                           child: Text(
-                            'Intentos restantes: $remaining / ${VaultService.maxAttempts}',
+                            '${_loc.text("attempts_remaining")}: $remaining / ${VaultService.maxAttempts}',
                             style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12),
                           ),
                         ),
 
                       const Spacer(),
 
-                      // Teclado Numérico Limpio
+                      // Teclado Numérico
                       if (_isLoading)
                         const Padding(
                           padding: EdgeInsets.all(24.0),
@@ -235,9 +236,9 @@ class _PinScreenState extends State<PinScreen> {
                             ),
                           );
                         },
-                        child: const Text(
-                          '¿Olvidaste tu PIN?',
-                          style: TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
+                        child: Text(
+                          _loc.text('forgot_pin'),
+                          style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -297,7 +298,6 @@ class _PinScreenState extends State<PinScreen> {
                               child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF6C63FF)),
                             )
                           : const Icon(Icons.fingerprint, color: Color(0xFF6C63FF), size: 32),
-                      tooltip: 'Desbloquear con Huella',
                       onPressed: _tryBiometricUnlock,
                     ),
                   );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'login_screen.dart';
 import 'pin_screen.dart';
@@ -18,12 +19,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _loc = LocalizationService();
   String _searchQuery = '';
-  String _selectedCategory = 'Todas';
+  late String _selectedCategory;
   final Set<String> _visiblePasswordIds = {};
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedCategory = _loc.text('all_categories');
+  }
+
   List<String> get _availableCategories {
-    final categoriesSet = <String>{'Todas'};
+    final allCatText = _loc.text('all_categories');
+    final categoriesSet = <String>{allCatText};
     for (final e in widget.vaultService.entries) {
       if (e.category.trim().isNotEmpty) {
         categoriesSet.add(e.category.trim());
@@ -31,8 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     final list = categoriesSet.toList();
     list.sort((a, b) {
-      if (a == 'Todas') return -1;
-      if (b == 'Todas') return 1;
+      if (a == allCatText) return -1;
+      if (b == allCatText) return 1;
       return a.toLowerCase().compareTo(b.toLowerCase());
     });
     return list;
@@ -65,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('$label copiado al portapapeles'),
+        content: Text('$label ${_loc.text("copied_toast")}'),
         duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
       ),
@@ -97,17 +106,17 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: const Color(0xFF1E2538),
-        title: const Text('Eliminar Contraseña', style: TextStyle(color: Colors.white)),
-        content: Text('¿Seguro que deseas eliminar "${entry.title}"?', style: const TextStyle(color: Colors.white70)),
+        title: Text(_loc.text('delete_password'), style: const TextStyle(color: Colors.white)),
+        content: Text('${_loc.text("delete_confirm")} (${entry.title})', style: const TextStyle(color: Colors.white70)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancelar', style: TextStyle(color: Colors.white60)),
+            child: Text(_loc.text('cancel'), style: const TextStyle(color: Colors.white60)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Eliminar', style: TextStyle(color: Colors.white)),
+            child: Text(_loc.text('delete'), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -159,27 +168,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          'Historial de "${entry.title}"',
+                          '${_loc.text("history_title")} - ${entry.title}',
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
                       if (historyList.isNotEmpty)
                         IconButton(
                           icon: const Icon(Icons.delete_sweep, color: Colors.redAccent),
-                          tooltip: 'Vaciar Historial',
+                          tooltip: _loc.text('clear_history'),
                           onPressed: () async {
                             final confirm = await showDialog<bool>(
                               context: ctx,
                               builder: (dCtx) => AlertDialog(
                                 backgroundColor: const Color(0xFF10141D),
-                                title: const Text('Vaciar Historial', style: TextStyle(color: Colors.white)),
-                                content: const Text('¿Deseas eliminar todo el historial de contraseñas anteriores para este registro?'),
+                                title: Text(_loc.text('clear_history'), style: const TextStyle(color: Colors.white)),
+                                content: Text(_loc.text('clear_history_confirm')),
                                 actions: [
-                                  TextButton(onPressed: () => Navigator.of(dCtx).pop(false), child: const Text('Cancelar')),
+                                  TextButton(onPressed: () => Navigator.of(dCtx).pop(false), child: Text(_loc.text('cancel'))),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                                     onPressed: () => Navigator.of(dCtx).pop(true),
-                                    child: const Text('Vaciar', style: TextStyle(color: Colors.white)),
+                                    child: Text(_loc.text('delete'), style: const TextStyle(color: Colors.white)),
                                   ),
                                 ],
                               ),
@@ -196,12 +205,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 12),
 
                   if (historyList.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Text(
-                        'No hay contraseñas anteriores guardadas.',
+                        _loc.text('no_history'),
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white54, fontSize: 14),
+                        style: const TextStyle(color: Colors.white54, fontSize: 14),
                       ),
                     )
                   else
@@ -225,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Modificada el ${_formatDateTime(h.changedAt)}',
+                                  '${_loc.text("modified_on")} ${_formatDateTime(h.changedAt)}',
                                   style: const TextStyle(color: Colors.amberAccent, fontSize: 12, fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 6),
@@ -259,12 +268,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 18),
-                                      tooltip: 'Copiar Contraseña',
-                                      onPressed: () => _copyToClipboard(h.password, 'Contraseña histórica'),
+                                      tooltip: _loc.text('copy'),
+                                      onPressed: () => _copyToClipboard(h.password, _loc.text('password_label')),
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.close, color: Colors.redAccent, size: 18),
-                                      tooltip: 'Eliminar este elemento',
+                                      tooltip: _loc.text('delete'),
                                       onPressed: () async {
                                         final newList = List<HistoricalPassword>.from(historyList)..removeAt(idx);
                                         await updateEntryHistory(newList);
@@ -328,7 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      isEditing ? 'Editar Contraseña' : 'Nueva Contraseña',
+                      isEditing ? _loc.text('edit_password') : _loc.text('add_password'),
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
@@ -337,9 +346,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextField(
                       controller: titleController,
                       style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Título (ej. Gmail, Banco, WiFi)',
-                        labelStyle: TextStyle(color: Colors.white70),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('title_label'),
+                        labelStyle: const TextStyle(color: Colors.white70),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -347,9 +356,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextField(
                       controller: usernameController,
                       style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Usuario / Email',
-                        labelStyle: TextStyle(color: Colors.white70),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('username_label'),
+                        labelStyle: const TextStyle(color: Colors.white70),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -360,15 +369,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: TextField(
                             controller: passwordController,
                             style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              labelText: 'Contraseña',
-                              labelStyle: TextStyle(color: Colors.white70),
+                            decoration: InputDecoration(
+                              labelText: _loc.text('password_label'),
+                              labelStyle: const TextStyle(color: Colors.white70),
                             ),
                           ),
                         ),
                         IconButton(
                           icon: const Icon(Icons.autorenew, color: Color(0xFF6C63FF)),
-                          tooltip: 'Generar Contraseña Segura',
+                          tooltip: _loc.text('generate_password'),
                           onPressed: generatePassword,
                         ),
                       ],
@@ -378,9 +387,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextField(
                       controller: categoryController,
                       style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Categoría',
-                        labelStyle: TextStyle(color: Colors.white70),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('category_label'),
+                        labelStyle: const TextStyle(color: Colors.white70),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -389,9 +398,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       controller: notesController,
                       style: const TextStyle(color: Colors.white),
                       maxLines: 2,
-                      decoration: const InputDecoration(
-                        labelText: 'Notas adicionales (Opcional)',
-                        labelStyle: TextStyle(color: Colors.white70),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('notes_label'),
+                        labelStyle: const TextStyle(color: Colors.white70),
                       ),
                     ),
 
@@ -414,7 +423,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         if (title.isEmpty || password.isEmpty) {
                           setModalState(() {
-                            dialogError = 'Ingresa al menos el Título y la Contraseña.';
+                            dialogError = _loc.text('pin_error');
                           });
                           return;
                         }
@@ -466,7 +475,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                       child: Text(
-                        isEditing ? 'Guardar Cambios' : 'Agregar Contraseña',
+                        isEditing ? _loc.text('save_changes') : _loc.text('add_password'),
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),
@@ -482,19 +491,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final allCatText = _loc.text('all_categories');
     final categories = _availableCategories;
 
     if (!categories.contains(_selectedCategory)) {
-      _selectedCategory = 'Todas';
+      _selectedCategory = allCatText;
     }
 
-    // Filtrar por categoría seleccionada
     final categoryFiltered = widget.vaultService.entries.where((e) {
-      if (_selectedCategory == 'Todas') return true;
+      if (_selectedCategory == allCatText) return true;
       return e.category.trim().toLowerCase() == _selectedCategory.toLowerCase();
     }).toList();
 
-    // Filtrar por texto de búsqueda
     final searchFiltered = categoryFiltered.where((e) {
       final q = _searchQuery.toLowerCase();
       return e.title.toLowerCase().contains(q) ||
@@ -502,7 +510,6 @@ class _HomeScreenState extends State<HomeScreen> {
           e.category.toLowerCase().contains(q);
     }).toList();
 
-    // Ordenar alfabéticamente A-Z por Título
     searchFiltered.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
 
     return Scaffold(
@@ -510,11 +517,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E2538),
         elevation: 2,
-        title: const Text('Bóveda SegurCel', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(_loc.text('vault_title'), style: const TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings_outlined, color: Colors.white70),
-            tooltip: 'Ajustes',
+            tooltip: _loc.text('settings'),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -525,13 +532,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.lock_outline, color: Colors.amberAccent),
-            tooltip: 'Bloquear Bóveda',
+            tooltip: _loc.text('lock_vault'),
             onPressed: _lockVault,
           ),
           if (AuthService().currentUser != null)
             IconButton(
               icon: const Icon(Icons.logout, color: Colors.redAccent),
-              tooltip: 'Cerrar Sesión',
+              tooltip: _loc.text('sign_out'),
               onPressed: _signOut,
             ),
         ],
@@ -548,10 +555,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const Icon(Icons.cloud_off_outlined, color: Colors.amberAccent, size: 20),
                     const SizedBox(width: 10),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Modo local. Inicia sesión para sincronizar.',
-                        style: TextStyle(color: Colors.white, fontSize: 13),
+                        _loc.text('local_mode_banner'),
+                        style: const TextStyle(color: Colors.white, fontSize: 13),
                       ),
                     ),
                     TextButton(
@@ -566,7 +573,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      child: const Text('Conectar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                      child: Text(_loc.text('connect_button'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                     ),
                   ],
                 ),
@@ -581,7 +588,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Nube activa (${AuthService().currentUser?.email})',
+                        '${_loc.text("cloud_active_banner")} (${AuthService().currentUser?.email})',
                         style: const TextStyle(color: Colors.white70, fontSize: 12),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -597,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: const TextStyle(color: Colors.white),
                 onChanged: (val) => setState(() => _searchQuery = val),
                 decoration: InputDecoration(
-                  hintText: 'Buscar contraseña o servicio...',
+                  hintText: _loc.text('search_placeholder'),
                   hintStyle: const TextStyle(color: Colors.white38),
                   prefixIcon: const Icon(Icons.search, color: Colors.white54),
                   filled: true,
@@ -648,7 +655,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Icon(
-                              cat == 'Todas' ? Icons.folder_copy_outlined : Icons.folder_outlined,
+                              cat == allCatText ? Icons.folder_copy_outlined : Icons.folder_outlined,
                               size: 16,
                               color: isSelected ? const Color(0xFF6C63FF) : Colors.white54,
                             ),
@@ -692,9 +699,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Icon(Icons.folder_open, size: 70, color: Colors.white24),
                             const SizedBox(height: 12),
                             Text(
-                              _selectedCategory == 'Todas'
-                                  ? 'No hay contraseñas guardadas'
-                                  : 'No hay contraseñas en la categoría "$_selectedCategory"',
+                              _selectedCategory == allCatText
+                                  ? _loc.text('no_passwords')
+                                  : '${_loc.text("no_passwords_category")} "$_selectedCategory"',
                               textAlign: TextAlign.center,
                               style: const TextStyle(color: Colors.white54, fontSize: 15),
                             ),
@@ -752,7 +759,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
-                                        tooltip: 'Ver Historial',
+                                        tooltip: _loc.text('history_title'),
                                         onPressed: () => _showHistoryBottomSheet(item),
                                       ),
                                       IconButton(
@@ -789,8 +796,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 18),
-                                        tooltip: 'Copiar Contraseña',
-                                        onPressed: () => _copyToClipboard(item.password, 'Contraseña'),
+                                        tooltip: _loc.text('copy'),
+                                        onPressed: () => _copyToClipboard(item.password, _loc.text('password_label')),
                                       ),
                                     ],
                                   ),

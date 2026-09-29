@@ -19,7 +19,6 @@ class LocalizationService extends ChangeNotifier {
       if (savedLang != null && _translations.containsKey(savedLang)) {
         _currentLanguage = savedLang;
       } else {
-        // Detección automática por sistema
         final systemLocale = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
         if (_translations.containsKey(systemLocale)) {
           _currentLanguage = systemLocale;
@@ -121,6 +120,16 @@ class LocalizationService extends ChangeNotifier {
       'plan_lifetime': 'Licencia Vitalicia',
       'activate_pro': 'Obtener SegurCel PRO',
       'language': 'Idioma / Language',
+      'all_categories': 'Todas',
+      'lock_vault': 'Bloquear Bóveda',
+      'sign_out': 'Cerrar Sesión',
+      'delete_confirm': '¿Seguro que deseas eliminar esta contraseña?',
+      'clear_history_confirm': '¿Deseas eliminar todo el historial de contraseñas anteriores?',
+      'pro_benefits_1': 'Sincronización ilimitada (Android, Windows, Web, iOS)',
+      'pro_benefits_2': 'Respaldo permanente cifrado con AES-256 en la nube',
+      'pro_benefits_3': 'Historial completo de contraseñas anteriores',
+      'pro_benefits_4': 'Acceso rápido desde cualquier navegador Web',
+      'vault_destroyed_logout': '¡Bóveda autodestruida por seguridad! Sesión cerrada.',
     },
     'en': {
       'app_title': 'SegurCel',
@@ -196,6 +205,16 @@ class LocalizationService extends ChangeNotifier {
       'plan_lifetime': 'Lifetime License',
       'activate_pro': 'Get SegurCel PRO',
       'language': 'Language',
+      'all_categories': 'All',
+      'lock_vault': 'Lock Vault',
+      'sign_out': 'Sign Out',
+      'delete_confirm': 'Are you sure you want to delete this password?',
+      'clear_history_confirm': 'Do you want to delete all previous password history?',
+      'pro_benefits_1': 'Unlimited sync (Android, Windows, Web, iOS)',
+      'pro_benefits_2': 'Permanent backup encrypted with AES-256 in the cloud',
+      'pro_benefits_3': 'Full history of previous passwords',
+      'pro_benefits_4': 'Quick access from any Web browser',
+      'vault_destroyed_logout': 'Vault self-destructed for security! Session closed.',
     },
     'pt': {
       'app_title': 'SegurCel',
@@ -271,6 +290,16 @@ class LocalizationService extends ChangeNotifier {
       'plan_lifetime': 'Licença Vitalícia',
       'activate_pro': 'Obter SegurCel PRO',
       'language': 'Idioma',
+      'all_categories': 'Todas',
+      'lock_vault': 'Bloquear Cofre',
+      'sign_out': 'Sair',
+      'delete_confirm': 'Tem certeza de que deseja excluir esta senha?',
+      'clear_history_confirm': 'Deseja excluir todo o histórico de senhas anteriores?',
+      'pro_benefits_1': 'Sincronização ilimitada (Android, Windows, Web, iOS)',
+      'pro_benefits_2': 'Backup permanente criptografado com AES-256 na nuvem',
+      'pro_benefits_3': 'Histórico completo de senhas anteriores',
+      'pro_benefits_4': 'Acesso rápido de qualquer navegador Web',
+      'vault_destroyed_logout': 'Cofre autodestruído por segurança! Sessão encerrada.',
     },
     'zh': {
       'app_title': 'SegurCel',
@@ -346,6 +375,16 @@ class LocalizationService extends ChangeNotifier {
       'plan_lifetime': '终身授权',
       'activate_pro': '获取 SegurCel PRO',
       'language': '语言 / Language',
+      'all_categories': '全部',
+      'lock_vault': '锁定保险库',
+      'sign_out': '退出登录',
+      'delete_confirm': '您确定要删除此密码吗？',
+      'clear_history_confirm': '您要删除所有历史密码记录吗？',
+      'pro_benefits_1': '无限同步（Android、Windows、Web、iOS）',
+      'pro_benefits_2': '云端AES-256永久加密备份',
+      'pro_benefits_3': '完整历史密码记录',
+      'pro_benefits_4': '随时从任何网页浏览器快速访问',
+      'vault_destroyed_logout': '保险库已自毁以保证安全！会话已关闭。',
     },
     'fr': {
       'app_title': 'SegurCel',
@@ -421,6 +460,16 @@ class LocalizationService extends ChangeNotifier {
       'plan_lifetime': 'Licence À Vie',
       'activate_pro': 'Obtenir SegurCel PRO',
       'language': 'Langue / Language',
+      'all_categories': 'Toutes',
+      'lock_vault': 'Verrouiller le coffre',
+      'sign_out': 'Déconnexion',
+      'delete_confirm': 'Voulez-vous vraiment supprimer ce mot de passe ?',
+      'clear_history_confirm': 'Voulez-vous supprimer tout l\'historique des anciens mots de passe ?',
+      'pro_benefits_1': 'Synchronisation illimitée (Android, Windows, Web, iOS)',
+      'pro_benefits_2': 'Sauvegarde permanente chiffrée en AES-256 sur le cloud',
+      'pro_benefits_3': 'Historique complet des anciens mots de passe',
+      'pro_benefits_4': 'Accès rapide depuis n\'importe quel navigateur Web',
+      'vault_destroyed_logout': 'Coffre autodétruit par sécurité ! Session fermée.',
     },
   };
 }

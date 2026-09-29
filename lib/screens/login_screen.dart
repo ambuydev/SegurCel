@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'paywall_screen.dart';
 import 'pin_screen.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = AuthService();
+  final _loc = LocalizationService();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -29,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final password = _passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      setState(() => _errorMessage = 'Ingresa correo y contraseña.');
+      setState(() => _errorMessage = _loc.text('login_subtitle'));
       return;
     }
 
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           if (widget.vaultService.lastSyncError != null) {
             setState(() {
-              _errorMessage = 'Sincronización en la nube: ${widget.vaultService.lastSyncError}';
+              _errorMessage = widget.vaultService.lastSyncError;
               _isLoading = false;
             });
             return;
@@ -93,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _resetPassword() async {
     final email = _emailController.text.trim();
     if (email.isEmpty) {
-      setState(() => _errorMessage = 'Ingresa tu correo para enviarte el enlace de recuperación.');
+      setState(() => _errorMessage = _loc.text('email_label'));
       return;
     }
 
@@ -101,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
       await _authService.sendPasswordReset(email);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Se envió un correo para restablecer la contraseña de tu cuenta.'),
+          SnackBar(
+            content: Text(_loc.text('forgot_account_pass')),
             backgroundColor: Colors.green,
           ),
         );
@@ -127,16 +129,16 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 30),
               const Icon(Icons.cloud_sync_outlined, size: 80, color: Color(0xFF6C63FF)),
               const SizedBox(height: 16),
-              const Text(
-                'SegurCel Cloud',
+              Text(
+                _loc.text('login_title'),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               const SizedBox(height: 8),
               Text(
                 _isLoginMode
-                    ? 'Inicia sesión para sincronizar tus contraseñas'
-                    : 'Crea tu cuenta para respaldar tus contraseñas',
+                    ? _loc.text('login_subtitle')
+                    : _loc.text('register_subtitle'),
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white70, fontSize: 14),
               ),
@@ -147,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: 'Correo Electrónico',
+                  labelText: _loc.text('email_label'),
                   labelStyle: const TextStyle(color: Colors.white70),
                   prefixIcon: const Icon(Icons.email_outlined, color: Color(0xFF6C63FF)),
                   filled: true,
@@ -163,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: _obscurePassword,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: 'Contraseña de Cuenta',
+                  labelText: _loc.text('account_pass_label'),
                   labelStyle: const TextStyle(color: Colors.white70),
                   prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF6C63FF)),
                   suffixIcon: IconButton(
@@ -204,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: _isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
                     : Text(
-                        _isLoginMode ? 'Iniciar Sesión' : 'Registrarse',
+                        _isLoginMode ? _loc.text('login_button') : _loc.text('register_button'),
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
               ),
@@ -222,16 +224,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     },
                     child: Text(
-                      _isLoginMode ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia Sesión',
+                      _isLoginMode ? _loc.text('no_account_register') : _loc.text('has_account_login'),
                       style: const TextStyle(color: Color(0xFF6C63FF), fontSize: 13),
                     ),
                   ),
                   if (_isLoginMode)
                     TextButton(
                       onPressed: _resetPassword,
-                      child: const Text(
-                        'Olvidé clave',
-                        style: TextStyle(color: Colors.white54, fontSize: 13),
+                      child: Text(
+                        _loc.text('forgot_account_pass'),
+                        style: const TextStyle(color: Colors.white54, fontSize: 13),
                       ),
                     ),
                 ],

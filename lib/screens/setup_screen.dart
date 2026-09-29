@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'home_screen.dart';
 
@@ -13,6 +14,7 @@ class SetupScreen extends StatefulWidget {
 }
 
 class _SetupScreenState extends State<SetupScreen> {
+  final _loc = LocalizationService();
   final _pinController = TextEditingController();
   final _confirmPinController = TextEditingController();
 
@@ -25,12 +27,12 @@ class _SetupScreenState extends State<SetupScreen> {
     final confirm = _confirmPinController.text.trim();
 
     if (pin.length != 4) {
-      setState(() => _errorMessage = 'El PIN debe tener exactamente 4 dígitos.');
+      setState(() => _errorMessage = _loc.text('pin_error'));
       return;
     }
 
     if (pin != confirm) {
-      setState(() => _errorMessage = 'Los PINs no coinciden.');
+      setState(() => _errorMessage = _loc.text('pin_error'));
       return;
     }
 
@@ -47,7 +49,7 @@ class _SetupScreenState extends State<SetupScreen> {
       });
     } catch (e) {
       setState(() {
-        _errorMessage = 'Error al crear la bóveda: $e';
+        _errorMessage = e.toString();
         _isLoading = false;
       });
     }
@@ -68,7 +70,7 @@ class _SetupScreenState extends State<SetupScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Configuración Inicial'),
+        title: Text(_loc.text('welcome')),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -89,16 +91,16 @@ class _SetupScreenState extends State<SetupScreen> {
         children: [
           const Icon(Icons.lock_outline, size: 80, color: Color(0xFF6C63FF)),
           const SizedBox(height: 20),
-          const Text(
-            'Bienvenido a SegurCel',
+          Text(
+            _loc.text('welcome'),
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const SizedBox(height: 10),
-          const Text(
-            'Crea un PIN seguro para proteger tus contraseñas cifradas en tu dispositivo.',
+          Text(
+            _loc.text('setup_subtitle'),
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white70, fontSize: 15),
+            style: const TextStyle(color: Colors.white70, fontSize: 15),
           ),
           const SizedBox(height: 30),
 
@@ -110,7 +112,7 @@ class _SetupScreenState extends State<SetupScreen> {
             style: const TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 8),
             textAlign: TextAlign.center,
             decoration: InputDecoration(
-              labelText: 'Nuevo PIN (4 dígitos)',
+              labelText: _loc.text('new_pin'),
               labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
               filled: true,
               fillColor: const Color(0xFF1E2538),
@@ -128,7 +130,7 @@ class _SetupScreenState extends State<SetupScreen> {
             style: const TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 8),
             textAlign: TextAlign.center,
             decoration: InputDecoration(
-              labelText: 'Confirmar PIN',
+              labelText: _loc.text('confirm_new_pin'),
               labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
               filled: true,
               fillColor: const Color(0xFF1E2538),
@@ -156,9 +158,9 @@ class _SetupScreenState extends State<SetupScreen> {
             onPressed: _isLoading ? null : _createVault,
             child: _isLoading
                 ? const CircularProgressIndicator(color: Colors.white)
-                : const Text(
-                    'Crear Bóveda Cifrada',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                : Text(
+                    _loc.text('create_vault'),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
           ),
         ],
@@ -172,16 +174,16 @@ class _SetupScreenState extends State<SetupScreen> {
       children: [
         const Icon(Icons.warning_amber_rounded, size: 80, color: Colors.amber),
         const SizedBox(height: 16),
-        const Text(
-          '¡Guarda tu Código de Recuperación!',
+        Text(
+          _loc.text('save_recovery_code_title'),
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         const SizedBox(height: 12),
-        const Text(
-          'Si olvidas tu PIN, esta clave es el ÚNICO medio para recuperar tu bóveda. Anótala o guárdala en un lugar seguro fuera de tu teléfono.',
+        Text(
+          _loc.text('save_recovery_code_subtitle'),
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white70, fontSize: 14),
+          style: const TextStyle(color: Colors.white70, fontSize: 14),
         ),
         const SizedBox(height: 24),
 
@@ -212,7 +214,7 @@ class _SetupScreenState extends State<SetupScreen> {
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: _generatedRecoveryCode!));
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Código de recuperación copiado al portapapeles.')),
+                    SnackBar(content: Text(_loc.text('copied_toast'))),
                   );
                 },
               ),
@@ -229,9 +231,9 @@ class _SetupScreenState extends State<SetupScreen> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           onPressed: _finishSetup,
-          child: const Text(
-            'Entrar a SegurCel',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          child: Text(
+            _loc.text('enter_segurcel'),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/user_profile.dart';
 import '../services/auth_service.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'pin_screen.dart';
 
@@ -24,9 +25,10 @@ class PaywallScreen extends StatefulWidget {
 
 class _PaywallScreenState extends State<PaywallScreen> {
   final _authService = AuthService();
+  final _loc = LocalizationService();
   Timer? _countdownTimer;
   int _remainingMillis = 0;
-  String _selectedPlan = 'yearly'; // 'monthly', 'yearly', 'lifetime', 'emergency_6m'
+  String _selectedPlan = 'yearly';
   bool _isLoading = false;
 
   @override
@@ -81,7 +83,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // Actualizar perfil de usuario en Firestore a Premium
       final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
       await userRef.set({
         'isPremium': true,
@@ -92,8 +93,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('¡Suscripción PRO activada con éxito!'),
+          SnackBar(
+            content: Text(_loc.text('activate_pro')),
             backgroundColor: Colors.green,
           ),
         );
@@ -111,7 +112,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error al procesar suscripción: $e'),
+            content: Text('$e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -128,7 +129,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(widget.isEmergency ? 'Rescate de Emergencia' : 'SegurCel PRO'),
+        title: Text(widget.isEmergency ? _loc.text('emergency_title') : _loc.text('pro_subscription')),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -138,7 +139,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (widget.isEmergency) ...[
-                // Banner de Emergencia con Temporizador
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -150,15 +150,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     children: [
                       const Icon(Icons.warning_amber_rounded, size: 60, color: Colors.redAccent),
                       const SizedBox(height: 12),
-                      const Text(
-                        '¡Bóveda Local Eliminada!',
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                      Text(
+                        _loc.text('emergency_title'),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Ingresaste 3 PINs incorrectos. Tus contraseñas están resguardadas e intactas en la nube, pero tu copia de seguridad expirará cuando venza el reloj:',
+                      Text(
+                        _loc.text('emergency_subtitle'),
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                        style: const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const SizedBox(height: 16),
                       Container(
@@ -185,65 +186,64 @@ class _PaywallScreenState extends State<PaywallScreen> {
               ] else ...[
                 const Icon(Icons.stars_outlined, size: 80, color: Color(0xFF6C63FF)),
                 const SizedBox(height: 16),
-                const Text(
-                  'Desbloquea SegurCel PRO',
+                Text(
+                  _loc.text('pro_subscription'),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Accede a tus contraseñas desde cualquier dispositivo en tiempo real.',
+                Text(
+                  _loc.text('login_subtitle'),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
                 const SizedBox(height: 24),
 
-                // Lista de beneficios
-                _buildBenefitRow(Icons.cloud_done_outlined, 'Sincronización ilimitada (Android, Windows, Web, iOS)'),
-                _buildBenefitRow(Icons.security, 'Respaldo permanente cifrado con AES-256 en la nube'),
-                _buildBenefitRow(Icons.history, 'Historial completo de contraseñas anteriores'),
-                _buildBenefitRow(Icons.language, 'Acceso rápido desde cualquier navegador Web'),
+                _buildBenefitRow(Icons.cloud_done_outlined, _loc.text('pro_benefits_1')),
+                _buildBenefitRow(Icons.security, _loc.text('pro_benefits_2')),
+                _buildBenefitRow(Icons.history, _loc.text('pro_benefits_3')),
+                _buildBenefitRow(Icons.language, _loc.text('pro_benefits_4')),
                 const SizedBox(height: 24),
               ],
 
-              const Text(
-                'Selecciona tu Plan:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+              Text(
+                _loc.text('select_plan'),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               const SizedBox(height: 12),
 
               if (widget.isEmergency)
                 _buildPlanTile(
                   id: 'emergency_6m',
-                  title: 'Plan Rescate 6 Meses',
+                  title: _loc.text('plan_emergency'),
                   price: '\$8.99 USD',
-                  subtitle: 'Restaura tu bóveda cifrada de inmediato',
-                  badge: 'RESCATE',
+                  subtitle: _loc.text('emergency_title'),
+                  badge: 'RESCUE',
                   badgeColor: Colors.amber,
                 )
               else ...[
                 _buildPlanTile(
                   id: 'yearly',
-                  title: 'Plan Anual',
-                  price: '\$9.99 USD / año',
-                  subtitle: '\$0.83 USD / mes (Ahorras 45%)',
+                  title: _loc.text('plan_yearly'),
+                  price: '\$9.99 USD / year',
+                  subtitle: '\$0.83 USD / mo (Save 45%)',
                   badge: 'POPULAR',
                   badgeColor: const Color(0xFF6C63FF),
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
                   id: 'monthly',
-                  title: 'Plan Mensual',
-                  price: '\$1.50 USD / mes',
-                  subtitle: 'Cancela cuando quieras',
+                  title: _loc.text('plan_monthly'),
+                  price: '\$1.50 USD / mo',
+                  subtitle: _loc.text('pro_subscription'),
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
                   id: 'lifetime',
-                  title: 'Licencia Vitalicia',
+                  title: _loc.text('plan_lifetime'),
                   price: '\$24.99 USD',
-                  subtitle: 'Un solo pago de por vida',
-                  badge: 'PAGO ÚNICO',
+                  subtitle: 'Lifetime',
+                  badge: 'PRO',
                   badgeColor: Colors.green,
                 ),
               ],
@@ -260,7 +260,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 child: _isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
                     : Text(
-                        widget.isEmergency ? 'Restaurar y Activar PRO' : 'Obtener SegurCel PRO',
+                        _loc.text('activate_pro'),
                         style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
               ),

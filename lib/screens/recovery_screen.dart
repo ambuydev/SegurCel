@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'home_screen.dart';
 
@@ -12,6 +13,7 @@ class RecoveryScreen extends StatefulWidget {
 }
 
 class _RecoveryScreenState extends State<RecoveryScreen> {
+  final _loc = LocalizationService();
   final _codeController = TextEditingController();
   final _newPinController = TextEditingController();
   final _confirmPinController = TextEditingController();
@@ -25,17 +27,17 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
     final confirm = _confirmPinController.text.trim();
 
     if (code.isEmpty) {
-      setState(() => _errorMessage = 'Ingresa el código de recuperación.');
+      setState(() => _errorMessage = _loc.text('recovery_code'));
       return;
     }
 
     if (newPin.length != 4) {
-      setState(() => _errorMessage = 'El nuevo PIN debe tener exactamente 4 dígitos.');
+      setState(() => _errorMessage = _loc.text('pin_error'));
       return;
     }
 
     if (newPin != confirm) {
-      setState(() => _errorMessage = 'Los PINs no coinciden.');
+      setState(() => _errorMessage = _loc.text('pin_error'));
       return;
     }
 
@@ -48,8 +50,8 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
       final success = await widget.vaultService.unlockWithRecoveryCode(code, newPin);
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('¡Bóveda recuperada con éxito! Se actualizó tu PIN.'),
+          SnackBar(
+            content: Text(_loc.text('reset_unlock')),
             backgroundColor: Colors.green,
           ),
         );
@@ -77,7 +79,7 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Recuperar Acceso'),
+        title: Text(_loc.text('recover_access')),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -88,16 +90,16 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
             children: [
               const Icon(Icons.key_outlined, size: 70, color: Color(0xFF6C63FF)),
               const SizedBox(height: 16),
-              const Text(
-                'Olvidé mi PIN',
+              Text(
+                _loc.text('forgot_pin'),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Ingresa tu Código de Recuperación de 24 caracteres para desbloquear la bóveda y definir un nuevo PIN.',
+              Text(
+                _loc.text('save_recovery_code_subtitle'),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white70, fontSize: 14),
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
               ),
               const SizedBox(height: 28),
 
@@ -107,7 +109,7 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 style: const TextStyle(color: Colors.white, fontSize: 16, letterSpacing: 1.5),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  labelText: 'Código de Recuperación',
+                  labelText: _loc.text('recovery_code'),
                   hintText: 'ABCD-1234-EFGH-5678-...',
                   hintStyle: const TextStyle(color: Colors.white30, letterSpacing: 0),
                   labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
@@ -127,7 +129,7 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 6),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  labelText: 'Nuevo PIN (4 dígitos)',
+                  labelText: _loc.text('new_pin'),
                   labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
                   filled: true,
                   fillColor: const Color(0xFF1E2538),
@@ -145,7 +147,7 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 6),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  labelText: 'Confirmar Nuevo PIN',
+                  labelText: _loc.text('confirm_new_pin'),
                   labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
                   filled: true,
                   fillColor: const Color(0xFF1E2538),
@@ -173,9 +175,9 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 onPressed: _isLoading ? null : _recoverVault,
                 child: _isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'Restablecer y Desbloquear',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    : Text(
+                        _loc.text('reset_unlock'),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
               ),
             ],
