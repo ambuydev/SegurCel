@@ -156,6 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _buildLanguageOption('pt', '🇧🇷 Português'),
                     _buildLanguageOption('zh', '🇨🇳 中文 (简体)'),
                     _buildLanguageOption('fr', '🇫🇷 Français'),
+                    _buildLanguageOption('hi', '🇮🇳 हिन्दी / Hindi'),
                   ],
                 ),
               ),
