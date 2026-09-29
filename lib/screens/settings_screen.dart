@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'paywall_screen.dart';
 
@@ -14,6 +15,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _authService = AuthService();
+  final _loc = LocalizationService();
 
   // Formulario Cambio de PIN
   final _currentPinController = TextEditingController();
@@ -133,7 +135,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: const Color(0xFF10141D),
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E2538),
-        title: const Text('Ajustes y Seguridad', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(_loc.text('settings_title'), style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -142,16 +144,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Sección de Idioma
+              _buildSectionCard(
+                title: _loc.text('language'),
+                icon: Icons.language,
+                iconColor: Colors.amberAccent,
+                child: Column(
+                  children: [
+                    _buildLanguageOption('es', '🇪🇸 Español'),
+                    _buildLanguageOption('en', '🇺🇸 English'),
+                    _buildLanguageOption('pt', '🇧🇷 Português'),
+                    _buildLanguageOption('zh', '🇨🇳 中文 (简体)'),
+                    _buildLanguageOption('fr', '🇫🇷 Français'),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
               // Sección 1: Cambiar PIN de la Bóveda
               _buildSectionCard(
-                title: 'Seguridad de la Bóveda',
+                title: _loc.text('vault_security'),
                 icon: Icons.shield_outlined,
                 iconColor: const Color(0xFF6C63FF),
                 child: Column(
                   children: [
-                    const Text(
-                      'Cambia el PIN con el que descifras tus contraseñas en esta app.',
-                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                    Text(
+                      _loc.text('setup_subtitle'),
+                      style: const TextStyle(color: Colors.white70, fontSize: 13),
                     ),
                     const SizedBox(height: 16),
                     TextField(
@@ -160,9 +180,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       obscureText: true,
                       maxLength: 4,
                       style: const TextStyle(color: Colors.white, letterSpacing: 6),
-                      decoration: const InputDecoration(
-                        labelText: 'PIN Actual',
-                        labelStyle: TextStyle(color: Colors.white70, letterSpacing: 0),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('current_pin'),
+                        labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -172,9 +192,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       obscureText: true,
                       maxLength: 4,
                       style: const TextStyle(color: Colors.white, letterSpacing: 6),
-                      decoration: const InputDecoration(
-                        labelText: 'Nuevo PIN (4 dígitos)',
-                        labelStyle: TextStyle(color: Colors.white70, letterSpacing: 0),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('new_pin'),
+                        labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -184,9 +204,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       obscureText: true,
                       maxLength: 4,
                       style: const TextStyle(color: Colors.white, letterSpacing: 6),
-                      decoration: const InputDecoration(
-                        labelText: 'Confirmar Nuevo PIN',
-                        labelStyle: TextStyle(color: Colors.white70, letterSpacing: 0),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('confirm_new_pin'),
+                        labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
                       ),
                     ),
                     if (_pinErrorMessage != null) ...[
@@ -212,7 +232,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 height: 20,
                                 child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                               )
-                            : const Text('Actualizar PIN', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                            : Text(_loc.text('update_pin'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ],
@@ -224,14 +244,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Sección 2: Cambiar Contraseña de la Cuenta Cloud
               if (currentUser != null)
                 _buildSectionCard(
-                  title: 'Cuenta Cloud',
+                  title: _loc.text('cloud_account'),
                   icon: Icons.cloud_done_outlined,
                   iconColor: Colors.greenAccent,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Usuario conectado: ${currentUser.email}',
+                        '${currentUser.email}',
                         style: const TextStyle(color: Colors.amberAccent, fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 12),
@@ -240,7 +260,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         obscureText: _obscureCurrentPass,
                         style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          labelText: 'Contraseña Actual de Cuenta',
+                          labelText: _loc.text('current_pass'),
                           labelStyle: const TextStyle(color: Colors.white70),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -257,7 +277,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         obscureText: _obscureNewPass,
                         style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          labelText: 'Nueva Contraseña de Cuenta',
+                          labelText: _loc.text('new_pass'),
                           labelStyle: const TextStyle(color: Colors.white70),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -273,9 +293,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         controller: _confirmPasswordController,
                         obscureText: _obscureNewPass,
                         style: const TextStyle(color: Colors.white),
-                        decoration: const InputDecoration(
-                          labelText: 'Confirmar Nueva Contraseña',
-                          labelStyle: TextStyle(color: Colors.white70),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('confirm_new_pass'),
+                          labelStyle: const TextStyle(color: Colors.white70),
                         ),
                       ),
                       if (_passwordErrorMessage != null) ...[
@@ -302,7 +322,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   height: 20,
                                   child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                                 )
-                              : const Text('Actualizar Contraseña de Cuenta', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              : Text(_loc.text('update_account_pass'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ],
@@ -313,17 +333,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // Sección 3: Suscripción PRO
               _buildSectionCard(
-                title: 'Suscripción SegurCel PRO',
+                title: _loc.text('pro_subscription'),
                 icon: Icons.stars_outlined,
                 iconColor: const Color(0xFF6C63FF),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Desbloquea sincronización permanente, respaldo de emergencia e historial completo.',
-                      style: TextStyle(color: Colors.white70, fontSize: 13),
-                    ),
-                    const SizedBox(height: 14),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -339,7 +354,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           );
                         },
-                        child: const Text('Ver Planes PRO / Suscribirse', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        child: Text(_loc.text('view_pro_plans'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ],
@@ -347,6 +362,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageOption(String code, String name) {
+    final isSelected = _loc.currentLanguage == code;
+
+    return InkWell(
+      onTap: () {
+        _loc.changeLanguage(code);
+        setState(() {});
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              name,
+              style: TextStyle(
+                color: isSelected ? Colors.amberAccent : Colors.white70,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 15,
+              ),
+            ),
+            if (isSelected)
+              const Icon(Icons.check, color: Colors.amberAccent, size: 20),
+          ],
         ),
       ),
     );
