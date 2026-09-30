@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../models/password_entry.dart';
 import '../services/auth_service.dart';
+import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import 'paywall_screen.dart';
@@ -127,6 +132,102 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Future<void> _importPasswords() async {
+    try {
+      final importedEntries = await ImportExportService.importFromFile();
+      if (importedEntries.isEmpty) return;
+
+      if (mounted) {
+        final confirm = await showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            backgroundColor: const Color(0xFF1E2538),
+            title: Text(_loc.text('import_preview_title'), style: const TextStyle(color: Colors.white)),
+            content: Text('${_loc.text("import_found_count")} ${importedEntries.length}'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(false),
+                child: Text(_loc.text('cancel')),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C63FF)),
+                onPressed: () => Navigator.of(ctx).pop(true),
+                child: Text(_loc.text('confirm_import'), style: const TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
+        );
+
+        if (confirm == true) {
+          final currentList = List<PasswordEntry>.from(widget.vaultService.entries)
+            ..addAll(importedEntries);
+          await widget.vaultService.saveEntries(currentList);
+
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${_loc.text("import_success_toast")} (${importedEntries.length})'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al importar: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _exportPasswords(String format) async {
+    try {
+      final entries = widget.vaultService.entries;
+      if (entries.isEmpty) return;
+
+      final String content;
+      final String fileName;
+
+      if (format == 'csv') {
+        content = ImportExportService.exportToCsv(entries);
+        fileName = 'segurcel_passwords.csv';
+      } else {
+        content = ImportExportService.exportToJson(entries);
+        fileName = 'segurcel_passwords.json';
+      }
+
+      final bytes = Uint8List.fromList(utf8.encode(content));
+      final Uri? savedUri = await FilePicker.saveFile(
+        dialogTitle: 'Guardar respaldo de contraseñas',
+        fileName: fileName,
+        bytes: bytes,
+      );
+
+      if (mounted && savedUri != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${_loc.text("copied_toast")}: $fileName'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al exportar: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUser = _authService.currentUser;
@@ -157,6 +258,70 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _buildLanguageOption('zh', '🇨🇳 中文 (简体)'),
                     _buildLanguageOption('fr', '🇫🇷 Français'),
                     _buildLanguageOption('hi', '🇮🇳 हिन्दी / Hindi'),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Sección Importar / Exportar Contraseñas
+              _buildSectionCard(
+                title: _loc.text('import_export'),
+                icon: Icons.import_export,
+                iconColor: Colors.lightBlueAccent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      _loc.text('import_subtitle'),
+                      style: const TextStyle(color: Colors.white70, fontSize: 13),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF1E2538),
+                        side: const BorderSide(color: Color(0xFF6C63FF)),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      icon: const Icon(Icons.file_upload_outlined, color: Color(0xFF6C63FF)),
+                      label: Text(_loc.text('import_passwords'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                      onPressed: _importPasswords,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      _loc.text('export_subtitle'),
+                      style: const TextStyle(color: Colors.white70, fontSize: 13),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1E2538),
+                              side: const BorderSide(color: Colors.amberAccent),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            icon: const Icon(Icons.file_download_outlined, color: Colors.amberAccent, size: 18),
+                            label: Text(_loc.text('export_csv_btn'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            onPressed: () => _exportPasswords('csv'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1E2538),
+                              side: const BorderSide(color: Colors.greenAccent),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            icon: const Icon(Icons.code, color: Colors.greenAccent, size: 18),
+                            label: Text(_loc.text('export_json_btn'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            onPressed: () => _exportPasswords('json'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -384,7 +549,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Text(
               name,
               style: TextStyle(
-                color: isSelected ? Colors.amberAccent : Colors.white70,
+                color: isSelected ? Colors.amberAccent : Colors.white,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 15,
               ),
