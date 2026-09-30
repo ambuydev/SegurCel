@@ -164,6 +164,115 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _showAboutDialog() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF1E2538),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    _loc.text('about_app'),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white54),
+                    onPressed: () => Navigator.of(ctx).pop(),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+
+              // Encabezado con Logo y Versión
+              Center(
+                child: Column(
+                  children: [
+                    const Icon(Icons.security, size: 60, color: Color(0xFF6C63FF)),
+                    const SizedBox(height: 8),
+                    Text(
+                      _loc.text('app_title'),
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    Text(
+                      _loc.text('app_version'),
+                      style: const TextStyle(color: Colors.amberAccent, fontSize: 13, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Especificaciones Técnicas y Seguridad
+              Text(
+                _loc.text('tech_specs'),
+                style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+
+              _buildSpecBullet(Icons.lock_outline, _loc.text('spec_1')),
+              _buildSpecBullet(Icons.fingerprint, _loc.text('spec_2')),
+              _buildSpecBullet(Icons.local_fire_department, _loc.text('spec_3')),
+              _buildSpecBullet(Icons.cloud_done_outlined, _loc.text('spec_4')),
+              _buildSpecBullet(Icons.verified_user_outlined, _loc.text('spec_5')),
+
+              const SizedBox(height: 24),
+
+              // Botón Enlace Política de Privacidad
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF10141D),
+                  side: const BorderSide(color: Color(0xFF6C63FF)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                icon: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF)),
+                label: Text(
+                  _loc.text('privacy_policy'),
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  const url = 'https://segurcel-45c92.web.app/privacy.html';
+                  _copyToClipboard(url, _loc.text('privacy_policy'));
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSpecBullet(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: const Color(0xFF6C63FF), size: 18),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(color: Colors.white70, fontSize: 13),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showPasswordGeneratorDialog(TextEditingController targetController) {
     double length = 16;
     bool includeUpper = true;
@@ -1333,6 +1442,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           _buildLanguagePicker(),
+          IconButton(
+            icon: const Icon(Icons.info_outline, color: Colors.white70),
+            tooltip: _loc.text('about_app'),
+            onPressed: _showAboutDialog,
+          ),
           IconButton(
             icon: const Icon(Icons.settings_outlined, color: Colors.white70),
             tooltip: _loc.text('settings'),

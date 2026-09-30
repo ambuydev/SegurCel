@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - SegurCel</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #10141D;
+            color: #E2E8F0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1E2538;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid #6C63FF;
+        }
+        h1 {
+            color: #6C63FF;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #A0AEC0;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #80EE99;
+            font-size: 20px;
+            border-bottom: 1px solid #2D3748;
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+        p, li {
+            color: #CBD5E0;
+            font-size: 15px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .highlight {
+            background-color: rgba(108, 99, 255, 0.2);
+            padding: 12px 16px;
+            border-left: 4px solid #6C63FF;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SegurCel</h1>
+        <div class="subtitle">Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge</div>
+
+        <div class="highlight">
+            <strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestre ni podemos leer tus contraseñas en ningún caso.
+        </div>
+
+        <h2>1. Información que Recopilamos</h2>
+        <p>Para brindarte la funcionalidad de sincronización multidispositivo y autenticación segura, recopilamos la siguiente información técnica mínima:</p>
+        <ul>
+            <li><strong>Dirección de Correo Electrónico:</strong> Utilizada únicamente para identificar tu cuenta de usuario e iniciar sesión en SegurCel Cloud.</li>
+            <li><strong>Datos Cifrados de la Bóveda:</strong> Todas tus contraseñas, nombres de usuario, números de tarjeta y notas se almacenan en forma de bloques de texto cifrado ilegible mediante AES-256. Ningún empleado ni servidor puede descifrar estos datos.</li>
+        </ul>
+
+        <h2>2. Arquitectura de Cifrado y Seguridad</h2>
+        <p>SegurCel implementa los más altos estándares de criptografía moderna:</p>
+        <ul>
+            <li><strong>Cifrado Simétrico AES-256-GCM:</strong> La clave de cifrado se deriva localmente en tu dispositivo mediante el protocolo <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</li>
+            <li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono (Keystore/Keychain).</li>
+            <li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente de tu dispositivo para prevenir ataques por fuerza bruta.</li>
+        </ul>
+
+        <h2>3. Uso de Datos y No Comercialización</h2>
+        <p>SegurCel <strong>NUNCA</strong> vende, alquila ni comparte la información de los usuarios con terceros ni con empresas de publicidad. No rastreamos tu navegación web ni incluimos SDKs de rastreo comercial.</p>
+
+        <h2>4. Derechos de Eliminación de Datos</h2>
+        <p>El usuario tiene control total sobre su información. Puedes eliminar tu bóveda local o cerrar tu sesión en cualquier momento. Si solicitas la eliminación de tu cuenta, todos los registros cifrados en la nube de Firebase se eliminarán de forma irreversible.</p>
+
+        <h2>5. Contacto y Soporte</h2>
+        <p>Si tienes preguntas sobre nuestra Política de Privacidad o la arquitectura de seguridad de SegurCel, puedes contactarnos a través de nuestra plataforma oficial o soporte por correo electrónico.</p>
+
+        <div class="footer">
+            &copy; 2026 SegurCel. Todos los derechos reservados.
+        </div>
+    </div>
+</body>
+</html>
