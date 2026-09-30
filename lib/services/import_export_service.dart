@@ -1,30 +1,16 @@
-import 'dart:convert';
 import 'package:csv/csv.dart';
-import 'package:file_picker/file_picker.dart';
 import '../models/password_entry.dart';
+import '../utils/file_helper.dart';
 
 class ImportExportService {
   /// Selecciona un archivo CSV o JSON y devuelve la lista de PasswordEntry parsedas.
   static Future<List<PasswordEntry>> importFromFile() async {
-    final result = await FilePicker.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['csv', 'json'],
-    );
-
-    if (result.isEmpty) {
+    final content = await FileHelper.pickFileContent();
+    if (content == null || content.trim().isEmpty) {
       return [];
     }
 
-    final file = result.first;
-    final bytes = await file.readAsBytes();
-    if (bytes.isEmpty) {
-      return [];
-    }
-
-    final content = utf8.decode(bytes);
-    final ext = file.extension?.toLowerCase() ?? '';
-
-    if (ext == 'json' || content.trim().startsWith('[')) {
+    if (content.trim().startsWith('[')) {
       return PasswordEntry.listFromJson(content);
     } else {
       return parseCsvPasswords(content);

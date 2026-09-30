@@ -1,12 +1,10 @@
-import 'dart:convert';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
 import '../services/vault_service.dart';
+import '../utils/file_helper.dart';
 import 'paywall_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -201,14 +199,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         fileName = 'segurcel_passwords.json';
       }
 
-      final bytes = Uint8List.fromList(utf8.encode(content));
-      final Uri? savedUri = await FilePicker.saveFile(
-        dialogTitle: 'Guardar respaldo de contraseñas',
-        fileName: fileName,
-        bytes: bytes,
-      );
+      await FileHelper.saveFile(content, fileName);
 
-      if (mounted && savedUri != null) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${_loc.text("copied_toast")}: $fileName'),
