@@ -558,7 +558,7 @@ class LocalizationService extends ChangeNotifier {
       'pro_benefits_3': 'Historique complet des anciens mots de passe',
       'pro_benefits_4': 'Accès rapide depuis n\'importe quel navigateur Web',
       'vault_destroyed_logout': 'Coffre autodétruit par sécurité ! Session fermée.',
-      'import_export': 'Importer / Exporter les mots de passe',
+      'import_export': 'Importer / Exporter',
       'import_passwords': 'Importer des mots de passe (CSV / Chrome / Bitwarden)',
       'export_passwords': 'Exporter les mots de passe (CSV / JSON)',
       'import_subtitle': 'Prend en charge les fichiers CSV de Google Chrome, Edge, Bitwarden et 1Password.',
