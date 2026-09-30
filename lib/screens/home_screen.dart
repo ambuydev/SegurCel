@@ -152,6 +152,242 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _showPasswordGeneratorDialog(TextEditingController targetController) {
+    double length = 16;
+    bool includeUpper = true;
+    bool includeLower = true;
+    bool includeNumbers = true;
+    bool includeSymbols = true;
+    bool avoidAmbiguous = false;
+
+    String generate() {
+      String upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      String lowerChars = 'abcdefghijklmnopqrstuvwxyz';
+      String numberChars = '0123456789';
+      String symbolChars = '!@#\$%^&*()_+-=[]{}|;:,.<>?';
+
+      if (avoidAmbiguous) {
+        upperChars = upperChars.replaceAll(RegExp(r'[IO]'), '');
+        lowerChars = lowerChars.replaceAll(RegExp(r'[l]'), '');
+        numberChars = numberChars.replaceAll(RegExp(r'[01]'), '');
+      }
+
+      String allowed = '';
+      if (includeUpper) allowed += upperChars;
+      if (includeLower) allowed += lowerChars;
+      if (includeNumbers) allowed += numberChars;
+      if (includeSymbols) allowed += symbolChars;
+
+      if (allowed.isEmpty) {
+        allowed = lowerChars;
+      }
+
+      final random = Random.secure();
+      final lenInt = length.toInt();
+      return List.generate(lenInt, (i) => allowed[random.nextInt(allowed.length)]).join();
+    }
+
+    String generatedPassword = generate();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF1E2538),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            void regenerate() {
+              setModalState(() {
+                generatedPassword = generate();
+              });
+            }
+
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _loc.text('generator_title'),
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.white54),
+                        onPressed: () => Navigator.of(ctx).pop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Muestra de Contraseña Generada + Botones
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF10141D),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFF6C63FF)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            generatedPassword,
+                            style: const TextStyle(
+                              color: Color(0xFF80EE99),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
+                          tooltip: _loc.text('copy'),
+                          onPressed: () => _copyToClipboard(generatedPassword, _loc.text('password_label')),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.autorenew, color: Colors.amberAccent, size: 22),
+                          tooltip: _loc.text('generate_password'),
+                          onPressed: regenerate,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Slider de Longitud
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _loc.text('pass_length'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '${length.toInt()} caracteres',
+                        style: const TextStyle(color: Colors.amberAccent, fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    value: length,
+                    min: 8,
+                    max: 64,
+                    divisions: 56,
+                    activeColor: const Color(0xFF6C63FF),
+                    inactiveColor: Colors.white12,
+                    label: '${length.toInt()}',
+                    onChanged: (val) {
+                      setModalState(() {
+                        length = val;
+                        generatedPassword = generate();
+                      });
+                    },
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Checkboxes de Opciones
+                  CheckboxListTile(
+                    title: Text(_loc.text('include_uppercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                    value: includeUpper,
+                    activeColor: const Color(0xFF6C63FF),
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) {
+                      setModalState(() {
+                        includeUpper = val ?? true;
+                        generatedPassword = generate();
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(_loc.text('include_lowercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                    value: includeLower,
+                    activeColor: const Color(0xFF6C63FF),
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) {
+                      setModalState(() {
+                        includeLower = val ?? true;
+                        generatedPassword = generate();
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(_loc.text('include_numbers'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                    value: includeNumbers,
+                    activeColor: const Color(0xFF6C63FF),
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) {
+                      setModalState(() {
+                        includeNumbers = val ?? true;
+                        generatedPassword = generate();
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(_loc.text('include_symbols'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                    value: includeSymbols,
+                    activeColor: const Color(0xFF6C63FF),
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) {
+                      setModalState(() {
+                        includeSymbols = val ?? true;
+                        generatedPassword = generate();
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text(_loc.text('avoid_ambiguous'), style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                    value: avoidAmbiguous,
+                    activeColor: const Color(0xFF6C63FF),
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) {
+                      setModalState(() {
+                        avoidAmbiguous = val ?? false;
+                        generatedPassword = generate();
+                      });
+                    },
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6C63FF),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    onPressed: () {
+                      targetController.text = generatedPassword;
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text(
+                      _loc.text('use_password'),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   void _showHealthAuditBottomSheet() {
     String selectedFilter = 'all';
 
@@ -606,13 +842,6 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (ctx) {
         return StatefulBuilder(
           builder: (context, setModalState) {
-            void generatePassword() {
-              const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#\$%^&*()_+-=';
-              final random = Random.secure();
-              final pass = List.generate(16, (i) => chars[random.nextInt(chars.length)]).join();
-              passwordController.text = pass;
-            }
-
             return Padding(
               padding: EdgeInsets.only(
                 left: 20,
@@ -709,9 +938,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.autorenew, color: Color(0xFF6C63FF)),
+                            icon: const Icon(Icons.tune, color: Color(0xFF6C63FF), size: 24),
                             tooltip: _loc.text('generate_password'),
-                            onPressed: generatePassword,
+                            onPressed: () => _showPasswordGeneratorDialog(passwordController),
                           ),
                         ],
                       ),
