@@ -34,6 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _isChangingPassword = false;
   bool _obscureCurrentPass = true;
   bool _obscureNewPass = true;
+  bool _obscureConfirmPass = true;
   String? _passwordErrorMessage;
 
   Future<void> _changePin() async {
@@ -308,9 +309,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.shield_outlined,
                 iconColor: const Color(0xFF6C63FF),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _loc.text('setup_subtitle'),
+                      _loc.text('change_pin_subtitle'),
                       style: const TextStyle(color: Colors.white70, fontSize: 13),
                     ),
                     const SizedBox(height: 16),
@@ -394,6 +396,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         '${currentUser.email}',
                         style: const TextStyle(color: Colors.amberAccent, fontSize: 13, fontWeight: FontWeight.bold),
                       ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _loc.text('change_pass_subtitle'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 13),
+                      ),
                       const SizedBox(height: 12),
                       TextField(
                         controller: _currentPasswordController,
@@ -431,11 +438,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 10),
                       TextField(
                         controller: _confirmPasswordController,
-                        obscureText: _obscureNewPass,
+                        obscureText: _obscureConfirmPass,
                         style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: _loc.text('confirm_new_pass'),
                           labelStyle: const TextStyle(color: Colors.white70),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureConfirmPass ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                              color: Colors.white54,
+                            ),
+                            onPressed: () => setState(() => _obscureConfirmPass = !_obscureConfirmPass),
+                          ),
                         ),
                       ),
                       if (_passwordErrorMessage != null) ...[
@@ -462,7 +476,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   height: 20,
                                   child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                                 )
-                              : Text(_loc.text('update_account_pass'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              : FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    _loc.text('update_account_pass'),
+                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                         ),
                       ),
                     ],
