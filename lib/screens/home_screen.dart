@@ -33,7 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<String> get _availableCategories {
     final allCatText = _loc.text('all_categories');
+    const favCatText = '⭐ Favoritos';
     final categoriesSet = <String>{allCatText};
+
+    final hasFavorites = widget.vaultService.entries.any((e) => e.isFavorite);
+    if (hasFavorites) {
+      categoriesSet.add(favCatText);
+    }
+
     for (final e in widget.vaultService.entries) {
       if (e.category.trim().isNotEmpty) {
         categoriesSet.add(e.category.trim());
@@ -43,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
     list.sort((a, b) {
       if (a == allCatText) return -1;
       if (b == allCatText) return 1;
+      if (a == favCatText) return -1;
+      if (b == favCatText) return 1;
       return a.toLowerCase().compareTo(b.toLowerCase());
     });
     return list;
@@ -90,6 +99,17 @@ class _HomeScreenState extends State<HomeScreen> {
         _visiblePasswordIds.add(id);
       }
     });
+  }
+
+  Future<void> _toggleFavorite(PasswordEntry entry) async {
+    final updatedEntry = entry.copyWith(isFavorite: !entry.isFavorite);
+    final currentList = List<PasswordEntry>.from(widget.vaultService.entries);
+    final idx = currentList.indexWhere((e) => e.id == entry.id);
+    if (idx != -1) {
+      currentList[idx] = updatedEntry;
+      await widget.vaultService.saveEntries(currentList);
+      setState(() {});
+    }
   }
 
   String _formatDateTime(int millis) {
@@ -715,6 +735,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           password: password,
                           category: catText.isEmpty ? 'General' : catText,
                           notes: notesController.text.trim(),
+                          isFavorite: existingEntry?.isFavorite ?? false,
                           updatedAt: now,
                           history: history,
                         );
@@ -802,6 +823,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final allCatText = _loc.text('all_categories');
+    const favCatText = '⭐ Favoritos';
     final categories = _availableCategories;
 
     if (!categories.contains(_selectedCategory)) {
@@ -819,6 +841,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final categoryFiltered = widget.vaultService.entries.where((e) {
       if (_selectedCategory == allCatText) return true;
+      if (_selectedCategory == favCatText) return e.isFavorite;
       return e.category.trim().toLowerCase() == _selectedCategory.toLowerCase();
     }).toList();
 
@@ -829,7 +852,11 @@ class _HomeScreenState extends State<HomeScreen> {
           e.category.toLowerCase().contains(q);
     }).toList();
 
-    searchFiltered.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    searchFiltered.sort((a, b) {
+      if (a.isFavorite && !b.isFavorite) return -1;
+      if (!a.isFavorite && b.isFavorite) return 1;
+      return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xFF10141D),
@@ -1023,9 +1050,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Icon(
-                              cat == allCatText ? Icons.folder_copy_outlined : Icons.folder_outlined,
+                              cat == allCatText
+                                  ? Icons.folder_copy_outlined
+                                  : (cat == favCatText ? Icons.star : Icons.folder_outlined),
                               size: 16,
-                              color: isSelected ? const Color(0xFF6C63FF) : Colors.white54,
+                              color: isSelected
+                                  ? (cat == favCatText ? Colors.amber : const Color(0xFF6C63FF))
+                                  : (cat == favCatText ? Colors.amber.withAlpha(180) : Colors.white54),
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -1087,7 +1118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                               color: const Color(0xFF10141D),
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.white12),
+                              border: Border.all(
+                                color: item.isFavorite ? Colors.amber.withAlpha(100) : Colors.white12,
+                                width: item.isFavorite ? 1.5 : 1,
+                              ),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
@@ -1098,10 +1132,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       CircleAvatar(
                                         radius: 18,
-                                        backgroundColor: const Color(0xFF6C63FF).withAlpha(51),
+                                        backgroundColor: item.isFavorite
+                                            ? Colors.amber.withAlpha(51)
+                                            : const Color(0xFF6C63FF).withAlpha(51),
                                         child: Text(
                                           item.title.isNotEmpty ? item.title[0].toUpperCase() : '?',
-                                          style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
+                                          style: TextStyle(
+                                            color: item.isFavorite ? Colors.amber : const Color(0xFF6C63FF),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(width: 12),
@@ -1124,6 +1164,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                           ],
                                         ),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          item.isFavorite ? Icons.star : Icons.star_border,
+                                          color: item.isFavorite ? Colors.amber : Colors.white38,
+                                          size: 20,
+                                        ),
+                                        tooltip: 'Favorito',
+                                        onPressed: () => _toggleFavorite(item),
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),

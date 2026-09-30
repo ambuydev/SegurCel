@@ -31,6 +31,7 @@ class PasswordEntry {
   final String password;
   final String category;
   final String notes;
+  final bool isFavorite;
   final int updatedAt;
   final List<HistoricalPassword> history;
 
@@ -41,6 +42,7 @@ class PasswordEntry {
     required this.password,
     this.category = 'General',
     this.notes = '',
+    this.isFavorite = false,
     int? updatedAt,
     List<HistoricalPassword>? history,
   })  : updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch,
@@ -53,6 +55,7 @@ class PasswordEntry {
     String? password,
     String? category,
     String? notes,
+    bool? isFavorite,
     int? updatedAt,
     List<HistoricalPassword>? history,
   }) {
@@ -63,6 +66,7 @@ class PasswordEntry {
       password: password ?? this.password,
       category: category ?? this.category,
       notes: notes ?? this.notes,
+      isFavorite: isFavorite ?? this.isFavorite,
       updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
       history: history ?? List.from(this.history),
     );
@@ -76,6 +80,7 @@ class PasswordEntry {
       'password': password,
       'category': category,
       'notes': notes,
+      'isFavorite': isFavorite,
       'updatedAt': updatedAt,
       'history': history.map((e) => e.toJson()).toList(),
     };
@@ -94,6 +99,7 @@ class PasswordEntry {
       password: json['password'] ?? '',
       category: json['category'] ?? 'General',
       notes: json['notes'] ?? '',
+      isFavorite: json['isFavorite'] ?? false,
       updatedAt: json['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
       history: historyList,
     );
