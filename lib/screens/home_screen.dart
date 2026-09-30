@@ -582,11 +582,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _showAddOrEditDialog([PasswordEntry? existingEntry]) {
     final isEditing = existingEntry != null;
+    String selectedType = existingEntry?.entryType ?? 'logins';
+
     final titleController = TextEditingController(text: existingEntry?.title ?? '');
     final usernameController = TextEditingController(text: existingEntry?.username ?? '');
     final passwordController = TextEditingController(text: existingEntry?.password ?? '');
     final categoryController = TextEditingController(text: existingEntry?.category ?? 'General');
     final notesController = TextEditingController(text: existingEntry?.notes ?? '');
+
+    final cardExpiryController = TextEditingController(text: existingEntry?.cardExpiry ?? '');
+    final cardCvvController = TextEditingController(text: existingEntry?.cardCvv ?? '');
+    final cardPinController = TextEditingController(text: existingEntry?.cardPin ?? '');
 
     String? dialogError;
 
@@ -626,66 +632,215 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
 
-                    TextField(
-                      controller: titleController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: _loc.text('title_label'),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    TextField(
-                      controller: usernameController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: _loc.text('username_label'),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
+                    // Selector de Tipo de Elemento (Contraseña, Tarjeta, Nota)
                     Row(
                       children: [
                         Expanded(
-                          child: TextField(
-                            controller: passwordController,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              labelText: _loc.text('password_label'),
-                              labelStyle: const TextStyle(color: Colors.white70),
-                            ),
+                          child: _buildTypeSegmentChip(
+                            id: 'logins',
+                            label: _loc.text('type_login'),
+                            icon: Icons.key_outlined,
+                            isSelected: selectedType == 'logins',
+                            onTap: () => setModalState(() => selectedType = 'logins'),
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.autorenew, color: Color(0xFF6C63FF)),
-                          tooltip: _loc.text('generate_password'),
-                          onPressed: generatePassword,
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: _buildTypeSegmentChip(
+                            id: 'cards',
+                            label: _loc.text('type_card'),
+                            icon: Icons.credit_card,
+                            isSelected: selectedType == 'cards',
+                            onTap: () => setModalState(() {
+                              selectedType = 'cards';
+                              if (categoryController.text == 'General') categoryController.text = 'Tarjetas';
+                            }),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: _buildTypeSegmentChip(
+                            id: 'notes',
+                            label: _loc.text('type_note'),
+                            icon: Icons.note_alt_outlined,
+                            isSelected: selectedType == 'notes',
+                            onTap: () => setModalState(() {
+                              selectedType = 'notes';
+                              if (categoryController.text == 'General') categoryController.text = 'Notas';
+                            }),
+                          ),
                         ),
                       ],
                     ),
+
+                    const SizedBox(height: 16),
+
+                    if (selectedType == 'logins') ...[
+                      TextField(
+                        controller: titleController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('title_label'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      TextField(
+                        controller: usernameController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('username_label'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: passwordController,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: _loc.text('password_label'),
+                                labelStyle: const TextStyle(color: Colors.white70),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.autorenew, color: Color(0xFF6C63FF)),
+                            tooltip: _loc.text('generate_password'),
+                            onPressed: generatePassword,
+                          ),
+                        ],
+                      ),
+                    ] else if (selectedType == 'cards') ...[
+                      TextField(
+                        controller: titleController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('card_title'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      TextField(
+                        controller: usernameController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('card_holder'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      TextField(
+                        controller: passwordController,
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('card_number'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: cardExpiryController,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: _loc.text('card_expiry'),
+                                labelStyle: const TextStyle(color: Colors.white70),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: TextField(
+                              controller: cardCvvController,
+                              keyboardType: TextInputType.number,
+                              obscureText: true,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: _loc.text('card_cvv'),
+                                labelStyle: const TextStyle(color: Colors.white70),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: TextField(
+                              controller: cardPinController,
+                              keyboardType: TextInputType.number,
+                              obscureText: true,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: _loc.text('card_pin'),
+                                labelStyle: const TextStyle(color: Colors.white70),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ] else ...[
+                      TextField(
+                        controller: titleController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('note_title'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      TextField(
+                        controller: notesController,
+                        style: const TextStyle(color: Colors.white),
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                          labelText: _loc.text('note_content'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                    ],
+
                     const SizedBox(height: 12),
 
-                    TextField(
-                      controller: categoryController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: _loc.text('category_label'),
-                        labelStyle: const TextStyle(color: Colors.white70),
+                    if (selectedType != 'notes') ...[
+                      TextField(
+                        controller: categoryController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('category_label'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
+                      const SizedBox(height: 12),
 
-                    TextField(
-                      controller: notesController,
-                      style: const TextStyle(color: Colors.white),
-                      maxLines: 2,
-                      decoration: InputDecoration(
-                        labelText: _loc.text('notes_label'),
-                        labelStyle: const TextStyle(color: Colors.white70),
+                      TextField(
+                        controller: notesController,
+                        style: const TextStyle(color: Colors.white),
+                        maxLines: 2,
+                        decoration: InputDecoration(
+                          labelText: _loc.text('notes_label'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
                       ),
-                    ),
+                    ] else ...[
+                      TextField(
+                        controller: categoryController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('category_label'),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                    ],
 
                     if (dialogError != null) ...[
                       const SizedBox(height: 10),
@@ -704,7 +859,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         final username = usernameController.text.trim();
                         final password = passwordController.text.trim();
 
-                        if (title.isEmpty || password.isEmpty) {
+                        if (title.isEmpty) {
                           setModalState(() {
                             dialogError = _loc.text('pin_error');
                           });
@@ -714,9 +869,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         final now = DateTime.now().millisecondsSinceEpoch;
                         List<HistoricalPassword> history = [];
 
-                        if (isEditing) {
+                        if (isEditing && selectedType == 'logins') {
                           history = List<HistoricalPassword>.from(existingEntry.history);
-                          if (existingEntry.password != password) {
+                          if (existingEntry.password != password && password.isNotEmpty) {
                             history.insert(
                               0,
                               HistoricalPassword(
@@ -733,8 +888,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: title,
                           username: username,
                           password: password,
-                          category: catText.isEmpty ? 'General' : catText,
+                          category: catText.isEmpty
+                              ? (selectedType == 'cards'
+                                  ? 'Tarjetas'
+                                  : (selectedType == 'notes' ? 'Notas' : 'General'))
+                              : catText,
                           notes: notesController.text.trim(),
+                          entryType: selectedType,
+                          cardExpiry: cardExpiryController.text.trim(),
+                          cardCvv: cardCvvController.text.trim(),
+                          cardPin: cardPinController.text.trim(),
                           isFavorite: existingEntry?.isFavorite ?? false,
                           updatedAt: now,
                           history: history,
@@ -770,6 +933,44 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
       },
+    );
+  }
+
+  Widget _buildTypeSegmentChip({
+    required String id,
+    required String label,
+    required IconData icon,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFF6C63FF) : const Color(0xFF10141D),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: isSelected ? const Color(0xFF6C63FF) : Colors.white24),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 20, color: isSelected ? Colors.white : Colors.white60),
+            const SizedBox(height: 4),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.white70,
+                  fontSize: 11,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -849,7 +1050,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final q = _searchQuery.toLowerCase();
       return e.title.toLowerCase().contains(q) ||
           e.username.toLowerCase().contains(q) ||
-          e.category.toLowerCase().contains(q);
+          e.category.toLowerCase().contains(q) ||
+          e.notes.toLowerCase().contains(q);
     }).toList();
 
     searchFiltered.sort((a, b) {
@@ -1026,6 +1228,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: categories.map((cat) {
                     final isSelected = cat.toLowerCase() == _selectedCategory.toLowerCase();
 
+                    IconData catIcon = Icons.folder_outlined;
+                    Color catIconColor = isSelected ? const Color(0xFF6C63FF) : Colors.white54;
+
+                    if (cat == allCatText) {
+                      catIcon = Icons.folder_copy_outlined;
+                    } else if (cat == favCatText) {
+                      catIcon = Icons.star;
+                      catIconColor = isSelected ? Colors.amber : Colors.amber.withAlpha(180);
+                    } else if (cat == 'Tarjetas') {
+                      catIcon = Icons.credit_card;
+                      catIconColor = isSelected ? Colors.amberAccent : Colors.amberAccent.withAlpha(180);
+                    } else if (cat == 'Notas') {
+                      catIcon = Icons.note_alt_outlined;
+                      catIconColor = isSelected ? Colors.tealAccent : Colors.tealAccent.withAlpha(180);
+                    }
+
                     return GestureDetector(
                       onTap: () => setState(() => _selectedCategory = cat),
                       child: AnimatedContainer(
@@ -1054,13 +1272,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Icon(
-                              cat == allCatText
-                                  ? Icons.folder_copy_outlined
-                                  : (cat == favCatText ? Icons.star : Icons.folder_outlined),
+                              catIcon,
                               size: 16,
-                              color: isSelected
-                                  ? (cat == favCatText ? Colors.amber : const Color(0xFF6C63FF))
-                                  : (cat == favCatText ? Colors.amber.withAlpha(180) : Colors.white54),
+                              color: catIconColor,
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -1116,6 +1330,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           final item = searchFiltered[index];
                           final isVisible = _visiblePasswordIds.contains(item.id);
+                          final isCard = item.entryType == 'cards';
+                          final isNote = item.entryType == 'notes';
 
                           return Container(
                             margin: const EdgeInsets.only(bottom: 10),
@@ -1132,21 +1348,28 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Fila Superior: Avatar + Título y Usuario Espaciosos + Estrella Favorito
+                                  // Nivel 1: Encabezado (Avatar según tipo + Título + Usuario/Titular + ⭐ Favorito)
                                   Row(
                                     children: [
                                       CircleAvatar(
                                         radius: 18,
-                                        backgroundColor: item.isFavorite
+                                        backgroundColor: isCard
                                             ? Colors.amber.withAlpha(51)
-                                            : const Color(0xFF6C63FF).withAlpha(51),
-                                        child: Text(
-                                          item.title.isNotEmpty ? item.title[0].toUpperCase() : '?',
-                                          style: TextStyle(
-                                            color: item.isFavorite ? Colors.amber : const Color(0xFF6C63FF),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                          ),
+                                            : (isNote
+                                                ? Colors.teal.withAlpha(51)
+                                                : (item.isFavorite
+                                                    ? Colors.amber.withAlpha(51)
+                                                    : const Color(0xFF6C63FF).withAlpha(51))),
+                                        child: Icon(
+                                          isCard
+                                              ? Icons.credit_card
+                                              : (isNote ? Icons.note_alt_outlined : Icons.vpn_key_outlined),
+                                          size: 18,
+                                          color: isCard
+                                              ? Colors.amberAccent
+                                              : (isNote
+                                                  ? Colors.tealAccent
+                                                  : (item.isFavorite ? Colors.amber : const Color(0xFF6C63FF))),
                                         ),
                                       ),
                                       const SizedBox(width: 12),
@@ -1185,47 +1408,127 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Divider(color: Colors.white12, height: 14),
+                                  const Divider(color: Colors.white12, height: 12),
 
-                                  // Nivel 2: Fila Dedicada de Contraseña + Ver y Copiar
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          isVisible ? item.password : '••••••••••••',
-                                          style: TextStyle(
-                                            color: isVisible ? const Color(0xFF80EE99) : Colors.white70,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: isVisible ? 1 : 2,
+                                  // Nivel 2: Fila Dedicada de Contenido (Contraseña, Tarjeta o Nota)
+                                  if (isNote) ...[
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            isVisible
+                                                ? (item.notes.isNotEmpty ? item.notes : 'Sin contenido')
+                                                : '••••••••••••••••••••',
+                                            maxLines: isVisible ? 3 : 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: isVisible ? Colors.tealAccent : Colors.white70,
+                                              fontSize: 14,
+                                              letterSpacing: isVisible ? 0 : 2,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                                          color: Colors.white54,
-                                          size: 20,
+                                        IconButton(
+                                          icon: Icon(
+                                            isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                            color: Colors.white54,
+                                            size: 20,
+                                          ),
+                                          onPressed: () => _togglePasswordVisibility(item.id),
                                         ),
-                                        onPressed: () => _togglePasswordVisibility(item.id),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
-                                        tooltip: _loc.text('copy'),
-                                        onPressed: () => _copyToClipboard(item.password, _loc.text('password_label')),
-                                      ),
-                                    ],
-                                  ),
+                                        IconButton(
+                                          icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
+                                          tooltip: _loc.text('copy'),
+                                          onPressed: () => _copyToClipboard(item.notes, _loc.text('type_note')),
+                                        ),
+                                      ],
+                                    ),
+                                  ] else if (isCard) ...[
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                isVisible
+                                                    ? item.password
+                                                    : (item.password.length > 4
+                                                        ? '•••• •••• •••• ${item.password.substring(item.password.length - 4)}'
+                                                        : '•••• •••• •••• ••••'),
+                                                style: TextStyle(
+                                                  color: isVisible ? Colors.amberAccent : Colors.white70,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                  letterSpacing: 2,
+                                                ),
+                                              ),
+                                              if (isVisible && (item.cardExpiry.isNotEmpty || item.cardCvv.isNotEmpty || item.cardPin.isNotEmpty)) ...[
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                  '${_loc.text("card_expiry")}: ${item.cardExpiry}  |  CVV: ${item.cardCvv}  |  PIN: ${item.cardPin}',
+                                                  style: const TextStyle(color: Colors.amberAccent, fontSize: 12),
+                                                ),
+                                              ],
+                                            ],
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                            color: Colors.white54,
+                                            size: 20,
+                                          ),
+                                          onPressed: () => _togglePasswordVisibility(item.id),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
+                                          tooltip: _loc.text('copy'),
+                                          onPressed: () => _copyToClipboard(item.password, _loc.text('card_number')),
+                                        ),
+                                      ],
+                                    ),
+                                  ] else ...[
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            isVisible ? item.password : '••••••••••••',
+                                            style: TextStyle(
+                                              color: isVisible ? const Color(0xFF80EE99) : Colors.white70,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              letterSpacing: isVisible ? 1 : 2,
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                            color: Colors.white54,
+                                            size: 20,
+                                          ),
+                                          onPressed: () => _togglePasswordVisibility(item.id),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
+                                          tooltip: _loc.text('copy'),
+                                          onPressed: () => _copyToClipboard(item.password, _loc.text('password_label')),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
 
                                   // Nivel 3: Barra de Herramientas de Gestión (Historial, Editar, Eliminar)
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
-                                        tooltip: _loc.text('history_title'),
-                                        onPressed: () => _showHistoryBottomSheet(item),
-                                      ),
+                                      if (!isCard && !isNote)
+                                        IconButton(
+                                          icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
+                                          tooltip: _loc.text('history_title'),
+                                          onPressed: () => _showHistoryBottomSheet(item),
+                                        ),
                                       IconButton(
                                         icon: const Icon(Icons.edit_outlined, color: Colors.white54, size: 18),
                                         onPressed: () => _showAddOrEditDialog(item),

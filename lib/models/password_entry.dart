@@ -31,6 +31,10 @@ class PasswordEntry {
   final String password;
   final String category;
   final String notes;
+  final String entryType; // 'logins', 'cards', 'notes'
+  final String cardExpiry;
+  final String cardCvv;
+  final String cardPin;
   final bool isFavorite;
   final int updatedAt;
   final List<HistoricalPassword> history;
@@ -42,6 +46,10 @@ class PasswordEntry {
     required this.password,
     this.category = 'General',
     this.notes = '',
+    this.entryType = 'logins',
+    this.cardExpiry = '',
+    this.cardCvv = '',
+    this.cardPin = '',
     this.isFavorite = false,
     int? updatedAt,
     List<HistoricalPassword>? history,
@@ -55,6 +63,10 @@ class PasswordEntry {
     String? password,
     String? category,
     String? notes,
+    String? entryType,
+    String? cardExpiry,
+    String? cardCvv,
+    String? cardPin,
     bool? isFavorite,
     int? updatedAt,
     List<HistoricalPassword>? history,
@@ -66,6 +78,10 @@ class PasswordEntry {
       password: password ?? this.password,
       category: category ?? this.category,
       notes: notes ?? this.notes,
+      entryType: entryType ?? this.entryType,
+      cardExpiry: cardExpiry ?? this.cardExpiry,
+      cardCvv: cardCvv ?? this.cardCvv,
+      cardPin: cardPin ?? this.cardPin,
       isFavorite: isFavorite ?? this.isFavorite,
       updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
       history: history ?? List.from(this.history),
@@ -80,6 +96,10 @@ class PasswordEntry {
       'password': password,
       'category': category,
       'notes': notes,
+      'entryType': entryType,
+      'cardExpiry': cardExpiry,
+      'cardCvv': cardCvv,
+      'cardPin': cardPin,
       'isFavorite': isFavorite,
       'updatedAt': updatedAt,
       'history': history.map((e) => e.toJson()).toList(),
@@ -99,6 +119,10 @@ class PasswordEntry {
       password: json['password'] ?? '',
       category: json['category'] ?? 'General',
       notes: json['notes'] ?? '',
+      entryType: json['entryType'] ?? 'logins',
+      cardExpiry: json['cardExpiry'] ?? '',
+      cardCvv: json['cardCvv'] ?? '',
+      cardPin: json['cardPin'] ?? '',
       isFavorite: json['isFavorite'] ?? false,
       updatedAt: json['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
       history: historyList,
