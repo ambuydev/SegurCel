@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
@@ -242,9 +243,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   _loc.text('privacy_policy'),
                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
-                  const url = 'https://segurcel-45c92.web.app/privacy.html';
-                  _copyToClipboard(url, _loc.text('privacy_policy'));
+                onPressed: () async {
+                  final uri = Uri.parse('https://segurcel-45c92.web.app/privacy.html');
+                  try {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  } catch (_) {
+                    _copyToClipboard(uri.toString(), _loc.text('privacy_policy'));
+                  }
                 },
               ),
             ],

@@ -22,6 +22,31 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border: 1px solid #6C63FF;
         }
+        .lang-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2D3748;
+        }
+        .lang-btn {
+            background-color: #10141D;
+            color: #E2E8F0;
+            border: 1px solid #4A5568;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background-color: #6C63FF;
+            color: #FFFFFF;
+            border-color: #6C63FF;
+            font-weight: bold;
+        }
         h1 {
             color: #6C63FF;
             text-align: center;
@@ -65,40 +90,169 @@
 </head>
 <body>
     <div class="container">
-        <h1>SegurCel</h1>
-        <div class="subtitle">Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge</div>
+        <!-- Barra de Idiomas -->
+        <div class="lang-bar">
+            <button class="lang-btn active" onclick="setLang('es')">🇪🇸 Español</button>
+            <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+            <button class="lang-btn" onclick="setLang('pt')">🇧🇷 Português</button>
+            <button class="lang-btn" onclick="setLang('zh')">🇨🇳 中文</button>
+            <button class="lang-btn" onclick="setLang('fr')">🇫🇷 Français</button>
+            <button class="lang-btn" onclick="setLang('hi')">🇮🇳 हिन्दी</button>
+        </div>
 
-        <div class="highlight">
+        <h1>SegurCel</h1>
+        <div class="subtitle" id="subtitle">Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge</div>
+
+        <div class="highlight" id="summary">
             <strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestre ni podemos leer tus contraseñas en ningún caso.
         </div>
 
-        <h2>1. Información que Recopilamos</h2>
-        <p>Para brindarte la funcionalidad de sincronización multidispositivo y autenticación segura, recopilamos la siguiente información técnica mínima:</p>
-        <ul>
-            <li><strong>Dirección de Correo Electrónico:</strong> Utilizada únicamente para identificar tu cuenta de usuario e iniciar sesión en SegurCel Cloud.</li>
-            <li><strong>Datos Cifrados de la Bóveda:</strong> Todas tus contraseñas, nombres de usuario, números de tarjeta y notas se almacenan en forma de bloques de texto cifrado ilegible mediante AES-256. Ningún empleado ni servidor puede descifrar estos datos.</li>
-        </ul>
+        <h2 id="h2_1">1. Información que Recopilamos</h2>
+        <div id="content_1">
+            <p>Para brindarte la funcionalidad de sincronización multidispositivo y autenticación segura, recopilamos la siguiente información técnica mínima:</p>
+            <ul>
+                <li><strong>Dirección de Correo Electrónico:</strong> Utilizada únicamente para identificar tu cuenta de usuario e iniciar sesión en SegurCel Cloud.</li>
+                <li><strong>Datos Cifrados de la Bóveda:</strong> Todas tus contraseñas, nombres de usuario, números de tarjeta y notas se almacenan en forma de bloques de texto cifrado ilegible mediante AES-256. Ningún empleado ni servidor puede descifrar estos datos.</li>
+            </ul>
+        </div>
 
-        <h2>2. Arquitectura de Cifrado y Seguridad</h2>
-        <p>SegurCel implementa los más altos estándares de criptografía moderna:</p>
-        <ul>
-            <li><strong>Cifrado Simétrico AES-256-GCM:</strong> La clave de cifrado se deriva localmente en tu dispositivo mediante el protocolo <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</li>
-            <li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono (Keystore/Keychain).</li>
-            <li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente de tu dispositivo para prevenir ataques por fuerza bruta.</li>
-        </ul>
+        <h2 id="h2_2">2. Arquitectura de Cifrado y Seguridad</h2>
+        <div id="content_2">
+            <p>SegurCel implementa los más altos estándares de criptografía moderna:</p>
+            <ul>
+                <li><strong>Cifrado Simétrico AES-256-GCM:</strong> La clave de cifrado se deriva localmente en tu dispositivo mediante el protocolo <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</li>
+                <li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono (Keystore/Keychain).</li>
+                <li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente de tu dispositivo para prevenir ataques por fuerza bruta.</li>
+            </ul>
+        </div>
 
-        <h2>3. Uso de Datos y No Comercialización</h2>
-        <p>SegurCel <strong>NUNCA</strong> vende, alquila ni comparte la información de los usuarios con terceros ni con empresas de publicidad. No rastreamos tu navegación web ni incluimos SDKs de rastreo comercial.</p>
+        <h2 id="h2_3">3. Uso de Datos y No Comercialización</h2>
+        <div id="content_3">
+            <p>SegurCel <strong>NUNCA</strong> vende, alquila ni comparte la información de los usuarios con terceros ni con empresas de publicidad. No rastreamos tu navegación web ni incluimos SDKs de rastreo comercial.</p>
+        </div>
 
-        <h2>4. Derechos de Eliminación de Datos</h2>
-        <p>El usuario tiene control total sobre su información. Puedes eliminar tu bóveda local o cerrar tu sesión en cualquier momento. Si solicitas la eliminación de tu cuenta, todos los registros cifrados en la nube de Firebase se eliminarán de forma irreversible.</p>
+        <h2 id="h2_4">4. Derechos de Eliminación de Datos</h2>
+        <div id="content_4">
+            <p>El usuario tiene control total sobre su información. Puedes eliminar tu bóveda local o cerrar tu sesión en cualquier momento. Si solicitas la eliminación de tu cuenta, todos los registros cifrados en la nube de Firebase se eliminarán de forma irreversible.</p>
+        </div>
 
-        <h2>5. Contacto y Soporte</h2>
-        <p>Si tienes preguntas sobre nuestra Política de Privacidad o la arquitectura de seguridad de SegurCel, puedes contactarnos a través de nuestra plataforma oficial o soporte por correo electrónico.</p>
+        <h2 id="h2_5">5. Contacto y Soporte</h2>
+        <div id="content_5">
+            <p>Si tienes preguntas sobre nuestra Política de Privacidad o la arquitectura de seguridad de SegurCel, puedes contactarnos a través de nuestra plataforma oficial o soporte por correo electrónico.</p>
+        </div>
 
         <div class="footer">
             &copy; 2026 SegurCel. Todos los derechos reservados.
         </div>
     </div>
+
+    <script>
+        const texts = {
+            es: {
+                subtitle: "Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge",
+                summary: "<strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestre ni podemos leer tus contraseñas en ningún caso.",
+                h2_1: "1. Información que Recopilamos",
+                content_1: "<p>Para brindarte la funcionalidad de sincronización multidispositivo y autenticación segura, recopilamos la siguiente información técnica mínima:</p><ul><li><strong>Dirección de Correo Electrónico:</strong> Utilizada únicamente para identificar tu cuenta de usuario e iniciar sesión en SegurCel Cloud.</li><li><strong>Datos Cifrados de la Bóveda:</strong> Todas tus contraseñas, nombres de usuario, números de tarjeta y notas se almacenan en forma de bloques de texto cifrado ilegible mediante AES-256. Ningún empleado ni servidor puede descifrar estos datos.</li></ul>",
+                h2_2: "2. Arquitectura de Cifrado y Seguridad",
+                content_2: "<p>SegurCel implementa los más altos estándares de criptografía moderna:</p><ul><li><strong>Cifrado Simétrico AES-256-GCM:</strong> La clave de cifrado se deriva localmente en tu dispositivo mediante el protocolo <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</li><li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono.</li><li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente para prevenir ataques por fuerza bruta.</li></ul>",
+                h2_3: "3. Uso de Datos y No Comercialización",
+                content_3: "<p>SegurCel <strong>NUNCA</strong> vende, alquila ni comparte la información de los usuarios con terceros ni con empresas de publicidad. No rastreamos tu navegación web ni incluimos SDKs de rastreo comercial.</p>",
+                h2_4: "4. Derechos de Eliminación de Datos",
+                content_4: "<p>El usuario tiene control total sobre su información. Puedes eliminar tu bóveda local o cerrar tu sesión en cualquier momento. Si solicitas la eliminación de tu cuenta, todos los registros cifrados en la nube de Firebase se eliminarán de forma irreversible.</p>",
+                h2_5: "5. Contacto y Soporte",
+                content_5: "<p>Si tienes preguntas sobre nuestra Política de Privacidad o la arquitectura de seguridad de SegurCel, puedes contactarnos a través de nuestra plataforma oficial o soporte por correo electrónico.</p>"
+            },
+            en: {
+                subtitle: "Privacy Policy & Zero-Knowledge Security Architecture",
+                summary: "<strong>Privacy Summary:</strong> At SegurCel we enforce the <strong>Zero-Knowledge</strong> principle. Your passwords, cards, and notes are encrypted on your own device using <strong>AES-256-GCM</strong> before being sent to the cloud. We never have access to your master key nor can we read your passwords under any circumstances.",
+                h2_1: "1. Information We Collect",
+                content_1: "<p>To provide multi-device sync and secure authentication, we collect minimal technical data:</p><ul><li><strong>Email Address:</strong> Used solely to identify your user account and log in to SegurCel Cloud.</li><li><strong>Encrypted Vault Data:</strong> All your passwords, usernames, card numbers, and notes are stored as encrypted AES-256 ciphertext. No employee or server can decrypt this data.</li></ul>",
+                h2_2: "2. Encryption & Security Architecture",
+                content_2: "<p>SegurCel implements industry-leading modern cryptography:</p><ul><li><strong>AES-256-GCM Symmetric Encryption:</strong> Derived locally on your device via <strong>PBKDF2WithHmacSHA256</strong> with 65,536 iterations.</li><li><strong>PIN & Biometric Protection:</strong> Your 4-digit PIN and fingerprint protect the decryption key in secure hardware.</li><li><strong>Local Self-Destruction Protocol:</strong> After 3 consecutive wrong PIN attempts, local vault data is permanently wiped to prevent brute-force attacks.</li></ul>",
+                h2_3: "3. Data Usage & No Commercialization",
+                content_3: "<p>SegurCel <strong>NEVER</strong> sells, rents, or shares user data with third parties or advertisers. We do not track your web browsing nor include commercial tracking SDKs.</p>",
+                h2_4: "4. Data Deletion Rights",
+                content_4: "<p>Users maintain full control over their data. You can delete your local vault or log out at any time. Account deletion irreversibly purges all cloud records from Firebase.</p>",
+                h2_5: "5. Contact & Support",
+                content_5: "<p>If you have questions regarding our Privacy Policy or SegurCel's security architecture, contact us via our official platform or email support.</p>"
+            },
+            pt: {
+                subtitle: "Política de Privacidade e Arquitetura de Segurança Zero-Knowledge",
+                summary: "<strong>Resumo de Privacidade:</strong> No SegurCel aplicamos o princípio de <strong>Zero-Knowledge (Conhecimento Zero)</strong>. Suas senhas, cartões e notas são criptografados no seu próprio dispositivo usando <strong>AES-256-GCM</strong> antes de serem enviados para a nuvem. Não temos acesso à sua chave mestre e não podemos ler suas senhas em nenhuma circunstância.",
+                h2_1: "1. Informações que Coletamos",
+                content_1: "<p>Para fornecer sincronização multidispositivo e autenticação segura, coletamos dados técnicos mínimos:</p><ul><li><strong>Endereço de E-mail:</strong> Usado exclusivamente para identificar sua conta e fazer login no SegurCel Cloud.</li><li><strong>Dados Criptografados do Cofre:</strong> Todas as suas senhas, usuários, cartões e notas são armazenados em blocos criptografados ilegíveis via AES-256.</li></ul>",
+                h2_2: "2. Arquitetura de Criptografia e Segurança",
+                content_2: "<p>O SegurCel implementa padrões avançados de criptografia moderna:</p><ul><li><strong>Criptografia AES-256-GCM:</strong> Chave derivada localmente via <strong>PBKDF2WithHmacSHA256</strong> com 65.536 iterações.</li><li><strong>PIN e Biometria:</strong> PIN de 4 dígitos e biometria protegem a chave no hardware seguro.</li><li><strong>Autodestruição Local:</strong> Após 3 tentativas incorretas de PIN, os dados locais são eliminados permanentemente.</li></ul>",
+                h2_3: "3. Uso de Dados e Não Comercialização",
+                content_3: "<p>O SegurCel <strong>NUNCA</strong> vende, aluga ou compartilha informações de usuários com terceiros ou anunciantes.</p>",
+                h2_4: "4. Direitos de Exclusão de Dados",
+                content_4: "<p>Você tem controle total sobre seus dados. A exclusão de conta remove irreversivelmente todos os registros da nuvem Firebase.</p>",
+                h2_5: "5. Contato e Suporte",
+                content_5: "<p>Entre em contato conosco através de nossa plataforma oficial ou suporte por e-mail para esclarecer dúvidas.</p>"
+            },
+            zh: {
+                subtitle: "隐私政策与零知识 (Zero-Knowledge) 安全架构",
+                summary: "<strong>隐私摘要：</strong>SegurCel 恪守<strong>零知识 (Zero-Knowledge)</strong> 原则。您的密码、银行卡和笔记在发送至云端前，已在您的设备上通过 <strong>AES-256-GCM</strong> 算法完成加密。我们在任何情况下都无法解密或读取您的数据。",
+                h2_1: "1. 我们收集的信息",
+                content_1: "<p>为了提供多设备同步和安全身份验证，我们仅收集极少的必要技术信息：</p><ul><li><strong>电子邮件地址：</strong>仅用于识别您的用户账户并登录 SegurCel Cloud。</li><li><strong>加密保险库数据：</strong>您的所有密码、用户名、卡号和笔记均以 AES-256 密文形式存储。任何员工或服务器均无法解密。</li></ul>",
+                h2_2: "2. 加密与安全架构",
+                content_2: "<p>SegurCel 采用业界领先的现代密码学标准：</p><ul><li><strong>AES-256-GCM 对称加密：</strong>加密密钥通过 <strong>PBKDF2WithHmacSHA256</strong> 协议在本地导出（65,536 次迭代）。</li><li><strong>PIN 码与指纹保护：</strong>4 位 PIN 码和指纹保护存储在手机安全硬件中的解密密钥。</li><li><strong>本地自毁协议：</strong>连续 3 次输入错误 PIN 码后，本地保险库数据将被永久擦除。</li></ul>",
+                h2_3: "3. 数据使用与禁止商业化",
+                content_3: "<p>SegurCel <strong>绝不</strong>向第三方或广告商出售、出租或共享用户数据。</p>",
+                h2_4: "4. 数据删除权利",
+                content_4: "<p>用户拥有对数据的完全控制权。删除账户将不可逆地清除 Firebase 云端的所有记录。</p>",
+                h2_5: "5. 联系与支持",
+                content_5: "<p>如果您对我们的隐私政策有任何疑问，请通过官方平台或电子邮件与我们联系。</p>"
+            },
+            fr: {
+                subtitle: "Politique de Confidentialité et Architecture de Sécurité Zero-Knowledge",
+                summary: "<strong>Résumé de Confidentialité :</strong> Chez SegurCel, nous appliquons le principe du <strong>Zero-Knowledge (Connaissance Nulle)</strong>. Vos mots de passe, cartes et notes sont chiffrés sur votre appareil via l'algorithme <strong>AES-256-GCM</strong> avant d'être envoyés sur le cloud. Nous n'avons jamais accès à votre clé maître.",
+                h2_1: "1. Informations que Nous Collectons",
+                content_1: "<p>Afin d'assurer la synchronisation multi-appareils, nous collectons des données techniques minimales :</p><ul><li><strong>Adresse E-mail :</strong> Utilisée uniquement pour identifier votre compte et vous connecter à SegurCel Cloud.</li><li><strong>Données Chiffrées du Coffre :</strong> Tous vos mots de passe, identifiants et cartes sont stockés sous forme de texte chiffré AES-256.</li></ul>",
+                h2_2: "2. Architecture de Chiffrement et Sécurité",
+                content_2: "<p>SegurCel met en œuvre les normes cryptographiques les plus élevées :</p><ul><li><strong>Chiffrement AES-256-GCM :</strong> Clé dérivée localement via <strong>PBKDF2WithHmacSHA256</strong> avec 65 536 itérations.</li><li><strong>Protection par PIN et Empreinte :</strong> PIN à 4 chiffres et empreinte digitale protègent la clé dans le matériel sécurisé.</li><li><strong>Autodestruction Locale :</strong> Après 3 tentatives de PIN incorrectes, les données locales sont définitivement effacées.</li></ul>",
+                h2_3: "3. Utilisation des Données et Non-Commercialisation",
+                content_3: "<p>SegurCel ne vend, ne loue et ne partage <strong>JAMAIS</strong> les données des utilisateurs avec des tiers.</p>",
+                h2_4: "4. Droits de Suppression des Données",
+                content_4: "<p>Vous conservez un contrôle total sur vos données. La suppression de votre compte efface définitivement tous les enregistrements cloud.</p>",
+                h2_5: "5. Contact et Support",
+                content_5: "<p>Pour toute question concernant notre politique de confidentialité, contactez-nous via notre plateforme officielle.</p>"
+            },
+            hi: {
+                subtitle: "गोपनीयता नीति और Zero-Knowledge सुरक्षा वास्तुकला",
+                summary: "<strong>गोपनीयता सारांश:</strong> SegurCel में हम <strong>Zero-Knowledge (शून्य-ज्ञान)</strong> सिद्धांत लागू करते हैं। आपके पासवर्ड, कार्ड और नोट्स क्लाउड पर भेजने से पहले आपके डिवाइस पर <strong>AES-256-GCM</strong> एल्गोरिदम द्वारा एन्क्रिप्ट किए जाते हैं।",
+                h2_1: "1. जानकारी जो हम एकत्र करते हैं",
+                content_1: "<p>मल्टी-डिवाइस सिंक प्रदान करने के लिए हम न्यूनतम तकनीकी जानकारी एकत्र करते हैं:</p><ul><li><strong>ईमेल पता:</strong> केवल आपके खाते की पहचान करने और SegurCel क्लाउड में साइन इन करने के लिए।</li><li><strong>एन्क्रिप्टेड वॉल्ट डेटा:</strong> आपके सभी पासवर्ड, कार्ड नंबर और नोट्स AES-256 द्वारा एन्क्रिप्टेड टेक्स्ट के रूप में संग्रहीत होते हैं।</li></ul>",
+                h2_2: "2. एन्क्रिप्शन और सुरक्षा वास्तुकला",
+                content_2: "<p>SegurCel आधुनिक क्रिप्टोग्राफी मानकों को लागू करता है:</p><ul><li><strong>AES-256-GCM एन्क्रिप्शन:</strong> 65,536 पुनरावृत्तियों के साथ <strong>PBKDF2WithHmacSHA256</strong> द्वारा स्थानीय रूप से कुंजी बनाई जाती है।</li><li><strong>पिन और फिंगरप्रिंट सुरक्षा:</strong> 4-अंकों का पिन और फिंगरप्रिंट सुरक्षित हार्डवेयर में कुंजी की रक्षा करते हैं।</li><li><strong>स्थानीय स्वतः नष्ट प्रोटोकॉल:</strong> 3 गलत पिन प्रयासों के बाद, स्थानीय वॉल्ट डेटा स्थायी रूप से हटा दिया जाता है।</li></ul>",
+                h2_3: "3. डेटा उपयोग और गैर-व्यावसायीकरण",
+                content_3: "<p>SegurCel कभी भी उपयोगकर्ता डेटा को तीसरे पक्ष या विज्ञापनदाताओं के साथ नहीं बेचता या साझा करता है।</p>",
+                h2_4: "4. डेटा हटाने के अधिकार",
+                content_4: "<p>खाता हटाने से Firebase क्लाउड से सभी रिकॉर्ड अपरिवर्तनीय रूप से हटा दिए जाते हैं।</p>",
+                h2_5: "5. संपर्क और सहायता",
+                content_5: "<p>किसी भी प्रश्न के लिए हमारे आधिकारिक मंच या ईमेल सहायता के माध्यम से हमसे संपर्क करें।</p>"
+            }
+        };
+
+        function setLang(lang) {
+            const data = texts[lang] || texts.es;
+            document.getElementById('subtitle').innerHTML = data.subtitle;
+            document.getElementById('summary').innerHTML = data.summary;
+            document.getElementById('h2_1').innerHTML = data.h2_1;
+            document.getElementById('content_1').innerHTML = data.content_1;
+            document.getElementById('h2_2').innerHTML = data.h2_2;
+            document.getElementById('content_2').innerHTML = data.content_2;
+            document.getElementById('h2_3').innerHTML = data.h2_3;
+            document.getElementById('content_3').innerHTML = data.content_3;
+            document.getElementById('h2_4').innerHTML = data.h2_4;
+            document.getElementById('content_4').innerHTML = data.content_4;
+            document.getElementById('h2_5').innerHTML = data.h2_5;
+            document.getElementById('content_5').innerHTML = data.content_5;
+
+            const btns = document.querySelectorAll('.lang-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
