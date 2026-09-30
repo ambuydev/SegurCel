@@ -1187,7 +1187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   const Divider(color: Colors.white12, height: 14),
 
-                                  // Fila Inferior: Contraseña + Botones de Acción (Ver, Copiar, Historial, Editar, Eliminar)
+                                  // Nivel 2: Fila Dedicada de Contraseña + Ver y Copiar
                                   Row(
                                     children: [
                                       Expanded(
@@ -1195,7 +1195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           isVisible ? item.password : '••••••••••••',
                                           style: TextStyle(
                                             color: isVisible ? const Color(0xFF80EE99) : Colors.white70,
-                                            fontSize: 14,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.w600,
                                             letterSpacing: isVisible ? 1 : 2,
                                           ),
@@ -1205,15 +1205,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                         icon: Icon(
                                           isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                                           color: Colors.white54,
-                                          size: 18,
+                                          size: 20,
                                         ),
                                         onPressed: () => _togglePasswordVisibility(item.id),
                                       ),
                                       IconButton(
-                                        icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 18),
+                                        icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
                                         tooltip: _loc.text('copy'),
                                         onPressed: () => _copyToClipboard(item.password, _loc.text('password_label')),
                                       ),
+                                    ],
+                                  ),
+
+                                  // Nivel 3: Barra de Herramientas de Gestión (Historial, Editar, Eliminar)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
                                       IconButton(
                                         icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
                                         tooltip: _loc.text('history_title'),
