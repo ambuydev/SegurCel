@@ -863,7 +863,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1E2538),
         elevation: 2,
-        title: Text(_loc.text('vault_title'), style: const TextStyle(fontWeight: FontWeight.bold)),
+        titleSpacing: 12,
+        title: Text(
+          _loc.text('app_title'),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
         actions: [
           _buildLanguagePicker(),
           IconButton(
@@ -1128,6 +1132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // Fila Superior: Avatar + Título y Usuario Espaciosos + Estrella Favorito
                                   Row(
                                     children: [
                                       CircleAvatar(
@@ -1151,15 +1156,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Text(
                                               item.title,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                                                fontSize: 16,
                                               ),
                                             ),
                                             if (item.username.isNotEmpty)
                                               Text(
                                                 item.username,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(color: Colors.white60, fontSize: 12),
                                               ),
                                           ],
@@ -1169,27 +1178,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         icon: Icon(
                                           item.isFavorite ? Icons.star : Icons.star_border,
                                           color: item.isFavorite ? Colors.amber : Colors.white38,
-                                          size: 20,
+                                          size: 22,
                                         ),
                                         tooltip: 'Favorito',
                                         onPressed: () => _toggleFavorite(item),
                                       ),
-                                      IconButton(
-                                        icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
-                                        tooltip: _loc.text('history_title'),
-                                        onPressed: () => _showHistoryBottomSheet(item),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.edit_outlined, color: Colors.white54, size: 18),
-                                        onPressed: () => _showAddOrEditDialog(item),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 18),
-                                        onPressed: () => _deleteEntry(item),
-                                      ),
                                     ],
                                   ),
                                   const Divider(color: Colors.white12, height: 14),
+
+                                  // Fila Inferior: Contraseña + Botones de Acción (Ver, Copiar, Historial, Editar, Eliminar)
                                   Row(
                                     children: [
                                       Expanded(
@@ -1215,6 +1213,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                         icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 18),
                                         tooltip: _loc.text('copy'),
                                         onPressed: () => _copyToClipboard(item.password, _loc.text('password_label')),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
+                                        tooltip: _loc.text('history_title'),
+                                        onPressed: () => _showHistoryBottomSheet(item),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.edit_outlined, color: Colors.white54, size: 18),
+                                        onPressed: () => _showAddOrEditDialog(item),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 18),
+                                        onPressed: () => _deleteEntry(item),
                                       ),
                                     ],
                                   ),
