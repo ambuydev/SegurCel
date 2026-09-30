@@ -489,6 +489,53 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildLanguagePicker() {
+    final languages = [
+      {'code': 'es', 'name': '🇪🇸 Español'},
+      {'code': 'en', 'name': '🇺🇸 English'},
+      {'code': 'pt', 'name': '🇧🇷 Português'},
+      {'code': 'zh', 'name': '🇨🇳 中文'},
+      {'code': 'fr', 'name': '🇫🇷 Français'},
+      {'code': 'hi', 'name': '🇮🇳 हिन्दी'},
+    ];
+
+    return PopupMenuButton<String>(
+      icon: const Icon(Icons.language, color: Colors.amberAccent, size: 24),
+      tooltip: _loc.text('language'),
+      color: const Color(0xFF1E2538),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      onSelected: (String code) async {
+        await _loc.changeLanguage(code);
+        if (mounted) {
+          setState(() {});
+        }
+      },
+      itemBuilder: (BuildContext context) {
+        return languages.map((lang) {
+          final isSelected = _loc.currentLanguage == lang['code'];
+          return PopupMenuItem<String>(
+            value: lang['code']!,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  lang['name']!,
+                  style: TextStyle(
+                    color: isSelected ? Colors.amberAccent : Colors.white,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontSize: 14,
+                  ),
+                ),
+                if (isSelected)
+                  const Icon(Icons.check, color: Colors.amberAccent, size: 18),
+              ],
+            ),
+          );
+        }).toList();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final allCatText = _loc.text('all_categories');
@@ -519,6 +566,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 2,
         title: Text(_loc.text('vault_title'), style: const TextStyle(fontWeight: FontWeight.bold)),
         actions: [
+          _buildLanguagePicker(),
           IconButton(
             icon: const Icon(Icons.settings_outlined, color: Colors.white70),
             tooltip: _loc.text('settings'),

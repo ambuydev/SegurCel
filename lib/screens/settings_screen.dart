@@ -245,25 +245,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Sección de Idioma
-              _buildSectionCard(
-                title: _loc.text('language'),
-                icon: Icons.language,
-                iconColor: Colors.amberAccent,
-                child: Column(
-                  children: [
-                    _buildLanguageOption('es', '🇪🇸 Español'),
-                    _buildLanguageOption('en', '🇺🇸 English'),
-                    _buildLanguageOption('pt', '🇧🇷 Português'),
-                    _buildLanguageOption('zh', '🇨🇳 中文 (简体)'),
-                    _buildLanguageOption('fr', '🇫🇷 Français'),
-                    _buildLanguageOption('hi', '🇮🇳 हिन्दी / Hindi'),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
               // Sección Importar / Exportar Contraseñas
               _buildSectionCard(
                 title: _loc.text('import_export'),
@@ -528,35 +509,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLanguageOption(String code, String name) {
-    final isSelected = _loc.currentLanguage == code;
-
-    return InkWell(
-      onTap: () {
-        _loc.changeLanguage(code);
-        setState(() {});
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              name,
-              style: TextStyle(
-                color: isSelected ? Colors.amberAccent : Colors.white,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                fontSize: 15,
-              ),
-            ),
-            if (isSelected)
-              const Icon(Icons.check, color: Colors.amberAccent, size: 20),
-          ],
         ),
       ),
     );
