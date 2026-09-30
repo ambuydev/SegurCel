@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,7 @@ import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/password_health_service.dart';
+import '../services/totp_service.dart';
 import '../services/vault_service.dart';
 import 'login_screen.dart';
 import 'pin_screen.dart';
@@ -24,11 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
   String _searchQuery = '';
   late String _selectedCategory;
   final Set<String> _visiblePasswordIds = {};
+  Timer? _totpTimer;
 
   @override
   void initState() {
     super.initState();
     _selectedCategory = _loc.text('all_categories');
+    _totpTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _totpTimer?.cancel();
+    super.dispose();
   }
 
   List<String> get _availableCategories {
@@ -227,170 +239,170 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                  const SizedBox(height: 12),
+                    const SizedBox(height: 12),
 
-                  // Muestra de Contraseña Generada + Botones
-                  Container(
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF10141D),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF6C63FF)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            generatedPassword,
-                            style: const TextStyle(
-                              color: Color(0xFF80EE99),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
+                    // Muestra de Contraseña Generada + Botones
+                    Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF10141D),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFF6C63FF)),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              generatedPassword,
+                              style: const TextStyle(
+                                color: Color(0xFF80EE99),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              ),
                             ),
                           ),
+                          IconButton(
+                            icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
+                            tooltip: _loc.text('copy'),
+                            onPressed: () => _copyToClipboard(generatedPassword, _loc.text('password_label')),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.autorenew, color: Colors.amberAccent, size: 22),
+                            tooltip: _loc.text('generate_password'),
+                            onPressed: regenerate,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Slider de Longitud
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _loc.text('pass_length'),
+                          style: const TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
-                          tooltip: _loc.text('copy'),
-                          onPressed: () => _copyToClipboard(generatedPassword, _loc.text('password_label')),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.autorenew, color: Colors.amberAccent, size: 22),
-                          tooltip: _loc.text('generate_password'),
-                          onPressed: regenerate,
+                        Text(
+                          '${length.toInt()} caracteres',
+                          style: const TextStyle(color: Colors.amberAccent, fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Slider de Longitud
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _loc.text('pass_length'),
-                        style: const TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '${length.toInt()} caracteres',
-                        style: const TextStyle(color: Colors.amberAccent, fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Slider(
-                    value: length,
-                    min: 8,
-                    max: 64,
-                    divisions: 56,
-                    activeColor: const Color(0xFF6C63FF),
-                    inactiveColor: Colors.white12,
-                    label: '${length.toInt()}',
-                    onChanged: (val) {
-                      setModalState(() {
-                        length = val;
-                        generatedPassword = generate();
-                      });
-                    },
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Checkboxes de Opciones
-                  CheckboxListTile(
-                    title: Text(_loc.text('include_uppercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
-                    value: includeUpper,
-                    activeColor: const Color(0xFF6C63FF),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (val) {
-                      setModalState(() {
-                        includeUpper = val ?? true;
-                        generatedPassword = generate();
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    title: Text(_loc.text('include_lowercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
-                    value: includeLower,
-                    activeColor: const Color(0xFF6C63FF),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (val) {
-                      setModalState(() {
-                        includeLower = val ?? true;
-                        generatedPassword = generate();
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    title: Text(_loc.text('include_numbers'), style: const TextStyle(color: Colors.white, fontSize: 13)),
-                    value: includeNumbers,
-                    activeColor: const Color(0xFF6C63FF),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (val) {
-                      setModalState(() {
-                        includeNumbers = val ?? true;
-                        generatedPassword = generate();
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    title: Text(_loc.text('include_symbols'), style: const TextStyle(color: Colors.white, fontSize: 13)),
-                    value: includeSymbols,
-                    activeColor: const Color(0xFF6C63FF),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (val) {
-                      setModalState(() {
-                        includeSymbols = val ?? true;
-                        generatedPassword = generate();
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    title: Text(_loc.text('avoid_ambiguous'), style: const TextStyle(color: Colors.white70, fontSize: 12)),
-                    value: avoidAmbiguous,
-                    activeColor: const Color(0xFF6C63FF),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (val) {
-                      setModalState(() {
-                        avoidAmbiguous = val ?? false;
-                        generatedPassword = generate();
-                      });
-                    },
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF6C63FF),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    Slider(
+                      value: length,
+                      min: 8,
+                      max: 64,
+                      divisions: 56,
+                      activeColor: const Color(0xFF6C63FF),
+                      inactiveColor: Colors.white12,
+                      label: '${length.toInt()}',
+                      onChanged: (val) {
+                        setModalState(() {
+                          length = val;
+                          generatedPassword = generate();
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      targetController.text = generatedPassword;
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Text(
-                      _loc.text('use_password'),
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+
+                    const SizedBox(height: 8),
+
+                    // Checkboxes de Opciones
+                    CheckboxListTile(
+                      title: Text(_loc.text('include_uppercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                      value: includeUpper,
+                      activeColor: const Color(0xFF6C63FF),
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      onChanged: (val) {
+                        setModalState(() {
+                          includeUpper = val ?? true;
+                          generatedPassword = generate();
+                        });
+                      },
                     ),
-                  ),
-                ],
+                    CheckboxListTile(
+                      title: Text(_loc.text('include_lowercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                      value: includeLower,
+                      activeColor: const Color(0xFF6C63FF),
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      onChanged: (val) {
+                        setModalState(() {
+                          includeLower = val ?? true;
+                          generatedPassword = generate();
+                        });
+                      },
+                    ),
+                    CheckboxListTile(
+                      title: Text(_loc.text('include_numbers'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                      value: includeNumbers,
+                      activeColor: const Color(0xFF6C63FF),
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      onChanged: (val) {
+                        setModalState(() {
+                          includeNumbers = val ?? true;
+                          generatedPassword = generate();
+                        });
+                      },
+                    ),
+                    CheckboxListTile(
+                      title: Text(_loc.text('include_symbols'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+                      value: includeSymbols,
+                      activeColor: const Color(0xFF6C63FF),
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      onChanged: (val) {
+                        setModalState(() {
+                          includeSymbols = val ?? true;
+                          generatedPassword = generate();
+                        });
+                      },
+                    ),
+                    CheckboxListTile(
+                      title: Text(_loc.text('avoid_ambiguous'), style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                      value: avoidAmbiguous,
+                      activeColor: const Color(0xFF6C63FF),
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      onChanged: (val) {
+                        setModalState(() {
+                          avoidAmbiguous = val ?? false;
+                          generatedPassword = generate();
+                        });
+                      },
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6C63FF),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      onPressed: () {
+                        targetController.text = generatedPassword;
+                        Navigator.of(ctx).pop();
+                      },
+                      child: Text(
+                        _loc.text('use_password'),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      );
-    },
-  );
-}
+            );
+          },
+        );
+      },
+    );
+  }
 
   void _showHealthAuditBottomSheet() {
     String selectedFilter = 'all';
@@ -829,6 +841,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final passwordController = TextEditingController(text: existingEntry?.password ?? '');
     final categoryController = TextEditingController(text: existingEntry?.category ?? 'General');
     final notesController = TextEditingController(text: existingEntry?.notes ?? '');
+    final totpController = TextEditingController(text: existingEntry?.totpSecret ?? '');
 
     final cardExpiryController = TextEditingController(text: existingEntry?.cardExpiry ?? '');
     final cardCvvController = TextEditingController(text: existingEntry?.cardCvv ?? '');
@@ -947,6 +960,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () => _showPasswordGeneratorDialog(passwordController),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 12),
+
+                      TextField(
+                        controller: totpController,
+                        textCapitalization: TextCapitalization.characters,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: _loc.text('totp_label'),
+                          hintText: _loc.text('totp_hint'),
+                          hintStyle: const TextStyle(color: Colors.white30),
+                          labelStyle: const TextStyle(color: Colors.white70),
+                          prefixIcon: const Icon(Icons.security, color: Colors.cyanAccent, size: 20),
+                        ),
                       ),
                     ] else if (selectedType == 'cards') ...[
                       TextField(
@@ -1131,6 +1158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           cardExpiry: cardExpiryController.text.trim(),
                           cardCvv: cardCvvController.text.trim(),
                           cardPin: cardPinController.text.trim(),
+                          totpSecret: totpController.text.trim(),
                           isFavorite: existingEntry?.isFavorite ?? false,
                           updatedAt: now,
                           history: history,
@@ -1565,6 +1593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           final isVisible = _visiblePasswordIds.contains(item.id);
                           final isCard = item.entryType == 'cards';
                           final isNote = item.entryType == 'notes';
+                          final totp = TotpService.generateTotp(item.totpSecret);
 
                           return Container(
                             margin: const EdgeInsets.only(bottom: 10),
@@ -1749,6 +1778,57 @@ class _HomeScreenState extends State<HomeScreen> {
                                           onPressed: () => _copyToClipboard(item.password, _loc.text('password_label')),
                                         ),
                                       ],
+                                    ),
+                                  ],
+
+                                  // Renglón Especial 2FA / TOTP (Si está configurado)
+                                  if (totp != null) ...[
+                                    const SizedBox(height: 6),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: Colors.cyan.withAlpha(30),
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(color: Colors.cyanAccent.withAlpha(100)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.security, color: Colors.cyanAccent, size: 18),
+                                          const SizedBox(width: 8),
+                                          const Text(
+                                            '2FA:',
+                                            style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text(
+                                              totp.code,
+                                              style: const TextStyle(
+                                                color: Colors.cyanAccent,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 2,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 18,
+                                            height: 18,
+                                            child: CircularProgressIndicator(
+                                              value: totp.progress,
+                                              strokeWidth: 3,
+                                              color: totp.remainingSeconds < 6 ? Colors.redAccent : Colors.cyanAccent,
+                                              backgroundColor: Colors.white12,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 6),
+                                          IconButton(
+                                            icon: const Icon(Icons.copy, color: Colors.cyanAccent, size: 18),
+                                            tooltip: _loc.text('totp_code_copied'),
+                                            onPressed: () => _copyToClipboard(totp.rawCode, 'Código 2FA'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
 

@@ -35,6 +35,7 @@ class PasswordEntry {
   final String cardExpiry;
   final String cardCvv;
   final String cardPin;
+  final String totpSecret;
   final bool isFavorite;
   final int updatedAt;
   final List<HistoricalPassword> history;
@@ -50,6 +51,7 @@ class PasswordEntry {
     this.cardExpiry = '',
     this.cardCvv = '',
     this.cardPin = '',
+    this.totpSecret = '',
     this.isFavorite = false,
     int? updatedAt,
     List<HistoricalPassword>? history,
@@ -67,6 +69,7 @@ class PasswordEntry {
     String? cardExpiry,
     String? cardCvv,
     String? cardPin,
+    String? totpSecret,
     bool? isFavorite,
     int? updatedAt,
     List<HistoricalPassword>? history,
@@ -82,6 +85,7 @@ class PasswordEntry {
       cardExpiry: cardExpiry ?? this.cardExpiry,
       cardCvv: cardCvv ?? this.cardCvv,
       cardPin: cardPin ?? this.cardPin,
+      totpSecret: totpSecret ?? this.totpSecret,
       isFavorite: isFavorite ?? this.isFavorite,
       updatedAt: updatedAt ?? DateTime.now().millisecondsSinceEpoch,
       history: history ?? List.from(this.history),
@@ -100,6 +104,7 @@ class PasswordEntry {
       'cardExpiry': cardExpiry,
       'cardCvv': cardCvv,
       'cardPin': cardPin,
+      'totpSecret': totpSecret,
       'isFavorite': isFavorite,
       'updatedAt': updatedAt,
       'history': history.map((e) => e.toJson()).toList(),
@@ -123,6 +128,7 @@ class PasswordEntry {
       cardExpiry: json['cardExpiry'] ?? '',
       cardCvv: json['cardCvv'] ?? '',
       cardPin: json['cardPin'] ?? '',
+      totpSecret: json['totpSecret'] ?? '',
       isFavorite: json['isFavorite'] ?? false,
       updatedAt: json['updatedAt'] ?? DateTime.now().millisecondsSinceEpoch,
       history: historyList,
