@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
+import '../services/password_health_service.dart';
 import '../services/vault_service.dart';
 import 'login_screen.dart';
 import 'pin_screen.dart';
@@ -129,6 +130,268 @@ class _HomeScreenState extends State<HomeScreen> {
       await widget.vaultService.saveEntries(updatedList);
       setState(() {});
     }
+  }
+
+  void _showHealthAuditBottomSheet() {
+    String selectedFilter = 'all';
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF1E2538),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            final report = PasswordHealthService.analyzeVault(widget.vaultService.entries);
+
+            Color scoreColor = Colors.greenAccent;
+            String statusText = _loc.text('health_excellent');
+
+            if (report.overallScore < 50) {
+              scoreColor = Colors.redAccent;
+              statusText = _loc.text('health_action_needed');
+            } else if (report.overallScore < 80) {
+              scoreColor = Colors.amberAccent;
+              statusText = _loc.text('health_good');
+            }
+
+            List<PasswordEntry> currentFilteredList = [];
+            if (selectedFilter == 'weak') {
+              currentFilteredList = report.weakEntries;
+            } else if (selectedFilter == 'reused') {
+              currentFilteredList = report.reusedEntries;
+            } else if (selectedFilter == 'old') {
+              currentFilteredList = report.oldEntries;
+            } else if (selectedFilter == 'strong') {
+              currentFilteredList = report.strongEntries;
+            }
+
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _loc.text('audit_vault'),
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.white54),
+                        onPressed: () => Navigator.of(ctx).pop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Anillo de Salud de Seguridad
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF10141D),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: scoreColor.withAlpha(128)),
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                              height: 60,
+                              child: CircularProgressIndicator(
+                                value: report.overallScore / 100,
+                                strokeWidth: 6,
+                                backgroundColor: Colors.white12,
+                                color: scoreColor,
+                              ),
+                            ),
+                            Text(
+                              '${report.overallScore}%',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: scoreColor),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                statusText,
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: scoreColor),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${_loc.text("security_score")}: ${report.overallScore}/100',
+                                style: const TextStyle(color: Colors.white70, fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Tarjetas Interactivas de Desglose
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _buildAuditFilterChip(
+                        id: 'weak',
+                        label: _loc.text('weak_passwords'),
+                        count: report.weakEntries.length,
+                        color: Colors.redAccent,
+                        isSelected: selectedFilter == 'weak',
+                        onTap: () => setModalState(() => selectedFilter = selectedFilter == 'weak' ? 'all' : 'weak'),
+                      ),
+                      _buildAuditFilterChip(
+                        id: 'reused',
+                        label: _loc.text('reused_passwords'),
+                        count: report.reusedEntries.length,
+                        color: Colors.amberAccent,
+                        isSelected: selectedFilter == 'reused',
+                        onTap: () => setModalState(() => selectedFilter = selectedFilter == 'reused' ? 'all' : 'reused'),
+                      ),
+                      _buildAuditFilterChip(
+                        id: 'old',
+                        label: _loc.text('old_passwords'),
+                        count: report.oldEntries.length,
+                        color: Colors.lightBlueAccent,
+                        isSelected: selectedFilter == 'old',
+                        onTap: () => setModalState(() => selectedFilter = selectedFilter == 'old' ? 'all' : 'old'),
+                      ),
+                      _buildAuditFilterChip(
+                        id: 'strong',
+                        label: _loc.text('strong_passwords'),
+                        count: report.strongEntries.length,
+                        color: Colors.greenAccent,
+                        isSelected: selectedFilter == 'strong',
+                        onTap: () => setModalState(() => selectedFilter = selectedFilter == 'strong' ? 'all' : 'strong'),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Lista filtrada para corregir contraseñas
+                  if (selectedFilter != 'all') ...[
+                    Text(
+                      '${_loc.text("vault_title")} (${currentFilteredList.length})',
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                    const SizedBox(height: 10),
+                    Flexible(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: currentFilteredList.length,
+                        itemBuilder: (context, idx) {
+                          final item = currentFilteredList[idx];
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF10141D),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.white12),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(item.title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      if (item.username.isNotEmpty)
+                                        Text(item.username, style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                                    ],
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF6C63FF),
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop();
+                                    _showAddOrEditDialog(item);
+                                  },
+                                  child: Text(_loc.text('edit_password'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildAuditFilterChip({
+    required String id,
+    required String label,
+    required int count,
+    required Color color,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? color.withAlpha(51) : const Color(0xFF10141D),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: isSelected ? color : Colors.white12,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: color.withAlpha(51),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                '$count',
+                style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.white70,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _showHistoryBottomSheet(PasswordEntry entry) {
@@ -545,6 +808,15 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedCategory = allCatText;
     }
 
+    final healthReport = PasswordHealthService.analyzeVault(widget.vaultService.entries);
+
+    Color healthColor = Colors.greenAccent;
+    if (healthReport.overallScore < 50) {
+      healthColor = Colors.redAccent;
+    } else if (healthReport.overallScore < 80) {
+      healthColor = Colors.amberAccent;
+    }
+
     final categoryFiltered = widget.vaultService.entries.where((e) {
       if (_selectedCategory == allCatText) return true;
       return e.category.trim().toLowerCase() == _selectedCategory.toLowerCase();
@@ -645,6 +917,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
+            // Tarjeta de Indicador de Salud de la Bóveda
+            if (widget.vaultService.entries.isNotEmpty)
+              GestureDetector(
+                onTap: _showHealthAuditBottomSheet,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 16, right: 16, top: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1E2538),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: healthColor.withAlpha(100)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.shield, color: healthColor, size: 24),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _loc.text('vault_health'),
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            Text(
+                              '${_loc.text("security_score")}: ${healthReport.overallScore}/100',
+                              style: TextStyle(color: healthColor, fontSize: 12, fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: healthColor.withAlpha(51),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: healthColor),
+                        ),
+                        child: Text(
+                          _loc.text('audit_vault'),
+                          style: TextStyle(color: healthColor, fontSize: 11, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
             // Buscador
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -712,7 +1032,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               cat,
                               style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                                 color: isSelected ? Colors.white : Colors.white60,
                               ),
                             ),
