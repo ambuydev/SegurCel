@@ -199,7 +199,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
                 child: Column(
                   children: [
-                    const Icon(Icons.security, size: 60, color: Color(0xFF6C63FF)),
+                    Image.asset(
+                      'assets/icon/app_icon.png',
+                      height: 64,
+                      errorBuilder: (context, error, stackTrace) => const Icon(Icons.security, size: 60, color: Color(0xFF6C63FF)),
+                    ),
                     const SizedBox(height: 8),
                     Text(
                       _loc.text('app_title'),

@@ -184,7 +184,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
                 const SizedBox(height: 24),
               ] else ...[
-                const Icon(Icons.stars_outlined, size: 80, color: Color(0xFF6C63FF)),
+                Center(
+                  child: Image.asset(
+                    'assets/icon/suscripcion.png',
+                    height: 80,
+                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.stars_outlined, size: 80, color: Color(0xFF6C63FF)),
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Text(
                   _loc.text('pro_subscription'),

@@ -206,7 +206,11 @@ class _PinScreenState extends State<PinScreen> {
                 child: IntrinsicHeight(
                   child: Column(
                     children: [
-                      const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
+                      Image.asset(
+                        'assets/icon/pantalla_pin.png',
+                        height: 64,
+                        errorBuilder: (context, error, stackTrace) => const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
+                      ),
                       const SizedBox(height: 10),
                       Text(
                         _loc.text('app_title'),

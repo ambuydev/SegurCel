@@ -182,7 +182,13 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 10),
-              const Icon(Icons.cloud_sync_outlined, size: 80, color: Color(0xFF6C63FF)),
+              Center(
+                child: Image.asset(
+                  'assets/icon/pantalla_pin.png',
+                  height: 80,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.cloud_sync_outlined, size: 80, color: Color(0xFF6C63FF)),
+                ),
+              ),
               const SizedBox(height: 16),
               Text(
                 _loc.text('login_title'),
