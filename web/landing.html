@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SegurCel - Bóveda de Contraseñas Cifrada Zero-Knowledge & 2FA</title>
+    <meta name="description" content="Protege tus contraseñas, tarjetas bancarias, notas y códigos 2FA con cifrado de nivel militar AES-256-GCM. Sincronización multidispositivo cifrada.">
+
+    <!-- Favicon e Ícono -->
+    <link rel="icon" type="image/png" href="assets/icon/app_icon.png">
+
+    <style>
+        :root {
+            --bg-color: #10141D;
+            --card-bg: #1E2538;
+            --accent-purple: #6C63FF;
+            --accent-green: #80EE99;
+            --accent-cyan: #00F0FF;
+            --accent-amber: #FFD700;
+            --text-main: #FFFFFF;
+            --text-muted: #A0AEC0;
+            --border-color: rgba(108, 99, 255, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar & Idiomas */
+        header {
+            background-color: rgba(30, 37, 56, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+        }
+
+        .brand-title {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lang-select {
+            background: #10141D;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-header {
+            background-color: var(--accent-purple);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(108, 99, 255, 0.15);
+            border: 1px solid var(--accent-purple);
+            color: #A39DFF;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            color: var(--accent-purple);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 750px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6C63FF, #4A42E0);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.5);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(108, 99, 255, 0.7);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Showcase Mockup */
+        .showcase {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .showcase-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #FF5F56; }
+        .dot-yellow { background: #FFBD2E; }
+        .dot-green { background: #27C93F; }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+
+        .mockup-card {
+            background: #10141D;
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .mockup-card-title {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .vault-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: #1E2538;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .vault-item-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vault-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(108, 99, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-purple);
+            font-size: 16px;
+        }
+
+        .vault-text h4 { font-size: 14px; color: white; }
+        .vault-text p { font-size: 12px; color: var(--text-muted); }
+
+        .totp-badge {
+            background: rgba(0, 240, 255, 0.15);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--accent-cyan);
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            font-size: 16px;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* CTA Footer Section */
+        .cta-banner {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, #1E2538, #141A28);
+            border-radius: 24px;
+            border: 1px solid var(--accent-purple);
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--accent-purple);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 32px; }
+            .hero-subtitle { font-size: 15px; }
+            .hero { padding-top: 110px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="brand">
+                <img src="assets/icon/app_icon.png" alt="SegurCel Logo">
+                <span class="brand-title">SegurCel</span>
+            </a>
+            <div class="nav-actions">
+                <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="pt">🇧🇷 Português</option>
+                    <option value="zh">🇨🇳 中文</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                </select>
+                <a href="app.html" class="btn-header" id="btnHeaderVault">Acceder a la Bóveda</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge" id="heroBadge">🛡️ Cifrado Zero-Knowledge End-to-End</div>
+        <h1 class="hero-title" id="heroTitle">Tus Contraseñas y Datos <span>100% Seguros</span> en Todos tus Dispositivos</h1>
+        <p class="hero-subtitle" id="heroSubtitle">
+            SegurCel es el gestor de contraseñas de nueva generación. Almacena contraseñas, tarjetas bancarias, notas confidenciales y genera códigos 2FA TOTP con cifrado AES-256 de nivel militar.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="app.html" class="btn-primary" id="btnHeroVault">
+                <span>🚀</span> <span id="lblBtnVault">Acceder a la Bóveda Web</span>
+            </a>
+            <a href="javascript:void(0)" onclick="alert('Google Play Store: Próximamente disponible para Android. Mientras tanto, puedes disfrutar de todas las funciones en la Bóveda Web.')" class="btn-secondary" id="btnHeroApk">
+                <span>📲</span> <span id="lblBtnApk">Disponible en Google Play</span>
+            </a>
+        </div>
+
+        <!-- Showcase Mockup -->
+        <div class="showcase">
+            <div class="showcase-header">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span style="font-size: 12px; color: var(--text-muted); margin-left: 10px;">SegurCel Vault - Sincronizado & Cifrado</span>
+            </div>
+            <div class="mockup-grid">
+                <!-- Tarjeta 1: Bóveda -->
+                <div class="mockup-card">
+                    <div class="mockup-card-title">🔑 Bóveda de Contraseñas</div>
+                    <div class="vault-item">
+                        <div class="vault-item-info">
+                            <div class="vault-icon">🔑</div>
+                            <div class="vault-text">
+                                <h4>Gmail Personal</h4>
+                                <p>usuario@gmail.com</p>
+                            </div>
+                        </div>
+                        <span style="color: var(--accent-green);">••••••••••••</span>
+                    </div>
+                    <div class="vault-item">
+                        <div class="vault-item-info">
+                            <div class="vault-icon">💳</div>
+                            <div class="vault-text">
+                                <h4>Visa Santander</h4>
+                                <p>•••• •••• •••• 9012</p>
+                            </div>
+                        </div>
+                        <span style="color: var(--accent-amber);">⭐</span>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: 2FA TOTP -->
+                <div class="mockup-card">
+                    <div class="mockup-card-title">🔑 Autenticador 2FA TOTP</div>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Código temporal que cambia cada 30 segundos:</p>
+                    <div class="totp-badge">
+                        <span>482 910</span>
+                        <span style="font-size: 12px; color: #00F0FF;">⏱️ 22s</span>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Auditoría -->
+                <div class="mockup-card">
+                    <div class="mockup-card-title">🩺 Auditoría de Salud de Bóveda</div>
+                    <div style="display: flex; align-items: center; gap: 15px; background: #1E2538; padding: 12px; border-radius: 10px;">
+                        <div style="font-size: 24px; font-weight: 800; color: var(--accent-green);">94%</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">
+                            <strong style="color: white;">Bóveda Excelente</strong><br>
+                            0 contraseñas débiles o reutilizadas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section style="background: rgba(0,0,0,0.2); padding: 80px 0;">
+        <h2 class="section-title" id="secTitleFeatures">Características Principales</h2>
+        <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
+                <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔑</div>
+                <h3 id="f2_title">Autenticador 2FA TOTP</h3>
+                <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💣</div>
+                <h3 id="f3_title">3-Strike Autodestrucción</h3>
+                <p id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🩺</div>
+                <h3 id="f4_title">Auditoría de Salud</h3>
+                <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
+                <p id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3 id="f6_title">Importar / Exportar Fácil</h3>
+                <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section Banner -->
+    <section style="padding: 0 20px;">
+        <div class="cta-banner">
+            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 15px;" id="ctaTitle">¿Listo para proteger tu vida digital?</h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.</p>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="app.html" class="btn-primary" id="btnCtaVault">🚀 Acceder a SegurCel Web</a>
+                <a href="javascript:void(0)" onclick="alert('Google Play Store: Próximamente disponible para Android. Mientras tanto, puedes disfrutar de todas las funciones en la Bóveda Web.')" class="btn-secondary" id="btnCtaApk">📲 Disponible en Google Play</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SegurCel. Todos los derechos reservados.</p>
+        <p style="margin-top: 10px;">
+            <a href="privacy.html" id="linkFooterPrivacy">Política de Privacidad</a> |
+            <a href="mailto:support.segurcel@gmail.com">support.segurcel@gmail.com</a>
+        </p>
+    </footer>
+
+    <!-- Multilingual Script -->
+    <script>
+        const dict = {
+            es: {
+                badge: "🛡️ Cifrado Zero-Knowledge End-to-End",
+                title: "Tus Contraseñas y Datos <span>100% Seguros</span> en Todos tus Dispositivos",
+                sub: "SegurCel es el gestor de contraseñas de nueva generación. Almacena contraseñas, tarjetas bancarias, notas confidenciales y genera códigos 2FA TOTP con cifrado AES-256 de nivel militar.",
+                btnVault: "Acceder a la Bóveda Web",
+                btnApk: "Disponible en Google Play",
+                btnHeader: "Acceder a la Bóveda",
+                secTitleF: "Características Principales",
+                secSubF: "Diseñado con los más estrictos estándares de ciberseguridad mundial.",
+                f1_t: "Cifrado Zero-Knowledge", f1_d: "Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.",
+                f2_t: "Autenticador 2FA TOTP", f2_d: "Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.",
+                f3_t: "3-Strike Autodestrucción", f3_d: "Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.",
+                f4_t: "Auditoría de Salud", f4_d: "Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.",
+                f5_t: "Tarjetas & Notas Seguras", f5_d: "Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.",
+                f6_t: "Importar / Exportar Fácil", f6_d: "Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.",
+                ctaT: "¿Listo para proteger tu vida digital?", ctaS: "Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.",
+                priv: "Política de Privacidad"
+            },
+            en: {
+                badge: "🛡️ Zero-Knowledge End-to-End Encryption",
+                title: "Your Passwords & Data <span>100% Secure</span> Across All Devices",
+                sub: "SegurCel is the next-generation password manager. Store passwords, bank cards, confidential notes, and generate 2FA TOTP codes with military-grade AES-256 encryption.",
+                btnVault: "Access Web Vault",
+                btnApk: "Available on Google Play",
+                btnHeader: "Access Vault",
+                secTitleF: "Key Features",
+                secSubF: "Designed with the world's strictest cybersecurity standards.",
+                f1_t: "Zero-Knowledge Encryption", f1_d: "Your data is encrypted locally on your device using AES-256-GCM + PBKDF2 (65,536 iterations). Nobody else has your keys.",
+                f2_t: "2FA TOTP Authenticator", f2_d: "Built-in 6-digit code generator with 30-second circular countdown timer. No separate authenticator app needed.",
+                f3_t: "3-Strike Self-Destruct", f3_d: "Anti brute-force protection: after 3 consecutive wrong 4-digit PIN attempts, local vault data is permanently wiped.",
+                f4_t: "Vault Health Audit", f4_d: "Smart analyzer that scores your password strength from 0 to 100% and flags weak, old, or reused passwords.",
+                f5_t: "Cards & Confidential Notes", f5_d: "Store credit cards, ATM PINs, and encrypted notes organized into category tabs and star favorites ⭐.",
+                f6_t: "Easy Import / Export", f6_d: "Migrate passwords in seconds from Google Chrome, Edge, Bitwarden, or 1Password in CSV and JSON formats.",
+                ctaT: "Ready to protect your digital life?", ctaS: "Start using SegurCel today from any browser or Android device.",
+                priv: "Privacy Policy"
+            },
+            pt: {
+                badge: "🛡️ Criptografia Zero-Knowledge End-to-End",
+                title: "Suas Senhas e Dados <span>100% Seguros</span> em Todos os Dispositivos",
+                sub: "O SegurCel é o gerenciador de senhas de nova geração. Armazene senhas, cartões bancários, notas confidenciais e gere códigos 2FA TOTP com criptografia AES-256 de nível militar.",
+                btnVault: "Acessar Cofre Web",
+                btnApk: "Disponível no Google Play",
+                btnHeader: "Acessar Cofre",
+                secTitleF: "Recursos Principais",
+                secSubF: "Projetado com os mais rigorosos padrões globais de cibersegurança.",
+                f1_t: "Criptografia Zero-Knowledge", f1_d: "Seus dados são criptografados localmente no seu dispositivo usando AES-256-GCM + PBKDF2 (65.536 iterações).",
+                f2_t: "Autenticador 2FA TOTP", f2_d: "Gerador integrado de códigos de 6 dígitos com temporizador circular de 30 segundos. Dispensa apps secundários.",
+                f3_t: "Autodestruição 3-Strikes", f3_d: "Proteção contra força bruta: após 3 tentativas incorretas do PIN de 4 dígitos, o cofre local é destruído.",
+                f4_t: "Auditoria de Saúde", f4_d: "Analisador inteligente que pontua a força das suas senhas de 0 a 100% e identifica senhas fracas ou reutilizadas.",
+                f5_t: "Cartões e Notas Seguras", f5_d: "Guarde cartões de crédito, PINs de caixas eletrônicos e notas confidenciais organizados com estrelas de favoritos ⭐.",
+                f6_t: "Importar / Exportar Fácil", f6_d: "Migre suas senhas em segundos do Google Chrome, Edge, Bitwarden ou 1Password em CSV e JSON.",
+                ctaT: "Pronto para proteger sua vida digital?", ctaS: "Comece a usar o SegurCel hoje mesmo de qualquer navegador ou dispositivo Android.",
+                priv: "Política de Privacidade"
+            },
+            zh: {
+                badge: "🛡️ 零知识 (Zero-Knowledge) 端到端加密",
+                title: "您的密码与数据在所有设备上 <span>100% 安全</span>",
+                sub: "SegurCel 是新一代密码管理器。使用军用级 AES-256 加密存储密码、银行卡、保密笔记，并生成 2FA TOTP 动态验证码。",
+                btnVault: "访问网页版保险库",
+                btnApk: "即将登陆 Google Play",
+                btnHeader: "进入保险库",
+                secTitleF: "核心功能",
+                secSubF: "遵循全球最严格的网络安全标准设计。",
+                f1_t: "零知识加密", f1_d: "数据在您的设备上通过 AES-256-GCM + PBKDF2 (65,536 次迭代) 本地加密。任何人均无法获取您的密钥。",
+                f2_t: "2FA TOTP 验证器", f2_d: "内置 6 位数字验证码生成器，配备 30 秒倒计时。无需使用第三方验证器应用。",
+                f3_t: "3次防爆自毁", f3_d: "防暴力破解保护：连续 3 次输入错误 4 位 PIN 码后，本地保险库数据将被永久擦除。",
+                f4_t: "保险库健康审计", f4_d: "智能分析器为您的密码打分 (0-100%)，并自动检测弱密码或重复密码。",
+                f5_t: "银行卡与保密笔记", f5_d: "分类存储信用卡、取款密码和保密笔记，支持星标收藏 ⭐。",
+                f6_t: "轻松导入与导出", f6_d: "数秒内即可从 Google Chrome、Edge、Bitwarden 或 1Password 导入 CSV 与 JSON 格式的密码。",
+                ctaT: "准备好保护您的数字生活了吗？", ctaS: "立即从任何浏览器或 Android 设备使用 SegurCel。",
+                priv: "隐私政策"
+            },
+            fr: {
+                badge: "🛡️ Chiffrement Zero-Knowledge de Bout en Bout",
+                title: "Vos Mots de Passe & Données <span>100% Sécurisés</span> sur Tous vos Appareils",
+                sub: "SegurCel est le gestionnaire de mots de passe nouvelle génération. Stockez vos mots de passe, cartes bancaires, notes confidentielles et générez des codes 2FA TOTP avec un chiffrement AES-256 militaire.",
+                btnVault: "Accéder au Coffre Web",
+                btnApk: "Disponible sur Google Play",
+                btnHeader: "Accéder au Coffre",
+                secTitleF: "Fonctionnalités Clés",
+                secSubF: "Conçu selon les normes de cybersécurité les plus strictes au monde.",
+                f1_t: "Chiffrement Zero-Knowledge", f1_d: "Vos données sont chiffrées localement sur votre appareil avec AES-256-GCM + PBKDF2 (65 536 itérations).",
+                f2_t: "Authentificateur 2FA TOTP", f2_d: "Générateur intégré de codes à 6 chiffres avec compte à rebours de 30 secondes. Plus besoin d'application externe.",
+                f3_t: "Autodestruction 3-Strikes", f3_d: "Protection anti-force brute : après 3 tentatives de PIN à 4 chiffres incorrectes, le coffre local est détruit.",
+                f4_t: "Audit de Santé du Coffre", f4_d: "Analyseur intelligent qui évalue la force de vos mots de passe de 0 à 100% et détecte les doublons.",
+                f5_t: "Cartes & Notes Confidentielles", f5_d: "Stockez vos cartes bancaires, codes PIN et notes confidentielles organisés avec des favoris ⭐.",
+                f6_t: "Import / Export Facile", f6_d: "Migrez vos mots de passe en quelques secondes depuis Google Chrome, Edge, Bitwarden ou 1Password en CSV et JSON.",
+                ctaT: "Prêt à protéger votre vie numérique ?", ctaS: "Commencez à utiliser SegurCel dès aujourd'hui depuis n'importe quel navigateur ou appareil Android.",
+                priv: "Politique de Confidentialité"
+            },
+            hi: {
+                badge: "🛡️ Zero-Knowledge एंड-टू-एंड एन्क्रिप्शन",
+                title: "आपके पासवर्ड और डेटा सभी डिवाइसों पर <span>100% सुरक्षित</span>",
+                sub: "SegurCel अगली पीढ़ी का पासवर्ड मैनेजर है। पासवर्ड, बैंक कार्ड, गोपनीय नोट सहेजें और सैन्य-स्तरीय AES-256 एन्क्रिप्शन के साथ 2FA TOTP कोड बनाएं।",
+                btnVault: "वेब वॉल्ट एक्सेस करें",
+                btnApk: "Google Play पर उपलब्ध",
+                btnHeader: "वॉल्ट एक्सेस करें",
+                secTitleF: "मुख्य विशेषताएं",
+                secSubF: "दुनिया के सबसे सख्त साइबर सुरक्षा मानकों के साथ डिज़ाइन किया गया।",
+                f1_t: "Zero-Knowledge एन्क्रिप्शन", f1_d: "आपका डेटा AES-256-GCM + PBKDF2 (65,536 पुनरावृत्तियों) का उपयोग करके आपके डिवाइस पर स्थानीय रूप से एन्क्रिप्ट किया जाता है।",
+                f2_t: "2FA TOTP ऑथेंटिकेटर", f2_d: "30-सेकंड टाइमर के साथ बिल्ट-इन 6-अंकीय कोड जनरेटर। किसी अलग ऑथेंटिकेटर ऐप की आवश्यकता नहीं है।",
+                f3_t: "3-स्ट्राइक स्वतः नष्ट", f3_d: "एंटी ब्रूट-फोर्स सुरक्षा: 3 गलत 4-अंकों के पिन प्रयासों के बाद, स्थानीय वॉल्ट डेटा स्थायी रूप से नष्ट हो जाता है।",
+                f4_t: "वॉल्ट स्वास्थ्य लेखापरीक्षा", f4_d: "स्मार्ट विश्लेषक जो आपके पासवर्ड की ताकत को 0 से 100% तक आंकता है और कमजोर पासवर्ड को फ़्लैग करता है।",
+                f5_t: "कार्ड और गोपनीय नोट", f5_d: "क्रेडिट कार्ड, एटीएम पिन और गोपनीय नोट्स को पसंदीदा स्टार ⭐ के साथ सहेजें।",
+                f6_t: "आसान आयात / निर्यात", f6_d: "Google Chrome, Edge, Bitwarden या 1Password से कुछ ही सेकंड में अपने पासवर्ड माइग्रेट करें।",
+                ctaT: "क्या आप अपने डिजिटल जीवन की रक्षा के लिए तैयार हैं?", ctaS: "किसी भी ब्राउज़र या एंड्रॉइड डिवाइस से आज ही SegurCel का उपयोग शुरू करें।",
+                priv: "गोपनीयता नीति"
+            }
+        };
+
+        function changeLanguage(lang) {
+            const data = dict[lang] || dict.es;
+            document.getElementById("heroBadge").innerText = data.badge;
+            document.getElementById("heroTitle").innerHTML = data.title;
+            document.getElementById("heroSubtitle").innerText = data.sub;
+            document.getElementById("lblBtnVault").innerText = data.btnVault;
+            document.getElementById("lblBtnApk").innerText = data.btnApk;
+            document.getElementById("btnHeaderVault").innerText = data.btnHeader;
+            document.getElementById("secTitleFeatures").innerText = data.secTitleF;
+            document.getElementById("secSubFeatures").innerText = data.secSubF;
+            document.getElementById("f1_title").innerText = data.f1_t; document.getElementById("f1_desc").innerText = data.f1_d;
+            document.getElementById("f2_title").innerText = data.f2_t; document.getElementById("f2_desc").innerText = data.f2_d;
+            document.getElementById("f3_title").innerText = data.f3_t; document.getElementById("f3_desc").innerText = data.f3_d;
+            document.getElementById("f4_title").innerText = data.f4_t; document.getElementById("f4_desc").innerText = data.f4_d;
+            document.getElementById("f5_title").innerText = data.f5_t; document.getElementById("f5_desc").innerText = data.f5_d;
+            document.getElementById("f6_title").innerText = data.f6_t; document.getElementById("f6_desc").innerText = data.f6_d;
+            document.getElementById("ctaTitle").innerText = data.ctaT;
+            document.getElementById("ctaSub").innerText = data.ctaS;
+            document.getElementById("btnCtaVault").innerText = "🚀 " + data.btnVault;
+            document.getElementById("btnCtaApk").innerText = "📲 " + data.btnApk;
+            document.getElementById("linkFooterPrivacy").innerText = data.priv;
+        }
+    </script>
+</body>
+</html>
