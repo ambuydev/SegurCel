@@ -7,7 +7,7 @@
     <meta name="description" content="Protege tus contraseñas, tarjetas bancarias, notas y códigos 2FA con cifrado de nivel militar AES-256-GCM. Sincronización multidispositivo cifrada.">
 
     <!-- Favicon e Ícono -->
-    <link rel="icon" type="image/png" href="assets/icon/app_icon.png">
+    <link rel="icon" type="image/jpeg" href="assets/html/logo_solo.jpeg">
 
     <style>
         :root {
@@ -38,7 +38,7 @@
 
         /* Navbar & Idiomas */
         header {
-            background-color: rgba(30, 37, 56, 0.8);
+            background-color: rgba(30, 37, 56, 0.85);
             backdrop-filter: blur(10px);
             position: fixed;
             top: 0;
@@ -51,7 +51,7 @@
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -66,13 +66,14 @@
         }
 
         .brand img {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--accent-purple);
         }
 
         .brand-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
             background: linear-gradient(135deg, #FFFFFF, var(--accent-purple));
             -webkit-background-clip: text;
@@ -115,7 +116,7 @@
 
         /* Hero Section */
         .hero {
-            padding: 140px 20px 80px;
+            padding: 130px 20px 60px;
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
@@ -135,7 +136,7 @@
         }
 
         .hero-title {
-            font-size: 48px;
+            font-size: 46px;
             font-weight: 900;
             line-height: 1.2;
             margin-bottom: 20px;
@@ -157,7 +158,7 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         .btn-primary {
@@ -201,105 +202,64 @@
             border-color: white;
         }
 
-        /* Showcase Mockup */
-        .showcase {
+        /* Banner Principal Imagen */
+        .hero-banner-wrapper {
             max-width: 1000px;
             margin: 0 auto 80px;
-            background: var(--card-bg);
             border-radius: 20px;
-            padding: 25px;
+            overflow: hidden;
             border: 1px solid var(--border-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
         }
 
-        .showcase-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
+        .hero-banner-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        /* Section Circuitos */
+        .zk-section {
+            background: rgba(0,0,0,0.3);
+            padding: 80px 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .dot-red { background: #FF5F56; }
-        .dot-yellow { background: #FFBD2E; }
-        .dot-green { background: #27C93F; }
-
-        .mockup-grid {
+        .zk-container {
+            max-width: 1100px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            text-align: left;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            align-items: center;
         }
 
-        .mockup-card {
-            background: #10141D;
-            border-radius: 14px;
-            padding: 18px;
-            border: 1px solid rgba(255,255,255,0.08);
+        .zk-image img {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid var(--accent-purple);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.3);
         }
 
-        .mockup-card-title {
-            font-size: 14px;
+        .zk-text h2 {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .zk-text p {
             color: var(--text-muted);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .vault-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            background: #1E2538;
-            border-radius: 10px;
-            margin-bottom: 8px;
-        }
-
-        .vault-item-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .vault-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: rgba(108, 99, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-purple);
             font-size: 16px;
-        }
-
-        .vault-text h4 { font-size: 14px; color: white; }
-        .vault-text p { font-size: 12px; color: var(--text-muted); }
-
-        .totp-badge {
-            background: rgba(0, 240, 255, 0.15);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: var(--accent-cyan);
-            font-weight: bold;
-            font-size: 16px;
-            letter-spacing: 2px;
+            margin-bottom: 20px;
+            line-height: 1.7;
         }
 
         /* Features Section */
         .section-title {
             text-align: center;
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 800;
             margin-bottom: 15px;
         }
@@ -307,7 +267,7 @@
         .section-subtitle {
             text-align: center;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto 50px;
             font-size: 16px;
         }
@@ -352,6 +312,65 @@
             line-height: 1.6;
         }
 
+        /* Sección Freemium & Planes PRO */
+        .freemium-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .freemium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .freemium-image img {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid var(--accent-amber);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
+        }
+
+        .freemium-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .plan-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .plan-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .plan-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .plan-list li span {
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
         /* CTA Footer Section */
         .cta-banner {
             max-width: 1000px;
@@ -386,6 +405,7 @@
             .hero-title { font-size: 32px; }
             .hero-subtitle { font-size: 15px; }
             .hero { padding-top: 110px; }
+            .zk-text h2 { font-size: 26px; }
         }
     </style>
 </head>
@@ -395,7 +415,7 @@
     <header>
         <div class="nav-container">
             <a href="index.html" class="brand">
-                <img src="assets/icon/app_icon.png" alt="SegurCel Logo">
+                <img src="assets/html/logo_solo.jpeg" alt="SegurCel Logo">
                 <span class="brand-title">SegurCel</span>
             </a>
             <div class="nav-actions">
@@ -429,67 +449,28 @@
             </a>
         </div>
 
-        <!-- Showcase Mockup -->
-        <div class="showcase">
-            <div class="showcase-header">
-                <div class="dot dot-red"></div>
-                <div class="dot dot-yellow"></div>
-                <div class="dot dot-green"></div>
-                <span style="font-size: 12px; color: var(--text-muted); margin-left: 10px;">SegurCel Vault - Sincronizado & Cifrado</span>
+        <!-- Banner Principal Oficial -->
+        <div class="hero-banner-wrapper">
+            <img src="assets/html/banner.jpeg" alt="SegurCel Banner Oficial">
+        </div>
+    </section>
+
+    <!-- Sección Cifrado Circuitos Zero-Knowledge -->
+    <section class="zk-section">
+        <div class="zk-container">
+            <div class="zk-image">
+                <img src="assets/html/logo_circuitos.jpeg" alt="Cifrado Zero-Knowledge SegurCel">
             </div>
-            <div class="mockup-grid">
-                <!-- Tarjeta 1: Bóveda -->
-                <div class="mockup-card">
-                    <div class="mockup-card-title">🔑 Bóveda de Contraseñas</div>
-                    <div class="vault-item">
-                        <div class="vault-item-info">
-                            <div class="vault-icon">🔑</div>
-                            <div class="vault-text">
-                                <h4>Gmail Personal</h4>
-                                <p>usuario@gmail.com</p>
-                            </div>
-                        </div>
-                        <span style="color: var(--accent-green);">••••••••••••</span>
-                    </div>
-                    <div class="vault-item">
-                        <div class="vault-item-info">
-                            <div class="vault-icon">💳</div>
-                            <div class="vault-text">
-                                <h4>Visa Santander</h4>
-                                <p>•••• •••• •••• 9012</p>
-                            </div>
-                        </div>
-                        <span style="color: var(--accent-amber);">⭐</span>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 2: 2FA TOTP -->
-                <div class="mockup-card">
-                    <div class="mockup-card-title">🔑 Autenticador 2FA TOTP</div>
-                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Código temporal que cambia cada 30 segundos:</p>
-                    <div class="totp-badge">
-                        <span>482 910</span>
-                        <span style="font-size: 12px; color: #00F0FF;">⏱️ 22s</span>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 3: Auditoría -->
-                <div class="mockup-card">
-                    <div class="mockup-card-title">🩺 Auditoría de Salud de Bóveda</div>
-                    <div style="display: flex; align-items: center; gap: 15px; background: #1E2538; padding: 12px; border-radius: 10px;">
-                        <div style="font-size: 24px; font-weight: 800; color: var(--accent-green);">94%</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">
-                            <strong style="color: white;">Bóveda Excelente</strong><br>
-                            0 contraseñas débiles o reutilizadas.
-                        </div>
-                    </div>
-                </div>
+            <div class="zk-text">
+                <h2 id="zkTitle">Seguridad Criptográfica Indescifrable</h2>
+                <p id="zkDesc1">En SegurCel aplicamos el estricto principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. La clave de cifrado se deriva en tu propio dispositivo mediante <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</p>
+                <p id="zkDesc2">Tus contraseñas se convierten en bloques de texto cifrado ilegible mediante <strong>AES-256-GCM</strong> antes de enviarse a la nube. Ningún empleado, servidor ni atacante externo puede leer tus datos.</p>
             </div>
         </div>
     </section>
 
     <!-- Features Grid Section -->
-    <section style="background: rgba(0,0,0,0.2); padding: 80px 0;">
+    <section style="padding: 80px 0;">
         <h2 class="section-title" id="secTitleFeatures">Características Principales</h2>
         <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
 
@@ -532,6 +513,29 @@
         </div>
     </section>
 
+    <!-- Nueva Sección Freemium & Suscripción PRO -->
+    <section class="freemium-section">
+        <h2 class="section-title" id="proTitle">Modelo Freemium & Planes PRO</h2>
+        <p class="section-subtitle" id="proSub">Usa SegurCel gratis de forma local o suscríbete para respaldar y sincronizar tus contraseñas en la nube de forma permanente.</p>
+
+        <div class="freemium-grid">
+            <div class="freemium-image">
+                <img src="assets/html/suscripcion.jpeg" alt="Planes SegurCel PRO">
+            </div>
+            <div class="freemium-box">
+                <span class="plan-badge" id="badgeFreemium">MODELO FREEMIUM TRANSPARENTE</span>
+                <h3 style="font-size: 22px; margin-bottom: 10px;" id="lblVentajasPro">Ventajas de SegurCel PRO</h3>
+                <ul class="plan-list">
+                    <li><span>✓</span> <div id="proItem1">Sincronización Ilimitada en Tiempo Real (Android, Windows, Web, iOS).</div></li>
+                    <li><span>✓</span> <div id="proItem2">Respaldo Permanente Cifrado AES-256 en la Nube.</div></li>
+                    <li><span>✓</span> <div id="proItem3">Historial Completo de Contraseñas Anteriores.</div></li>
+                    <li><span>✓</span> <div id="proItem4">Rescate de Emergencia de Bóveda (48 Horas).</div></li>
+                    <li><span>✓</span> <div id="proItem5">Planes Flexibles: Mensual, Anual, Rescate 6 Meses y Licencia Vitalicia.</div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section Banner -->
     <section style="padding: 0 20px;">
         <div class="cta-banner">
@@ -564,6 +568,9 @@
                 btnApk: "Descargar APK Android",
                 btnPlay: "Disponible en Google Play",
                 btnHeader: "Acceder a la Bóveda",
+                zkT: "Seguridad Criptográfica Indescifrable",
+                zkD1: "En SegurCel aplicamos el estricto principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. La clave de cifrado se deriva en tu propio dispositivo mediante <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.",
+                zkD2: "Tus contraseñas se convierten en bloques de texto cifrado ilegible mediante <strong>AES-256-GCM</strong> antes de enviarse a la nube. Ningún empleado, servidor ni atacante externo puede leer tus datos.",
                 secTitleF: "Características Principales",
                 secSubF: "Diseñado con los más estrictos estándares de ciberseguridad mundial.",
                 f1_t: "Cifrado Zero-Knowledge", f1_d: "Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.",
@@ -572,6 +579,13 @@
                 f4_t: "Auditoría de Salud", f4_d: "Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.",
                 f5_t: "Tarjetas & Notas Seguras", f5_d: "Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.",
                 f6_t: "Importar / Exportar Fácil", f6_d: "Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.",
+                proT: "Modelo Freemium & Planes PRO", proS: "Usa SegurCel gratis de forma local o suscríbete para respaldar y sincronizar tus contraseñas en la nube de forma permanente.",
+                proB: "MODELO FREEMIUM TRANSPARENTE", proV: "Ventajas de SegurCel PRO",
+                pi1: "Sincronización Ilimitada en Tiempo Real (Android, Windows, Web, iOS).",
+                pi2: "Respaldo Permanente Cifrado AES-256 en la Nube.",
+                pi3: "Historial Completo de Contraseñas Anteriores.",
+                pi4: "Rescate de Emergencia de Bóveda (48 Horas).",
+                pi5: "Planes Flexibles: Mensual, Anual, Rescate 6 Meses y Licencia Vitalicia.",
                 ctaT: "¿Listo para proteger tu vida digital?", ctaS: "Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.",
                 priv: "Política de Privacidad"
             },
@@ -583,6 +597,9 @@
                 btnApk: "Download Android APK",
                 btnPlay: "Available on Google Play",
                 btnHeader: "Access Vault",
+                zkT: "Unbreakable Cryptographic Security",
+                zkD1: "At SegurCel we enforce the strict <strong>Zero-Knowledge</strong> principle. Key derivation takes place locally on your device via <strong>PBKDF2WithHmacSHA256</strong> with 65,536 iterations.",
+                zkD2: "Your passwords are encrypted into unreadable ciphertext via <strong>AES-256-GCM</strong> before leaving your device. No employee or server can read your data.",
                 secTitleF: "Key Features",
                 secSubF: "Designed with the world's strictest cybersecurity standards.",
                 f1_t: "Zero-Knowledge Encryption", f1_d: "Your data is encrypted locally on your device using AES-256-GCM + PBKDF2 (65,536 iterations). Nobody else has your keys.",
@@ -591,6 +608,13 @@
                 f4_t: "Vault Health Audit", f4_d: "Smart analyzer that scores your password strength from 0 to 100% and flags weak, old, or reused passwords.",
                 f5_t: "Cards & Confidential Notes", f5_d: "Store credit cards, ATM PINs, and encrypted notes organized into category tabs and star favorites ⭐.",
                 f6_t: "Easy Import / Export", f6_d: "Migrate passwords in seconds from Google Chrome, Edge, Bitwarden, or 1Password in CSV and JSON formats.",
+                proT: "Freemium Model & PRO Plans", proS: "Use SegurCel for free locally or subscribe to back up and sync your passwords across devices via the cloud.",
+                proB: "TRANSPARENT FREEMIUM MODEL", proV: "SegurCel PRO Advantages",
+                pi1: "Unlimited Real-Time Sync (Android, Windows, Web, iOS).",
+                pi2: "Permanent AES-256 Encrypted Cloud Backup.",
+                pi3: "Full History of Previous Passwords.",
+                pi4: "Emergency Vault Rescue (48 Hours).",
+                pi5: "Flexible Plans: Monthly, Yearly, 6-Month Rescue, and Lifetime License.",
                 ctaT: "Ready to protect your digital life?", ctaS: "Start using SegurCel today from any browser or Android device.",
                 priv: "Privacy Policy"
             },
@@ -602,6 +626,9 @@
                 btnApk: "Baixar APK Android",
                 btnPlay: "Disponível no Google Play",
                 btnHeader: "Acessar Cofre",
+                zkT: "Segurança Criptográfica Inquebrável",
+                zkD1: "No SegurCel aplicamos o princípio estrito de <strong>Zero-Knowledge (Conhecimento Zero)</strong>. A chave é derivada localmente via <strong>PBKDF2WithHmacSHA256</strong> com 65.536 iterações.",
+                zkD2: "Suas senhas tornam-se blocos criptografados ilegíveis via <strong>AES-256-GCM</strong> antes de irem para a nuvem.",
                 secTitleF: "Recursos Principais",
                 secSubF: "Projetado com os mais rigorosos padrões globais de cibersegurança.",
                 f1_t: "Criptografia Zero-Knowledge", f1_d: "Seus dados são criptografados localmente no seu dispositivo usando AES-256-GCM + PBKDF2 (65.536 iterações).",
@@ -610,6 +637,13 @@
                 f4_t: "Auditoria de Saúde", f4_d: "Analisador inteligente que pontua a força das suas senhas de 0 a 100% e identifica senhas fracas ou reutilizadas.",
                 f5_t: "Cartões e Notas Seguras", f5_d: "Guarde cartões de crédito, PINs de caixas eletrônicos e notas confidenciais organizados com estrelas de favoritos ⭐.",
                 f6_t: "Importar / Exportar Fácil", f6_d: "Migre suas senhas em segundos do Google Chrome, Edge, Bitwarden ou 1Password em CSV e JSON.",
+                proT: "Modelo Freemium e Planos PRO", proS: "Use o SegurCel gratuitamente de forma local ou assine para sincronizar e salvar suas senhas na nuvem.",
+                proB: "MODELO FREEMIUM TRANSPARENTE", proV: "Vantagens do SegurCel PRO",
+                pi1: "Sincronização Ilimitada em Tempo Real (Android, Windows, Web, iOS).",
+                pi2: "Backup Permanente Criptografado AES-256 na Nuvem.",
+                pi3: "Histórico Completo de Senhas Anteriores.",
+                pi4: "Resgate de Emergência do Cofre (48 Horas).",
+                pi5: "Planos Flexíveis: Mensal, Anual, Resgate de 6 Meses e Licença Vitalícia.",
                 ctaT: "Pronto para proteger sua vida digital?", ctaS: "Comece a usar o SegurCel hoje mesmo de qualquer navegador ou dispositivo Android.",
                 priv: "Política de Privacidade"
             },
@@ -621,6 +655,9 @@
                 btnApk: "下载 Android APK",
                 btnPlay: "即将登陆 Google Play",
                 btnHeader: "进入保险库",
+                zkT: "无可破解的密码学安全",
+                zkD1: "SegurCel 恪守严格的<strong>零知识 (Zero-Knowledge)</strong> 原则。密钥导出在您的设备上通过 <strong>PBKDF2WithHmacSHA256</strong> 协议在本地完成（65,536 次迭代）。",
+                zkD2: "您的密码在离开设备前通过 <strong>AES-256-GCM</strong> 转换为不可读密文。任何员工或服务器均无法解密。",
                 secTitleF: "核心功能",
                 secSubF: "遵循全球最严格的网络安全标准设计。",
                 f1_t: "零知识加密", f1_d: "数据在您的设备上通过 AES-256-GCM + PBKDF2 (65,536 次迭代) 本地加密。任何人均无法获取您的密钥。",
@@ -629,6 +666,13 @@
                 f4_t: "保险库健康审计", f4_d: "智能分析器为您的密码打分 (0-100%)，并自动检测弱密码或重复密码。",
                 f5_t: "银行卡与保密笔记", f5_d: "分类存储信用卡、取款密码和保密笔记，支持星标收藏 ⭐。",
                 f6_t: "轻松导入与导出", f6_d: "数秒内即可从 Google Chrome、Edge、Bitwarden 或 1Password 导入 CSV 与 JSON 格式的密码。",
+                proT: "Freemium 免费模式与 PRO 订阅", proS: "在本地免费使用 SegurCel，或订阅以通过云端备份和同步您的密码。",
+                proB: "透明 FREEMIUM 模式", proV: "SegurCel PRO 优势",
+                pi1: "无限实时同步（Android、Windows、Web、iOS）。",
+                pi2: "云端 AES-256 永久加密备份。",
+                pi3: "完整历史密码记录。",
+                pi4: "保险库 48 小时紧急救援。",
+                pi5: "灵活订阅方案：月度、年度、6个月救援方案与终身授权。",
                 ctaT: "准备好保护您的数字生活了吗？", ctaS: "立即从任何浏览器或 Android 设备使用 SegurCel。",
                 priv: "隐私政策"
             },
@@ -640,6 +684,9 @@
                 btnApk: "Télécharger l'APK Android",
                 btnPlay: "Disponible sur Google Play",
                 btnHeader: "Accéder au Coffre",
+                zkT: "Sécurité Cryptographique Inviolable",
+                zkD1: "Chez SegurCel nous appliquons le principe strict du <strong>Zero-Knowledge</strong>. La clé est dérivée localement via <strong>PBKDF2WithHmacSHA256</strong> avec 65 536 itérations.",
+                zkD2: "Vos mots de passe sont chiffrés en texte de chiffrement AES-256-GCM avant de quitter votre appareil.",
                 secTitleF: "Fonctionnalités Clés",
                 secSubF: "Conçu selon les normes de cybersécurité les plus strictes au monde.",
                 f1_t: "Chiffrement Zero-Knowledge", f1_d: "Vos données sont chiffrées localement sur votre appareil avec AES-256-GCM + PBKDF2 (65 536 itérations).",
@@ -648,6 +695,13 @@
                 f4_t: "Audit de Santé du Coffre", f4_d: "Analyseur intelligent qui évalue la force de vos mots de passe de 0 à 100% et détecte les doublons.",
                 f5_t: "Cartes & Notes Confidentielles", f5_d: "Stockez vos cartes bancaires, codes PIN et notes confidentielles organisés avec des favoris ⭐.",
                 f6_t: "Import / Export Facile", f6_d: "Migrez vos mots de passe en quelques secondes depuis Google Chrome, Edge, Bitwarden ou 1Password en CSV et JSON.",
+                proT: "Modèle Freemium & Offres PRO", proS: "Utilisez SegurCel gratuitement en local ou abonnez-vous pour sauvegarder vos mots de passe sur le cloud.",
+                proB: "MODÈLE FREEMIUM TRANSPARENT", proV: "Avantages de SegurCel PRO",
+                pi1: "Synchronisation Illimitée en Temps Réel (Android, Windows, Web, iOS).",
+                pi2: "Sauvegarde Permanente Chiffrée AES-256 sur le Cloud.",
+                pi3: "Historique Complet des Mots de Passe Précédents.",
+                pi4: "Sauvetage d'Urgence du Coffre (48 Heures).",
+                pi5: "Offres Flexibles : Mensuel, Annuel, Sauvetage 6 Mois et Licence À Vie.",
                 ctaT: "Prêt à protéger votre vie numérique ?", ctaS: "Commencez à utiliser SegurCel dès aujourd'hui depuis n'importe quel navigateur ou appareil Android.",
                 priv: "Politique de Confidentialité"
             },
@@ -659,6 +713,9 @@
                 btnApk: "Android APK डाउनलोड करें",
                 btnPlay: "Google Play पर उपलब्ध",
                 btnHeader: "वॉल्ट एक्सेस करें",
+                zkT: "अभेद्य क्रिप्टोग्राफिक सुरक्षा",
+                zkD1: "SegurCel में हम सख्त <strong>Zero-Knowledge</strong> सिद्धांत लागू करते हैं। 65,536 पुनरावृत्तियों के साथ <strong>PBKDF2WithHmacSHA256</strong> द्वारा स्थानीय कुंजी बनाई जाती है।",
+                zkD2: "आपके पासवर्ड क्लाउड में भेजे जाने से पहले <strong>AES-256-GCM</strong> द्वारा एन्क्रिप्ट किए जाते हैं।",
                 secTitleF: "मुख्य विशेषताएं",
                 secSubF: "दुनिया के सबसे सख्त साइबर सुरक्षा मानकों के साथ डिज़ाइन किया गया।",
                 f1_t: "Zero-Knowledge एन्क्रिप्शन", f1_d: "आपका डेटा AES-256-GCM + PBKDF2 (65,536 पुनरावृत्तियों) का उपयोग करके आपके डिवाइस पर स्थानीय रूप से एन्क्रिप्ट किया जाता है।",
@@ -667,6 +724,13 @@
                 f4_t: "वॉल्ट स्वास्थ्य लेखापरीक्षा", f4_d: "स्मार्ट विश्लेषक जो आपके पासवर्ड की ताकत को 0 से 100% तक आंकता है और कमजोर पासवर्ड को फ़्लैग करता है।",
                 f5_t: "कार्ड और गोपनीय नोट", f5_d: "क्रेडिट कार्ड, एटीएम पिन और गोपनीय नोट्स को पसंदीदा स्टार ⭐ के साथ सहेजें।",
                 f6_t: "आसान आयात / निर्यात", f6_d: "Google Chrome, Edge, Bitwarden या 1Password से कुछ ही सेकंड में अपने पासवर्ड माइग्रेट करें।",
+                proT: "Freemium मॉडल और PRO प्लान", proS: "SegurCel का मुफ़्त में स्थानीय रूप से उपयोग करें या क्लाउड के माध्यम से अपने पासवर्ड सिंक करने के लिए सदस्यता लें।",
+                proB: "पारदर्शी FREEMIUM मॉडल", proV: "SegurCel PRO के लाभ",
+                pi1: "अनलिमिटेड रीयल-टाइम सिंक (Android, Windows, Web, iOS)।",
+                pi2: "क्लाउड में AES-256 के साथ स्थायी बैकअप।",
+                pi3: "पिछले पासवर्ड का पूरा इतिहास।",
+                pi4: "आपातकालीन वॉल्ट बचाव (48 घंटे)।",
+                pi5: "लचीले प्लान: मासिक, वार्षिक, 6-महीने का बचाव प्लान और लाइफटाइम लाइसेंस।",
                 ctaT: "क्या आप अपने डिजिटल जीवन की रक्षा के लिए तैयार हैं?", ctaS: "किसी भी ब्राउज़र या एंड्रॉइड डिवाइस से आज ही SegurCel का उपयोग शुरू करें।",
                 priv: "गोपनीयता नीति"
             }
@@ -680,6 +744,9 @@
             document.getElementById("lblBtnVault").innerText = data.btnVault;
             document.getElementById("lblBtnApk").innerText = data.btnApk;
             document.getElementById("btnHeaderVault").innerText = data.btnHeader;
+            document.getElementById("zkTitle").innerText = data.zkT;
+            document.getElementById("zkDesc1").innerHTML = data.zkD1;
+            document.getElementById("zkDesc2").innerHTML = data.zkD2;
             document.getElementById("secTitleFeatures").innerText = data.secTitleF;
             document.getElementById("secSubFeatures").innerText = data.secSubF;
             document.getElementById("f1_title").innerText = data.f1_t; document.getElementById("f1_desc").innerText = data.f1_d;
@@ -688,6 +755,15 @@
             document.getElementById("f4_title").innerText = data.f4_t; document.getElementById("f4_desc").innerText = data.f4_d;
             document.getElementById("f5_title").innerText = data.f5_t; document.getElementById("f5_desc").innerText = data.f5_d;
             document.getElementById("f6_title").innerText = data.f6_t; document.getElementById("f6_desc").innerText = data.f6_d;
+            document.getElementById("proTitle").innerText = data.proT;
+            document.getElementById("proSub").innerText = data.proS;
+            document.getElementById("badgeFreemium").innerText = data.proB;
+            document.getElementById("lblVentajasPro").innerText = data.proV;
+            document.getElementById("proItem1").innerText = data.pi1;
+            document.getElementById("proItem2").innerText = data.pi2;
+            document.getElementById("proItem3").innerText = data.pi3;
+            document.getElementById("proItem4").innerText = data.pi4;
+            document.getElementById("proItem5").innerText = data.pi5;
             document.getElementById("ctaTitle").innerText = data.ctaT;
             document.getElementById("ctaSub").innerText = data.ctaS;
             document.getElementById("btnCtaVault").innerText = "🚀 " + data.btnVault;
