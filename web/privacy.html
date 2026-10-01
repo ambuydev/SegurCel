@@ -104,7 +104,7 @@
         <div class="subtitle" id="subtitle">Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge</div>
 
         <div class="highlight" id="summary">
-            <strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestre ni podemos leer tus contraseñas en ningún caso.
+            <strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestra ni podemos leer tus contraseñas en ningún caso.
         </div>
 
         <h2 id="h2_1">1. Información que Recopilamos</h2>
@@ -121,7 +121,7 @@
             <p>SegurCel implementa los más altos estándares de criptografía moderna:</p>
             <ul>
                 <li><strong>Cifrado Simétrico AES-256-GCM:</strong> La clave de cifrado se deriva localmente en tu dispositivo mediante el protocolo <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</li>
-                <li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono (Keystore/Keychain).</li>
+                <li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono.</li>
                 <li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente de tu dispositivo para prevenir ataques por fuerza bruta.</li>
             </ul>
         </div>
@@ -150,7 +150,7 @@
         const texts = {
             es: {
                 subtitle: "Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge",
-                summary: "<strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestre ni podemos leer tus contraseñas en ningún caso.",
+                summary: "<strong>Resumen de Privacidad:</strong> En SegurCel aplicamos el principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. Tus contraseñas, tarjetas y notas se cifran en tu propio dispositivo utilizando el algoritmo <strong>AES-256-GCM</strong> antes de enviarse a la nube. Nosotros no tenemos acceso a tu clave maestra ni podemos leer tus contraseñas en ningún caso.",
                 h2_1: "1. Información que Recopilamos",
                 content_1: "<p>Para brindarte la funcionalidad de sincronización multidispositivo y autenticación segura, recopilamos la siguiente información técnica mínima:</p><ul><li><strong>Dirección de Correo Electrónico:</strong> Utilizada únicamente para identificar tu cuenta de usuario e iniciar sesión en SegurCel Cloud.</li><li><strong>Datos Cifrados de la Bóveda:</strong> Todas tus contraseñas, nombres de usuario, números de tarjeta y notas se almacenan en forma de bloques de texto cifrado ilegible mediante AES-256. Ningún empleado ni servidor puede descifrar estos datos.</li></ul>",
                 h2_2: "2. Arquitectura de Cifrado y Seguridad",
