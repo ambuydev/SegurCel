@@ -185,6 +185,9 @@ class LocalizationService extends ChangeNotifier {
       'spec_3': 'Autodestrucción local tras 3 intentos fallidos de PIN',
       'spec_4': 'Sincronización Cloud Encriptada en Tiempo Real (Firebase)',
       'spec_5': 'Auditoría de Bóveda, Importador/Exportador y 2FA TOTP',
+      'support_contact': 'Soporte y Contacto',
+      'official_website': 'Sitio Web Oficial',
+      'support_email': 'Correo de Soporte',
     },
     'en': {
       'app_title': 'SegurCel',
@@ -325,6 +328,9 @@ class LocalizationService extends ChangeNotifier {
       'spec_3': 'Local self-destruction after 3 failed PIN attempts',
       'spec_4': 'Real-Time Encrypted Cloud Sync (Firebase)',
       'spec_5': 'Vault Health Audit, Importer/Exporter & 2FA TOTP',
+      'support_contact': 'Support & Contact',
+      'official_website': 'Official Website',
+      'support_email': 'Support Email',
     },
     'pt': {
       'app_title': 'SegurCel',
@@ -465,6 +471,9 @@ class LocalizationService extends ChangeNotifier {
       'spec_3': 'Autodestruição local após 3 tentativas incorretas de PIN',
       'spec_4': 'Sincronização em Nuvem Criptografada em Tempo Real (Firebase)',
       'spec_5': 'Auditoria de Cofre, Importador/Exportador e 2FA TOTP',
+      'support_contact': 'Suporte e Contato',
+      'official_website': 'Website Oficial',
+      'support_email': 'E-mail de Suporte',
     },
     'zh': {
       'app_title': 'SegurCel',
@@ -605,6 +614,9 @@ class LocalizationService extends ChangeNotifier {
       'spec_3': '连续 3 次 PIN 码错误触发本地数据自毁',
       'spec_4': '实时云端加密同步 (Firebase)',
       'spec_5': '保险库健康审计、导入/导出与 2FA TOTP 生成器',
+      'support_contact': '支持与联系',
+      'official_website': '官方网站',
+      'support_email': '支持邮箱',
     },
     'fr': {
       'app_title': 'SegurCel',
@@ -745,6 +757,9 @@ class LocalizationService extends ChangeNotifier {
       'spec_3': 'Autodestruction locale après 3 tentatives de PIN incorrectes',
       'spec_4': 'Synchronisation Cloud chiffrée en temps réel (Firebase)',
       'spec_5': 'Audit de Santé de Coffre, Importateur/Exportateur et 2FA TOTP',
+      'support_contact': 'Support et Contact',
+      'official_website': 'Site Web Officiel',
+      'support_email': 'E-mail de Support',
     },
     'hi': {
       'app_title': 'SegurCel',
@@ -849,7 +864,7 @@ class LocalizationService extends ChangeNotifier {
       'weak_passwords': 'कमजोर पासवर्ड',
       'reused_passwords': 'पुनः उपयोग किए गए पासवर्ड',
       'old_passwords': 'पुराने पासवर्ड',
-      'strong_passwords': 'मजबूत पासवर्ड',
+      'strong_passwords': 'मजबल पासवर्ड',
       'health_excellent': 'उत्कृष्ट वॉल्ट!',
       'health_good': 'अच्छा वॉल्ट',
       'health_action_needed': 'ध्यान देने योग्य',
@@ -885,6 +900,9 @@ class LocalizationService extends ChangeNotifier {
       'spec_3': '3 गलत पिन प्रयासों के बाद स्थानीय डेटा स्वतः नष्ट',
       'spec_4': 'रीयल-टाइम एन्क्रिप्टेड क्लाउड सिंक (Firebase)',
       'spec_5': 'वॉल्ट स्वास्थ्य लेखापरीक्षा, आयात/निर्यात और 2FA TOTP',
+      'support_contact': 'सहायता और संपर्क',
+      'official_website': 'आधिकारिक वेबसाइट',
+      'support_email': 'सहायता ईमेल',
     },
   };
 }

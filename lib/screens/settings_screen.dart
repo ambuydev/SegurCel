@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
@@ -491,7 +493,69 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               const SizedBox(height: 20),
 
-              // Sección 3: Suscripción PRO
+              // Sección 3: Soporte y Contacto Oficial
+              _buildSectionCard(
+                title: _loc.text('support_contact'),
+                icon: Icons.contact_support_outlined,
+                iconColor: Colors.amberAccent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.language, color: Colors.cyanAccent, size: 20),
+                      title: Text(_loc.text('official_website'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: const Text('https://segurcel.app', style: TextStyle(color: Colors.cyanAccent, fontSize: 12)),
+                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      onTap: () async {
+                        final uri = Uri.parse('https://segurcel.app');
+                        try {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication, webOnlyWindowName: '_blank');
+                        } catch (_) {
+                          Clipboard.setData(ClipboardData(text: uri.toString()));
+                        }
+                      },
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.email_outlined, color: Colors.amberAccent, size: 20),
+                      title: Text(_loc.text('support_email'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: const Text('support.segurcel@gmail.com', style: TextStyle(color: Colors.amberAccent, fontSize: 12)),
+                      trailing: const Icon(Icons.copy, color: Colors.white54, size: 18),
+                      onTap: () {
+                        Clipboard.setData(const ClipboardData(text: 'support.segurcel@gmail.com'));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${_loc.text("support_email")} ${_loc.text("copied_toast")}'),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF), size: 20),
+                      title: Text(_loc.text('privacy_policy'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: const Text('https://segurcel.app/privacy.html', style: TextStyle(color: Colors.white60, fontSize: 12)),
+                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      onTap: () async {
+                        final uri = Uri.parse('https://segurcel.app/privacy.html');
+                        try {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication, webOnlyWindowName: '_blank');
+                        } catch (_) {
+                          Clipboard.setData(ClipboardData(text: uri.toString()));
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Sección 4: Suscripción PRO
               _buildSectionCard(
                 title: _loc.text('pro_subscription'),
                 icon: Icons.stars_outlined,

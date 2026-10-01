@@ -248,9 +248,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 onPressed: () async {
-                  final uri = Uri.parse('https://segurcel-45c92.web.app/privacy.html');
+                  final uri = Uri.parse('https://segurcel.app/privacy.html');
                   try {
-                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    await launchUrl(
+                      uri,
+                      mode: LaunchMode.externalApplication,
+                      webOnlyWindowName: '_blank',
+                    );
                   } catch (_) {
                     _copyToClipboard(uri.toString(), _loc.text('privacy_policy'));
                   }
