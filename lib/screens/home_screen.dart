@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/password_health_service.dart';
 import '../services/totp_service.dart';
 import '../services/vault_service.dart';
+import '../utils/file_helper.dart';
 import 'login_screen.dart';
 import 'pin_screen.dart';
 import 'settings_screen.dart';
@@ -247,16 +247,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   _loc.text('privacy_policy'),
                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                onPressed: () async {
-                  final uri = Uri.parse('https://segurcel.app/privacy.html');
+                onPressed: () {
                   try {
-                    await launchUrl(
-                      uri,
-                      mode: LaunchMode.externalApplication,
-                      webOnlyWindowName: '_blank',
-                    );
+                    FileHelper.openUrl('https://segurcel.app/privacy.html');
                   } catch (_) {
-                    _copyToClipboard(uri.toString(), _loc.text('privacy_policy'));
+                    _copyToClipboard('https://segurcel.app/privacy.html', _loc.text('privacy_policy'));
                   }
                 },
               ),

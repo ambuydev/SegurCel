@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../models/password_entry.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
@@ -507,12 +506,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       title: Text(_loc.text('official_website'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                       subtitle: const Text('https://segurcel.app', style: TextStyle(color: Colors.cyanAccent, fontSize: 12)),
                       trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
-                      onTap: () async {
-                        final uri = Uri.parse('https://segurcel.app');
+                      onTap: () {
                         try {
-                          await launchUrl(uri, mode: LaunchMode.externalApplication, webOnlyWindowName: '_blank');
+                          FileHelper.openUrl('https://segurcel.app');
                         } catch (_) {
-                          Clipboard.setData(ClipboardData(text: uri.toString()));
+                          Clipboard.setData(const ClipboardData(text: 'https://segurcel.app'));
                         }
                       },
                     ),
@@ -540,12 +538,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       title: Text(_loc.text('privacy_policy'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                       subtitle: const Text('https://segurcel.app/privacy.html', style: TextStyle(color: Colors.white60, fontSize: 12)),
                       trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
-                      onTap: () async {
-                        final uri = Uri.parse('https://segurcel.app/privacy.html');
+                      onTap: () {
                         try {
-                          await launchUrl(uri, mode: LaunchMode.externalApplication, webOnlyWindowName: '_blank');
+                          FileHelper.openUrl('https://segurcel.app/privacy.html');
                         } catch (_) {
-                          Clipboard.setData(ClipboardData(text: uri.toString()));
+                          Clipboard.setData(const ClipboardData(text: 'https://segurcel.app/privacy.html'));
                         }
                       },
                     ),

@@ -44,4 +44,8 @@ class FileHelperImpl {
     anchor.click();
     html.Url.revokeObjectUrl(url);
   }
+
+  static Future<void> openUrl(String url) async {
+    html.window.open(url, '_blank');
+  }
 }

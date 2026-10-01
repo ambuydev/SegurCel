@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FileHelperImpl {
   static Future<String?> pickFileContent() async {
@@ -29,5 +30,10 @@ class FileHelperImpl {
       fileName: fileName,
       bytes: bytes,
     );
+  }
+
+  static Future<void> openUrl(String url) async {
+    final uri = Uri.parse(url);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }
