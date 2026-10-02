@@ -6,7 +6,7 @@ import 'auth_service.dart';
 
 class AntiTheftCloudSync {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static StreamSubscription<QuerySnapshot>? _commandSubscription;
+  static StreamSubscription<DocumentSnapshot>? _deviceSubscription;
 
   /// Inicia la escucha activa de comandos remotos en el dispositivo móvil Android
   static void startDeviceCloudListener() {
@@ -15,64 +15,51 @@ class AntiTheftCloudSync {
     if (user == null) return;
 
     final deviceId = 'android_phone';
-    _commandSubscription?.cancel();
+    _deviceSubscription?.cancel();
 
-    final commandsRef = _firestore
+    final deviceDocRef = _firestore
         .collection('users')
         .doc(user.uid)
         .collection('devices')
-        .doc(deviceId)
-        .collection('commands');
+        .doc(deviceId);
 
-    _commandSubscription = commandsRef.snapshots().listen((snapshot) async {
-      for (final doc in snapshot.docs) {
-        final data = doc.data();
-        final status = data['status'] as String?;
-        if (status != 'pending') continue;
+    _deviceSubscription = deviceDocRef.snapshots().listen((snapshot) async {
+      if (!snapshot.exists) return;
+      final data = snapshot.data();
+      final cmd = data?['pendingCommand'] as String?;
 
-        final cmd = data['command'] as String?;
-        if (cmd == null) continue;
-
-        await doc.reference.update({'status': 'processing'});
-
-        if (cmd == 'start_alarm') {
-          await AntiTheftService.startAlarm();
-        } else if (cmd == 'stop_alarm') {
-          await AntiTheftService.stopAlarm();
-        }
-
-        await doc.reference.update({
-          'status': 'executed',
-          'executedAt': FieldValue.serverTimestamp(),
-        });
+      if (cmd == 'start_alarm') {
+        await deviceDocRef.set({'pendingCommand': 'none'}, SetOptions(merge: true));
+        await AntiTheftService.startAlarm();
+      } else if (cmd == 'stop_alarm') {
+        await deviceDocRef.set({'pendingCommand': 'none'}, SetOptions(merge: true));
+        await AntiTheftService.stopAlarm();
       }
     });
   }
 
-  /// Envía un comando remoto desde la Web Vault o la App
+  /// Envía un comando remoto instantáneo desde la Web Vault o la App
   static Future<void> sendRemoteCommand(String command) async {
     final user = AuthService().currentUser;
     if (user == null) return;
 
     final deviceId = 'android_phone';
 
-    final commandsRef = _firestore
+    final deviceDocRef = _firestore
         .collection('users')
         .doc(user.uid)
         .collection('devices')
-        .doc(deviceId)
-        .collection('commands');
+        .doc(deviceId);
 
-    await commandsRef.add({
-      'command': command,
-      'status': 'pending',
-      'createdAt': FieldValue.serverTimestamp(),
-      'createdAtMillis': DateTime.now().millisecondsSinceEpoch,
-    });
+    await deviceDocRef.set({
+      'pendingCommand': command,
+      'commandTimestamp': DateTime.now().millisecondsSinceEpoch,
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
   }
 
   /// Detiene la escucha de comandos al cerrar sesión
   static void stopDeviceCloudListener() {
-    _commandSubscription?.cancel();
+    _deviceSubscription?.cancel();
   }
 }
