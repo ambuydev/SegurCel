@@ -4,16 +4,14 @@ import android.content.Context
 import android.hardware.camera2.CameraManager
 import android.media.AudioAttributes
 import android.media.AudioManager
-import android.media.Ringtone
-import android.media.RingtoneManager
-import android.net.Uri
+import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 
 object SirenFlashHelper {
     private const val TAG = "SirenFlashHelper"
-    private var alarmRingtone: Ringtone? = null
+    private var mediaPlayer: MediaPlayer? = null
     private var isFlashing = false
     private var flashHandler: Handler? = null
     private var flashRunnable: Runnable? = null
@@ -26,44 +24,46 @@ object SirenFlashHelper {
             val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0)
 
-            // 2. Reproduce sonido de sirena de alarma
-            val alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-
-            if (alarmRingtone == null) {
-                alarmRingtone = RingtoneManager.getRingtone(context.applicationContext, alarmUri)
-                alarmRingtone?.audioAttributes = AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build()
+            // 2. Reproduce el archivo de audio nativo de Sirena Policial
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(context.applicationContext, R.raw.siren_police)
+                mediaPlayer?.isLooping = true
+                mediaPlayer?.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
             }
 
-            if (alarmRingtone?.isPlaying == false) {
-                alarmRingtone?.play()
+            if (mediaPlayer?.isPlaying == false) {
+                mediaPlayer?.start()
             }
 
             // 3. Inicia parpadeo estroboscópico de linterna LED
             startStrobeFlash(context)
 
-            Log.i(TAG, "¡Sirena de Alarma y Flash LED activados a máximo volumen!")
+            Log.i(TAG, "¡Sirena Policial y Flash LED activados a máximo volumen!")
         } catch (e: Exception) {
-            Log.e(TAG, "Error activando sirena y flash: ${e.message}")
+            Log.e(TAG, "Error activando sirena policial: ${e.message}")
         }
     }
 
     fun stopAlarmAndFlash(context: Context) {
         try {
-            // 1. Detiene la sirena de alarma
-            if (alarmRingtone?.isPlaying == true) {
-                alarmRingtone?.stop()
+            // 1. Detiene la sirena policial
+            if (mediaPlayer?.isPlaying == true) {
+                mediaPlayer?.stop()
             }
+            mediaPlayer?.release()
+            mediaPlayer = null
 
             // 2. Detiene el parpadeo de linterna LED
             stopStrobeFlash(context)
 
-            Log.i(TAG, "Sirena de Alarma y Flash LED desactivados")
+            Log.i(TAG, "Sirena Policial y Flash LED desactivados")
         } catch (e: Exception) {
-            Log.e(TAG, "Error desactivando sirena y flash: ${e.message}")
+            Log.e(TAG, "Error desactivando sirena policial: ${e.message}")
         }
     }
 
@@ -82,7 +82,7 @@ object SirenFlashHelper {
                     flashState = !flashState
                     cameraManager.setTorchMode(cameraId, flashState)
                 } catch (_: Exception) {}
-                flashHandler?.postDelayed(this, 200) // Parpadeo cada 200 milisegundos
+                flashHandler?.postDelayed(this, 200)
             }
         }
         flashHandler?.post(flashRunnable as Runnable)
