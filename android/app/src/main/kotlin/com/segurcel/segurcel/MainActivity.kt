@@ -11,10 +11,15 @@ class MainActivity : FlutterFragmentActivity() {
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
+        try {
+            SegurCelForegroundService.startService(this)
+        } catch (_: Exception) {}
+
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
                 "startAlarm" -> {
                     try {
+                        SegurCelForegroundService.acquireWakeLock(this)
                         SirenFlashHelper.startAlarmAndFlash(this)
                         result.success(true)
                     } catch (e: Exception) {
