@@ -10,6 +10,7 @@ import '../services/totp_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import 'login_screen.dart';
+import 'my_devices_screen.dart';
 import 'pin_screen.dart';
 import 'settings_screen.dart';
 
@@ -1450,6 +1451,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           _buildLanguagePicker(),
+          IconButton(
+            icon: const Icon(Icons.phonelink_lock, color: Color(0xFF6C63FF)),
+            tooltip: _loc.text('my_devices_title'),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const MyDevicesScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.volume_up, color: Colors.amberAccent),
             tooltip: 'Sirena y Flash LED',
