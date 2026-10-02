@@ -24,12 +24,12 @@ class AntiTheftCloudSync {
         .doc(deviceId)
         .collection('commands');
 
-    _commandSubscription = commandsRef
-        .where('status', isEqualTo: 'pending')
-        .snapshots()
-        .listen((snapshot) async {
+    _commandSubscription = commandsRef.snapshots().listen((snapshot) async {
       for (final doc in snapshot.docs) {
         final data = doc.data();
+        final status = data['status'] as String?;
+        if (status != 'pending') continue;
+
         final cmd = data['command'] as String?;
         if (cmd == null) continue;
 

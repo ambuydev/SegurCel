@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../services/anti_theft_cloud_sync.dart';
 import '../services/anti_theft_service.dart';
@@ -163,11 +164,11 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
 
                               if (_isAlarmActive) {
                                 await AntiTheftCloudSync.sendRemoteCommand('stop_alarm');
-                                await AntiTheftService.stopAlarm();
+                                if (!kIsWeb) await AntiTheftService.stopAlarm();
                                 if (mounted) setState(() => _isAlarmActive = false);
                               } else {
                                 await AntiTheftCloudSync.sendRemoteCommand('start_alarm');
-                                await AntiTheftService.startAlarm();
+                                if (!kIsWeb) await AntiTheftService.startAlarm();
                                 if (mounted) setState(() => _isAlarmActive = true);
                               }
 
