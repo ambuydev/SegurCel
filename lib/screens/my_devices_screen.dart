@@ -161,25 +161,40 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                             ),
                             onPressed: () async {
                               final messenger = ScaffoldMessenger.of(context);
+                              final targetCommand = _isAlarmActive ? 'stop_alarm' : 'start_alarm';
+                              final success = await AntiTheftCloudSync.sendRemoteCommand(targetCommand);
 
-                              if (_isAlarmActive) {
-                                await AntiTheftCloudSync.sendRemoteCommand('stop_alarm');
-                                if (!kIsWeb) await AntiTheftService.stopAlarm();
-                                if (mounted) setState(() => _isAlarmActive = false);
+                              if (success) {
+                                if (!kIsWeb) {
+                                  if (_isAlarmActive) {
+                                    await AntiTheftService.stopAlarm();
+                                  } else {
+                                    await AntiTheftService.startAlarm();
+                                  }
+                                }
+                                if (mounted) setState(() => _isAlarmActive = !_isAlarmActive);
+
+                                if (mounted) {
+                                  messenger.showSnackBar(
+                                    SnackBar(
+                                      content: Text(_isAlarmActive
+                                          ? '🔊 Comando enviado: ¡Sirena y Flash activados!'
+                                          : '🔇 Comando enviado: Sirena detenida.'),
+                                      backgroundColor: Colors.amber,
+                                      behavior: SnackBarBehavior.floating,
+                                    ),
+                                  );
+                                }
                               } else {
-                                await AntiTheftCloudSync.sendRemoteCommand('start_alarm');
-                                if (!kIsWeb) await AntiTheftService.startAlarm();
-                                if (mounted) setState(() => _isAlarmActive = true);
-                              }
-
-                              if (mounted) {
-                                messenger.showSnackBar(
-                                  SnackBar(
-                                    content: Text(_loc.text('cmd_sent_toast')),
-                                    backgroundColor: Colors.amber,
-                                    behavior: SnackBarBehavior.floating,
-                                  ),
-                                );
+                                if (mounted) {
+                                  messenger.showSnackBar(
+                                    const SnackBar(
+                                      content: Text('⚠️ No se pudo conectar con la Nube. Verifica la sesión.'),
+                                      backgroundColor: Colors.redAccent,
+                                      behavior: SnackBarBehavior.floating,
+                                    ),
+                                  );
+                                }
                               }
                             },
                           ),
