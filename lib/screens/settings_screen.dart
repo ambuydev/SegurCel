@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
+import '../services/anti_theft_service.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
@@ -37,6 +38,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _obscureNewPass = true;
   bool _obscureConfirmPass = true;
   String? _passwordErrorMessage;
+
+  bool _isAlarmPlaying = false;
 
   Future<void> _changePin() async {
     final currentPin = _currentPinController.text.trim();
@@ -240,6 +243,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Sección Sirena Antirrobo y Flash Strobe LED
+              _buildSectionCard(
+                title: 'Sirena Antirrobo y Flash LED Remoto',
+                icon: Icons.volume_up,
+                iconColor: Colors.amberAccent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Dispara una sirena de alarma a máximo volumen (fuerza 100% de volumen) junto con destellos estroboscópicos de la linterna LED para localizar tu celular.',
+                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                    ),
+                    const SizedBox(height: 14),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _isAlarmPlaying ? Colors.redAccent : const Color(0xFF10141D),
+                        side: BorderSide(color: _isAlarmPlaying ? Colors.redAccent : Colors.amberAccent),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      icon: Icon(_isAlarmPlaying ? Icons.volume_off : Icons.volume_up, color: _isAlarmPlaying ? Colors.white : Colors.amberAccent, size: 20),
+                      label: Text(
+                        _isAlarmPlaying ? '🔇 Detener Sirena y Flash Strobe' : '🔊 Probar Sirena y Flash Strobe LED',
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                      onPressed: () async {
+                        if (_isAlarmPlaying) {
+                          await AntiTheftService.stopAlarm();
+                          if (mounted) setState(() => _isAlarmPlaying = false);
+                        } else {
+                          await AntiTheftService.startAlarm();
+                          if (mounted) setState(() => _isAlarmPlaying = true);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
               // Sección Importar / Exportar Contraseñas
               _buildSectionCard(
                 title: _loc.text('import_export'),

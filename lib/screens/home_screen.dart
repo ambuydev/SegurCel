@@ -1451,6 +1451,17 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           _buildLanguagePicker(),
           IconButton(
+            icon: const Icon(Icons.volume_up, color: Colors.amberAccent),
+            tooltip: 'Sirena y Flash LED',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => SettingsScreen(vaultService: widget.vaultService),
+                ),
+              );
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.info_outline, color: Colors.white70),
             tooltip: _loc.text('about_app'),
             onPressed: _showAboutDialog,
