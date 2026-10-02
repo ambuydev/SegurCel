@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
@@ -1447,28 +1448,27 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xFF1E2538),
         elevation: 2,
         titleSpacing: 12,
-        title: Text(
-          _loc.text('app_title'),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        title: GestureDetector(
+          onTap: _showAboutDialog,
+          child: Text(
+            _loc.text('app_title'),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
         ),
         actions: [
           _buildLanguagePicker(),
-          IconButton(
-            icon: const Icon(Icons.phonelink_lock, color: Color(0xFF6C63FF)),
-            tooltip: _loc.text('my_devices_title'),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const MyDevicesScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.info_outline, color: Colors.white70),
-            tooltip: _loc.text('about_app'),
-            onPressed: _showAboutDialog,
-          ),
+          if (kIsWeb)
+            IconButton(
+              icon: const Icon(Icons.phonelink_lock, color: Color(0xFF6C63FF)),
+              tooltip: _loc.text('my_devices_title'),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const MyDevicesScreen(),
+                  ),
+                );
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.settings_outlined, color: Colors.white70),
             tooltip: _loc.text('settings'),
