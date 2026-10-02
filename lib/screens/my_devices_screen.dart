@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../services/anti_theft_cloud_sync.dart';
-import '../services/anti_theft_service.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 
@@ -135,70 +134,84 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
 
                         // Comandos Remotos
                         const Text(
-                          'Comandos Remotos en Tiempo Real',
+                          'Control Remoto Nube SegurCel',
                           style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                         const SizedBox(height: 12),
 
-                        // Botón Sirena Remota
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: _isAlarmActive ? Colors.redAccent : const Color(0xFF10141D),
-                              side: BorderSide(color: _isAlarmActive ? Colors.redAccent : Colors.amberAccent),
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            ),
-                            icon: Icon(
-                              _isAlarmActive ? Icons.volume_off : Icons.volume_up,
-                              color: _isAlarmActive ? Colors.white : Colors.amberAccent,
-                              size: 22,
-                            ),
-                            label: Text(
-                              _isAlarmActive ? '🔇 Detener Sirena Remota' : '🔊 Disparar Sirena y Flash Strobe Remoto',
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            onPressed: () async {
-                              final messenger = ScaffoldMessenger.of(context);
-                              final targetCommand = _isAlarmActive ? 'stop_alarm' : 'start_alarm';
-                              final success = await AntiTheftCloudSync.sendRemoteCommand(targetCommand);
+                        if (kIsWeb)
+                          // Botón Sirena Remota (Solo visible en la Web)
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isAlarmActive ? Colors.redAccent : const Color(0xFF10141D),
+                                side: BorderSide(color: _isAlarmActive ? Colors.redAccent : Colors.amberAccent),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                              icon: Icon(
+                                _isAlarmActive ? Icons.volume_off : Icons.volume_up,
+                                color: _isAlarmActive ? Colors.white : Colors.amberAccent,
+                                size: 22,
+                              ),
+                              label: Text(
+                                _isAlarmActive ? '🔇 Detener Sirena Remota' : '🔊 Disparar Sirena y Flash Strobe Remoto',
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                              ),
+                              onPressed: () async {
+                                final messenger = ScaffoldMessenger.of(context);
+                                final targetCommand = _isAlarmActive ? 'stop_alarm' : 'start_alarm';
+                                final success = await AntiTheftCloudSync.sendRemoteCommand(targetCommand);
 
-                              if (success) {
-                                if (!kIsWeb) {
-                                  if (_isAlarmActive) {
-                                    await AntiTheftService.stopAlarm();
-                                  } else {
-                                    await AntiTheftService.startAlarm();
+                                if (success) {
+                                  if (mounted) setState(() => _isAlarmActive = !_isAlarmActive);
+                                  if (mounted) {
+                                    messenger.showSnackBar(
+                                      SnackBar(
+                                        content: Text(_isAlarmActive
+                                            ? '🔊 Comando enviado: ¡Sirena y Flash activados!'
+                                            : '🔇 Comando enviado: Sirena detenida.'),
+                                        backgroundColor: Colors.amber,
+                                        behavior: SnackBarBehavior.floating,
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  if (mounted) {
+                                    messenger.showSnackBar(
+                                      const SnackBar(
+                                        content: Text('⚠️ No se pudo conectar con la Nube. Verifica la sesión.'),
+                                        backgroundColor: Colors.redAccent,
+                                        behavior: SnackBarBehavior.floating,
+                                      ),
+                                    );
                                   }
                                 }
-                                if (mounted) setState(() => _isAlarmActive = !_isAlarmActive);
-
-                                if (mounted) {
-                                  messenger.showSnackBar(
-                                    SnackBar(
-                                      content: Text(_isAlarmActive
-                                          ? '🔊 Comando enviado: ¡Sirena y Flash activados!'
-                                          : '🔇 Comando enviado: Sirena detenida.'),
-                                      backgroundColor: Colors.amber,
-                                      behavior: SnackBarBehavior.floating,
-                                    ),
-                                  );
-                                }
-                              } else {
-                                if (mounted) {
-                                  messenger.showSnackBar(
-                                    const SnackBar(
-                                      content: Text('⚠️ No se pudo conectar con la Nube. Verifica la sesión.'),
-                                      backgroundColor: Colors.redAccent,
-                                      behavior: SnackBarBehavior.floating,
-                                    ),
-                                  );
-                                }
-                              }
-                            },
+                              },
+                            ),
+                          )
+                        else
+                          // Mensaje orientativo en el celular
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF10141D),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Row(
+                              children: [
+                                Icon(Icons.info_outline, color: Colors.cyanAccent, size: 20),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    'El disparo remoto de sirena se ejecuta desde la Web oficial https://segurcel.app cuando tu teléfono está extraviado.',
+                                    style: TextStyle(color: Colors.white70, fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
