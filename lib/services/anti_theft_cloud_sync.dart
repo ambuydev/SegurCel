@@ -21,25 +21,22 @@ class AntiTheftCloudSync {
         return;
       }
 
-      final deviceId = 'android_phone';
       _deviceSubscription?.cancel();
 
-      final deviceDocRef = _firestore
+      final userDocRef = _firestore
           .collection('users')
-          .doc(user.uid)
-          .collection('devices')
-          .doc(deviceId);
+          .doc(user.uid);
 
-      _deviceSubscription = deviceDocRef.snapshots().listen((snapshot) async {
+      _deviceSubscription = userDocRef.snapshots().listen((snapshot) async {
         if (!snapshot.exists) return;
         final data = snapshot.data();
         final cmd = data?['pendingCommand'] as String?;
 
         if (cmd == 'start_alarm') {
-          await deviceDocRef.set({'pendingCommand': 'none'}, SetOptions(merge: true));
+          await userDocRef.set({'pendingCommand': 'none'}, SetOptions(merge: true));
           await AntiTheftService.startAlarm();
         } else if (cmd == 'stop_alarm') {
-          await deviceDocRef.set({'pendingCommand': 'none'}, SetOptions(merge: true));
+          await userDocRef.set({'pendingCommand': 'none'}, SetOptions(merge: true));
           await AntiTheftService.stopAlarm();
         }
       });
@@ -53,16 +50,12 @@ class AntiTheftCloudSync {
       return false;
     }
 
-    final deviceId = 'android_phone';
-
     try {
-      final deviceDocRef = _firestore
+      final userDocRef = _firestore
           .collection('users')
-          .doc(user.uid)
-          .collection('devices')
-          .doc(deviceId);
+          .doc(user.uid);
 
-      await deviceDocRef.set({
+      await userDocRef.set({
         'pendingCommand': command,
         'commandTimestamp': DateTime.now().millisecondsSinceEpoch,
         'updatedAt': FieldValue.serverTimestamp(),
