@@ -13,17 +13,8 @@ class MainActivity : FlutterFragmentActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
-                "startForegroundService" -> {
-                    try {
-                        SegurCelForegroundService.startService(this)
-                        result.success(true)
-                    } catch (e: Exception) {
-                        result.error("SERVICE_ERROR", e.message, null)
-                    }
-                }
                 "startAlarm" -> {
                     try {
-                        SegurCelForegroundService.acquireWakeLock(this)
                         SirenFlashHelper.startAlarmAndFlash(this)
                         result.success(true)
                     } catch (e: Exception) {

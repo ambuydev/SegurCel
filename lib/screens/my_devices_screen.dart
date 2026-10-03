@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/anti_theft_cloud_sync.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
+import '../utils/file_helper.dart';
 
 class MyDevicesScreen extends StatefulWidget {
   const MyDevicesScreen({super.key});
@@ -212,6 +213,46 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                               ],
                             ),
                           ),
+
+                        const SizedBox(height: 16),
+
+                        // Enlace Oficial a Google Find My Device
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF10141D),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.greenAccent),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.security, color: Colors.greenAccent, size: 24),
+                              const SizedBox(width: 10),
+                              const Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Google Encontrar mi Dispositivo (Oficial)',
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                    ),
+                                    SizedBox(height: 2),
+                                    Text(
+                                      'Servicio oficial de Google con privilegios de sistema para rastrear GPS, sonar o formatear tu teléfono.',
+                                      style: TextStyle(color: Colors.white70, fontSize: 11),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.open_in_new, color: Colors.greenAccent, size: 20),
+                                onPressed: () {
+                                  FileHelper.openUrl('https://google.com/android/find');
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
