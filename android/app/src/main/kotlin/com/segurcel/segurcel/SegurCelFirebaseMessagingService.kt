@@ -32,15 +32,16 @@ class SegurCelFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        Log.i(TAG, "Mensaje Push FCM de Alta Prioridad recibido en Kotlin: ${remoteMessage.data}")
+        Log.i(TAG, "Mensaje Push FCM recibido en Kotlin: ${remoteMessage.data}")
 
-        val cmd = remoteMessage.data["command"] ?: remoteMessage.data["pendingCommand"]
+        val data = remoteMessage.data
+        val cmd = data["command"] ?: data["pendingCommand"] ?: ""
 
-        if (cmd == "start_alarm") {
+        if (cmd == "start_alarm" || data.values.contains("start_alarm")) {
             acquireWakeLock(applicationContext)
             SirenFlashHelper.startAlarmAndFlash(applicationContext)
             showFullScreenNotification(applicationContext)
-        } else if (cmd == "stop_alarm") {
+        } else if (cmd == "stop_alarm" || data.values.contains("stop_alarm")) {
             SirenFlashHelper.stopAlarmAndFlash(applicationContext)
         }
     }

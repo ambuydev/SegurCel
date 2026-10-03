@@ -6,16 +6,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'anti_theft_service.dart';
 import 'auth_service.dart';
 
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  final cmd = message.data['command'] as String?;
-  if (cmd == 'start_alarm') {
-    await AntiTheftService.startAlarm();
-  } else if (cmd == 'stop_alarm') {
-    await AntiTheftService.stopAlarm();
-  }
-}
-
 class AntiTheftCloudSync {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -33,12 +23,7 @@ class AntiTheftCloudSync {
         return;
       }
 
-      // 1. Inicia el Servicio Persistente en Primer Plano (Estilo Samsung Health)
-      try {
-        await AntiTheftService.startForegroundService();
-      } catch (_) {}
-
-      // 2. Solicita permiso de notificaciones Push en Android 13/14 y guarda Token FCM
+      // 1. Solicita permiso de notificaciones Push en Android 13/14 y guarda Token FCM
       try {
         await _messaging.requestPermission(
           alert: true,
@@ -56,19 +41,7 @@ class AntiTheftCloudSync {
         }
       } catch (_) {}
 
-      // 2. Escucha mensajes FCM en segundo plano y primer plano
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-        final cmd = message.data['command'] as String?;
-        if (cmd == 'start_alarm') {
-          await AntiTheftService.startAlarm();
-        } else if (cmd == 'stop_alarm') {
-          await AntiTheftService.stopAlarm();
-        }
-      });
-
-      // 3. Escucha de Firestore como respaldo en vivo
+      // 2. Escucha de Firestore en vivo
       _deviceSubscription?.cancel();
       final userDocRef = _firestore.collection('users').doc(user.uid);
 
