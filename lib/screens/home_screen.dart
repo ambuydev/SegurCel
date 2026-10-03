@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
-import '../services/anti_theft_cloud_sync.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/password_health_service.dart';
@@ -35,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    AntiTheftCloudSync.startDeviceCloudListener();
     _selectedCategory = _loc.text('all_categories');
     _totpTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (mounted) setState(() {});

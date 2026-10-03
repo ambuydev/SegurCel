@@ -5,7 +5,6 @@ import 'firebase_options.dart';
 import 'screens/login_screen.dart';
 import 'screens/pin_screen.dart';
 import 'screens/setup_screen.dart';
-import 'services/anti_theft_cloud_sync.dart';
 import 'services/auth_service.dart';
 import 'services/localization_service.dart';
 import 'services/vault_service.dart';
@@ -108,8 +107,6 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
               if (user == null) {
                 return LoginScreen(vaultService: widget.vaultService);
               }
-
-              AntiTheftCloudSync.startDeviceCloudListener();
 
               // Si el usuario está autenticado, verificamos si ya existe su bóveda
               return FutureBuilder<bool>(
