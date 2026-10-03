@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
+import '../services/anti_theft_service.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
@@ -240,6 +241,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Sección de Paro de Emergencia de Sirena de Alarma
+              _buildSectionCard(
+                title: 'Control de Sirena y Alarma',
+                icon: Icons.volume_up,
+                iconColor: Colors.redAccent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Si la sirena policial fue disparada remotamente desde la Web, puedes detenerla en cualquier momento desde este botón.',
+                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      icon: const Icon(Icons.volume_off, color: Colors.white, size: 22),
+                      label: const Text(
+                        '🔇 DETENER SIRENA Y FLASH LED',
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                      onPressed: () async {
+                        await AntiTheftService.stopAlarm();
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('🔇 Sirena de alarma y flash detenidos.'),
+                              backgroundColor: Colors.green,
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
               // Sección Importar / Exportar Contraseñas
               _buildSectionCard(
                 title: _loc.text('import_export'),
