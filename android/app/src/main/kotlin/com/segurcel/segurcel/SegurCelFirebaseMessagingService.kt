@@ -38,11 +38,9 @@ class SegurCelFirebaseMessagingService : FirebaseMessagingService() {
         val cmd = data["command"] ?: data["pendingCommand"] ?: ""
 
         if (cmd == "start_alarm" || data.values.contains("start_alarm")) {
-            acquireWakeLock(applicationContext)
-            SirenFlashHelper.startAlarmAndFlash(applicationContext)
-            showFullScreenNotification(applicationContext)
+            AlarmForegroundService.startAlarmService(applicationContext)
         } else if (cmd == "stop_alarm" || data.values.contains("stop_alarm")) {
-            SirenFlashHelper.stopAlarmAndFlash(applicationContext)
+            AlarmForegroundService.stopAlarmService(applicationContext)
         }
     }
 
