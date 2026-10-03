@@ -22,4 +22,14 @@ class AntiTheftService {
       return false;
     }
   }
+
+  /// Abre la pantalla nativa de permisos del sistema (Xiaomi/Samsung)
+  static Future<bool> openAppSettings() async {
+    try {
+      final bool? result = await _channel.invokeMethod('openAppSettings');
+      return result ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
 }

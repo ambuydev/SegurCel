@@ -277,6 +277,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         }
                       },
                     ),
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: Colors.cyanAccent),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      icon: const Icon(Icons.settings_applications, color: Colors.cyanAccent, size: 18),
+                      label: const Text(
+                        '⚙️ Configurar Permisos de Pantalla de Bloqueo (Xiaomi/Samsung)',
+                        style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        await AntiTheftService.openAppSettings();
+                      },
+                    ),
                   ],
                 ),
               ),
