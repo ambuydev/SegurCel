@@ -193,22 +193,41 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                             ),
                           )
                         else
-                          // Mensaje orientativo en el celular
+                          // Mensaje orientativo y Disparador SMS en el celular
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: const Color(0xFF10141D),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.amberAccent.withAlpha(120)),
                             ),
-                            child: const Row(
+                            child: const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(Icons.info_outline, color: Colors.cyanAccent, size: 20),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    'El disparo remoto de sirena se ejecuta desde la Web oficial https://segurcel.app cuando tu teléfono está extraviado.',
-                                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                                  ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.sms_outlined, color: Colors.amberAccent, size: 20),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Disparador Offline por SMS Secreto:',
+                                      style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  'Si tu teléfono no tiene internet, puedes enviar un SMS desde cualquier celular a tu número con la clave:',
+                                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                                ),
+                                SizedBox(height: 4),
+                                SelectableText(
+                                  '#SIRENA_SEGURCEL',
+                                  style: TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 14, fontFamily: 'monospace'),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  '¡La sirena policial sonará inmediatamente sin requerir datos móviles ni Wi-Fi!',
+                                  style: TextStyle(color: Colors.white54, fontSize: 11),
                                 ),
                               ],
                             ),
