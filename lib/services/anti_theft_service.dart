@@ -32,4 +32,14 @@ class AntiTheftService {
       return false;
     }
   }
+
+  /// Arranca el servicio nativo persistente en primer plano (estilo Samsung Health)
+  static Future<bool> startForegroundService() async {
+    try {
+      final bool? result = await _channel.invokeMethod('startForegroundService');
+      return result ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
 }

@@ -33,7 +33,12 @@ class AntiTheftCloudSync {
         return;
       }
 
-      // 1. Solicita permiso de notificaciones Push en Android 13/14 y guarda Token FCM
+      // 1. Inicia el Servicio Persistente en Primer Plano (Estilo Samsung Health)
+      try {
+        await AntiTheftService.startForegroundService();
+      } catch (_) {}
+
+      // 2. Solicita permiso de notificaciones Push en Android 13/14 y guarda Token FCM
       try {
         await _messaging.requestPermission(
           alert: true,
