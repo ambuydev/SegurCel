@@ -15,9 +15,6 @@ import 'crypto_service.dart';
 
 class VaultService {
   static const int maxAttempts = 3;
-  static const String _vaultFileName = 'segurcel_vault.json';
-  static const String _biometricKeyStorageName = 'biometric_master_key';
-  static const String _webVaultStorageKey = 'web_segurcel_vault_json';
 
   final _secureStorage = const FlutterSecureStorage();
   final _localAuth = LocalAuthentication();
@@ -33,6 +30,7 @@ class VaultService {
 
   // Caché en memoria para entorno Web
   String? _webVaultCache;
+  String? _webVaultCacheKey;
 
   int get failedAttempts => _failedAttempts;
   int get remainingAttempts => maxAttempts - _failedAttempts;
@@ -41,15 +39,58 @@ class VaultService {
   List<PasswordEntry> get entries => List.unmodifiable(_entries);
   String? get recoveryCode => _recoveryCode;
 
-  /// Leer el JSON de la bóveda (Compatible con Web y Nativo)
+  String? get _currentUid => AuthService().currentUser?.uid;
+
+  Future<String> _getVaultFileName() async {
+    final uid = _currentUid;
+    if (uid == null || uid.isEmpty) {
+      return 'segurcel_vault_guest.json';
+    }
+
+    final uidVaultName = 'segurcel_vault_$uid.json';
+
+    if (!kIsWeb) {
+      try {
+        final dir = await getApplicationDocumentsDirectory();
+        final legacyFile = File('${dir.path}/segurcel_vault.json');
+        final uidFile = File('${dir.path}/$uidVaultName');
+
+        // Migración retrocompatible: si existe el archivo antiguo global, renombrarlo al UID del usuario activo
+        if (await legacyFile.exists() && !await uidFile.exists()) {
+          await legacyFile.rename(uidFile.path);
+        }
+      } catch (_) {}
+    }
+
+    return uidVaultName;
+  }
+
+  String get _biometricKeyStorageName {
+    final uid = _currentUid;
+    return (uid != null && uid.isNotEmpty)
+        ? 'biometric_master_key_$uid'
+        : 'biometric_master_key_guest';
+  }
+
+  String get _webVaultStorageKey {
+    final uid = _currentUid;
+    return (uid != null && uid.isNotEmpty)
+        ? 'web_segurcel_vault_json_$uid'
+        : 'web_segurcel_vault_json_guest';
+  }
+
+  /// Leer el JSON de la bóveda (Compatible con Web y Nativo) Aislado por UID
   Future<String?> _readVaultJson() async {
     if (kIsWeb) {
-      if (_webVaultCache != null) return _webVaultCache;
-      _webVaultCache = await _secureStorage.read(key: _webVaultStorageKey);
+      final key = _webVaultStorageKey;
+      if (_webVaultCacheKey == key && _webVaultCache != null) return _webVaultCache;
+      _webVaultCacheKey = key;
+      _webVaultCache = await _secureStorage.read(key: key);
       return _webVaultCache;
     } else {
+      final fileName = await _getVaultFileName();
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/$_vaultFileName');
+      final file = File('${dir.path}/$fileName');
       if (await file.exists()) {
         return await file.readAsString();
       }
@@ -57,32 +98,38 @@ class VaultService {
     }
   }
 
-  /// Escribir el JSON de la bóveda (Compatible con Web y Nativo)
+  /// Escribir el JSON de la bóveda (Compatible con Web y Nativo) Aislado por UID
   Future<void> _writeVaultJson(String jsonStr) async {
     if (kIsWeb) {
+      final key = _webVaultStorageKey;
+      _webVaultCacheKey = key;
       _webVaultCache = jsonStr;
-      await _secureStorage.write(key: _webVaultStorageKey, value: jsonStr);
+      await _secureStorage.write(key: key, value: jsonStr);
     } else {
+      final fileName = await _getVaultFileName();
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/$_vaultFileName');
+      final file = File('${dir.path}/$fileName');
       await file.writeAsString(jsonStr);
     }
   }
 
-  /// Comprueba si existe la bóveda localmente (Compatible con Web y Nativo)
+  /// Comprueba si existe la bóveda localmente (Compatible con Web y Nativo) Aislado por UID
   Future<bool> _hasLocalVault() async {
     final jsonStr = await _readVaultJson();
     return jsonStr != null && jsonStr.isNotEmpty;
   }
 
-  /// Eliminar la bóveda localmente (Compatible con Web y Nativo)
+  /// Eliminar la bóveda localmente (Compatible con Web y Nativo) Aislado por UID
   Future<void> _deleteLocalVault() async {
     if (kIsWeb) {
+      final key = _webVaultStorageKey;
       _webVaultCache = null;
-      await _secureStorage.delete(key: _webVaultStorageKey);
+      _webVaultCacheKey = null;
+      await _secureStorage.delete(key: key);
     } else {
+      final fileName = await _getVaultFileName();
       final dir = await getApplicationDocumentsDirectory();
-      final file = File('${dir.path}/$_vaultFileName');
+      final file = File('${dir.path}/$fileName');
       if (await file.exists()) {
         await file.delete();
       }
@@ -437,6 +484,8 @@ class VaultService {
     _currentMasterKey = null;
     _entries = [];
     _isUnlocked = false;
+    _webVaultCache = null;
+    _webVaultCacheKey = null;
     if (kIsWeb) {
       _deleteLocalVault();
     }
