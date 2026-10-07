@@ -434,6 +434,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 'familyMembers': members,
                                 'updatedAt': FieldValue.serverTimestamp(),
                               }, SetOptions(merge: true));
+
+                              for (final mEmail in members) {
+                                final cleanEmail = mEmail.trim().toLowerCase();
+
+                                await FirebaseFirestore.instance
+                                    .collection('family_invites')
+                                    .doc(cleanEmail)
+                                    .set({
+                                  'email': cleanEmail,
+                                  'ownerUid': user.uid,
+                                  'ownerEmail': user.email ?? '',
+                                  'isPremium': true,
+                                  'subscriptionType': 'family_member',
+                                  'createdAt': FieldValue.serverTimestamp(),
+                                }, SetOptions(merge: true));
+
+                                try {
+                                  final userMatchQuery = await FirebaseFirestore.instance
+                                      .collection('users')
+                                      .where('email', isEqualTo: cleanEmail)
+                                      .get();
+
+                                  for (final matchedDoc in userMatchQuery.docs) {
+                                    await matchedDoc.reference.set({
+                                      'isPremium': true,
+                                      'subscriptionType': 'family_member',
+                                      'updatedAt': FieldValue.serverTimestamp(),
+                                    }, SetOptions(merge: true));
+                                  }
+                                } catch (_) {}
+                              }
                             }
 
                             if (mounted) {

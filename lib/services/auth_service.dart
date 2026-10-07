@@ -50,11 +50,22 @@ class AuthService {
       final user = userCred.user;
       if (user != null) {
         try {
+          final cleanEmail = (user.email ?? email.trim()).toLowerCase();
+
+          // Comprobar si existe invitación pre-autorizada en un Plan Familiar
+          bool isFamilyInvite = false;
+          try {
+            final inviteDoc = await FirebaseFirestore.instance.collection('family_invites').doc(cleanEmail).get();
+            if (inviteDoc.exists && inviteDoc.data() != null) {
+              isFamilyInvite = inviteDoc.data()?['isPremium'] == true;
+            }
+          } catch (_) {}
+
           await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
             'uid': user.uid,
-            'email': user.email ?? email.trim(),
-            'isPremium': false,
-            'subscriptionType': 'free',
+            'email': cleanEmail,
+            'isPremium': isFamilyInvite,
+            'subscriptionType': isFamilyInvite ? 'family_member' : 'free',
             'selfDestructedAt': null,
             'gracePeriodExpiresAt': null,
             'createdAt': FieldValue.serverTimestamp(),
