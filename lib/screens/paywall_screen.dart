@@ -210,6 +210,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
       if (_products.isNotEmpty) {
         String targetProductID = PurchaseService.yearlyID;
         if (_selectedPlan == 'monthly') targetProductID = PurchaseService.monthlyID;
+        if (_selectedPlan == 'family_yearly') targetProductID = PurchaseService.familyYearlyID;
+        if (_selectedPlan == 'family_monthly') targetProductID = PurchaseService.familyMonthlyID;
 
         final matchingProduct = _products.firstWhere(
           (p) => p.id == targetProductID,
@@ -369,8 +371,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 _buildPlanTile(
                   id: 'yearly',
                   title: _loc.text('plan_yearly'),
-                  price: '\$9.99 USD / year',
-                  subtitle: '\$0.83 USD / mo (Save 45%)',
+                  price: '\$9.99 USD / año',
+                  subtitle: 'Plan Individual (1 Usuario)',
                   badge: 'POPULAR',
                   badgeColor: const Color(0xFF6C63FF),
                 ),
@@ -378,8 +380,24 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 _buildPlanTile(
                   id: 'monthly',
                   title: _loc.text('plan_monthly'),
-                  price: '\$1.50 USD / mo',
-                  subtitle: _loc.text('pro_subscription'),
+                  price: '\$1.50 USD / mes',
+                  subtitle: 'Plan Individual (1 Usuario)',
+                ),
+                const SizedBox(height: 14),
+                _buildPlanTile(
+                  id: 'family_yearly',
+                  title: 'Plan Familiar Anual (Hasta 5 Usuarios)',
+                  price: '\$24.99 USD / año',
+                  subtitle: '\$2.08 USD / mes — ¡Protege a toda tu familia!',
+                  badge: 'FAMILIA',
+                  badgeColor: Colors.amberAccent,
+                ),
+                const SizedBox(height: 10),
+                _buildPlanTile(
+                  id: 'family_monthly',
+                  title: 'Plan Familiar Mensual (Hasta 5 Usuarios)',
+                  price: '\$3.99 USD / mes',
+                  subtitle: 'Suscripción familiar flexible',
                 ),
               ],
 

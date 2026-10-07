@@ -10,8 +10,15 @@ class PurchaseService {
 
   static const String monthlyID = 'segurcel_pro_monthly';
   static const String yearlyID = 'segurcel_pro_yearly';
+  static const String familyMonthlyID = 'segurcel_family_monthly';
+  static const String familyYearlyID = 'segurcel_family_yearly';
 
-  static const Set<String> productIDs = {monthlyID, yearlyID};
+  static const Set<String> productIDs = {
+    monthlyID,
+    yearlyID,
+    familyMonthlyID,
+    familyYearlyID,
+  };
 
   /// Inicializa el oyente del flujo de compras In-App de Google Play
   static void initializePurchaseListener() {

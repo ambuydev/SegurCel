@@ -308,6 +308,164 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Future<void> _showFamilyGroupManagerDialog(List<String> currentMembers) async {
+    final emailController = TextEditingController();
+    List<String> members = List<String>.from(currentMembers);
+    bool isSaving = false;
+    String? dialogError;
+
+    await showDialog(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: const Color(0xFF1E2538),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: const Row(
+                children: [
+                  Icon(Icons.family_restroom, color: Colors.amberAccent, size: 24),
+                  SizedBox(width: 8),
+                  Text('Gestión de Grupo Familiar', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Agrega los correos de hasta 4 miembros de tu familia para otorgarles acceso Premium gratuito.',
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: emailController,
+                            style: const TextStyle(color: Colors.white, fontSize: 13),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                              hintText: 'ejemplo@gmail.com',
+                              hintStyle: TextStyle(color: Colors.white38, fontSize: 12),
+                              filled: true,
+                              fillColor: Color(0xFF10141D),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                              border: OutlineInputBorder(borderSide: BorderSide.none),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amberAccent,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: const Text('Agregar', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12)),
+                          onPressed: () {
+                            final email = emailController.text.trim().toLowerCase();
+                            if (email.isEmpty) return;
+                            if (members.length >= 4) {
+                              setDialogState(() => dialogError = 'Límite máximo alcanzado (4 miembros + 1 titular).');
+                              return;
+                            }
+                            if (members.contains(email)) {
+                              setDialogState(() => dialogError = 'Este correo ya está agregado.');
+                              return;
+                            }
+
+                            setDialogState(() {
+                              members.add(email);
+                              emailController.clear();
+                              dialogError = null;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    if (dialogError != null) ...[
+                      const SizedBox(height: 6),
+                      Text(dialogError!, style: const TextStyle(color: Colors.redAccent, fontSize: 11)),
+                    ],
+                    const SizedBox(height: 14),
+                    const Text('Miembros Autorizados:', style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 12)),
+                    const SizedBox(height: 6),
+                    if (members.isEmpty)
+                      const Text('Aún no has agregado correos familiares.', style: TextStyle(color: Colors.white38, fontSize: 11, fontStyle: FontStyle.italic))
+                    else
+                      Column(
+                        children: members
+                            .map(
+                              (m) => ListTile(
+                                dense: true,
+                                contentPadding: EdgeInsets.zero,
+                                leading: const Icon(Icons.person, color: Colors.greenAccent, size: 18),
+                                title: Text(m, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 18),
+                                  onPressed: () {
+                                    setDialogState(() => members.remove(m));
+                                  },
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('Cancelar', style: TextStyle(color: Colors.white54)),
+                  onPressed: () => Navigator.pop(ctx),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C63FF)),
+                  onPressed: isSaving
+                      ? null
+                      : () async {
+                          setDialogState(() => isSaving = true);
+                          try {
+                            final user = AuthService().currentUser;
+                            if (user != null) {
+                              await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+                                'familyMembers': members,
+                                'updatedAt': FieldValue.serverTimestamp(),
+                              }, SetOptions(merge: true));
+                            }
+
+                            if (mounted) {
+                              Navigator.pop(ctx);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('👨‍👩‍👧‍👦 Grupo Familiar actualizado exitosamente.'),
+                                  backgroundColor: Colors.green,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                              setState(() {});
+                            }
+                          } catch (e) {
+                            setDialogState(() {
+                              dialogError = 'Error al guardar: $e';
+                              isSaving = false;
+                            });
+                          }
+                        },
+                  child: isSaving
+                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                      : const Text('Guardar Cambios', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> _importPasswords() async {
     try {
       final importedEntries = await ImportExportService.importFromFile();
@@ -505,6 +663,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 },
                               ),
                             ],
+                          ),
+                        ] else ...[
+                          const SizedBox(height: 12),
+                          OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Colors.amberAccent),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            ),
+                            icon: const Icon(Icons.family_restroom, color: Colors.amberAccent, size: 18),
+                            label: const Text(
+                              '👨‍👩‍👧‍👦 Gestionar Grupo Familiar (Hasta 5 Miembros)',
+                              style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                            onPressed: () async {
+                              final user = _authService.currentUser;
+                              if (user == null) return;
+                              final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+                              final familyMembers = List<String>.from(doc.data()?['familyMembers'] ?? []);
+                              if (mounted) {
+                                _showFamilyGroupManagerDialog(familyMembers);
+                              }
+                            },
                           ),
                         ],
                       ],

@@ -161,6 +161,22 @@ class VaultService {
             await FirebaseFirestore.instance.collection('users').doc(user.uid).set(updates, SetOptions(merge: true));
           }
 
+          // Comprobar si el usuario pertenece al Plan Familiar de otro titular
+          if (data['isPremium'] != true && user.email != null && user.email!.isNotEmpty) {
+            try {
+              final familyQuery = await FirebaseFirestore.instance
+                  .collection('users')
+                  .where('familyMembers', arrayContains: user.email!.trim().toLowerCase())
+                  .where('isPremium', isEqualTo: true)
+                  .get();
+
+              if (familyQuery.docs.isNotEmpty) {
+                data['isPremium'] = true;
+                data['subscriptionType'] = 'family_member';
+              }
+            } catch (_) {}
+          }
+
           return UserProfile.fromJson(data);
         } else {
           final newProfile = UserProfile(uid: user.uid, email: user.email ?? '');
