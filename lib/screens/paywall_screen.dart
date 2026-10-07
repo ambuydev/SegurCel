@@ -120,10 +120,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
         'usedAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 
+      final isFamilyCode = promoData?['isFamilyCode'] as bool? ?? false;
+      final ownerUid = promoData?['ownerUid'] as String?;
+
       final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
       await userRef.set({
         'isPremium': true,
-        'subscriptionType': 'promo_gift',
+        'subscriptionType': isFamilyCode ? 'family_member' : 'promo_gift',
+        'familyOwnerUid': isFamilyCode ? ownerUid : null,
         'promoCodeUsed': code,
         'selfDestructedAt': null,
         'gracePeriodExpiresAt': null,

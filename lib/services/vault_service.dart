@@ -161,39 +161,27 @@ class VaultService {
             await FirebaseFirestore.instance.collection('users').doc(user.uid).set(updates, SetOptions(merge: true));
           }
 
-          // Comprobar si el usuario pertenece al Plan Familiar de otro titular
-          if (data['isPremium'] != true && user.email != null && user.email!.isNotEmpty) {
+          // Cascada de Expiración del Plan Familiar:
+          // Si el usuario es un miembro de familia, verificar si el titular (familyOwnerUid) sigue siendo Premium.
+          final familyOwnerUid = data['familyOwnerUid'] as String?;
+          if (data['subscriptionType'] == 'family_member' && familyOwnerUid != null && familyOwnerUid.isNotEmpty) {
             try {
-              final cleanEmail = user.email!.trim().toLowerCase();
+              final ownerDoc = await FirebaseFirestore.instance.collection('users').doc(familyOwnerUid).get();
+              final isOwnerPremium = ownerDoc.exists && (ownerDoc.data()?['isPremium'] == true);
 
-              // Consulta 1: Buscar por arreglo familyMembers
-              final familyQuery = await FirebaseFirestore.instance
-                  .collection('users')
-                  .where('familyMembers', arrayContains: cleanEmail)
-                  .where('isPremium', isEqualTo: true)
-                  .get();
+              if (!isOwnerPremium && data['isPremium'] == true) {
+                // El titular ya no es Premium: el familiar revierte a Plan Gratuito
+                data['isPremium'] = false;
+                data['subscriptionType'] = 'free';
 
-              // Consulta 2: Buscar por colección family_invites
-              final inviteDoc = await FirebaseFirestore.instance
-                  .collection('family_invites')
-                  .doc(cleanEmail)
-                  .get();
-
-              final isMember = familyQuery.docs.isNotEmpty || (inviteDoc.exists && inviteDoc.data()?['isPremium'] == true);
-
-              if (isMember) {
-                data['isPremium'] = true;
-                data['subscriptionType'] = 'family_member';
-
-                // Escribir directamente en el documento de Firestore para actualizarlo permanentemente
                 await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-                  'isPremium': true,
-                  'subscriptionType': 'family_member',
+                  'isPremium': false,
+                  'subscriptionType': 'free',
                   'updatedAt': FieldValue.serverTimestamp(),
                 }, SetOptions(merge: true));
               }
             } catch (e) {
-              debugPrint("[Family Plan Check Error] Error al verificar membresía familiar: $e");
+              debugPrint("[Family Cascade Check Error] $e");
             }
           }
 
