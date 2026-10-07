@@ -9,6 +9,7 @@ import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../utils/promo_code_helper.dart';
+import 'login_screen.dart';
 import 'paywall_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -133,6 +134,177 @@ class _SettingsScreenState extends State<SettingsScreen> {
     } finally {
       if (mounted) setState(() => _isChangingPassword = false);
     }
+  }
+
+  Future<void> _showDeleteAccountDialog(bool isPremium) async {
+    final passwordController = TextEditingController();
+    bool isDeleting = false;
+    String? errorMessage;
+
+    await showDialog(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: const Color(0xFF1E2538),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: const Row(
+                children: [
+                  Icon(Icons.warning_amber_rounded, color: Colors.redAccent, size: 26),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Eliminar Cuenta Permanentemente',
+                      style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Esta acción destruirá tu cuenta, tu bóveda cifrada en la Nube y todos los datos guardados en este dispositivo de forma permanente. Esta acción NO se puede deshacer.',
+                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                    ),
+                    const SizedBox(height: 14),
+
+                    if (isPremium) ...[
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.amber.withAlpha(30),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.amberAccent),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(Icons.info_outline, color: Colors.amberAccent, size: 18),
+                                SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    'AVISO DE SUSCRIPCIÓN PREMIUM:',
+                                    style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            const Text(
+                              'Si compraste tu suscripción en Google Play Store, recuerda cancelar la renovación automática desde la tienda para evitar cobros futuros.',
+                              style: TextStyle(color: Colors.white70, fontSize: 11),
+                            ),
+                            const SizedBox(height: 8),
+                            OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Colors.amberAccent),
+                                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                              ),
+                              icon: const Icon(Icons.open_in_new, color: Colors.amberAccent, size: 14),
+                              label: const Text(
+                                '1. Abrir Suscripciones en Google Play',
+                                style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                FileHelper.openUrl('https://play.google.com/store/account/subscriptions');
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                    ],
+
+                    const Text(
+                      'Ingresa tu Contraseña de SegurCel para confirmar:',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        hintText: 'Contraseña de tu cuenta',
+                        hintStyle: TextStyle(color: Colors.white38, fontSize: 12),
+                        filled: true,
+                        fillColor: Color(0xFF10141D),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                      ),
+                    ),
+                    if (errorMessage != null) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        errorMessage!,
+                        style: const TextStyle(color: Colors.redAccent, fontSize: 12),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('Cancelar', style: TextStyle(color: Colors.white54)),
+                  onPressed: () => Navigator.pop(ctx),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                  onPressed: isDeleting
+                      ? null
+                      : () async {
+                          final pass = passwordController.text.trim();
+                          if (pass.isEmpty) {
+                            setDialogState(() => errorMessage = 'Por favor ingresa tu contraseña.');
+                            return;
+                          }
+
+                          setDialogState(() => isDeleting = true);
+
+                          try {
+                            final rootContext = context;
+                            await widget.vaultService.deleteAccountAndVault(pass);
+
+                            if (mounted) {
+                              Navigator.pop(ctx);
+                              ScaffoldMessenger.of(rootContext).showSnackBar(
+                                const SnackBar(
+                                  content: Text('🗑️ Tu cuenta y tus datos fueron eliminados permanentemente.'),
+                                  backgroundColor: Colors.redAccent,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+
+                              Navigator.of(rootContext).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (_) => LoginScreen(vaultService: widget.vaultService),
+                                ),
+                                (route) => false,
+                              );
+                            }
+                          } catch (e) {
+                            setDialogState(() {
+                              errorMessage = e.toString().replaceAll('Exception: ', '');
+                              isDeleting = false;
+                            });
+                          }
+                        },
+                  child: isDeleting
+                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                      : const Text('2. Confirmar y Eliminar Cuenta', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<void> _importPasswords() async {
@@ -747,6 +919,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 20),
+
+              // Zona de Peligro: Eliminar Cuenta (Requisito Google Play Store)
+              if (currentUser != null)
+                FutureBuilder<UserProfile?>(
+                  future: widget.vaultService.fetchUserProfile(),
+                  builder: (context, snapshot) {
+                    final isPremium = snapshot.data?.isPremium ?? false;
+
+                    return _buildSectionCard(
+                      title: 'Zona de Peligro',
+                      icon: Icons.warning_amber_rounded,
+                      iconColor: Colors.redAccent,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text(
+                            'Puedes eliminar tu cuenta de SegurCel y borrar de forma permanente todas tus contraseñas y datos guardados.',
+                            style: TextStyle(color: Colors.white70, fontSize: 13),
+                          ),
+                          const SizedBox(height: 12),
+                          ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF10141D),
+                              side: const BorderSide(color: Colors.redAccent),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            ),
+                            icon: const Icon(Icons.delete_forever, color: Colors.redAccent, size: 20),
+                            label: const Text(
+                              '🗑️ Eliminar Cuenta y Borrar Todos los Datos',
+                              style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                            onPressed: () => _showDeleteAccountDialog(isPremium),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
             ],
           ),
         ),

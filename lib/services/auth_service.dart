@@ -109,6 +109,27 @@ class AuthService {
     }
   }
 
+  /// Re-autentica y elimina permanentemente la cuenta de usuario de Firebase Auth.
+  Future<void> deleteAccount(String password) async {
+    final user = currentUser;
+    if (user == null || user.email == null) {
+      throw Exception('No hay una sesión de usuario activa.');
+    }
+
+    try {
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password.trim(),
+      );
+      await user.reauthenticateWithCredential(cred);
+      await user.delete();
+    } on FirebaseAuthException catch (e) {
+      throw Exception(_parseAuthError(e.code));
+    } catch (e) {
+      throw Exception('Error al eliminar la cuenta: $e');
+    }
+  }
+
   /// Envía correo para restablecer la contraseña de la cuenta Firebase.
   Future<void> sendPasswordReset(String email) async {
     final auth = _auth;

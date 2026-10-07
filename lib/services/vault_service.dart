@@ -500,6 +500,33 @@ class VaultService {
     }
   }
 
+  /// Elimina permanentemente la bóveda local, la nube en Firestore y la cuenta de Firebase Auth.
+  Future<void> deleteAccountAndVault(String password) async {
+    final user = AuthService().currentUser;
+    if (user == null) {
+      throw Exception('No hay una sesión de usuario activa.');
+    }
+
+    final uid = user.uid;
+
+    try {
+      final userDocRef = FirebaseFirestore.instance.collection('users').doc(uid);
+      final vaultDocRef = userDocRef.collection('vault').doc('main');
+
+      await vaultDocRef.delete();
+      await userDocRef.delete();
+    } catch (_) {}
+
+    await _deleteLocalVault();
+    try {
+      await _secureStorage.delete(key: _biometricKeyStorageName);
+    } catch (_) {}
+
+    await AuthService().deleteAccount(password);
+
+    lock();
+  }
+
   /// Elimina por completo los archivos y claves locales (Autodestrucción local y periodo de gracia 48h en la nube).
   Future<void> selfDestruct() async {
     await _deleteLocalVault();
