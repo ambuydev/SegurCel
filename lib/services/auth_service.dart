@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -35,16 +36,34 @@ class AuthService {
     }
   }
 
-  /// Registra un nuevo usuario en Firebase Auth.
+  /// Registra un nuevo usuario en Firebase Auth y crea su documento estándar en Firestore.
   Future<UserCredential> registerWithEmail(String email, String password) async {
     final auth = _auth;
     if (auth == null) throw Exception('Firebase no está disponible.');
     try {
       await _configureWebPersistence();
-      return await auth.createUserWithEmailAndPassword(
+      final userCred = await auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
+
+      final user = userCred.user;
+      if (user != null) {
+        try {
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+            'uid': user.uid,
+            'email': user.email ?? email.trim(),
+            'isPremium': false,
+            'subscriptionType': 'free',
+            'selfDestructedAt': null,
+            'gracePeriodExpiresAt': null,
+            'createdAt': FieldValue.serverTimestamp(),
+            'updatedAt': FieldValue.serverTimestamp(),
+          }, SetOptions(merge: true));
+        } catch (_) {}
+      }
+
+      return userCred;
     } on FirebaseAuthException catch (e) {
       throw Exception(_parseAuthError(e.code));
     } catch (e) {

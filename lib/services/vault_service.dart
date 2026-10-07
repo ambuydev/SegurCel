@@ -99,7 +99,9 @@ class VaultService {
           return UserProfile.fromJson(doc.data()!);
         } else {
           final newProfile = UserProfile(uid: user.uid, email: user.email ?? '');
-          await FirebaseFirestore.instance.collection('users').doc(user.uid).set(newProfile.toJson(), SetOptions(merge: true));
+          final newMap = newProfile.toJson();
+          newMap['updatedAt'] = FieldValue.serverTimestamp();
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).set(newMap, SetOptions(merge: true));
           return newProfile;
         }
       }
