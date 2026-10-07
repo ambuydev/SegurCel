@@ -5,6 +5,7 @@ import '../models/user_profile.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/vault_service.dart';
+import '../utils/promo_code_helper.dart';
 import 'pin_screen.dart';
 
 class PaywallScreen extends StatefulWidget {
@@ -59,44 +60,85 @@ class _PaywallScreenState extends State<PaywallScreen> {
     setState(() => _isRedeemingPromo = true);
 
     try {
-      final validCodes = ['FAMILIA_SEGURCEL_2026', 'SEGURCEL_VIP', 'REGALO_PREMIUM'];
-
-      if (validCodes.contains(code)) {
-        final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-        await userRef.set({
-          'isPremium': true,
-          'subscriptionType': 'promo_gift',
-          'promoCodeUsed': code,
-          'selfDestructedAt': null,
-          'gracePeriodExpiresAt': null,
-          'updatedAt': FieldValue.serverTimestamp(),
-        }, SetOptions(merge: true));
-
+      // 1. Barrera 1: Validación Matemática Módulo 10 (Estilo Cédula Uruguaya)
+      if (!PromoCodeHelper.isValidPromoCodeFormat(code)) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('🎉 ¡Código Promocional Canjeado con Éxito! Ahora eres Premium.'),
-              backgroundColor: Colors.green,
+              content: Text('⚠️ El código ingresado es matemáticamente inválido.'),
+              backgroundColor: Colors.redAccent,
               behavior: SnackBarBehavior.floating,
             ),
           );
-
-          await widget.vaultService.checkVaultExists();
-          if (mounted) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => PinScreen(vaultService: widget.vaultService),
-              ),
-            );
-          }
         }
-      } else {
+        return;
+      }
+
+      // 2. Barrera 2: Verificación de Autorización y Único Uso en Firestore
+      final promoDocRef = FirebaseFirestore.instance.collection('promo_codes').doc(code);
+      final promoSnapshot = await promoDocRef.get();
+
+      if (!promoSnapshot.exists) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('⚠️ Código promocional inválido o expirado.'),
+              content: Text('⚠️ Este código promocional no existe o no ha sido emitido por el Administrador.'),
               backgroundColor: Colors.redAccent,
               behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+        return;
+      }
+
+      final promoData = promoSnapshot.data();
+      final isUsed = promoData?['used'] as bool? ?? false;
+
+      if (isUsed) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('⚠️ Este código promocional ya fue utilizado por otro usuario.'),
+              backgroundColor: Colors.orangeAccent,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+        return;
+      }
+
+      // 3. Marcar código como Usado en Firestore y activar Premium en el perfil
+      await promoDocRef.set({
+        'used': true,
+        'usedByUid': user.uid,
+        'usedByEmail': user.email ?? '',
+        'usedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+      await userRef.set({
+        'isPremium': true,
+        'subscriptionType': 'promo_gift',
+        'promoCodeUsed': code,
+        'selfDestructedAt': null,
+        'gracePeriodExpiresAt': null,
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('🎉 ¡Código Módulo 10 Canjeado con Éxito! Ahora eres Premium.'),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+
+        await widget.vaultService.checkVaultExists();
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => PinScreen(vaultService: widget.vaultService),
             ),
           );
         }
@@ -104,7 +146,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al canjear: $e'), backgroundColor: Colors.red),
+          SnackBar(content: Text('Error al canjear código: $e'), backgroundColor: Colors.red),
         );
       }
     } finally {

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
@@ -7,6 +8,7 @@ import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
+import '../utils/promo_code_helper.dart';
 import 'paywall_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -313,6 +315,96 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
 
               const SizedBox(height: 20),
+
+              // Panel Generador de Códigos Módulo 10 para Administrador
+              if (currentUser?.email == 'alejandro.martinez.briao@gmail.com') ...[
+                _buildSectionCard(
+                  title: 'Panel Administrador SegurCel',
+                  icon: Icons.admin_panel_settings,
+                  iconColor: Colors.amberAccent,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'Genera un nuevo Código de Regalo Módulo 10 exclusivo de único uso para tus familiares o clientes VIP.',
+                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF10141D),
+                          side: const BorderSide(color: Colors.amberAccent),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                        icon: const Icon(Icons.flash_on, color: Colors.amberAccent, size: 20),
+                        label: const Text(
+                          '⚡ Generar Código de Regalo Módulo 10',
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                        onPressed: () async {
+                          final newCode = PromoCodeHelper.generateRandomCode();
+                          try {
+                            await FirebaseFirestore.instance.collection('promo_codes').doc(newCode).set({
+                              'code': newCode,
+                              'used': false,
+                              'createdBy': currentUser?.email,
+                              'createdAt': FieldValue.serverTimestamp(),
+                            });
+
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  backgroundColor: const Color(0xFF1E2538),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                  title: const Row(
+                                    children: [
+                                      Icon(Icons.card_giftcard, color: Colors.amberAccent),
+                                      SizedBox(width: 8),
+                                      Text('Código Módulo 10 Creado', style: TextStyle(color: Colors.white, fontSize: 16)),
+                                    ],
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text('Copia este código de único uso y envíaselo a tu familiar:', style: TextStyle(color: Colors.white70, fontSize: 13)),
+                                      const SizedBox(height: 12),
+                                      SelectableText(
+                                        newCode,
+                                        style: const TextStyle(color: Colors.amberAccent, fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'monospace'),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('Copiar y Cerrar', style: TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold)),
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(text: newCode));
+                                        Navigator.pop(ctx);
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text('Código copiado: $newCode'), backgroundColor: Colors.green),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Error creando código: $e'), backgroundColor: Colors.red),
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
 
               // Sección Importar / Exportar Contraseñas
               _buildSectionCard(
