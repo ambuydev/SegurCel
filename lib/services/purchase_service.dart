@@ -10,9 +10,8 @@ class PurchaseService {
 
   static const String monthlyID = 'segurcel_pro_monthly';
   static const String yearlyID = 'segurcel_pro_yearly';
-  static const String lifetimeID = 'segurcel_pro_lifetime';
 
-  static const Set<String> productIDs = {monthlyID, yearlyID, lifetimeID};
+  static const Set<String> productIDs = {monthlyID, yearlyID};
 
   /// Inicializa el oyente del flujo de compras In-App de Google Play
   static void initializePurchaseListener() {
@@ -70,11 +69,7 @@ class PurchaseService {
   static Future<bool> buyProduct(ProductDetails productDetails) async {
     try {
       final purchaseParam = PurchaseParam(productDetails: productDetails);
-      if (productDetails.id == lifetimeID) {
-        return await _iap.buyNonConsumable(purchaseParam: purchaseParam);
-      } else {
-        return await _iap.buyConsumable(purchaseParam: purchaseParam);
-      }
+      return await _iap.buyConsumable(purchaseParam: purchaseParam);
     } catch (e) {
       debugPrint('[InAppPurchase Buy Error] $e');
       return false;

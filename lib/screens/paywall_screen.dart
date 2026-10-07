@@ -210,7 +210,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
       if (_products.isNotEmpty) {
         String targetProductID = PurchaseService.yearlyID;
         if (_selectedPlan == 'monthly') targetProductID = PurchaseService.monthlyID;
-        if (_selectedPlan == 'lifetime') targetProductID = PurchaseService.lifetimeID;
 
         final matchingProduct = _products.firstWhere(
           (p) => p.id == targetProductID,
@@ -381,15 +380,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   title: _loc.text('plan_monthly'),
                   price: '\$1.50 USD / mo',
                   subtitle: _loc.text('pro_subscription'),
-                ),
-                const SizedBox(height: 10),
-                _buildPlanTile(
-                  id: 'lifetime',
-                  title: _loc.text('plan_lifetime'),
-                  price: '\$24.99 USD',
-                  subtitle: 'Lifetime',
-                  badge: 'PRO',
-                  badgeColor: Colors.green,
                 ),
               ],
 
