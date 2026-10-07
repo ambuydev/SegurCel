@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
+import '../models/user_profile.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/password_health_service.dart';
@@ -31,14 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
   late String _selectedCategory;
   final Set<String> _visiblePasswordIds = {};
   Timer? _totpTimer;
+  UserProfile? _userProfile;
 
   @override
   void initState() {
     super.initState();
+    _loadUserProfile();
     _selectedCategory = _loc.text('all_categories');
     _totpTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (mounted) setState(() {});
     });
+  }
+
+  Future<void> _loadUserProfile() async {
+    final profile = await widget.vaultService.fetchUserProfile();
+    if (mounted) {
+      setState(() => _userProfile = profile);
+    }
   }
 
   @override
@@ -1745,10 +1755,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: searchFiltered.length,
                         itemBuilder: (context, index) {
                           final item = searchFiltered[index];
+                          final isPremium = _userProfile?.isPremium ?? false;
+                          final isLockedByLimit = !isPremium && index >= 15;
                           final isVisible = _visiblePasswordIds.contains(item.id);
                           final isCard = item.entryType == 'cards';
                           final isNote = item.entryType == 'notes';
-                          final totp = TotpService.generateTotp(item.totpSecret);
+                          final totp = isLockedByLimit ? null : TotpService.generateTotp(item.totpSecret);
 
                           return Container(
                             margin: const EdgeInsets.only(bottom: 10),
@@ -1828,7 +1840,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const Divider(color: Colors.white12, height: 12),
 
                                   // Nivel 2: Fila Dedicada de Contenido (Contraseña, Tarjeta o Nota)
-                                  if (isNote) ...[
+                                  if (isLockedByLimit) ...[
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red.withAlpha(30),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.redAccent.withAlpha(120)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.lock_outline, color: Colors.redAccent, size: 20),
+                                          const SizedBox(width: 8),
+                                          const Expanded(
+                                            child: Text(
+                                              '🔒 Requiere SegurCel Premium para ver / copiar',
+                                              style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: const Color(0xFF6C63FF),
+                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                            ),
+                                            child: const Text('Renovar', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (_) => PaywallScreen(vaultService: widget.vaultService, userProfile: _userProfile),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ] else if (isNote) ...[
                                     Row(
                                       children: [
                                         Expanded(
