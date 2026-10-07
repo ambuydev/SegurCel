@@ -26,10 +26,12 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   final _authService = AuthService();
   final _loc = LocalizationService();
+  final _promoCodeController = TextEditingController();
   Timer? _countdownTimer;
   int _remainingMillis = 0;
   String _selectedPlan = 'yearly';
   bool _isLoading = false;
+  bool _isRedeemingPromo = false;
 
   @override
   void initState() {
@@ -43,7 +45,71 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   void dispose() {
     _countdownTimer?.cancel();
+    _promoCodeController.dispose();
     super.dispose();
+  }
+
+  Future<void> _redeemPromoCode() async {
+    final code = _promoCodeController.text.trim().toUpperCase();
+    if (code.isEmpty) return;
+
+    final user = _authService.currentUser;
+    if (user == null) return;
+
+    setState(() => _isRedeemingPromo = true);
+
+    try {
+      final validCodes = ['FAMILIA_SEGURCEL_2026', 'SEGURCEL_VIP', 'REGALO_PREMIUM'];
+
+      if (validCodes.contains(code)) {
+        final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+        await userRef.set({
+          'isPremium': true,
+          'subscriptionType': 'promo_gift',
+          'promoCodeUsed': code,
+          'selfDestructedAt': null,
+          'gracePeriodExpiresAt': null,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('🎉 ¡Código Promocional Canjeado con Éxito! Ahora eres Premium.'),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+
+          await widget.vaultService.checkVaultExists();
+          if (mounted) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => PinScreen(vaultService: widget.vaultService),
+              ),
+            );
+          }
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('⚠️ Código promocional inválido o expirado.'),
+              backgroundColor: Colors.redAccent,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al canjear: $e'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isRedeemingPromo = false);
+    }
   }
 
   void _startCountdown() {
@@ -254,7 +320,66 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
               ],
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
+
+              // Sección Canje de Código Promocional / Regalo
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E2538),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: Colors.amberAccent.withAlpha(120)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(Icons.card_giftcard, color: Colors.amberAccent, size: 20),
+                        SizedBox(width: 8),
+                        Text(
+                          '¿Tienes un Código de Regalo / Promocional?',
+                          style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _promoCodeController,
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            textCapitalization: TextCapitalization.characters,
+                            decoration: InputDecoration(
+                              hintText: 'Ej: FAMILIA_SEGURCEL_2026',
+                              hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
+                              filled: true,
+                              fillColor: const Color(0xFF10141D),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amberAccent,
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                          onPressed: _isRedeemingPromo ? null : _redeemPromoCode,
+                          child: _isRedeemingPromo
+                              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black))
+                              : const Text('Canjear', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
