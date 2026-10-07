@@ -55,9 +55,12 @@ class VaultService {
         final legacyFile = File('${dir.path}/segurcel_vault.json');
         final uidFile = File('${dir.path}/$uidVaultName');
 
-        // Migración retrocompatible: si existe el archivo antiguo global, renombrarlo al UID del usuario activo
-        if (await legacyFile.exists() && !await uidFile.exists()) {
+        // La migración del archivo antiguo 'segurcel_vault.json' SOLO aplica a la cuenta original del administrador
+        if (uid == 'y4nDhx7H7selY34MuxOQud5Zx152' && await legacyFile.exists() && !await uidFile.exists()) {
           await legacyFile.rename(uidFile.path);
+        } else if (await legacyFile.exists() && uid != 'y4nDhx7H7selY34MuxOQud5Zx152') {
+          // Si el usuario activo NO es el administrador original, eliminar el archivo legacy genérico para evitar colisiones
+          await legacyFile.delete();
         }
       } catch (_) {}
     }
