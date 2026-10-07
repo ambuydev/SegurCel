@@ -7,6 +7,7 @@ import 'screens/pin_screen.dart';
 import 'screens/setup_screen.dart';
 import 'services/auth_service.dart';
 import 'services/localization_service.dart';
+import 'services/purchase_service.dart';
 import 'services/vault_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -23,6 +24,7 @@ void main() async {
   }
 
   await LocalizationService().initLanguage();
+  PurchaseService.initializePurchaseListener();
 
   final vaultService = VaultService();
 

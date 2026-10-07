@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import '../models/user_profile.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
+import '../services/purchase_service.dart';
 import '../services/vault_service.dart';
 import '../utils/promo_code_helper.dart';
 import 'pin_screen.dart';
@@ -34,6 +36,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
   bool _isLoading = false;
   bool _isRedeemingPromo = false;
 
+  List<ProductDetails> _products = [];
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +45,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       _selectedPlan = 'emergency_6m';
     }
     _startCountdown();
+    _loadProducts();
   }
 
   @override
@@ -175,6 +180,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
   }
 
+
+
+  Future<void> _loadProducts() async {
+    try {
+      final products = await PurchaseService.fetchProducts();
+      if (mounted) {
+        setState(() => _products = products);
+      }
+    } catch (_) {}
+  }
+
   String _formatCountdown(int millis) {
     if (millis <= 0) return '00h : 00m : 00s';
     final duration = Duration(milliseconds: millis);
@@ -191,12 +207,27 @@ class _PaywallScreenState extends State<PaywallScreen> {
     setState(() => _isLoading = true);
 
     try {
+      if (_products.isNotEmpty) {
+        String targetProductID = PurchaseService.yearlyID;
+        if (_selectedPlan == 'monthly') targetProductID = PurchaseService.monthlyID;
+        if (_selectedPlan == 'lifetime') targetProductID = PurchaseService.lifetimeID;
+
+        final matchingProduct = _products.firstWhere(
+          (p) => p.id == targetProductID,
+          orElse: () => _products.first,
+        );
+
+        await PurchaseService.buyProduct(matchingProduct);
+        return;
+      }
+
       final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
       await userRef.set({
         'isPremium': true,
         'subscriptionType': _selectedPlan,
         'selfDestructedAt': null,
         'gracePeriodExpiresAt': null,
+        'updatedAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 
       if (mounted) {

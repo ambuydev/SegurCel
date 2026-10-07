@@ -6,6 +6,7 @@ import '../models/user_profile.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
+import '../services/purchase_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../utils/promo_code_helper.dart';
@@ -460,24 +461,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         if (!isPremium) ...[
                           const SizedBox(height: 14),
-                          ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF6C63FF),
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            ),
-                            icon: const Icon(Icons.star, color: Colors.amberAccent, size: 20),
-                            label: const Text(
-                              '🚀 Mejorar a SegurCel Premium',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => PaywallScreen(vaultService: widget.vaultService, userProfile: profile),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF6C63FF),
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  ),
+                                  icon: const Icon(Icons.star, color: Colors.amberAccent, size: 20),
+                                  label: const Text(
+                                    '🚀 Mejorar a SegurCel Premium',
+                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => PaywallScreen(vaultService: widget.vaultService, userProfile: profile),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                              const SizedBox(width: 8),
+                              OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(color: Colors.cyanAccent),
+                                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                ),
+                                child: const Text('🔄 Restaurar', style: TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 12)),
+                                onPressed: () async {
+                                  await PurchaseService.restorePurchases();
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('🔄 Compras In-App sincronizadas con Google Play.'),
+                                        backgroundColor: Colors.cyan,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ],
