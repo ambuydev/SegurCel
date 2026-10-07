@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/password_entry.dart';
+import '../models/user_profile.dart';
 import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
@@ -240,6 +241,79 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Sección Estado de Suscripción (Gratuito vs Premium)
+              FutureBuilder<UserProfile?>(
+                future: widget.vaultService.fetchUserProfile(),
+                builder: (context, snapshot) {
+                  final profile = snapshot.data;
+                  final isPremium = profile?.isPremium ?? false;
+
+                  return _buildSectionCard(
+                    title: 'Estado de la Suscripción',
+                    icon: isPremium ? Icons.stars : Icons.stars_outlined,
+                    iconColor: isPremium ? Colors.amberAccent : Colors.cyanAccent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              isPremium ? Icons.verified : Icons.info_outline,
+                              color: isPremium ? Colors.amberAccent : Colors.white70,
+                              size: 24,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    isPremium ? '👑 SegurCel Premium Activo' : '🟢 Plan Gratuito (SegurCel Free)',
+                                    style: TextStyle(
+                                      color: isPremium ? Colors.amberAccent : Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Text(
+                                    isPremium ? 'Acceso ilimitado a todas las funciones' : 'Límite de 15 contraseñas y 2 cuentas TOTP',
+                                    style: const TextStyle(color: Colors.white70, fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (!isPremium) ...[
+                          const SizedBox(height: 14),
+                          ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF6C63FF),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            ),
+                            icon: const Icon(Icons.star, color: Colors.amberAccent, size: 20),
+                            label: const Text(
+                              '🚀 Mejorar a SegurCel Premium',
+                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => PaywallScreen(vaultService: widget.vaultService, userProfile: profile),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 20),
+
               // Sección Importar / Exportar Contraseñas
               _buildSectionCard(
                 title: _loc.text('import_export'),

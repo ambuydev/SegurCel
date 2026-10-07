@@ -12,6 +12,7 @@ import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import 'login_screen.dart';
 import 'my_devices_screen.dart';
+import 'paywall_screen.dart';
 import 'pin_screen.dart';
 import 'settings_screen.dart';
 
@@ -951,8 +952,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showAddOrEditDialog([PasswordEntry? existingEntry]) {
+  Future<void> _showAddOrEditDialog([PasswordEntry? existingEntry]) async {
     final isEditing = existingEntry != null;
+
+    if (!isEditing) {
+      final profile = await widget.vaultService.fetchUserProfile();
+      final isPremium = profile?.isPremium ?? false;
+
+      if (!isPremium && widget.vaultService.entries.length >= 15) {
+        if (mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => PaywallScreen(
+                vaultService: widget.vaultService,
+                userProfile: profile,
+              ),
+            ),
+          );
+        }
+        return;
+      }
+    }
+
     String selectedType = existingEntry?.entryType ?? 'logins';
 
     final titleController = TextEditingController(text: existingEntry?.title ?? '');
