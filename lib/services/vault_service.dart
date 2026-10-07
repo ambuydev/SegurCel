@@ -89,17 +89,33 @@ class VaultService {
     }
   }
 
-  /// Obtiene el perfil de usuario desde Firestore.
+  /// Obtiene el perfil de usuario desde Firestore y auto-inyecta campos faltantes en usuarios antiguos.
   Future<UserProfile?> fetchUserProfile() async {
     try {
       final user = AuthService().currentUser;
       if (user != null) {
         final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
         if (doc.exists && doc.data() != null) {
-          return UserProfile.fromJson(doc.data()!);
+          final data = doc.data()!;
+
+          // Auto-inyección silenciosa de campos faltantes para migrar usuarios antiguos
+          final Map<String, dynamic> updates = {};
+          if (!data.containsKey('isPremium')) updates['isPremium'] = false;
+          if (!data.containsKey('subscriptionType')) updates['subscriptionType'] = 'free';
+          if (!data.containsKey('selfDestructedAt')) updates['selfDestructedAt'] = null;
+          if (!data.containsKey('gracePeriodExpiresAt')) updates['gracePeriodExpiresAt'] = null;
+          if (!data.containsKey('createdAt')) updates['createdAt'] = FieldValue.serverTimestamp();
+          if (!data.containsKey('updatedAt')) updates['updatedAt'] = FieldValue.serverTimestamp();
+
+          if (updates.isNotEmpty) {
+            await FirebaseFirestore.instance.collection('users').doc(user.uid).set(updates, SetOptions(merge: true));
+          }
+
+          return UserProfile.fromJson(data);
         } else {
           final newProfile = UserProfile(uid: user.uid, email: user.email ?? '');
           final newMap = newProfile.toJson();
+          newMap['createdAt'] = FieldValue.serverTimestamp();
           newMap['updatedAt'] = FieldValue.serverTimestamp();
           await FirebaseFirestore.instance.collection('users').doc(user.uid).set(newMap, SetOptions(merge: true));
           return newProfile;
