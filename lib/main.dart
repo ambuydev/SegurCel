@@ -110,6 +110,7 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
 
               // Si el usuario está autenticado, verificamos si ya existe su bóveda
               return FutureBuilder<bool>(
+                key: ValueKey('vault_check_${user.uid}'),
                 future: widget.vaultService.checkVaultExists(),
                 builder: (context, vaultSnapshot) {
                   if (vaultSnapshot.connectionState == ConnectionState.waiting) {

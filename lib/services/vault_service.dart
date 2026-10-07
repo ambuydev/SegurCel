@@ -482,13 +482,19 @@ class VaultService {
     _syncToCloud(map);
   }
 
-  /// Bloquea la bóveda y elimina claves en memoria. En Web borra el caché local por seguridad en PCs compartidas.
-  void lock() {
+  /// Resetea el estado en memoria de la bóveda.
+  void resetState() {
     _currentMasterKey = null;
     _entries = [];
     _isUnlocked = false;
+    _isInitialized = false;
     _webVaultCache = null;
     _webVaultCacheKey = null;
+  }
+
+  /// Bloquea la bóveda y elimina claves en memoria. En Web borra el caché local por seguridad en PCs compartidas.
+  void lock() {
+    resetState();
     if (kIsWeb) {
       _deleteLocalVault();
     }
