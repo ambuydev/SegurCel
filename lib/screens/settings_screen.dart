@@ -399,85 +399,173 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<void> _generateFamilyCode(String ownerUid, String ownerEmail) async {
-    try {
-      final query = await FirebaseFirestore.instance
-          .collection('promo_codes')
-          .where('ownerUid', isEqualTo: ownerUid)
-          .where('isFamilyCode', isEqualTo: true)
-          .get();
+  Future<void> _showFamilyCodesListDialog(String ownerUid, String ownerEmail) async {
+    await showDialog(
+      context: context,
+      builder: (ctx) {
+        return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance
+              .collection('promo_codes')
+              .where('ownerUid', isEqualTo: ownerUid)
+              .where('isFamilyCode', isEqualTo: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            final docs = snapshot.data?.docs ?? [];
+            final count = docs.length;
 
-      final existingCount = query.docs.length;
-      if (existingCount >= 4) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('⚠️ Límite alcanzado: Ya has generado tus 4 Códigos Familiares Módulo 10.'),
-              backgroundColor: Colors.orangeAccent,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
-        return;
-      }
+            return AlertDialog(
+              backgroundColor: const Color(0xFF1E2538),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: Row(
+                children: [
+                  const Icon(Icons.family_restroom, color: Colors.amberAccent, size: 24),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Códigos Familiares ($count de 4)',
+                      style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Entrega un código único a cada familiar para activar su cuenta Premium:',
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    ),
+                    const SizedBox(height: 12),
+                    if (snapshot.connectionState == ConnectionState.waiting)
+                      const Center(child: CircularProgressIndicator(color: Colors.amberAccent))
+                    else if (docs.isEmpty)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Text(
+                          'Aún no has generado ningún código familiar.',
+                          style: TextStyle(color: Colors.white38, fontSize: 12, fontStyle: FontStyle.italic),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    else
+                      Flexible(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: docs.map((d) {
+                              final data = d.data();
+                              final code = data['code'] as String? ?? d.id;
+                              final used = data['used'] as bool? ?? false;
+                              final usedByEmail = data['usedByEmail'] as String? ?? '';
 
-      final newCode = PromoCodeHelper.generateRandomCode();
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF10141D),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: used ? Colors.white12 : Colors.amberAccent.withAlpha(150),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SelectableText(
+                                            code,
+                                            style: TextStyle(
+                                              color: used ? Colors.white38 : Colors.amberAccent,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'monospace',
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            used ? '🔒 Usado por: $usedByEmail' : '🟢 Disponible para enviar',
+                                            style: TextStyle(
+                                              color: used ? Colors.grey : Colors.greenAccent,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.copy, color: Colors.cyanAccent, size: 18),
+                                      tooltip: 'Copiar Código',
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(text: code));
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('Código copiado: $code'),
+                                            backgroundColor: Colors.green,
+                                            behavior: SnackBarBehavior.floating,
+                                            duration: const Duration(seconds: 2),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    const SizedBox(height: 12),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: count >= 4 ? Colors.grey : Colors.amberAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      icon: const Icon(Icons.add, color: Colors.black, size: 18),
+                      label: Text(
+                        count >= 4 ? 'Límite Máximo Alcanzado (4/4)' : '⚡ Generar Nuevo Código ($count/4)',
+                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
+                      ),
+                      onPressed: count >= 4
+                          ? null
+                          : () async {
+                              final newCode = PromoCodeHelper.generateRandomCode();
+                              await FirebaseFirestore.instance.collection('promo_codes').doc(newCode).set({
+                                'code': newCode,
+                                'used': false,
+                                'isFamilyCode': true,
+                                'ownerUid': ownerUid,
+                                'ownerEmail': ownerEmail,
+                                'createdAt': FieldValue.serverTimestamp(),
+                              });
 
-      await FirebaseFirestore.instance.collection('promo_codes').doc(newCode).set({
-        'code': newCode,
-        'used': false,
-        'isFamilyCode': true,
-        'ownerUid': ownerUid,
-        'ownerEmail': ownerEmail,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-
-      if (mounted) {
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            backgroundColor: const Color(0xFF1E2538),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            title: const Row(
-              children: [
-                Icon(Icons.family_restroom, color: Colors.amberAccent),
-                SizedBox(width: 8),
-                Text('Código Familiar Módulo 10', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Envía este código Módulo 10 a tu familiar (Generado ${existingCount + 1} de 4):', style: const TextStyle(color: Colors.white70, fontSize: 13)),
-                const SizedBox(height: 12),
-                SelectableText(
-                  newCode,
-                  style: const TextStyle(color: Colors.amberAccent, fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'monospace'),
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('⚡ Nuevo Código Familiar Creado: $newCode'),
+                                  backgroundColor: Colors.green,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            },
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('Cerrar', style: TextStyle(color: Colors.white70)),
+                  onPressed: () => Navigator.pop(ctx),
                 ),
               ],
-            ),
-            actions: [
-              TextButton(
-                child: const Text('Copiar Código y Cerrar', style: TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: newCode));
-                  Navigator.pop(ctx);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Código copiado: $newCode'), backgroundColor: Colors.green),
-                  );
-                },
-              ),
-            ],
-          ),
+            );
+          },
         );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al generar código familiar: $e'), backgroundColor: Colors.red),
-        );
-      }
-    }
+      },
+    );
   }
 
   @override
@@ -598,13 +686,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             icon: const Icon(Icons.family_restroom, color: Colors.amberAccent, size: 20),
                             label: const Text(
-                              '👨‍👩‍👧‍👦 Generar Código Familiar Módulo 10',
+                              '👨‍👩‍👧‍👦 Mis Códigos Familiares Módulo 10',
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                             onPressed: () {
                               final user = _authService.currentUser;
                               if (user != null) {
-                                _generateFamilyCode(user.uid, user.email ?? '');
+                                _showFamilyCodesListDialog(user.uid, user.email ?? '');
                               }
                             },
                           ),
