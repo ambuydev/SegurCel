@@ -591,6 +591,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context, snapshot) {
                   final profile = snapshot.data;
                   final isPremium = profile?.isPremium ?? false;
+                  final isFamilyOwner = isPremium &&
+                      (profile?.subscriptionType == 'segurcel_family_monthly' ||
+                          profile?.subscriptionType == 'segurcel_family_yearly' ||
+                          profile?.subscriptionType == 'family' ||
+                          currentUser?.email == 'alejandro.martinez.briao@gmail.com');
 
                   return _buildSectionCard(
                     title: 'Estado de la Suscripción',
@@ -675,7 +680,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ],
                           ),
-                        ] else ...[
+                        ],
+                        if (isFamilyOwner) ...[
                           const SizedBox(height: 12),
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
