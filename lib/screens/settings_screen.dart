@@ -1153,15 +1153,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     final isPremium = snapshot.data?.isPremium ?? false;
 
                     return _buildSectionCard(
-                      title: 'Zona de Peligro',
+                      title: _loc.text('danger_zone'),
                       icon: Icons.warning_amber_rounded,
                       iconColor: Colors.redAccent,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Text(
-                            'Puedes eliminar tu cuenta de SegurCel y borrar de forma permanente todas tus contraseñas y datos guardados.',
-                            style: TextStyle(color: Colors.white70, fontSize: 13),
+                          Text(
+                            _loc.text('delete_account_warning'),
+                            style: const TextStyle(color: Colors.white70, fontSize: 12),
                           ),
                           const SizedBox(height: 12),
                           ElevatedButton.icon(
@@ -1172,9 +1172,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             ),
                             icon: const Icon(Icons.delete_forever, color: Colors.redAccent, size: 20),
-                            label: const Text(
-                              '🗑️ Eliminar Cuenta y Borrar Todos los Datos',
-                              style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                            label: Text(
+                              _loc.text('delete_account_btn'),
+                              style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                             onPressed: () => _showDeleteAccountDialog(isPremium),
                           ),
