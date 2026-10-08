@@ -598,7 +598,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           currentUser?.email == 'alejandro.martinez.briao@gmail.com');
 
                   return _buildSectionCard(
-                    title: 'Estado de la Suscripción',
+                    title: _loc.text('subscription_status'),
                     icon: isPremium ? Icons.stars : Icons.stars_outlined,
                     iconColor: isPremium ? Colors.amberAccent : Colors.cyanAccent,
                     child: Column(
@@ -617,7 +617,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    isPremium ? '👑 SegurCel Premium Activo' : '🟢 Plan Gratuito (SegurCel Free)',
+                                    isPremium ? _loc.text('premium_active') : _loc.text('free_plan'),
                                     style: TextStyle(
                                       color: isPremium ? Colors.amberAccent : Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -625,7 +625,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   ),
                                   Text(
-                                    isPremium ? 'Acceso ilimitado a todas las funciones' : 'Límite de 15 contraseñas y 2 cuentas TOTP',
+                                    isPremium ? _loc.text('unlimited_access') : _loc.text('free_limits'),
                                     style: const TextStyle(color: Colors.white70, fontSize: 12),
                                   ),
                                 ],
@@ -645,9 +645,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   ),
                                   icon: const Icon(Icons.star, color: Colors.amberAccent, size: 20),
-                                  label: const Text(
-                                    '🚀 Mejorar a SegurCel Premium',
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                  label: Text(
+                                    _loc.text('upgrade_pro'),
+                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                                   ),
                                   onPressed: () {
                                     Navigator.of(context).push(
@@ -665,7 +665,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                 ),
-                                child: const Text('🔄 Restaurar', style: TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 12)),
+                                child: Text(_loc.text('restore_purchases'), style: const TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 12)),
                                 onPressed: () async {
                                   await PurchaseService.restorePurchases();
                                   if (context.mounted) {
@@ -691,9 +691,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             ),
                             icon: const Icon(Icons.family_restroom, color: Colors.amberAccent, size: 20),
-                            label: const Text(
-                              '👨‍👩‍👧‍👦 Mis Códigos Familiares Módulo 10',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            label: Text(
+                              _loc.text('my_family_codes'),
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                             onPressed: () {
                               final user = _authService.currentUser;
@@ -714,15 +714,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Panel Generador de Códigos Módulo 10 para Administrador
               if (currentUser?.email == 'alejandro.martinez.briao@gmail.com') ...[
                 _buildSectionCard(
-                  title: 'Panel Administrador SegurCel',
+                  title: _loc.text('admin_panel_title'),
                   icon: Icons.admin_panel_settings,
                   iconColor: Colors.amberAccent,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
-                        'Genera un nuevo Código de Regalo Módulo 10 exclusivo de único uso para tus familiares o clientes VIP.',
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                      Text(
+                        _loc.text('admin_panel_desc'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton.icon(
@@ -733,9 +733,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
                         icon: const Icon(Icons.flash_on, color: Colors.amberAccent, size: 20),
-                        label: const Text(
-                          '⚡ Generar Código de Regalo Módulo 10',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                        label: Text(
+                          _loc.text('generate_gift_code'),
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                         onPressed: () async {
                           final newCode = PromoCodeHelper.generateRandomCode();
