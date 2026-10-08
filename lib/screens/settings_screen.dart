@@ -1099,6 +1099,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const Divider(color: Colors.white12, height: 8),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.menu_book_outlined, color: Colors.greenAccent, size: 20),
+                      title: Text(_loc.text('user_guide'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: const Text('https://segurcel.app/guide.html', style: TextStyle(color: Colors.white60, fontSize: 12)),
+                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      onTap: () {
+                        try {
+                          FileHelper.openUrl('https://segurcel.app/guide.html');
+                        } catch (_) {
+                          Clipboard.setData(const ClipboardData(text: 'https://segurcel.app/guide.html'));
+                        }
+                      },
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF), size: 20),
                       title: Text(_loc.text('privacy_policy'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
                       subtitle: const Text('https://segurcel.app/privacy.html', style: TextStyle(color: Colors.white60, fontSize: 12)),
