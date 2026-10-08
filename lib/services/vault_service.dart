@@ -179,6 +179,17 @@ class VaultService {
                   'subscriptionType': 'free',
                   'updatedAt': FieldValue.serverTimestamp(),
                 }, SetOptions(merge: true));
+
+                // Inactivar el código promocional antiguo para obligar a emitir uno nuevo si el titular renueva
+                final promoCodeUsed = data['promoCodeUsed'] as String?;
+                if (promoCodeUsed != null && promoCodeUsed.isNotEmpty) {
+                  try {
+                    await FirebaseFirestore.instance.collection('promo_codes').doc(promoCodeUsed).set({
+                      'disabled': true,
+                      'updatedAt': FieldValue.serverTimestamp(),
+                    }, SetOptions(merge: true));
+                  } catch (_) {}
+                }
               }
             } catch (e) {
               debugPrint("[Family Cascade Check Error] $e");

@@ -410,7 +410,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               .snapshots(),
           builder: (context, snapshot) {
             final allDocs = snapshot.data?.docs ?? [];
-            final docs = allDocs.where((d) => d.data()['isFamilyCode'] == true).toList();
+            final docs = allDocs.where((d) {
+              final data = d.data();
+              final isFamily = data['isFamilyCode'] == true;
+              final isDisabled = data['disabled'] == true;
+              return isFamily && !isDisabled;
+            }).toList();
             final count = docs.length;
 
             return AlertDialog(
