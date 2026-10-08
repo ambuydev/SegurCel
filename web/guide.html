@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Rápida de Uso - SegurCel</title>
+    <title>Manual de Funciones y Botones - SegurCel</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
@@ -108,7 +108,7 @@
             border-color: var(--primary);
         }
 
-        .step-badge {
+        .section-badge {
             display: inline-block;
             background-color: rgba(108, 99, 255, 0.2);
             color: var(--primary);
@@ -143,24 +143,28 @@
             margin-bottom: 12px;
         }
 
-        ul.step-list {
+        ul.button-list {
             list-style: none;
             padding-left: 0;
         }
 
-        ul.step-list li {
+        ul.button-list li {
             position: relative;
             padding-left: 24px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: var(--text-main);
             font-size: 14px;
         }
 
-        ul.step-list li::before {
-            content: "✓";
+        ul.button-list li strong {
+            color: var(--accent);
+        }
+
+        ul.button-list li::before {
+            content: "➔";
             position: absolute;
             left: 0;
-            color: var(--accent);
+            color: var(--primary);
             font-weight: bold;
         }
 
@@ -213,81 +217,96 @@
 
     <div class="container">
         <a href="index.html" class="btn-back" id="btnBack">← Volver al Sitio Oficial</a>
-        <h1 class="guide-title" id="guideTitle">Guía Rápida de Uso de SegurCel</h1>
-        <p class="guide-subtitle" id="guideSub">Aprende a proteger, respaldar y administrar tus contraseñas y códigos 2FA en 5 sencillos pasos.</p>
+        <h1 class="guide-title" id="guideTitle">Manual de Botones y Secciones de SegurCel</h1>
+        <p class="guide-subtitle" id="guideSub">Conoce en detalle qué hace cada botón, pantalla y función dentro de tu aplicación y la Bóveda Web.</p>
 
-        <!-- Paso 1 -->
+        <!-- Sección 1 -->
         <div class="guide-card">
-            <span class="step-badge" id="s1_badge">PASO 1</span>
+            <span class="section-badge" id="s1_badge">PANTALLA DE ACCESO</span>
             <div class="card-header">
                 <span class="card-icon">🔑</span>
-                <h2 class="card-title" id="s1_title">Creación de PIN Maestro y Código de Recuperación</h2>
+                <h2 class="card-title" id="s1_title">PIN Maestro y Desbloqueo Biométrico</h2>
             </div>
-            <p class="card-text" id="s1_text">Al iniciar SegurCel por primera vez, creas tu PIN de 4 dígitos. Este PIN deriva tu clave criptográfica AES-256 en tu propio dispositivo.</p>
-            <ul class="step-list">
-                <li id="s1_l1">Guarda tu Código de Recuperación en un lugar seguro fuera del celular.</li>
-                <li id="s1_l2">Activa la Desbloqueo por Huella Dactilar desde Ajustes para un acceso ultra-rápido.</li>
-                <li id="s1_l3">Protección Anti-Fuerza Bruta: 3 intentos fallidos consecutivos autodestruyen la bóveda local por seguridad.</li>
+            <p class="card-text" id="s1_text">Es la primera barrera de seguridad de tu bóveda local en tu celular o navegador.</p>
+            <ul class="button-list">
+                <li id="s1_l1"><strong>Botón "¿Olvidaste tu PIN?":</strong> Permite recuperar el acceso a tu bóveda local utilizando el Código de Recuperación grabado al instalar la aplicación.</li>
+                <li id="s1_l2"><strong>Ícono de Huella Dactilar:</strong> Si activas el Desbloqueo por Huella Dactilar desde Ajustes, te permite usar la biometría de tu celular para un acceso instantáneo sin digitar los 4 dígitos.</li>
+                <li id="s1_l3"><strong>Contador de Intentos Restantes:</strong> Muestra cuántas oportunidades quedan antes de activar la autodestrucción local de seguridad si alguien intenta adivinar tu PIN.</li>
             </ul>
         </div>
 
-        <!-- Paso 2 -->
+        <!-- Sección 2 -->
         <div class="guide-card">
-            <span class="step-badge" id="s2_badge">PASO 2</span>
+            <span class="section-badge" id="s2_badge">AGREGAR ELEMENTOS</span>
             <div class="card-header">
-                <span class="card-icon">🛡️</span>
-                <h2 class="card-title" id="s2_title">Cifrado Zero-Knowledge End-to-End</h2>
+                <span class="card-icon">➕</span>
+                <h2 class="card-title" id="s2_title">Botón Flotante (+) y Pestañas de Registro</h2>
             </div>
-            <p class="card-text" id="s2_text">SegurCel utiliza un esquema estricto de Conocimiento Cero (Zero-Knowledge). Tus datos se cifran antes de salir de tu dispositivo.</p>
-            <ul class="step-list">
-                <li id="s2_l1">Tus contraseñas, tarjetas y notas confidenciales se convierten en texto ilegible mediante AES-256-GCM.</li>
-                <li id="s2_l2">PBKDF2 con 65.536 iteraciones protege tu clave contra ataques de supercomputadoras.</li>
-                <li id="s2_l3">Nadie (ni siquiera los servidores de SegurCel) puede leer tu información.</li>
+            <p class="card-text" id="s2_text">Al presionar el botón morado (+) en la pantalla principal, puedes guardar 3 tipos de registros encriptados:</p>
+            <ul class="button-list">
+                <li id="s2_l1"><strong>Pestaña "Contraseñas":</strong> Almacena nombre del servicio (ej. Gmail, Banco), usuario, correo electrónico, clave y notas confidenciales.</li>
+                <li id="s2_l2"><strong>Pestaña "Tarjetas Bancarias":</strong> Guarda titular de la tarjeta, número de plástico, fecha de vencimiento (MM/AA), código CVV de seguridad y PIN del cajero.</li>
+                <li id="s2_l3"><strong>Pestaña "Notas Seguras":</strong> Un bloc de notas confidencial encriptado para pines de WiFi, contratos o secretos personales.</li>
+                <li id="s2_l4"><strong>Ícono de Estrella ⭐:</strong> Marca cualquier registro como favorito para fijarlo de forma prioritaria en la parte superior de tu bóveda.</li>
             </ul>
         </div>
 
-        <!-- Paso 3 -->
+        <!-- Sección 3 -->
         <div class="guide-card">
-            <span class="step-badge" id="s3_badge">PASO 3</span>
+            <span class="section-badge" id="s3_badge">SEGURIDAD 2FA</span>
             <div class="card-header">
                 <span class="card-icon">⏱️</span>
-                <h2 class="card-title" id="s3_title">Autenticador de Verificación en 2 Pasos (2FA TOTP)</h2>
+                <h2 class="card-title" id="s3_title">Autenticador 2FA TOTP (Códigos de 6 Dígitos)</h2>
             </div>
-            <p class="card-text" id="s3_text">Sustituye aplicaciones secundarias como Google Authenticator o Authy integrando tus códigos de 6 dígitos dentro de SegurCel.</p>
-            <ul class="step-list">
-                <li id="s3_l1">Al agregar un elemento, pega la clave secreta 2FA/TOTP (ej: JBSWY3DPEHPK3PXP).</li>
-                <li id="s3_l2">Verás un temporizador circular de 30 segundos en vivo.</li>
-                <li id="s3_l3">Haz clic en el código de 6 dígitos para copiarlo al portapapeles con 1 solo toque.</li>
+            <p class="card-text" id="s3_text">Reemplaza aplicaciones externas como Google Authenticator integrando tus códigos temporales directamente en SegurCel.</p>
+            <ul class="button-list">
+                <li id="s3_l1"><strong>Campo "Clave Secreta 2FA / TOTP":</strong> Pega la clave secreta alfanumérica que te brinda tu servicio (ej. Google, Facebook, Binance).</li>
+                <li id="s3_l2"><strong>Temporizador Circular de 30 Segundos:</strong> Muestra el tiempo de validez restante antes de que el código de 6 dígitos se renueve automáticamente.</li>
+                <li id="s3_l3"><strong>Copia con 1 Táctil:</strong> Al tocar el código dinámico de 6 dígitos, este se copia automáticamente al portapapeles de tu dispositivo.</li>
             </ul>
         </div>
 
-        <!-- Paso 4 -->
+        <!-- Sección 4 -->
         <div class="guide-card">
-            <span class="step-badge" id="s4_badge">PASO 4</span>
+            <span class="section-badge" id="s4_badge">GENERADOR DE CLAVES</span>
+            <div class="card-header">
+                <span class="card-icon">🎲</span>
+                <h2 class="card-title" id="s4_title">Botón "Generador Avanzado de Contraseñas"</h2>
+            </div>
+            <p class="card-text" id="s4_text">Crea contraseñas criptográficamente fuertes e indescifrables a la medida de tus necesidades.</p>
+            <ul class="button-list">
+                <li id="s4_l1"><strong>Deslizador de Longitud:</strong> Configura el largo de tu contraseña desde 8 hasta 32 caracteres.</li>
+                <li id="s4_l2"><strong>Casilla "Evitar Caracteres Ambiguos":</strong> Excluye letras y números que se confunden fácilmente (como 1, l, I, 0, O) para evitar errores al escribir.</li>
+                <li id="s4_l3"><strong>Botón "Usar esta Contraseña":</strong> Inserta la clave generada directamente en el formulario activo sin tener que escribirla manualmente.</li>
+            </ul>
+        </div>
+
+        <!-- Sección 5 -->
+        <div class="guide-card">
+            <span class="section-badge" id="s5_badge">AUDITORÍA</span>
             <div class="card-header">
                 <span class="card-icon">🩺</span>
-                <h2 class="card-title" id="s4_title">Auditoría de Salud e Importación / Exportación</h2>
+                <h2 class="card-title" id="s5_title">Pestaña "Salud de la Bóveda"</h2>
             </div>
-            <p class="card-text" id="s4_text">Mantén tu bóveda saludable y migra tus contraseñas desde cualquier otro gestor sin esfuerzo.</p>
-            <ul class="step-list">
-                <li id="s4_l1">Auditoría Inteligente: Evalúa tus contraseñas del 0 al 100% e identifica claves débiles o repetidas.</li>
-                <li id="s4_l2">Importador Universal: Carga archivos CSV de Google Chrome, Edge, Bitwarden o 1Password.</li>
-                <li id="s4_l3">Exportador Seguro: Genera copias de respaldo en formato CSV y JSON.</li>
+            <p class="card-text" id="s5_text">Un escáner inteligente que analiza la fortaleza global de tu colección de contraseñas.</p>
+            <ul class="button-list">
+                <li id="s5_l1"><strong>Medidor de Puntaje (0 al 100%):</strong> Califica la seguridad general de tu bóveda basándose en la complejidad de tus claves.</li>
+                <li id="s5_l2"><strong>Alertas de Riesgo:</strong> Clasifica y detecta contraseñas débiles, claves repetidas en múltiples sitios y contraseñas antiguas que deberías cambiar.</li>
             </ul>
         </div>
 
-        <!-- Paso 5 -->
+        <!-- Sección 6 -->
         <div class="guide-card">
-            <span class="step-badge" id="s5_badge">PASO 5</span>
+            <span class="section-badge" id="s6_badge">CONFIGURACIÓN</span>
             <div class="card-header">
-                <span class="card-icon">👨‍👩‍👧‍👦</span>
-                <h2 class="card-title" id="s5_title">Suscripciones PRO, Bóveda Web y Pases VIP</h2>
+                <span class="card-icon">⚙️</span>
+                <h2 class="card-title" id="s6_title">Ajustes, Pases VIP e Importador / Exportador</h2>
             </div>
-            <p class="card-text" id="s5_text">Accede a tus contraseñas desde cualquier navegador Web y comparte el Plan Familiar con tus seres queridos.</p>
-            <ul class="step-list">
-                <li id="s5_l1">Acceso Web Exclusivo: Ingresa a la Bóveda Web desde cualquier PC en https://segurcel.app/vault.html.</li>
-                <li id="s5_l2">Pases de Invitación VIP: Los titulares del Plan Familiar generan hasta 4 Pases VIP únicos para otorgar suscripciones a familiares.</li>
-                <li id="s5_l3">Estado en Tiempo Real: Revisa quién canjeó tus pases VIP desde la sección Ajustes.</li>
+            <p class="card-text" id="s6_text">Administra las funciones avanzadas de tu cuenta y la suscripción en la sección Ajustes.</p>
+            <ul class="button-list">
+                <li id="s6_l1"><strong>Botones "Importar / Exportar":</strong> Migra tus contraseñas fácilmente mediante archivos CSV desde Google Chrome, Edge, Bitwarden o 1Password, o guarda copias en CSV y JSON.</li>
+                <li id="s6_l2"><strong>Botón "Mis Pases de Invitación VIP":</strong> (Titulares de Plan Familiar) Permite generar hasta 4 pases de invitación únicos para regalar membresías Premium a familiares y ver quién los canjeó en tiempo real.</li>
+                <li id="s6_l3"><strong>Botón "Bóveda Web":</strong> Permite acceder y sincronizar tus contraseñas desde cualquier PC o navegador ingresando a https://segurcel.app/vault.html.</li>
             </ul>
         </div>
 
@@ -301,53 +320,61 @@
         const dict = {
             es: {
                 btnBack: "← Volver al Sitio Oficial",
-                title: "Guía Rápida de Uso de SegurCel",
-                sub: "Aprende a proteger, respaldar y administrar tus contraseñas y códigos 2FA en 5 sencillos pasos.",
-                s1_b: "PASO 1", s1_t: "Creación de PIN Maestro y Código de Recuperación", s1_x: "Al iniciar SegurCel por primera vez, creas tu PIN de 4 dígitos. Este PIN deriva tu clave criptográfica AES-256 en tu propio dispositivo.",
-                s1_1: "Guarda tu Código de Recuperación en un lugar seguro fuera del celular.",
-                s1_2: "Activa el Desbloqueo por Huella Dactilar desde Ajustes para un acceso ultra-rápido.",
-                s1_3: "Protección Anti-Fuerza Bruta: 3 intentos fallidos consecutivos autodestruyen la bóveda local por seguridad.",
-                s2_b: "PASO 2", s2_t: "Cifrado Zero-Knowledge End-to-End", s2_x: "SegurCel utiliza un esquema estricto de Conocimiento Cero (Zero-Knowledge). Tus datos se cifran antes de salir de tu dispositivo.",
-                s2_1: "Tus contraseñas, tarjetas y notas confidenciales se convierten en texto ilegible mediante AES-256-GCM.",
-                s2_2: "PBKDF2 con 65.536 iteraciones protege tu clave contra ataques de supercomputadoras.",
-                s2_3: "Nadie (ni siquiera los servidores de SegurCel) puede leer tu información.",
-                s3_b: "PASO 3", s3_t: "Autenticador de Verificación en 2 Pasos (2FA TOTP)", s3_x: "Sustituye aplicaciones secundarias como Google Authenticator o Authy integrando tus códigos de 6 dígitos dentro de SegurCel.",
-                s3_1: "Al agregar un elemento, pega la clave secreta 2FA/TOTP (ej: JBSWY3DPEHPK3PXP).",
-                s3_2: "Verás un temporizador circular de 30 segundos en vivo.",
-                s3_3: "Haz clic en el código de 6 dígitos para copiarlo al portapapeles con 1 solo toque.",
-                s4_b: "PASO 4", s4_t: "Auditoría de Salud e Importación / Exportación", s4_x: "Mantén tu bóveda saludable y migra tus contraseñas desde cualquier otro gestor sin esfuerzo.",
-                s4_1: "Auditoría Inteligente: Evalúa tus contraseñas del 0 al 100% e identifica claves débiles o repetidas.",
-                s4_2: "Importador Universal: Carga archivos CSV de Google Chrome, Edge, Bitwarden o 1Password.",
-                s4_3: "Exportador Seguro: Genera copias de respaldo en formato CSV y JSON.",
-                s5_b: "PASO 5", s5_t: "Suscripciones PRO, Bóveda Web y Pases VIP", s5_x: "Accede a tus contraseñas desde cualquier navegador Web y comparte el Plan Familiar con tus seres queridos.",
-                s5_1: "Acceso Web Exclusivo: Ingresa a la Bóveda Web desde cualquier PC en https://segurcel.app/vault.html.",
-                s5_2: "Pases de Invitación VIP: Los titulares del Plan Familiar generan hasta 4 Pases VIP únicos para otorgar suscripciones a familiares.",
-                s5_3: "Estado en Tiempo Real: Revisa quién canjeó tus pases VIP desde la sección Ajustes."
+                title: "Manual de Botones y Secciones de SegurCel",
+                sub: "Conoce en detalle qué hace cada botón, pantalla y función dentro de tu aplicación y la Bóveda Web.",
+                s1_b: "PANTALLA DE ACCESO", s1_t: "PIN Maestro y Desbloqueo Biométrico", s1_x: "Es la primera barrera de seguridad de tu bóveda local en tu celular o navegador.",
+                s1_1: "<strong>Botón \"¿Olvidaste tu PIN?\":</strong> Permite recuperar el acceso a tu bóveda local utilizando el Código de Recuperación grabado al instalar la aplicación.",
+                s1_2: "<strong>Ícono de Huella Dactilar:</strong> Si activas el Desbloqueo por Huella Dactilar desde Ajustes, te permite usar la biometría de tu celular para un acceso instantáneo sin digitar los 4 dígitos.",
+                s1_3: "<strong>Contador de Intentos Restantes:</strong> Muestra cuántas oportunidades quedan antes de activar la autodestrucción local de seguridad si alguien intenta adivinar tu PIN.",
+                s2_b: "AGREGAR ELEMENTOS", s2_t: "Botón Flotante (+) y Pestañas de Registro", s2_x: "Al presionar el botón morado (+) en la pantalla principal, puedes guardar 3 tipos de registros encriptados:",
+                s2_1: "<strong>Pestaña \"Contraseñas\":</strong> Almacena nombre del servicio (ej. Gmail, Banco), usuario, correo electrónico, clave y notas confidenciales.",
+                s2_2: "<strong>Pestaña \"Tarjetas Bancarias\":</strong> Guarda titular de la tarjeta, número de plástico, fecha de vencimiento (MM/AA), código CVV de seguridad y PIN del cajero.",
+                s2_3: "<strong>Pestaña \"Notas Seguras\":</strong> Un bloc de notas confidencial encriptado para pines de WiFi, contratos o secretos personales.",
+                s2_4: "<strong>Ícono de Estrella ⭐:</strong> Marca cualquier registro como favorito para fijarlo de forma prioritaria en la parte superior de tu bóveda.",
+                s3_b: "SEGURIDAD 2FA", s3_t: "Autenticador 2FA TOTP (Códigos de 6 Dígitos)", s3_x: "Reemplaza aplicaciones externas como Google Authenticator integrando tus códigos temporales directamente en SegurCel.",
+                s3_1: "<strong>Campo \"Clave Secreta 2FA / TOTP\":</strong> Pega la clave secreta alfanumérica que te brinda tu servicio (ej. Google, Facebook, Binance).",
+                s3_2: "<strong>Temporizador Circular de 30 Segundos:</strong> Muestra el tiempo de validez restante antes de que el código de 6 dígitos se renueve automáticamente.",
+                s3_3: "<strong>Copia con 1 Táctil:</strong> Al tocar el código dinámico de 6 dígitos, este se copia automáticamente al portapapeles de tu dispositivo.",
+                s4_b: "GENERADOR DE CLAVES", s4_t: "Botón \"Generador Avanzado de Contraseñas\"", s4_x: "Crea contraseñas criptográficamente fuertes e indescifrables a la medida de tus necesidades.",
+                s4_1: "<strong>Deslizador de Longitud:</strong> Configura el largo de tu contraseña desde 8 hasta 32 caracteres.",
+                s4_2: "<strong>Casilla \"Evitar Caracteres Ambiguos\":</strong> Excluye letras y números que se confunden fácilmente (como 1, l, I, 0, O) para evitar errores al escribir.",
+                s4_3: "<strong>Botón \"Usar esta Contraseña\":</strong> Inserta la clave generada directamente en el formulario activo sin tener que escribirla manualmente.",
+                s5_b: "AUDITORÍA", s5_t: "Pestaña \"Salud de la Bóveda\"", s5_x: "Un escáner inteligente que analiza la fortaleza global de tu colección de contraseñas.",
+                s5_1: "<strong>Medidor de Puntaje (0 al 100%):</strong> Califica la seguridad general de tu bóveda basándose en la complejidad de tus claves.",
+                s5_2: "<strong>Alertas de Riesgo:</strong> Clasifica y detecta contraseñas débiles, claves repetidas en múltiples sitios y contraseñas antiguas que deberías cambiar.",
+                s6_b: "CONFIGURACIÓN", s6_t: "Ajustes, Pases VIP e Importador / Exportador", s6_x: "Administra las funciones avanzadas de tu cuenta y la suscripción en la sección Ajustes.",
+                s6_1: "<strong>Botones \"Importar / Exportar\":</strong> Migra tus contraseñas fácilmente mediante archivos CSV desde Google Chrome, Edge, Bitwarden o 1Password, o guarda copias en CSV y JSON.",
+                s6_2: "<strong>Botón \"Mis Pases de Invitación VIP\":</strong> (Titulares de Plan Familiar) Permite generar hasta 4 pases de invitación únicos para regalar membresías Premium a familiares y ver quién los canjeó en tiempo real.",
+                s6_3: "<strong>Botón \"Bóveda Web\":</strong> Permite acceder y sincronizar tus contraseñas desde cualquier PC o navegador ingresando a https://segurcel.app/vault.html."
             },
             en: {
                 btnBack: "← Back to Official Site",
-                title: "SegurCel Quick Start User Guide",
-                sub: "Learn how to protect, back up, and manage your passwords and 2FA codes in 5 simple steps.",
-                s1_b: "STEP 1", s1_t: "Master PIN & Recovery Code Setup", s1_x: "When starting SegurCel for the first time, create your 4-digit PIN. This PIN derives your AES-256 cryptographic key locally.",
-                s1_1: "Save your Recovery Code in a safe place off your phone.",
-                s1_2: "Enable Fingerprint Unlock from Settings for ultra-fast access.",
-                s1_3: "Anti-Brute Force Protection: 3 consecutive failed PIN attempts self-destruct local vault data for security.",
-                s2_b: "STEP 2", s2_t: "Zero-Knowledge End-to-End Encryption", s2_x: "SegurCel uses a strict Zero-Knowledge architecture. Your data is encrypted locally before leaving your device.",
-                s2_1: "Your passwords, cards, and confidential notes are converted into unreadable ciphertext via AES-256-GCM.",
-                s2_2: "PBKDF2 with 65,536 iterations protects your key against supercomputer attacks.",
-                s2_3: "Nobody (not even SegurCel servers) can read your data.",
-                s3_b: "STEP 3", s3_t: "2-Factor Authenticator (2FA TOTP)", s3_x: "Replace separate authenticator apps like Google Authenticator or Authy by generating 6-digit codes inside SegurCel.",
-                s3_1: "When adding an item, paste the 2FA/TOTP secret key (e.g. JBSWY3DPEHPK3PXP).",
-                s3_2: "Watch the live 30-second circular countdown timer.",
-                s3_3: "Tap the 6-digit code to copy it to clipboard with 1 single touch.",
-                s4_b: "STEP 4", s4_t: "Vault Health Audit & Import / Export", s4_x: "Keep your vault healthy and migrate passwords effortlessly from any other manager.",
-                s4_1: "Smart Audit: Scores password strength from 0 to 100% and flags weak or reused keys.",
-                s4_2: "Universal Importer: Upload CSV files from Google Chrome, Edge, Bitwarden, or 1Password.",
-                s4_3: "Secure Exporter: Generate local backup copies in CSV and JSON formats.",
-                s5_b: "STEP 5", s5_t: "PRO Subscriptions, Web Vault & VIP Passes", s5_x: "Access passwords from any Web browser and share the Family Plan with your loved ones.",
-                s5_1: "Exclusive Web Access: Log into the Web Vault on any PC at https://segurcel.app/vault.html.",
-                s5_2: "VIP Invitation Passes: Family Plan owners generate up to 4 unique VIP Passes to gift subscriptions.",
-                s5_3: "Real-Time Status: Track who redeemed your VIP passes directly in Settings."
+                title: "SegurCel Buttons & Features Manual",
+                sub: "Discover in detail what every button, screen, and feature does inside your app and the Web Vault.",
+                s1_b: "ACCESS SCREEN", s1_t: "Master PIN & Biometric Unlock", s1_x: "This is the first security barrier of your local vault on your phone or browser.",
+                s1_1: "<strong>\"Forgot your PIN?\" Button:</strong> Restores access to your local vault using the Recovery Code saved during initial setup.",
+                s1_2: "<strong>Fingerprint Icon:</strong> Enable Fingerprint Unlock from Settings to use biometric authentication for instant access without typing 4 digits.",
+                s1_3: "<strong>Remaining Attempts Counter:</strong> Shows remaining attempts before activating local security self-destruction if someone guesses your PIN.",
+                s2_b: "ADD ITEMS", s2_t: "Floating (+) Button & Entry Tabs", s2_x: "Tapping the purple (+) button on the main screen lets you save 3 types of encrypted records:",
+                s2_1: "<strong>\"Passwords\" Tab:</strong> Stores service name (e.g. Gmail, Bank), username, email, password, and confidential notes.",
+                s2_2: "<strong>\"Bank Cards\" Tab:</strong> Stores cardholder name, card number, expiration date (MM/YY), CVV code, and ATM PIN.",
+                s2_3: "<strong>\"Secure Notes\" Tab:</strong> An encrypted confidential notepad for WiFi PINs, contracts, or personal secrets.",
+                s2_4: "<strong>Star Icon ⭐:</strong> Marks any entry as a favorite to pin it at the top of your vault.",
+                s3_b: "2FA SECURITY", s3_t: "2FA TOTP Authenticator (6-Digit Codes)", s3_x: "Replaces separate apps like Google Authenticator by generating temporary codes directly inside SegurCel.",
+                s3_1: "<strong>\"2FA Secret Key / TOTP\" Field:</strong> Paste the alphanumeric secret key provided by your service (e.g. Google, Facebook, Binance).",
+                s3_2: "<strong>30-Second Circular Countdown:</strong> Shows remaining validity time before the 6-digit code auto-renews.",
+                s3_3: "<strong>1-Tap Copy:</strong> Tap the dynamic 6-digit code to copy it instantly to your clipboard.",
+                s4_b: "KEY GENERATOR", s4_t: "\"Advanced Password Generator\" Button", s4_x: "Creates cryptographically strong, uncrackable passwords tailored to your needs.",
+                s4_1: "<strong>Length Slider:</strong> Configures password length from 8 up to 32 characters.",
+                s4_2: "<strong>\"Avoid Ambiguous Characters\" Checkbox:</strong> Excludes easily confused letters and numbers (like 1, l, I, 0, O) to prevent typing errors.",
+                s4_3: "<strong>\"Use this Password\" Button:</strong> Inserts the generated key directly into your active form without manual typing.",
+                s5_b: "AUDIT", s5_t: "\"Vault Health\" Tab", s5_x: "A smart scanner that analyzes the overall strength of your password collection.",
+                s5_1: "<strong>Score Gauge (0 to 100%):</strong> Rates your vault's security based on key complexity.",
+                s5_2: "<strong>Risk Alerts:</strong> Flags weak passwords, reused keys across sites, and old passwords you should change.",
+                s6_b: "SETTINGS", s6_t: "Settings, VIP Passes & Importer / Exporter", s6_x: "Manage advanced account features and subscriptions in the Settings section.",
+                s6_1: "<strong>\"Import / Export\" Buttons:</strong> Easily migrate passwords via CSV files from Chrome, Edge, Bitwarden, or 1Password, or save backups in CSV/JSON.",
+                s6_2: "<strong>\"My VIP Invitation Passes\" Button:</strong> (Family Owners) Generates up to 4 unique VIP passes to gift Premium subscriptions and see who redeemed them in real time.",
+                s6_3: "<strong>\"Web Vault\" Button:</strong> Access and sync passwords from any PC or browser at https://segurcel.app/vault.html."
             }
         };
 
@@ -357,15 +384,17 @@
             document.getElementById("guideTitle").innerText = data.title;
             document.getElementById("guideSub").innerText = data.sub;
             document.getElementById("s1_badge").innerText = data.s1_b; document.getElementById("s1_title").innerText = data.s1_t; document.getElementById("s1_text").innerText = data.s1_x;
-            document.getElementById("s1_l1").innerText = data.s1_1; document.getElementById("s1_l2").innerText = data.s1_2; document.getElementById("s1_l3").innerText = data.s1_3;
+            document.getElementById("s1_l1").innerHTML = data.s1_1; document.getElementById("s1_l2").innerHTML = data.s1_2; document.getElementById("s1_l3").innerHTML = data.s1_3;
             document.getElementById("s2_badge").innerText = data.s2_b; document.getElementById("s2_title").innerText = data.s2_t; document.getElementById("s2_text").innerText = data.s2_x;
-            document.getElementById("s2_l1").innerText = data.s2_1; document.getElementById("s2_l2").innerText = data.s2_2; document.getElementById("s2_l3").innerText = data.s2_3;
+            document.getElementById("s2_l1").innerHTML = data.s2_1; document.getElementById("s2_l2").innerHTML = data.s2_2; document.getElementById("s2_l3").innerHTML = data.s2_3; document.getElementById("s2_l4").innerHTML = data.s2_4;
             document.getElementById("s3_badge").innerText = data.s3_b; document.getElementById("s3_title").innerText = data.s3_t; document.getElementById("s3_text").innerText = data.s3_x;
-            document.getElementById("s3_l1").innerText = data.s3_1; document.getElementById("s3_l2").innerText = data.s3_2; document.getElementById("s3_l3").innerText = data.s3_3;
+            document.getElementById("s3_l1").innerHTML = data.s3_1; document.getElementById("s3_l2").innerHTML = data.s3_2; document.getElementById("s3_l3").innerHTML = data.s3_3;
             document.getElementById("s4_badge").innerText = data.s4_b; document.getElementById("s4_title").innerText = data.s4_t; document.getElementById("s4_text").innerText = data.s4_x;
-            document.getElementById("s4_l1").innerText = data.s4_1; document.getElementById("s4_l2").innerText = data.s4_2; document.getElementById("s4_l3").innerText = data.s4_3;
+            document.getElementById("s4_l1").innerHTML = data.s4_1; document.getElementById("s4_l2").innerHTML = data.s4_2; document.getElementById("s4_l3").innerHTML = data.s4_3;
             document.getElementById("s5_badge").innerText = data.s5_b; document.getElementById("s5_title").innerText = data.s5_t; document.getElementById("s5_text").innerText = data.s5_x;
-            document.getElementById("s5_l1").innerText = data.s5_1; document.getElementById("s5_l2").innerText = data.s5_2; document.getElementById("s5_l3").innerText = data.s5_3;
+            document.getElementById("s5_l1").innerHTML = data.s5_1; document.getElementById("s5_l2").innerHTML = data.s5_2;
+            document.getElementById("s6_badge").innerText = data.s6_b; document.getElementById("s6_title").innerText = data.s6_t; document.getElementById("s6_text").innerText = data.s6_x;
+            document.getElementById("s6_l1").innerHTML = data.s6_1; document.getElementById("s6_l2").innerHTML = data.s6_2; document.getElementById("s6_l3").innerHTML = data.s6_3;
         }
     </script>
 </body>
