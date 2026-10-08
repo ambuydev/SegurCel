@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -15,6 +16,16 @@ class LocalizationService extends ChangeNotifier {
 
   Future<void> initLanguage() async {
     try {
+      if (kIsWeb) {
+        final queryLang = Uri.base.queryParameters['lang'];
+        if (queryLang != null && _translations.containsKey(queryLang)) {
+          _currentLanguage = queryLang;
+          await _secureStorage.write(key: _storageKey, value: queryLang);
+          notifyListeners();
+          return;
+        }
+      }
+
       final savedLang = await _secureStorage.read(key: _storageKey);
       if (savedLang != null && _translations.containsKey(savedLang)) {
         _currentLanguage = savedLang;

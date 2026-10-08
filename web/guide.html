@@ -226,103 +226,24 @@
         }
 
         @media (max-width: 600px) {
-            header {
-                padding: 12px 16px;
-            }
-
-            .brand {
-                font-size: 17px;
-                gap: 8px;
-            }
-
-            .brand img {
-                width: 28px;
-                height: 28px;
-            }
-
-            .lang-select {
-                padding: 6px 8px;
-                font-size: 12px;
-            }
-
-            .container {
-                margin-top: 20px;
-                padding: 0 14px;
-            }
-
-            .btn-back {
-                display: block;
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-                font-size: 13px;
-                margin-bottom: 20px;
-            }
-
-            .guide-title {
-                font-size: 22px;
-                line-height: 1.3;
-            }
-
-            .guide-subtitle {
-                font-size: 13px;
-                margin-bottom: 24px;
-            }
-
-            .guide-card {
-                padding: 16px 14px;
-                border-radius: 14px;
-                margin-bottom: 16px;
-            }
-
-            .card-header {
-                gap: 8px;
-                margin-bottom: 8px;
-            }
-
-            .card-icon {
-                font-size: 24px;
-            }
-
-            .card-title {
-                font-size: 17px;
-            }
-
-            .card-text {
-                font-size: 13px;
-                margin-bottom: 10px;
-            }
-
-            ul.button-list li {
-                padding-left: 20px;
-                font-size: 13px;
-                margin-bottom: 8px;
-            }
+            header { padding: 12px 16px; }
+            .brand { font-size: 17px; gap: 8px; }
+            .brand img { width: 28px; height: 28px; }
+            .container { margin-top: 20px; padding: 0 14px; }
+            .btn-back { display: block; width: 100%; text-align: center; padding: 12px; font-size: 13px; margin-bottom: 20px; }
+            .guide-title { font-size: 22px; line-height: 1.3; }
+            .guide-subtitle { font-size: 13px; margin-bottom: 24px; }
+            .guide-card { padding: 16px 14px; border-radius: 14px; margin-bottom: 16px; }
+            .card-header { gap: 8px; margin-bottom: 8px; }
+            .card-icon { font-size: 24px; }
+            .card-title { font-size: 17px; }
+            .card-text { font-size: 13px; margin-bottom: 10px; }
+            ul.button-list li { padding-left: 20px; font-size: 13px; margin-bottom: 8px; }
         }
 
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .btn-back {
-            display: inline-block;
-            background-color: var(--primary);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+        footer { text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 13px; }
+        footer a { color: var(--primary); text-decoration: none; }
+        .btn-back { display: inline-block; background-color: var(--primary); color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -456,11 +377,27 @@
     </div>
 
     <script>
+        const flagsMap = {
+            es: "https://flagcdn.com/20x15/es.png",
+            en: "https://flagcdn.com/20x15/us.png",
+            pt: "https://flagcdn.com/20x15/br.png",
+            zh: "https://flagcdn.com/20x15/cn.png",
+            fr: "https://flagcdn.com/20x15/fr.png",
+            hi: "https://flagcdn.com/20x15/in.png",
+            de: "https://flagcdn.com/20x15/de.png",
+            ja: "https://flagcdn.com/20x15/jp.png",
+            ko: "https://flagcdn.com/20x15/kr.png",
+            ru: "https://flagcdn.com/20x15/ru.png"
+        };
+
+        const namesMap = {
+            es: "Español", en: "English", pt: "Português", zh: "中文", fr: "Français",
+            hi: "हिन्दी", de: "Deutsch", ja: "日本語", ko: "한국어", ru: "Русский"
+        };
+
         const dict = {
             es: {
-                btnBack: "← Volver al Sitio Oficial",
-                title: "Manual de Botones y Secciones de SegurCel",
-                sub: "Conoce en detalle qué hace cada botón, pantalla y función dentro de tu aplicación y la Bóveda Web.",
+                btnBack: "← Volver al Sitio Oficial", title: "Manual de Botones y Secciones de SegurCel", sub: "Conoce en detalle qué hace cada botón, pantalla y función dentro de tu aplicación y la Bóveda Web.",
                 s1_b: "PANTALLA DE ACCESO", s1_t: "PIN Maestro y Desbloqueo Biométrico", s1_x: "Es la primera barrera de seguridad de tu bóveda local en tu celular o navegador.",
                 s1_1: "<strong>Botón \"¿Olvidaste tu PIN?\":</strong> Permite recuperar el acceso a tu bóveda local utilizando el Código de Recuperación grabado al instalar la aplicación.",
                 s1_2: "<strong>Ícono de Huella Dactilar:</strong> Si activas el Desbloqueo por Huella Dactilar desde Ajustes, te permite usar la biometría de tu celular para un acceso instantáneo sin digitar los 4 dígitos.",
@@ -487,9 +424,7 @@
                 s6_3: "<strong>Botón \"Bóveda Web\":</strong> Permite acceder y sincronizar tus contraseñas desde cualquier PC o navegador ingresando a https://segurcel.app/vault.html."
             },
             en: {
-                btnBack: "← Back to Official Site",
-                title: "SegurCel Buttons & Features Manual",
-                sub: "Discover in detail what every button, screen, and feature does inside your app and the Web Vault.",
+                btnBack: "← Back to Official Site", title: "SegurCel Buttons & Features Manual", sub: "Discover in detail what every button, screen, and feature does inside your app and the Web Vault.",
                 s1_b: "ACCESS SCREEN", s1_t: "Master PIN & Biometric Unlock", s1_x: "This is the first security barrier of your local vault on your phone or browser.",
                 s1_1: "<strong>\"Forgot your PIN?\" Button:</strong> Restores access to your local vault using the Recovery Code saved during initial setup.",
                 s1_2: "<strong>Fingerprint Icon:</strong> Enable Fingerprint Unlock from Settings to use biometric authentication for instant access without typing 4 digits.",
@@ -514,26 +449,256 @@
                 s6_1: "<strong>\"Import / Export\" Buttons:</strong> Easily migrate passwords via CSV files from Chrome, Edge, Bitwarden, or 1Password, or save backups in CSV/JSON.",
                 s6_2: "<strong>\"My VIP Invitation Passes\" Button:</strong> (Family Owners) Generates up to 4 unique VIP passes to gift Premium subscriptions and see who redeemed them in real time.",
                 s6_3: "<strong>\"Web Vault\" Button:</strong> Access and sync passwords from any PC or browser at https://segurcel.app/vault.html."
+            },
+            pt: {
+                btnBack: "← Voltar ao Site Oficial", title: "Manual de Botões e Recursos do SegurCel", sub: "Descubra em detalhes o que cada botão, tela e recurso faz no seu aplicativo e no Cofre Web.",
+                s1_b: "TELA DE ACESSO", s1_t: "PIN Mestre e Desbloqueio Biométrico", s1_x: "É a primeira barreira de segurança do seu cofre local no seu celular ou navegador.",
+                s1_1: "<strong>Botão \"Esqueceu seu PIN?\":</strong> Restaura o acesso ao cofre local usando o Código de Recuperação salvo durante a configuração.",
+                s1_2: "<strong>Ícone de Impressão Digital:</strong> Ative o Desbloqueio por Impressão Digital nas Configurações para usar biometria e acessar sem digitar 4 dígitos.",
+                s1_3: "<strong>Contador de Tentativas Restantes:</strong> Mostra as tentativas restantes antes de ativar a autodestruição do cofre local por segurança.",
+                s2_b: "ADICIONAR ITENS", s2_t: "Botão Flutuante (+) e Abas de Registro", s2_x: "Ao tocar no botão roxo (+) na tela principal, você pode salvar 3 tipos de registros criptografados:",
+                s2_1: "<strong>Aba \"Senhas\":</strong> Armazena nome do serviço (ex: Gmail, Banco), usuário, e-mail, senha e notas confidenciais.",
+                s2_2: "<strong>Aba \"Cartões Bancários\":</strong> Armazena titular, número do cartão, data de validade (MM/AA), código CVV e PIN do caixa eletrônico.",
+                s2_3: "<strong>Aba \"Notas Seguras\":</strong> Um bloco de notas confidencial criptografado para senhas de WiFi, contratos ou segredos.",
+                s2_4: "<strong>Ícone de Estrela ⭐:</strong> Marca qualquer item como favorito para fixá-lo no topo do cofre.",
+                s3_b: "SEGURANÇA 2FA", s3_t: "Autenticador 2FA TOTP (Códigos de 6 Dígitos)", s3_x: "Substitui aplicativos como Google Authenticator gerando códigos temporários no SegurCel.",
+                s3_1: "<strong>Campo \"Chave Secreta 2FA / TOTP\":</strong> Cole a chave secreta alfanumérica fornecida pelo seu serviço (ex: Google, Binance).",
+                s3_2: "<strong>Temporizador Circular de 30 Segundos:</strong> Mostra o tempo restante antes que o código de 6 dígitos seja renovado.",
+                s3_3: "<strong>Cópia com 1 Toque:</strong> Toque no código de 6 dígitos para copiá-lo para a área de transferência.",
+                s4_b: "GERADOR DE SENHAS", s4_t: "Botão \"Gerador Avançado de Senhas\"", s4_x: "Cria senhas criptograficamente fortes e inquebráveis sob medida.",
+                s4_1: "<strong>Controlador de Comprimento:</strong> Configura o tamanho da senha de 8 até 32 caracteres.",
+                s4_2: "<strong>Caixa \"Evitar Caracteres Ambíguos\":</strong> Exclui letras e números confusos (como 1, l, I, 0, O) para evitar erros.",
+                s4_3: "<strong>Botão \"Usar esta Senha\":</strong> Insere a senha gerada diretamente no formulário ativo.",
+                s5_b: "AUDITORIA", s5_t: "Aba \"Saúde do Cofre\"", s5_x: "Um scanner inteligente que analisa a força geral de suas senhas.",
+                s5_1: "<strong>Pontuação (0 a 100%):</strong> Avalia a segurança do cofre com base na complexidade das chaves.",
+                s5_2: "<strong>Alertas de Risco:</strong> Identifica senhas fracas, reutilizadas e antigas que devem ser alteradas.",
+                s6_b: "CONFIGURAÇÕES", s6_t: "Configurações, Passes VIP e Importador / Exportador", s6_x: "Gerencie recursos avançados e assinaturas na seção Configurações.",
+                s6_1: "<strong>Botões \"Importar / Exportar\":</strong> Migre senhas facilmente via CSV do Chrome, Edge, Bitwarden ou 1Password, ou salve backups.",
+                s6_2: "<strong>Botão \"Meus Passes de Convite VIP\":</strong> (Titulares do Plano Familiar) Gera até 4 passes VIP para dar assinaturas de presente.",
+                s6_3: "<strong>Botão \"Cofre Web\":</strong> Acesse e sincronize senhas de qualquer PC em https://segurcel.app/vault.html."
+            },
+            zh: {
+                btnBack: "← 返回官方网站", title: "SegurCel 按钮与功能使用手册", sub: "详细了解应用及网页端保险库中每个按钮、屏幕和功能的作用。",
+                s1_b: "访问屏幕", s1_t: "主 PIN 码与指纹解锁", s1_x: "这是手机或浏览器上本地保险库的第一道安全防线。",
+                s1_1: "<strong>“忘记 PIN 码？”按钮：</strong> 使用初始设置时保存的恢复代码恢复对本地保险库的访问。",
+                s1_2: "<strong>指纹图标：</strong> 在设置中启用指纹解锁，即可使用生物识别免输入 4 位 PIN 码快速解锁。",
+                s1_3: "<strong>剩余尝试次数：</strong> 显示在触发本地数据自毁之前剩余的 PIN 码尝试次数。",
+                s2_b: "添加项目", s2_t: "浮动 (+) 按钮与项目标签", s2_x: "点击主屏幕上的紫色 (+) 按钮，可保存 3 种类型的加密记录：",
+                s2_1: "<strong>“密码”标签：</strong> 存储服务名称（如 Gmail、银行）、用户名、邮箱、密码及保密笔记。",
+                s2_2: "<strong>“银行卡”标签：</strong> 存储持卡人姓名、卡号、有效期 (MM/YY)、CVV 码及取款 PIN 码。",
+                s2_3: "<strong>“保密笔记”标签：</strong> 用于加密存储 WiFi 密码、合同或个人隐私的加密记事本。",
+                s2_4: "<strong>星标图标 ⭐：</strong> 将任何记录标记为收藏，置顶显示在保险库顶部。",
+                s3_b: "2FA 安全", s3_t: "2FA TOTP 验证器（6位动态码）", s3_x: "直接在 SegurCel 内生成动态验证码，无需再使用 Google Authenticator 等第三方应用。",
+                s3_1: "<strong>“2FA 密钥 / TOTP” 字段：</strong> 粘贴服务商（如 Google、Binance）提供的字母数字密钥。",
+                s3_2: "<strong>30秒倒计时圆环：</strong> 显示动态码自动更新前的剩余有效时间。",
+                s3_3: "<strong>一键复制：</strong> 点击 6 位动态码即可瞬间复制到剪贴板。",
+                s4_b: "密码生成器", s4_t: "“高级密码生成器”按钮", s4_x: "根据您的需求定制生成高强度、无可破解的随机密码。",
+                s4_1: "<strong>长度滑块：</strong> 自由设置 8 到 32 位的密码长度。",
+                s4_2: "<strong>“避免易混淆字符”复选框：</strong> 排除容易看错的字符（如 1, l, I, 0, O），防止输入错误。",
+                s4_3: "<strong>“使用此密码”按钮：</strong> 将生成的密码直接填入当前表单中。",
+                s5_b: "安全审计", s5_t: "“保险库健康”标签", s5_x: "智能扫描器，全面分析您的密码库安全强度。",
+                s5_1: "<strong>健康评分 (0-100%)：</strong> 根据密码复杂度评估保险库整体安全指数。",
+                s5_2: "<strong>风险预警：</strong> 自动标记弱密码、跨站重复密码以及陈旧密码。",
+                s6_b: "设置", s6_t: "设置、VIP 通行证与导入/导出", s6_x: "在“设置”板块管理高级账户功能与订阅。",
+                s6_1: "<strong>“导入 / 导出”按钮：</strong> 轻松从 Chrome、Bitwarden 或 1Password 导入 CSV 密码文件，或导出 CSV/JSON 备份。",
+                s6_2: "<strong>“我的 VIP 邀请通行证”按钮：</strong>（家庭方案 Holders）生成最多 4 个专属 VIP 通行证赠送给家人，并实时查看使用状态。",
+                s6_3: "<strong>“网页版保险库”按钮：</strong> 在任何电脑浏览器访问 https://segurcel.app/vault.html 同步密码。"
+            },
+            fr: {
+                btnBack: "← Retour au Site Officiel", title: "Manuel des Boutons et Fonctionnalités SegurCel", sub: "Découvrez en détail le rôle de chaque bouton, écran et fonctionnalité sur l'application et le Coffre Web.",
+                s1_b: "ÉCRAN D'ACCÈS", s1_t: "Code PIN Maître et Déverrouillage Biométrique", s1_x: "C'est la première barrière de sécurité de votre coffre local sur votre téléphone ou navigateur.",
+                s1_1: "<strong>Bouton \"Code PIN oublié ?\" :</strong> Restaure l'accès au coffre local à l'aide du Code de Récupération enregistré lors de l'installation.",
+                s1_2: "<strong>Icône d'Empreinte Digitale :</strong> Activez le Déverrouillage par Empreinte dans les Paramètres pour un accès biométrique instantané.",
+                s1_3: "<strong>Compteur de Tentatives Restantes :</strong> Affiche les essais restants avant le déclenchement de l'autodestruction de sécurité du coffre.",
+                s2_b: "AJOUTER DES ÉLÉMENTS", s2_t: "Bouton Flottant (+) et Onglets de Saisie", s2_x: "En appuyant sur le bouton violet (+) sur l'écran principal, vous pouvez enregistrer 3 types de données chiffrées :",
+                s2_1: "<strong>Onglet \"Mots de Passe\" :</strong> Stocke nom du service (ex. Gmail, Banque), identifiant, e-mail, mot de passe et notes confidentielles.",
+                s2_2: "<strong>Onglet \"Cartes Bancaires\" :</strong> Stocke titulaire, numéro de carte, date d'expiration (MM/AA), code CVV et code PIN distributeur.",
+                s2_3: "<strong>Onglet \"Notes Sécurisées\" :</strong> Bloc-notes confidentiel chiffré pour vos codes WiFi, contrats ou secrets.",
+                s2_4: "<strong>Icône d'Étoile ⭐ :</strong> Marque un élément comme favori pour l'épingler en haut du coffre.",
+                s3_b: "SÉCURITÉ 2FA", s3_t: "Authentificateur 2FA TOTP (Codes à 6 Chiffres)", s3_x: "Remplace les applications comme Google Authenticator en générant vos codes directement dans SegurCel.",
+                s3_1: "<strong>Champ \"Clé Secrète 2FA / TOTP\" :</strong> Collez la clé secrète alphanumérique fournie par votre service (ex. Google, Binance).",
+                s3_2: "<strong>Compte à Rebours Circulaire de 30 Secondes :</strong> Affiche le temps de validité restant avant le renouvellement du code.",
+                s3_3: "<strong>Copie en 1 Clic :</strong> Touchez le code à 6 chiffres pour le copier instantanément dans le presse-papiers.",
+                s4_b: "GÉNÉRATEUR DE CLÉS", s4_t: "Bouton \"Générateur de Mots de Passe Avancé\"", s4_x: "Crée des mots de passe ultra-sécurisés et incrackables sur mesure.",
+                s4_1: "<strong>Curseur de Longueur :</strong> Ajuste la longueur du mot de passe de 8 à 32 caractères.",
+                s4_2: "<strong>Case \"Éviter les Caractères Ambigus\" :</strong> Exclut les chiffres et lettres similaires (comme 1, l, I, 0, O) pour éviter les erreurs de saisie.",
+                s4_3: "<strong>Bouton \"Utiliser ce Mot de Passe\" :</strong> Insère directement le mot de passe généré dans votre formulaire actif.",
+                s5_b: "AUDIT", s5_t: "Onglet \"Santé du Coffre\"", s5_x: "Un scanner intelligent qui analyse la résistance globale de vos mots de passe.",
+                s5_1: "<strong>Jauge de Score (0 à 100%) :</strong> Évalue la sécurité globale de votre coffre selon la complexité de vos clés.",
+                s5_2: "<strong>Alertes de Risque :</strong> Détecte les mots de passe faibles, réutilisés et anciens à modifier.",
+                s6_b: "PARAMÈTRES", s6_t: "Paramètres, Pass VIP & Importateur / Exportateur", s6_x: "Gérez les fonctionnalités avancées et abonnements dans la section Paramètres.",
+                s6_1: "<strong>Boutons \"Importer / Exporter\" :</strong> Migrez vos mots de passe via des fichiers CSV depuis Chrome, Edge, Bitwarden ou 1Password, ou sauvegardez en CSV/JSON.",
+                s6_2: "<strong>Bouton \"Mes Pass d'Invitation VIP\" :</strong> (Titulaires d'Offres Familiales) Génère jusqu'à 4 pass VIP uniques pour offrir des abonnements Premium.",
+                s6_3: "<strong>Bouton \"Coffre Web\" :</strong> Accédez à vos mots de passe depuis n'importe quel ordinateur sur https://segurcel.app/vault.html."
+            },
+            de: {
+                btnBack: "← Zurück zur offiziellen Website", title: "SegurCel Schaltflächen- & Funktionshandbuch", sub: "Erfahren Sie im Detail, was jede Schaltfläche, jeder Bildschirm und jede Funktion in Ihrer App und im Web-Tresor bewirkt.",
+                s1_b: "ZUGRIFFSBILDSCHIRM", s1_t: "Master-PIN und Biometrie-Entsperrung", s1_x: "Dies ist die erste Sicherheitsbarriere Ihres lokalen Tresors auf Ihrem Telefon oder Browser.",
+                s1_1: "<strong>Schaltfläche \"PIN vergessen?\":</strong> Stellt den Zugriff auf Ihren lokalen Tresor mithilfe des Wiederherstellungscodes wieder her.",
+                s1_2: "<strong>Fingerabdruck-Symbol:</strong> Aktivieren Sie die Fingerabdruck-Entsperrung in den Einstellungen für einen sofortigen Zugriff ohne PIN-Eingabe.",
+                s1_3: "<strong>Verbleibende Versuche:</strong> Zeigt verbleibende Versuche an, bevor die lokale Selbstzerstörung aus Sicherheitsgründen aktiviert wird.",
+                s2_b: "EINTRÄGE HINZUFÜGEN", s2_t: "Plus-Schaltfläche (+) & Kategorie-Registerkarten", s2_x: "Durch Tippen auf die lila (+)-Schaltfläche auf dem Hauptbildschirm können Sie 3 Arten von verschlüsselten Daten speichern:",
+                s2_1: "<strong>Registerkarte \"Passwörter\":</strong> Speichert Dienstnamen (z. B. Gmail, Bank), Benutzername, E-Mail, Passwort und vertrauliche Notizen.",
+                s2_2: "<strong>Registerkarte \"Bankkarten\":</strong> Speichert Karteninhaber, Kartennummer, Ablaufdatum (MM/JJ), CVV-Code und Geldautomat-PIN.",
+                s2_3: "<strong>Registerkarte \"Sichere Notizen\":</strong> Ein verschlüsseltes Notizbuch für WLAN-PINs, Verträge oder persönliche Geheimnisse.",
+                s2_4: "<strong>Stern-Symbol ⭐:</strong> Markiert einen Eintrag als Favorit, um ihn ganz oben im Tresor anzuheften.",
+                s3_b: "2FA SICHERHEIT", s3_t: "2FA TOTP Authentifikator (6-stellige Codes)", s3_x: "Ersetzt externe Apps wie Google Authenticator durch Generierung temporärer Codes direkt in SegurCel.",
+                s3_1: "<strong>Feld \"Geheimer 2FA / TOTP-Schlüssel\":</strong> Fügt den alphanumerischen Schlüssel Ihres Dienstes ein (z. B. Google, Binance).",
+                s3_2: "<strong>30-Sekunden-Countdown:</strong> Zeigt die verbleibende Gültigkeitsdauer an, bevor der 6-stellige Code automatisch erneuert wird.",
+                s3_3: "<strong>1-Klick-Kopie:</strong> Tippen Sie auf den 6-stelligen Code, um ihn sofort in die Zwischenablage zu kopieren.",
+                s4_b: "PASSWORT-GENERATOR", s4_t: "Schaltfläche \"Erweiterter Passwort-Generator\"", s4_x: "Erstellt krypografisch starke und unknackbare Passwörter nach Ihren Wünschen.",
+                s4_1: "<strong>Längenregler:</strong> Stellt die Passwortlänge von 8 bis 32 Zeichen ein.",
+                s4_2: "<strong>Kontrollkästchen \"Mehrdeutige Zeichen vermeiden\":</strong> Schließt leicht verwechselbare Zeichen (wie 1, l, I, 0, O) aus.",
+                s4_3: "<strong>Schaltfläche \"Dieses Passwort verwenden\":</strong> Fügt das generierte Passwort direkt in Ihr aktives Formular ein.",
+                s5_b: "AUDIT", s5_t: "Registerkarte \"Tresor-Gesundheit\"", s5_x: "Ein intelligenter Scanner, der die Gesamtstärke Ihrer Passwortsammlung analysiert.",
+                s5_1: "<strong>Punkteanzeige (0 bis 100%):</strong> Bewertet die Sicherheit Ihres Tresors basierend auf der Passwortkomplexität.",
+                s5_2: "<strong>Risikowarnungen:</strong> Erkennt schwache, wiederverwendete und alte Passwörter, die Sie ändern sollten.",
+                s6_b: "EINSTELLUNGEN", s6_t: "Einstellungen, VIP-Pässe & Import/Export", s6_x: "Verwalten Sie erweiterte Kontofunktionen und Abonnements im Bereich Einstellungen.",
+                s6_1: "<strong>Schaltflächen \"Importieren / Exportieren\":</strong> Übertragen Sie Passwörter einfach über CSV-Dateien aus Chrome, Edge, Bitwarden oder 1Password.",
+                s6_2: "<strong>Schaltfläche \"Meine VIP-Einladungspässe\":</strong> (Familienplan-Inhaber) Erstellt bis zu 4 VIP-Pässe, um Premium-Mitgliedschaften zu verschenken.",
+                s6_3: "<strong>Schaltfläche \"Web-Tresor\":</strong> Greifen Sie auf Ihre Passwörter von jedem PC unter https://segurcel.app/vault.html zu."
+            },
+            ja: {
+                btnBack: "← 公式サイトに戻る", title: "SegurCel ボタンと機能のマニュアル", sub: "アプリおよびWeb保管庫内の各ボタン、画面、機能の詳細を確認できます。",
+                s1_b: "アクセス画面", s1_t: "マスターPINと生体認証解除", s1_x: "スマホやブラウザ上のローカル保管庫の最初のセキュリティバリアです。",
+                s1_1: "<strong>「PINをお忘れですか？」ボタン：</strong> 初期設定時に保存したリカバリーコードを使用してローカル保管庫へのアクセスを復元します。",
+                s1_2: "<strong>指紋アイコン：</strong> 設定で指紋認証解除を有効にすると、4桁のPINを入力せずに生体認証で高速アクセスできます。",
+                s1_3: "<strong>残り試行回数カウンター：</strong> PIN推測攻撃に備え、自動自己破壊が発動するまでの残り試行回数を表示します。",
+                s2_b: "項目の追加", s2_t: "フローティング(+)ボタンと入力タブ", s2_x: "メイン画面の紫色の(+)ボタンをタップすると、3種類の暗号化データを保存できます：",
+                s2_1: "<strong>「パスワード」タブ：</strong> サービス名（例：Gmail、銀行）、ユーザー名、メール、パスワード、機密メモを保存します。",
+                s2_2: "<strong>「銀行カード」タブ：</strong> 名義人、カード番号、有効期限(MM/YY)、CVVコード、ATM暗証番号を保存します。",
+                s2_3: "<strong>「安全なメモ」タブ：</strong> WiFi暗証番号や契約書用の暗号化メモ帳です。",
+                s2_4: "<strong>星マーク⭐：</strong> 任意の項目をお気に入り登録して保管庫の一番上に固定します。",
+                s3_b: "2FA セキュリティ", s3_t: "2FA TOTP 認証器（6桁コード）", s3_x: "Google Authenticatorなどの外部アプリを使わず、SegurCel内で一時コードを生成します。",
+                s3_1: "<strong>「2FA シークレットキー」フィールド：</strong> サービスから提供された英数字のキー（例：Google、Binance）を貼り付けます。",
+                s3_2: "<strong>30秒タイマー：</strong> 6桁コードが自動更新されるまでの残り時間を表示します。",
+                s3_3: "<strong>1タップコピー：</strong> 6桁のコードをタップすると、クリップボードに一発でコピーされます。",
+                s4_b: "キー生成ツール", s4_t: "「高度なパスワード生成ツール」ボタン", s4_x: "ニーズに合わせて強固で解読不可能なパスワードを生成します。",
+                s4_1: "<strong>長さスライダー：</strong> 8桁から32桁までパスワードの長さを設定します。",
+                s4_2: "<strong>「紛らわしい文字を除外」チェックボックス：</strong> 誤入力を防ぐため、見分けにくい文字（1, l, I, 0, Oなど）を除外します。",
+                s4_3: "<strong>「このパスワードを使用」ボタン：</strong> 生成されたキーを入力フォームに自動挿入します。",
+                s5_b: "監査", s5_t: "「保管庫の健康状態」タブ", s5_x: "パスワードコレクション全体の強度を分析するスマートスキャナーです。",
+                s5_1: "<strong>スコアゲージ（0〜100%）：</strong> 複雑さに基づいて保管庫の全体的なセキュリティを評価します。",
+                s5_2: "<strong>リスクアラート：</strong> 脆弱なパスワード、使い回し、古いパスワードを検出して通知します。",
+                s6_b: "設定", s6_t: "設定、VIPパス、インポート／エクスポート", s6_x: "設定セクションで高度なアカウント機能やサブスクリプションを管理します。",
+                s6_1: "<strong>「インポート／エクスポート」ボタン：</strong> Chrome、Edge、Bitwarden、1PasswordからCSVファイルで簡単に移行できます。",
+                s6_2: "<strong>「私のVIP招待パス」ボタン：</strong> （ファミリープラン所有者）最大4つのVIPパスを発行して家族にPremiumをプレゼントできます。",
+                s6_3: "<strong>「Web保管庫」ボタン：</strong> https://segurcel.app/vault.html からパソコン等でパスワードを同期アクセスできます。"
+            },
+            ko: {
+                btnBack: "← 공식 사이트로 돌아가기", title: "SegurCel 버튼 및 기능 설명서", sub: "앱 및 웹 보관함 내의 모든 버튼, 화면, 기능의 역할을 자세히 알아보세요.",
+                s1_b: "접근 화면", s1_t: "마스터 PIN 및 생체 인식 잠금 해제", s1_x: "스마트폰이나 브라우저의 로컬 보관함을 보호하는 첫 번째 보안 장벽입니다.",
+                s1_1: "<strong>\"PIN을 잊으셨나요?\" 버튼:</strong> 초기 설정 시 저장한 복구 코드를 사용하여 로컬 보관함 접근을 복구합니다.",
+                s1_2: "<strong>지문 아이콘:</strong> 설정에서 지문 잠금 해제를 활성화하면 4자리 PIN 입력 없이 빠른 생체 인증이 가능합니다.",
+                s1_3: "<strong>남은 시도 횟수:</strong> PIN 무차별 대입 공격에 대비해 자동 자가 파괴가 실행되기까지 남은 시도 횟수를 표시합니다.",
+                s2_b: "항목 추가", s2_t: "플로팅 (+) 버튼 및 등록 탭", s2_x: "메인 화면의 보라색 (+) 버튼을 누르면 3가지 암호화 기록을 저장할 수 있습니다:",
+                s2_1: "<strong>\"비밀번호\" 탭:</strong> 서비스 이름(예: Gmail, 은행), 사용자 이름, 이메일, 비밀번호 및 보안 메모를 저장합니다.",
+                s2_2: "<strong>\"신용/체크카드\" 탭:</strong> 소유자 이름, 카드 번호, 유효기간(MM/YY), CVV 코드 및 ATM 비밀번호를 저장합니다.",
+                s2_3: "<strong>\"보안 메모\" 탭:</strong> WiFi 비밀번호, 계약서, 개인 비밀을 위한 암호화 메모장입니다.",
+                s2_4: "<strong>별표 아이콘 ⭐:</strong> 즐겨찾기로 등록하여 보관함 상단에 우선 고정합니다.",
+                s3_b: "2FA 보안", s3_t: "2FA TOTP 인증기 (6자리 코드)", s3_x: "Google Authenticator 같은 외부 앱 대신 SegurCel 내부에서 임시 코드를 생성합니다.",
+                s3_1: "<strong>\"2FA 보안 키 / TOTP\" 필드:</strong> 서비스에서 제공하는 보안 키(예: Google, Binance)를 붙여넣습니다.",
+                s3_2: "<strong>30초 원형 타이머:</strong> 6자리 코드가 자동 갱신되기까지 남은 시간을 보여줍니다.",
+                s3_3: "<strong>1터치 복사:</strong> 6자리 코드를 터치하면 클립보드로 즉시 복사됩니다.",
+                s4_b: "비밀번호 생성기", s4_t: "\"고급 비밀번호 생성기\" 버튼", s4_x: "필요에 따라 해독 불가능한 강력한 비밀번호를 생성합니다.",
+                s4_1: "<strong>길이 슬라이더:</strong> 8자에서 32자까지 비밀번호 길이를 설정합니다.",
+                s4_2: "<strong>\"혼동되는 문자 제외\" 체크박스:</strong> 혼동하기 쉬운 문자(1, l, I, 0, O 등)를 제외하여 오타를 방지합니다.",
+                s4_3: "<strong>\"이 비밀번호 사용\" 버튼:</strong> 생성된 비밀번호를 폼에 바로 입력합니다.",
+                s5_b: "감사", s5_t: "\"보관함 건강 상태\" 탭", s5_x: "비밀번호 컬렉션의 전체적인 보안 강도를 분석하는 스마트 스캐너입니다.",
+                s5_1: "<strong>보안 점수 (0~100%):</strong> 비밀번호 복잡성에 따른 전체 보관함 보안을 진단합니다.",
+                s5_2: "<strong>위험 알림:</strong> 취약한 비밀번호, 중복 비밀번호, 오래된 비밀번호를 감지합니다.",
+                s6_b: "설정", s6_t: "설정, VIP 패스 및 가져오기 / 내보내기", s6_x: "설정 섹션에서 고급 계정 기능 및 구독을 관리합니다.",
+                s6_1: "<strong>\"가져오기 / 내보내기\" 버튼:</strong> Chrome, Edge, Bitwarden, 1Password에서 CSV 파일로 비밀번호를 가져오거나 내보냅니다.",
+                s6_2: "<strong>\"나의 VIP 초대 패스\" 버튼:</strong> (패밀리 요금제 소유자) 최대 4개의 VIP 패스를 발급하여 가족에게 프리미엄을 선물합니다.",
+                s6_3: "<strong>\"웹 보관함\" 버튼:</strong> https://segurcel.app/vault.html 에서 모든 PC로 비밀번호에 동기화 접근합니다."
+            },
+            ru: {
+                btnBack: "← Вернуться на официальный сайт", title: "Руководство по кнопкам и функциям SegurCel", sub: "Узнайте подробно, за что отвечает каждая кнопка, экран и функция в приложении и веб-хранилище.",
+                s1_b: "ЭКРАН ДОСТУПА", s1_t: "Мастер-PIN и биометрическая разблокировка", s1_x: "Это первый рубеж защиты вашего локального хранилища на телефоне или в браузере.",
+                s1_1: "<strong>Кнопка \"Забыли PIN-код?\":</strong> Восстанавливает доступ с помощью Кода восстановления, сохраненного при установке.",
+                s1_2: "<strong>Иконка отпечатка пальца:</strong> Если активировать Разблокировку по отпечатку пальца в Настройках, можно входить мгновенно без ввода 4 цифр.",
+                s1_3: "<strong>Счетчик оставшихся попыток:</strong> Показывает количество попыток до запуска локального самоуничтожения при подборе PIN-кода.",
+                s2_b: "ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ", s2_t: "Плавающая кнопка (+) и вкладки записей", s2_x: "Нажатие фиолетовой кнопки (+) на главном экране позволяет сохранить 3 типа зашифрованных записей:",
+                s2_1: "<strong>Вкладка \"Пароли\":</strong> Хранит название сервиса (например, Gmail, Банк), логин, email, пароль и конфиденциальные заметки.",
+                s2_2: "<strong>Вкладка \"Банковские карты\":</strong> Хранит имя владельца, номер карты, срок действия (ММ/ГГ), CVV-код и PIN-код банкомата.",
+                s2_3: "<strong>Вкладка \"Защищенные заметки\":</strong> Зашифрованный блокнот для паролей Wi-Fi, договоров или личных секретов.",
+                s2_4: "<strong>Иконка звезды ⭐:</strong> Отмечает элемент как избранный для закрепления в самом верху хранилища.",
+                s3_b: "БЕЗОПАСНОСТЬ 2FA", s3_t: "Аутентификатор 2FA TOTP (6-значные коды)", s3_x: "Заменяет сторонние приложения вроде Google Authenticator, генерируя временные коды прямо в SegurCel.",
+                s3_1: "<strong>Поле \"Секретный ключ 2FA / TOTP\":</strong> Вставьте секретный ключ, предоставленный вашим сервисом (например, Google, Binance).",
+                s3_2: "<strong>Круговой 30-секундный таймер:</strong> Показывает время действия до автоматического обновления 6-значного кода.",
+                s3_3: "<strong>Копирование в 1 касание:</strong> Нажмите на 6-значный код, чтобы мгновенно скопировать его в буфер обмена.",
+                s4_b: "ГЕНЕРАТОР КЛЮЧЕЙ", s4_t: "Кнопка \"Продвинутый генератор паролей\"", s4_x: "Создает криптографически стойкие и невзламываемые пароли под ваши требования.",
+                s4_1: "<strong>Ползунок длины:</strong> Настраивает длину пароля от 8 до 32 символов.",
+                s4_2: "<strong>Флажок \"Исключить похожие символы\":</strong> Исключает путающиеся символы (такие как 1, l, I, 0, O) для предотвращения ошибок при вводе.",
+                s4_3: "<strong>Кнопка \"Использовать этот пароль\":</strong> Автоматически вставляет сгенерированный ключ в активную форму.",
+                s5_b: "АУДИТ", s5_t: "Вкладка \"Состояние хранилища\"", s5_x: "Умный сканер, анализирующий общую надежность вашей коллекции паролей.",
+                s5_1: "<strong>Шкала оценки (от 0 до 100%):</strong> Оценивает общую безопасность хранилища на основе сложности ключей.",
+                s5_2: "<strong>Предупреждения о рисках:</strong> Находит слабые, повторяющиеся и старые пароли, которые следует заменить.",
+                s6_b: "НАСТРОЙКИ", s6_t: "Настройки, VIP-пассы и Импорт / Экспорт", s6_x: "Управляйте расширенными функциями аккаунта и подпиской в разделе Настройки.",
+                s6_1: "<strong>Кнопки \"Импорт / Экспорт\":</strong> Легко переносить пароли через файлы CSV из Chrome, Edge, Bitwarden или 1Password, либо сохранять резервные копии.",
+                s6_2: "<strong>Кнопка \"Мои VIP-приглашения\":</strong> (Владельцы Семейного тарифа) Создает до 4 уникальных VIP-пассов для дарения Premium-подписок близким.",
+                s6_3: "<strong>Кнопка \"Веб-хранилище\":</strong> Доступ и синхронизация паролей с любого ПК по адресу https://segurcel.app/vault.html."
             }
         };
 
         function changeLanguage(lang) {
-            const data = dict[lang] || dict.es;
-            document.getElementById("btnBack").innerText = data.btnBack;
-            document.getElementById("guideTitle").innerText = data.title;
-            document.getElementById("guideSub").innerText = data.sub;
-            document.getElementById("s1_badge").innerText = data.s1_b; document.getElementById("s1_title").innerText = data.s1_t; document.getElementById("s1_text").innerText = data.s1_x;
-            document.getElementById("s1_l1").innerHTML = data.s1_1; document.getElementById("s1_l2").innerHTML = data.s1_2; document.getElementById("s1_l3").innerHTML = data.s1_3;
-            document.getElementById("s2_badge").innerText = data.s2_b; document.getElementById("s2_title").innerText = data.s2_t; document.getElementById("s2_text").innerText = data.s2_x;
-            document.getElementById("s2_l1").innerHTML = data.s2_1; document.getElementById("s2_l2").innerHTML = data.s2_2; document.getElementById("s2_l3").innerHTML = data.s2_3; document.getElementById("s2_l4").innerHTML = data.s2_4;
-            document.getElementById("s3_badge").innerText = data.s3_b; document.getElementById("s3_title").innerText = data.s3_t; document.getElementById("s3_text").innerText = data.s3_x;
-            document.getElementById("s3_l1").innerHTML = data.s3_1; document.getElementById("s3_l2").innerHTML = data.s3_2; document.getElementById("s3_l3").innerHTML = data.s3_3;
-            document.getElementById("s4_badge").innerText = data.s4_b; document.getElementById("s4_title").innerText = data.s4_t; document.getElementById("s4_text").innerText = data.s4_x;
-            document.getElementById("s4_l1").innerHTML = data.s4_1; document.getElementById("s4_l2").innerHTML = data.s4_2; document.getElementById("s4_l3").innerHTML = data.s4_3;
-            document.getElementById("s5_badge").innerText = data.s5_b; document.getElementById("s5_title").innerText = data.s5_t; document.getElementById("s5_text").innerText = data.s5_x;
-            document.getElementById("s5_l1").innerHTML = data.s5_1; document.getElementById("s5_l2").innerHTML = data.s5_2;
-            document.getElementById("s6_badge").innerText = data.s6_b; document.getElementById("s6_title").innerText = data.s6_t; document.getElementById("s6_text").innerText = data.s6_x;
-            document.getElementById("s6_l1").innerHTML = data.s6_1; document.getElementById("s6_l2").innerHTML = data.s6_2; document.getElementById("s6_l3").innerHTML = data.s6_3;
+            let currentLang = lang;
+            if (!dict[currentLang]) {
+                const urlParams = new URLSearchParams(window.location.search);
+                currentLang = urlParams.get('lang') || 'es';
+            }
+            const data = dict[currentLang] || dict.es;
+
+            const flagEl = document.getElementById("selectedFlag");
+            const nameEl = document.getElementById("selectedLangName");
+            if (flagEl && flagsMap[currentLang]) flagEl.src = flagsMap[currentLang];
+            if (nameEl && namesMap[currentLang]) nameEl.innerText = namesMap[currentLang];
+
+            if (document.getElementById("btnBack")) document.getElementById("btnBack").innerText = data.btnBack;
+            if (document.getElementById("guideTitle")) document.getElementById("guideTitle").innerText = data.title;
+            if (document.getElementById("guideSub")) document.getElementById("guideSub").innerText = data.sub;
+
+            if (document.getElementById("s1_badge")) document.getElementById("s1_badge").innerText = data.s1_b;
+            if (document.getElementById("s1_title")) document.getElementById("s1_title").innerText = data.s1_t;
+            if (document.getElementById("s1_text")) document.getElementById("s1_text").innerText = data.s1_x;
+            if (document.getElementById("s1_l1")) document.getElementById("s1_l1").innerHTML = data.s1_1;
+            if (document.getElementById("s1_l2")) document.getElementById("s1_l2").innerHTML = data.s1_2;
+            if (document.getElementById("s1_l3")) document.getElementById("s1_l3").innerHTML = data.s1_3;
+
+            if (document.getElementById("s2_badge")) document.getElementById("s2_badge").innerText = data.s2_b;
+            if (document.getElementById("s2_title")) document.getElementById("s2_title").innerText = data.s2_t;
+            if (document.getElementById("s2_text")) document.getElementById("s2_text").innerText = data.s2_x;
+            if (document.getElementById("s2_l1")) document.getElementById("s2_l1").innerHTML = data.s2_1;
+            if (document.getElementById("s2_l2")) document.getElementById("s2_l2").innerHTML = data.s2_2;
+            if (document.getElementById("s2_l3")) document.getElementById("s2_l3").innerHTML = data.s2_3;
+            if (document.getElementById("s2_l4")) document.getElementById("s2_l4").innerHTML = data.s2_4;
+
+            if (document.getElementById("s3_badge")) document.getElementById("s3_badge").innerText = data.s3_b;
+            if (document.getElementById("s3_title")) document.getElementById("s3_title").innerText = data.s3_t;
+            if (document.getElementById("s3_text")) document.getElementById("s3_text").innerText = data.s3_x;
+            if (document.getElementById("s3_l1")) document.getElementById("s3_l1").innerHTML = data.s3_1;
+            if (document.getElementById("s3_l2")) document.getElementById("s3_l2").innerHTML = data.s3_2;
+            if (document.getElementById("s3_l3")) document.getElementById("s3_l3").innerHTML = data.s3_3;
+
+            if (document.getElementById("s4_badge")) document.getElementById("s4_badge").innerText = data.s4_b;
+            if (document.getElementById("s4_title")) document.getElementById("s4_title").innerText = data.s4_t;
+            if (document.getElementById("s4_text")) document.getElementById("s4_text").innerText = data.s4_x;
+            if (document.getElementById("s4_l1")) document.getElementById("s4_l1").innerHTML = data.s4_1;
+            if (document.getElementById("s4_l2")) document.getElementById("s4_l2").innerHTML = data.s4_2;
+            if (document.getElementById("s4_l3")) document.getElementById("s4_l3").innerHTML = data.s4_3;
+
+            if (document.getElementById("s5_badge")) document.getElementById("s5_badge").innerText = data.s5_b;
+            if (document.getElementById("s5_title")) document.getElementById("s5_title").innerText = data.s5_t;
+            if (document.getElementById("s5_text")) document.getElementById("s5_text").innerText = data.s5_x;
+            if (document.getElementById("s5_l1")) document.getElementById("s5_l1").innerHTML = data.s5_1;
+            if (document.getElementById("s5_l2")) document.getElementById("s5_l2").innerHTML = data.s5_2;
+
+            if (document.getElementById("s6_badge")) document.getElementById("s6_badge").innerText = data.s6_b;
+            if (document.getElementById("s6_title")) document.getElementById("s6_title").innerText = data.s6_t;
+            if (document.getElementById("s6_text")) document.getElementById("s6_text").innerText = data.s6_x;
+            if (document.getElementById("s6_l1")) document.getElementById("s6_l1").innerHTML = data.s6_1;
+            if (document.getElementById("s6_l2")) document.getElementById("s6_l2").innerHTML = data.s6_2;
+            if (document.getElementById("s6_l3")) document.getElementById("s6_l3").innerHTML = data.s6_3;
         }
 
         function toggleLangMenu(event) {
@@ -551,6 +716,16 @@
             if (menu) menu.classList.remove("show");
             changeLanguage(lang);
         }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            if (langParam && dict[langParam]) {
+                selectLanguage(langParam, flagsMap[langParam], namesMap[langParam]);
+            } else {
+                changeLanguage('es');
+            }
+        };
 
         window.onclick = function(event) {
             const menu = document.getElementById("langMenu");

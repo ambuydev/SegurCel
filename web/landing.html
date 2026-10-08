@@ -983,14 +983,38 @@
             }
         };
 
+        const guideTextMap = {
+            es: "📘 Guía de Uso", en: "📘 User Guide", pt: "📘 Guia do Usuário", zh: "📘 使用指南", fr: "📘 Guide Utilisateur",
+            hi: "📘 उपयोग निर्देशिका", de: "📘 Benutzerhandbuch", ja: "📘 ユーザーガイド", ko: "📘 사용자 설명서", ru: "📘 Руководство"
+        };
+
+        const flagsMapLanding = {
+            es: "https://flagcdn.com/20x15/es.png", en: "https://flagcdn.com/20x15/us.png", pt: "https://flagcdn.com/20x15/br.png",
+            zh: "https://flagcdn.com/20x15/cn.png", fr: "https://flagcdn.com/20x15/fr.png", hi: "https://flagcdn.com/20x15/in.png",
+            de: "https://flagcdn.com/20x15/de.png", ja: "https://flagcdn.com/20x15/jp.png", ko: "https://flagcdn.com/20x15/kr.png",
+            ru: "https://flagcdn.com/20x15/ru.png"
+        };
+
+        const namesMapLanding = {
+            es: "Español", en: "English", pt: "Português", zh: "中文", fr: "Français",
+            hi: "हिन्दी", de: "Deutsch", ja: "日本語", ko: "한국어", ru: "Русский"
+        };
+
         function changeLanguage(lang) {
-            const data = dict[lang] || dict.es;
+            let currentLang = lang || 'es';
+            const data = dict[currentLang] || dict.es;
+
             document.getElementById("heroBadge").innerText = data.badge;
             document.getElementById("heroTitle").innerHTML = data.title;
             document.getElementById("heroSubtitle").innerText = data.sub;
             document.getElementById("lblBtnVault").innerText = data.btnVault;
             document.getElementById("lblBtnApk").innerText = data.btnApk;
             document.getElementById("btnHeaderVault").innerText = data.btnHeader;
+
+            const guideText = guideTextMap[currentLang] || "📘 Guía de Uso";
+            if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").innerText = guideText;
+            if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").innerText = guideText;
+
             document.getElementById("zkTitle").innerText = data.zkT;
             document.getElementById("zkDesc1").innerHTML = data.zkD1;
             document.getElementById("zkDesc2").innerHTML = data.zkD2;
@@ -1016,7 +1040,24 @@
             document.getElementById("btnCtaVault").innerText = "🚀 " + data.btnVault;
             document.getElementById("btnCtaApk").innerText = "📲 " + data.btnPlay;
             document.getElementById("linkFooterPrivacy").innerText = data.priv;
+
+            // Actualizar enlaces de destino conservando el idioma seleccionado
+            document.getElementById("btnHeaderVault").href = "/vault.html?lang=" + currentLang;
+            document.getElementById("btnHeroVault").href = "/vault.html?lang=" + currentLang;
+            document.getElementById("btnCtaVault").href = "/vault.html?lang=" + currentLang;
+            if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").href = "guide.html?lang=" + currentLang;
+            if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").href = "guide.html?lang=" + currentLang;
         }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            if (langParam && dict[langParam]) {
+                selectLanguage(langParam, flagsMapLanding[langParam], namesMapLanding[langParam]);
+            } else {
+                changeLanguage('es');
+            }
+        };
 
         function toggleLangMenu(event) {
             if (event) event.stopPropagation();
