@@ -376,7 +376,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   id: 'yearly',
                   title: _loc.text('plan_yearly'),
                   price: '\$9.99 USD / año',
-                  subtitle: 'Plan Individual (1 Usuario)',
+                  subtitle: _loc.text('plan_yearly'),
                   badge: 'POPULAR',
                   badgeColor: const Color(0xFF6C63FF),
                 ),
@@ -385,23 +385,23 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   id: 'monthly',
                   title: _loc.text('plan_monthly'),
                   price: '\$1.50 USD / mes',
-                  subtitle: 'Plan Individual (1 Usuario)',
+                  subtitle: _loc.text('plan_monthly'),
                 ),
                 const SizedBox(height: 14),
                 _buildPlanTile(
                   id: 'family_yearly',
-                  title: 'Plan Familiar Anual (Hasta 5 Usuarios)',
+                  title: _loc.text('plan_family_yearly'),
                   price: '\$24.99 USD / año',
-                  subtitle: '\$2.08 USD / mes — ¡Protege a toda tu familia!',
+                  subtitle: '\$2.08 USD / mes',
                   badge: 'FAMILIA',
                   badgeColor: Colors.amberAccent,
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
                   id: 'family_monthly',
-                  title: 'Plan Familiar Mensual (Hasta 5 Usuarios)',
+                  title: _loc.text('plan_family_monthly'),
                   price: '\$3.99 USD / mes',
-                  subtitle: 'Suscripción familiar flexible',
+                  subtitle: _loc.text('family_plan_title'),
                 ),
               ],
 
@@ -418,13 +418,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.card_giftcard, color: Colors.amberAccent, size: 20),
-                        SizedBox(width: 8),
-                        Text(
-                          '¿Tienes un Código de Regalo / Promocional?',
-                          style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                        const Icon(Icons.card_giftcard, color: Colors.amberAccent, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _loc.text('has_gift_code'),
+                            style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                            softWrap: true,
+                          ),
                         ),
                       ],
                     ),
@@ -437,7 +440,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                             textCapitalization: TextCapitalization.characters,
                             decoration: InputDecoration(
-                              hintText: 'Ej: FAMILIA_SEGURCEL_2026',
+                              hintText: _loc.text('enter_code_hint'),
                               hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
                               filled: true,
                               fillColor: const Color(0xFF10141D),
@@ -456,7 +459,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           onPressed: _isRedeemingPromo ? null : _redeemPromoCode,
                           child: _isRedeemingPromo
                               ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black))
-                              : const Text('Canjear', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12)),
+                              : Text(_loc.text('redeem'), style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12)),
                         ),
                       ],
                     ),
@@ -537,11 +540,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 children: [
                   Row(
                     children: [
-                      Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                          softWrap: true,
+                        ),
+                      ),
                       if (badge != null) ...[
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 6),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
                             color: (badgeColor ?? const Color(0xFF6C63FF)).withAlpha(51),
                             borderRadius: BorderRadius.circular(6),
