@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../models/password_entry.dart';
 import '../models/user_profile.dart';
 import '../services/auth_service.dart';
@@ -1493,11 +1492,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.info_outline, color: Colors.amberAccent, size: 22),
             tooltip: _loc.text('user_guide'),
-            onPressed: () async {
-              final uri = Uri.parse('https://segurcel.app/guide.html');
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
-              }
+            onPressed: () {
+              FileHelper.openUrl('https://segurcel.app/guide.html');
             },
           ),
           _buildLanguagePicker(),

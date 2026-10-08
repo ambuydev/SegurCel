@@ -427,7 +427,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Códigos Familiares ($count de 4)',
+                      '${_loc.text("family_codes_count")} ($count / 4)',
                       style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -439,19 +439,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      'Entrega un código único a cada familiar para activar su cuenta Premium:',
-                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    Text(
+                      _loc.text('my_family_codes'),
+                      style: const TextStyle(color: Colors.white70, fontSize: 12),
                     ),
                     const SizedBox(height: 12),
                     if (snapshot.connectionState == ConnectionState.waiting)
                       const Center(child: CircularProgressIndicator(color: Colors.amberAccent))
                     else if (docs.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         child: Text(
-                          'Aún no has generado ningún código familiar.',
-                          style: TextStyle(color: Colors.white38, fontSize: 12, fontStyle: FontStyle.italic),
+                          _loc.text('family_code_available'),
+                          style: const TextStyle(color: Colors.white38, fontSize: 12, fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -492,7 +492,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                           const SizedBox(height: 2),
                                           Text(
-                                            used ? '🔒 Usado por: $usedByEmail' : '🟢 Disponible para enviar',
+                                            used ? '${_loc.text("family_code_used")} $usedByEmail' : _loc.text('family_code_available'),
                                             style: TextStyle(
                                               color: used ? Colors.grey : Colors.greenAccent,
                                               fontSize: 11,
@@ -503,12 +503,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.copy, color: Colors.cyanAccent, size: 18),
-                                      tooltip: 'Copiar Código',
+                                      tooltip: _loc.text('copy'),
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(text: code));
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
-                                            content: Text('Código copiado: $code'),
+                                            content: Text('${_loc.text("copy")}: $code'),
                                             backgroundColor: Colors.green,
                                             behavior: SnackBarBehavior.floating,
                                             duration: const Duration(seconds: 2),
@@ -532,7 +532,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       icon: const Icon(Icons.add, color: Colors.black, size: 18),
                       label: Text(
-                        count >= 4 ? 'Límite Máximo Alcanzado (4/4)' : '⚡ Generar Nuevo Código ($count/4)',
+                        count >= 4 ? _loc.text('family_code_limit_reached') : '${_loc.text("generate_family_code")} ($count/4)',
                         style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                       onPressed: count >= 4
@@ -550,7 +550,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('⚡ Nuevo Código Familiar Creado: $newCode'),
+                                  content: Text('${_loc.text("generate_family_code")}: $newCode'),
                                   backgroundColor: Colors.green,
                                   behavior: SnackBarBehavior.floating,
                                 ),
@@ -562,7 +562,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               actions: [
                 TextButton(
-                  child: const Text('Cerrar', style: TextStyle(color: Colors.white70)),
+                  child: Text(_loc.text('cancel'), style: const TextStyle(color: Colors.white70)),
                   onPressed: () => Navigator.pop(ctx),
                 ),
               ],
