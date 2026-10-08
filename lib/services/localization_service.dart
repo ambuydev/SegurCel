@@ -59,6 +59,7 @@ class LocalizationService extends ChangeNotifier {
   static const Map<String, Map<String, String>> _translations = {
     'es': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← Volver al Sitio Oficial',
       'enter_pin': 'Ingresa tu PIN de 4 dígitos',
       'pin_error': 'PIN incorrecto.',
       'attempts_remaining': 'Intentos restantes',
@@ -237,6 +238,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'en': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← Back to Official Site',
       'enter_pin': 'Enter your 4-digit PIN',
       'pin_error': 'Incorrect PIN.',
       'attempts_remaining': 'Attempts remaining',

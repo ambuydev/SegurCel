@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/vault_service.dart';
+import '../utils/file_helper.dart';
 import 'paywall_screen.dart';
 import 'pin_screen.dart';
 import 'setup_screen.dart';
@@ -239,6 +240,27 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: kIsWeb
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.amberAccent),
+                tooltip: _loc.text('back_to_official_site'),
+                onPressed: () {
+                  FileHelper.openUrl('https://segurcel.app/');
+                },
+              )
+            : null,
+        title: kIsWeb
+            ? TextButton.icon(
+                icon: const Icon(Icons.home, color: Colors.amberAccent, size: 18),
+                label: Text(
+                  _loc.text('back_to_official_site'),
+                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+                onPressed: () {
+                  FileHelper.openUrl('https://segurcel.app/');
+                },
+              )
+            : null,
         actions: [
           _buildLanguagePicker(),
           const SizedBox(width: 8),
