@@ -32,11 +32,15 @@
     "rewrites": [
       {
         "source": "/app",
-        "destination": "/app/index.html"
+        "destination": "/vault.html"
       },
       {
         "source": "/app/**",
-        "destination": "/app/index.html"
+        "destination": "/vault.html"
+      },
+      {
+        "source": "/app.html",
+        "destination": "/vault.html"
       }
     ]
   }
