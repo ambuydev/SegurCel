@@ -135,6 +135,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       }, SetOptions(merge: true));
 
       if (mounted) {
+        _promoCodeController.clear();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('🎉 ¡Código Módulo 10 Canjeado con Éxito! Ahora eres Premium.'),

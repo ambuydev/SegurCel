@@ -407,10 +407,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           stream: FirebaseFirestore.instance
               .collection('promo_codes')
               .where('ownerUid', isEqualTo: ownerUid)
-              .where('isFamilyCode', isEqualTo: true)
               .snapshots(),
           builder: (context, snapshot) {
-            final docs = snapshot.data?.docs ?? [];
+            final allDocs = snapshot.data?.docs ?? [];
+            final docs = allDocs.where((d) => d.data()['isFamilyCode'] == true).toList();
             final count = docs.length;
 
             return AlertDialog(
