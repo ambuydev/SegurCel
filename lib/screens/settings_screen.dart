@@ -596,10 +596,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context, snapshot) {
                   final profile = snapshot.data;
                   final isPremium = profile?.isPremium ?? false;
+                  final subType = profile?.subscriptionType ?? '';
                   final isFamilyOwner = isPremium &&
-                      (profile?.subscriptionType == 'segurcel_family_monthly' ||
-                          profile?.subscriptionType == 'segurcel_family_yearly' ||
-                          profile?.subscriptionType == 'family' ||
+                      ((subType.contains('family') && subType != 'family_member') ||
                           currentUser?.email == 'alejandro.martinez.briao@gmail.com');
 
                   return _buildSectionCard(
