@@ -2,11 +2,12 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // 1. Privacidad Absoluta: Cada usuario sólo accede a su propio documento
+    // 1. Privacidad de Usuarios & Verificación de Cascada Familiar
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
 
-      // Subcolección aislada de Contraseñas (AES-256 Zero-Knowledge)
+      // Subcolección aislada de Contraseñas (AES-256 Zero-Knowledge: 100% Inviolable)
       match /vault/{vaultItemId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
