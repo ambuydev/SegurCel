@@ -202,7 +202,7 @@ class _PinScreenState extends State<PinScreen> {
                 icon: const Icon(Icons.arrow_back, color: Colors.amberAccent),
                 tooltip: _loc.text('back_to_official_site'),
                 onPressed: () {
-                  FileHelper.openUrl('https://segurcel.app/');
+                  FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
                 },
               )
             : null,
@@ -214,7 +214,7 @@ class _PinScreenState extends State<PinScreen> {
                   style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
                 ),
                 onPressed: () {
-                  FileHelper.openUrl('https://segurcel.app/');
+                  FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
                 },
               )
             : null,

@@ -417,6 +417,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'pt': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← Voltar ao Site Oficial',
       'enter_pin': 'Digite seu PIN de 4 dígitos',
       'pin_error': 'PIN incorreto.',
       'attempts_remaining': 'Tentativas restantes',
@@ -595,6 +596,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'zh': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← 返回官方网站',
       'enter_pin': '请输入4位密码',
       'pin_error': '密码错误。',
       'attempts_remaining': '剩余尝试次数',
@@ -773,6 +775,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'fr': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← Retour au Site Officiel',
       'enter_pin': 'Entrez votre code PIN à 4 chiffres',
       'pin_error': 'Code PIN incorrect.',
       'attempts_remaining': 'Tentatives restantes',
@@ -951,6 +954,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'hi': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← आधिकारिक साइट पर लौटें',
       'enter_pin': 'अपना 4-अंकों का पिन दर्ज करें',
       'pin_error': 'गलत पिन।',
       'attempts_remaining': 'शेष प्रयास',
@@ -1129,6 +1133,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'de': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← Zurück zur offiziellen Website',
       'enter_pin': 'Geben Sie Ihre 4-stellige PIN ein',
       'pin_error': 'Falsche PIN.',
       'attempts_remaining': 'Verbleibende Versuche',
@@ -1307,6 +1312,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'ja': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← 公式サイトに戻る',
       'enter_pin': '4桁のPINを入力してください',
       'pin_error': 'PINが正しくありません。',
       'attempts_remaining': '残り試行回数',
@@ -1485,6 +1491,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'ko': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← 공식 사이트로 돌아가기',
       'enter_pin': '4자리 PIN을 입력하세요',
       'pin_error': '잘못된 PIN입니다.',
       'attempts_remaining': '남은 시도 횟수',
@@ -1663,6 +1670,7 @@ class LocalizationService extends ChangeNotifier {
     },
     'ru': {
       'app_title': 'SegurCel',
+      'back_to_official_site': '← Вернуться на официальный сайт',
       'enter_pin': 'Введите 4-значный PIN-код',
       'pin_error': 'Неверный PIN-код.',
       'attempts_remaining': 'Осталось попыток',
