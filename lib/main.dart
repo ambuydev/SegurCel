@@ -73,6 +73,51 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
     }
   }
 
+  Widget _buildRootScreen() {
+    return StreamBuilder<User?>(
+      stream: AuthService().authStateChanges,
+      builder: (context, snapshot) {
+        // Esperando inicialización de Firebase Auth
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            backgroundColor: Color(0xFF10141D),
+            body: Center(
+              child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+            ),
+          );
+        }
+
+        final user = snapshot.data;
+        if (user == null) {
+          return LoginScreen(vaultService: widget.vaultService);
+        }
+
+        // Si el usuario está autenticado, verificamos si ya existe su bóveda
+        return FutureBuilder<bool>(
+          key: ValueKey('vault_check_${user.uid}'),
+          future: widget.vaultService.checkVaultExists(),
+          builder: (context, vaultSnapshot) {
+            if (vaultSnapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                backgroundColor: Color(0xFF10141D),
+                body: Center(
+                  child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+                ),
+              );
+            }
+
+            final vaultExists = vaultSnapshot.data ?? false;
+            if (vaultExists) {
+              return PinScreen(vaultService: widget.vaultService);
+            } else {
+              return SetupScreen(vaultService: widget.vaultService);
+            }
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -92,48 +137,19 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
             ),
             useMaterial3: true,
           ),
-          home: StreamBuilder<User?>(
-            stream: AuthService().authStateChanges,
-            builder: (context, snapshot) {
-              // Esperando inicialización de Firebase Auth
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(
-                  backgroundColor: Color(0xFF10141D),
-                  body: Center(
-                    child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
-                  ),
-                );
-              }
-
-              final user = snapshot.data;
-              if (user == null) {
-                return LoginScreen(vaultService: widget.vaultService);
-              }
-
-              // Si el usuario está autenticado, verificamos si ya existe su bóveda
-              return FutureBuilder<bool>(
-                key: ValueKey('vault_check_${user.uid}'),
-                future: widget.vaultService.checkVaultExists(),
-                builder: (context, vaultSnapshot) {
-                  if (vaultSnapshot.connectionState == ConnectionState.waiting) {
-                    return const Scaffold(
-                      backgroundColor: Color(0xFF10141D),
-                      body: Center(
-                        child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
-                      ),
-                    );
-                  }
-
-                  final vaultExists = vaultSnapshot.data ?? false;
-                  if (vaultExists) {
-                    return PinScreen(vaultService: widget.vaultService);
-                  } else {
-                    return SetupScreen(vaultService: widget.vaultService);
-                  }
-                },
-              );
-            },
-          ),
+          home: _buildRootScreen(),
+          onGenerateRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => _buildRootScreen(),
+              settings: settings,
+            );
+          },
+          onUnknownRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => _buildRootScreen(),
+              settings: settings,
+            );
+          },
         );
       },
     );
