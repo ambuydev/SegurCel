@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'models/user_profile.dart';
 import 'screens/login_screen.dart';
+import 'screens/paywall_screen.dart';
 import 'screens/pin_screen.dart';
 import 'screens/setup_screen.dart';
 import 'services/auth_service.dart';
@@ -92,12 +95,12 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
           return LoginScreen(vaultService: widget.vaultService);
         }
 
-        // Si el usuario está autenticado, verificamos si ya existe su bóveda
-        return FutureBuilder<bool>(
-          key: ValueKey('vault_check_${user.uid}'),
-          future: widget.vaultService.checkVaultExists(),
-          builder: (context, vaultSnapshot) {
-            if (vaultSnapshot.connectionState == ConnectionState.waiting) {
+        // Consultar el perfil principal en la colección users/{user.uid}
+        return FutureBuilder<UserProfile?>(
+          key: ValueKey('user_profile_${user.uid}'),
+          future: widget.vaultService.fetchUserProfile(),
+          builder: (context, profileSnapshot) {
+            if (profileSnapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
                 backgroundColor: Color(0xFF10141D),
                 body: Center(
@@ -106,12 +109,39 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
               );
             }
 
-            final vaultExists = vaultSnapshot.data ?? false;
-            if (vaultExists) {
-              return PinScreen(vaultService: widget.vaultService);
-            } else {
-              return SetupScreen(vaultService: widget.vaultService);
+            final profile = profileSnapshot.data;
+            final isPremium = profile?.isPremium ?? false;
+
+            // Filtro Web Freemium: En entorno Web (kIsWeb), la Bóveda requiere isPremium == true en users/{uid}
+            if (kIsWeb && !isPremium) {
+              return PaywallScreen(
+                vaultService: widget.vaultService,
+                userProfile: profile,
+              );
             }
+
+            // Si es Premium o está en app móvil Android, verificamos si ya existe su bóveda
+            return FutureBuilder<bool>(
+              key: ValueKey('vault_check_${user.uid}'),
+              future: widget.vaultService.checkVaultExists(),
+              builder: (context, vaultSnapshot) {
+                if (vaultSnapshot.connectionState == ConnectionState.waiting) {
+                  return const Scaffold(
+                    backgroundColor: Color(0xFF10141D),
+                    body: Center(
+                      child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+                    ),
+                  );
+                }
+
+                final vaultExists = vaultSnapshot.data ?? false;
+                if (vaultExists) {
+                  return PinScreen(vaultService: widget.vaultService);
+                } else {
+                  return SetupScreen(vaultService: widget.vaultService);
+                }
+              },
+            );
           },
         );
       },
