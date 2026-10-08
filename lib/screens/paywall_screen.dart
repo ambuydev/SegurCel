@@ -376,7 +376,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   id: 'yearly',
                   title: _loc.text('plan_yearly'),
                   price: '\$10.99 USD / año',
-                  subtitle: '\$0.91 USD / mes — 👑 MÁS POPULAR',
+                  subtitle: '\$0.91 USD / mes',
+                  badge: '👑 MÁS POPULAR',
+                  badgeColor: Colors.amberAccent,
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
@@ -390,7 +392,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   id: 'family_yearly',
                   title: _loc.text('plan_family_yearly'),
                   price: '\$24.99 USD / año',
-                  subtitle: '\$2.08 USD / mes — 👑 MÁS POPULAR',
+                  subtitle: '\$2.08 USD / mes',
+                  badge: '👑 MÁS POPULAR',
+                  badgeColor: Colors.amberAccent,
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
@@ -534,37 +538,36 @@ class _PaywallScreenState extends State<PaywallScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-                          softWrap: true,
-                        ),
-                      ),
-                      if (badge != null) ...[
-                        const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: (badgeColor ?? const Color(0xFF6C63FF)).withAlpha(51),
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: badgeColor ?? const Color(0xFF6C63FF)),
-                          ),
-                          child: Text(
-                            badge,
-                            style: TextStyle(color: badgeColor ?? const Color(0xFF6C63FF), fontSize: 10, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ],
+                  Text(
+                    title,
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                    softWrap: true,
                   ),
                   const SizedBox(height: 4),
                   Text(price, style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14)),
-                  if (subtitle.isNotEmpty) ...[
-                    const SizedBox(height: 2),
-                    Text(subtitle, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                  if (subtitle.isNotEmpty || badge != null) ...[
+                    const SizedBox(height: 3),
+                    Row(
+                      children: [
+                        if (subtitle.isNotEmpty)
+                          Text(subtitle, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                        if (badge != null) ...[
+                          if (subtitle.isNotEmpty) const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: (badgeColor ?? const Color(0xFF6C63FF)).withAlpha(51),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: badgeColor ?? const Color(0xFF6C63FF)),
+                            ),
+                            child: Text(
+                              badge,
+                              style: TextStyle(color: badgeColor ?? const Color(0xFF6C63FF), fontSize: 10, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
                   ],
                 ],
               ),

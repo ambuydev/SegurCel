@@ -143,6 +143,10 @@ class _PinScreenState extends State<PinScreen> {
       {'code': 'zh', 'name': '🇨🇳 中文'},
       {'code': 'fr', 'name': '🇫🇷 Français'},
       {'code': 'hi', 'name': '🇮🇳 हिन्दी'},
+      {'code': 'de', 'name': '🇩🇪 Deutsch'},
+      {'code': 'ja', 'name': '🇯🇵 日本語'},
+      {'code': 'ko', 'name': '🇰🇷 한국어'},
+      {'code': 'ru', 'name': '🇷🇺 Русский'},
     ];
 
     return PopupMenuButton<String>(
