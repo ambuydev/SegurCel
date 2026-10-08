@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
@@ -50,6 +51,70 @@ class _LoginScreenState extends State<LoginScreen> {
       final profile = await widget.vaultService.fetchUserProfile();
 
       if (mounted) {
+        final isPremium = profile?.isPremium ?? false;
+
+        // Si se ingresa desde navegador Web (kIsWeb) y el usuario es GRATUITO:
+        if (kIsWeb && !isPremium) {
+          setState(() => _isLoading = false);
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (ctx) => AlertDialog(
+              backgroundColor: const Color(0xFF1E2538),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              title: Row(
+                children: [
+                  const Icon(Icons.stars, color: Colors.amberAccent),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _loc.text('web_access_premium_title'),
+                      style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              content: Text(
+                _loc.text('web_access_premium_desc'),
+                style: const TextStyle(color: Colors.white70, fontSize: 13),
+              ),
+              actions: [
+                TextButton(
+                  child: Text(_loc.text('cancel'), style: const TextStyle(color: Colors.white54)),
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    _authService.signOut();
+                  },
+                ),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6C63FF),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  icon: const Icon(Icons.star, color: Colors.amberAccent, size: 18),
+                  label: Text(
+                    _loc.text('view_pro_plans'),
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => PaywallScreen(
+                          vaultService: widget.vaultService,
+                          userProfile: profile,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+          return;
+        }
+
         if (profile != null && profile.isInGracePeriod) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

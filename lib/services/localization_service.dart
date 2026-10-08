@@ -220,6 +220,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'Panel Administrador SegurCel',
       'admin_panel_desc': 'Genera un nuevo Código de Regalo Módulo 10 exclusivo de único uso para tus familiares o clientes VIP.',
       'generate_gift_code': '⚡ Generar Código de Regalo Módulo 10',
+      'web_access_premium_title': '🌐 Acceso Web Exclusivo SegurCel PRO',
+      'web_access_premium_desc': 'Para acceder y sincronizar tus contraseñas desde cualquier navegador Web, necesitas una suscripción activa a SegurCel PRO.',
     },
     'en': {
       'app_title': 'SegurCel',
@@ -395,6 +397,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'SegurCel Admin Panel',
       'admin_panel_desc': 'Generate a new single-use Modulo 10 Gift Code for family members or VIP clients.',
       'generate_gift_code': '⚡ Generate Modulo 10 Gift Code',
+      'web_access_premium_title': '🌐 Exclusive Web Access for SegurCel PRO',
+      'web_access_premium_desc': 'To access and sync your passwords from any Web browser, you need an active SegurCel PRO subscription.',
     },
     'pt': {
       'app_title': 'SegurCel',
@@ -547,7 +551,7 @@ class LocalizationService extends ChangeNotifier {
       'cancel_subscription_link': 'Gerenciar / Cancelar Assinaturas no Google Play',
       'family_plan_title': 'Plano Familiar SegurCel',
       'plan_family_yearly': 'Plano Familiar Anual (Até 5 Usuários)',
-      'plan_family_monthly': 'Plano Familiar Mensal (Até 5 Usuários)',
+      'plan_family_monthly': 'Plano Familiar Mensual (Até 5 Usuários)',
       'my_family_codes': '👨‍👩‍👧‍👦 Meus Códigos Familiares Módulo 10',
       'generate_family_code': '⚡ Gerar Novo Código Familiar',
       'family_codes_count': 'Códigos Familiares',
@@ -570,6 +574,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'Painel do Administrador',
       'admin_panel_desc': 'Gere um novo Código de Presente Módulo 10 exclusivo de uso único.',
       'generate_gift_code': '⚡ Gerar Código de Presente Módulo 10',
+      'web_access_premium_title': '🌐 Acesso Web Exclusivo SegurCel PRO',
+      'web_access_premium_desc': 'Para acessar e sincronizar suas senhas de qualquer navegador Web, você precisa de uma assinatura ativa do SegurCel PRO.',
     },
     'zh': {
       'app_title': 'SegurCel',
@@ -745,6 +751,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'SegurCel 管理员面板',
       'admin_panel_desc': '生成一个新的单次使用 Modulo 10 礼品码。',
       'generate_gift_code': '⚡ 生成礼品码 Módulo 10',
+      'web_access_premium_title': '🌐 SegurCel PRO 网页端专属功能',
+      'web_access_premium_desc': '要从任何网页浏览器访问和同步您的密码，您需要有效的 SegurCel PRO 订阅。',
     },
     'fr': {
       'app_title': 'SegurCel',
@@ -920,6 +928,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'Panneau d\'Administration',
       'admin_panel_desc': 'Générez un nouveau code cadeau Módulo 10 à usage unique.',
       'generate_gift_code': '⚡ Générer un Code Cadeau Módulo 10',
+      'web_access_premium_title': '🌐 Accès Web Exclusif SegurCel PRO',
+      'web_access_premium_desc': 'Pour accéder et synchroniser vos mots de passe depuis n\'importe quel navigateur Web, vous devez avoir un abonnement SegurCel PRO actif.',
     },
     'hi': {
       'app_title': 'SegurCel',
@@ -1095,6 +1105,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'SegurCel एडमिन पैनल',
       'admin_panel_desc': 'एक नया एकल-उपयोग मॉड्यूलो 10 उपहार कोड बनाएं।',
       'generate_gift_code': '⚡ उपहार कोड बनाएं Módulo 10',
+      'web_access_premium_title': '🌐 SegurCel PRO विशेष वेब एक्सेस',
+      'web_access_premium_desc': 'किसी भी वेब ब्राउज़र से अपने पासवर्ड तक पहुंचने और सिंक करने के लिए, आपको एक सक्रिय SegurCel PRO सदस्यता की आवश्यकता है।',
     },
     'de': {
       'app_title': 'SegurCel',
@@ -1270,6 +1282,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'SegurCel Admin-Panel',
       'admin_panel_desc': 'Generieren Sie einen neuen Modulo 10 Geschenke-Code.',
       'generate_gift_code': '⚡ Geschenkcode generieren Módulo 10',
+      'web_access_premium_title': '🌐 Exklusiver Web-Zugriff für SegurCel PRO',
+      'web_access_premium_desc': 'Um von jedem Webbrowser auf Ihre Passwörter zuzugreifen und diese zu synchronisieren, benötigen Sie ein aktives SegurCel PRO Abonnement.',
     },
     'ja': {
       'app_title': 'SegurCel',
@@ -1445,6 +1459,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'SegurCel 管理パネル',
       'admin_panel_desc': '1回限りのModulo 10ギフトコードを生成します。',
       'generate_gift_code': '⚡ ギフトコードを発行 Módulo 10',
+      'web_access_premium_title': '🌐 SegurCel PRO 限定Webアクセス',
+      'web_access_premium_desc': 'Webブラウザからパスワードにアクセスして同期するには、有効なSegurCel PROサブスクリプションが必要です。',
     },
     'ko': {
       'app_title': 'SegurCel',
@@ -1620,6 +1636,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'SegurCel 관리자 패널',
       'admin_panel_desc': '단일 사용 Modulo 10 선물 코드를 생성합니다.',
       'generate_gift_code': '⚡ 선물 코드 생성 Módulo 10',
+      'web_access_premium_title': '🌐 SegurCel PRO 전용 웹 접근',
+      'web_access_premium_desc': '모든 웹 브라우저에서 비밀번호에 접근하고 동기화하려면 활성화된 SegurCel PRO 구독이 필요합니다.',
     },
     'ru': {
       'app_title': 'SegurCel',
@@ -1795,6 +1813,8 @@ class LocalizationService extends ChangeNotifier {
       'admin_panel_title': 'Панель администратора SegurCel',
       'admin_panel_desc': 'Создать одноразовый подарочный код Модуль 10.',
       'generate_gift_code': '⚡ Создать подарочный код Модуль 10',
+      'web_access_premium_title': '🌐 Эксклюзивный веб-доступ SegurCel PRO',
+      'web_access_premium_desc': 'Для доступа и синхронизации ваших паролей из любого веб-браузера требуется активная подписка SegurCel PRO.',
     },
   };
 }
