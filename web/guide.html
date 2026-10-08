@@ -63,15 +63,72 @@
             border-radius: 8px;
         }
 
-        .lang-select {
-            background-color: var(--bg-color);
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-dropbtn {
+            background: #10141D;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 13px;
-            outline: none;
+            font-weight: 600;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            outline: none;
+        }
+
+        .lang-dropbtn img {
+            width: 18px;
+            height: 13px;
+            border-radius: 2px;
+            object-fit: cover;
+        }
+
+        .lang-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 115%;
+            background-color: #1E2538;
+            min-width: 150px;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.6);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            z-index: 2000;
+            overflow: hidden;
+        }
+
+        .lang-dropdown-content.show {
+            display: block;
+        }
+
+        .lang-dropdown-content div {
+            color: var(--text-main);
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+
+        .lang-dropdown-content div:hover {
+            background-color: var(--primary);
+        }
+
+        .lang-dropdown-content div img {
+            width: 18px;
+            height: 13px;
+            border-radius: 2px;
+            object-fit: cover;
         }
 
         .container {
@@ -275,18 +332,25 @@
                 <img src="assets/assets/html/logo_solo.jpeg" alt="SegurCel Logo">
                 <span>SegurCel</span>
             </a>
-            <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
-                <option value="es">🇪🇸 Español</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="pt">🇧🇷 Português</option>
-                <option value="zh">🇨🇳 中文</option>
-                <option value="fr">🇫🇷 Français</option>
-                <option value="hi">🇮🇳 हिन्दी</option>
-                <option value="de">🇩🇪 Deutsch</option>
-                <option value="ja">🇯🇵 日本語</option>
-                <option value="ko">🇰🇷 한국어</option>
-                <option value="ru">🇷🇺 Русский</option>
-            </select>
+            <div class="lang-dropdown">
+                <button class="lang-dropbtn" onclick="toggleLangMenu(event)">
+                    <img src="https://flagcdn.com/20x15/es.png" id="selectedFlag" alt="Flag">
+                    <span id="selectedLangName">Español</span>
+                    <span style="font-size: 10px; opacity: 0.7;">▼</span>
+                </button>
+                <div class="lang-dropdown-content" id="langMenu">
+                    <div onclick="selectLanguage('es', 'https://flagcdn.com/20x15/es.png', 'Español')"><img src="https://flagcdn.com/20x15/es.png" alt="es"> Español</div>
+                    <div onclick="selectLanguage('en', 'https://flagcdn.com/20x15/us.png', 'English')"><img src="https://flagcdn.com/20x15/us.png" alt="en"> English</div>
+                    <div onclick="selectLanguage('pt', 'https://flagcdn.com/20x15/br.png', 'Português')"><img src="https://flagcdn.com/20x15/br.png" alt="pt"> Português</div>
+                    <div onclick="selectLanguage('zh', 'https://flagcdn.com/20x15/cn.png', '中文')"><img src="https://flagcdn.com/20x15/cn.png" alt="zh"> 中文</div>
+                    <div onclick="selectLanguage('fr', 'https://flagcdn.com/20x15/fr.png', 'Français')"><img src="https://flagcdn.com/20x15/fr.png" alt="fr"> Français</div>
+                    <div onclick="selectLanguage('hi', 'https://flagcdn.com/20x15/in.png', 'हिन्दी')"><img src="https://flagcdn.com/20x15/in.png" alt="hi"> हिन्दी</div>
+                    <div onclick="selectLanguage('de', 'https://flagcdn.com/20x15/de.png', 'Deutsch')"><img src="https://flagcdn.com/20x15/de.png" alt="de"> Deutsch</div>
+                    <div onclick="selectLanguage('ja', 'https://flagcdn.com/20x15/jp.png', '日本語')"><img src="https://flagcdn.com/20x15/jp.png" alt="ja"> 日本語</div>
+                    <div onclick="selectLanguage('ko', 'https://flagcdn.com/20x15/kr.png', '한국어')"><img src="https://flagcdn.com/20x15/kr.png" alt="ko"> 한국어</div>
+                    <div onclick="selectLanguage('ru', 'https://flagcdn.com/20x15/ru.png', 'Русский')"><img src="https://flagcdn.com/20x15/ru.png" alt="ru"> Русский</div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -471,6 +535,29 @@
             document.getElementById("s6_badge").innerText = data.s6_b; document.getElementById("s6_title").innerText = data.s6_t; document.getElementById("s6_text").innerText = data.s6_x;
             document.getElementById("s6_l1").innerHTML = data.s6_1; document.getElementById("s6_l2").innerHTML = data.s6_2; document.getElementById("s6_l3").innerHTML = data.s6_3;
         }
+
+        function toggleLangMenu(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById("langMenu");
+            if (menu) menu.classList.toggle("show");
+        }
+
+        function selectLanguage(lang, flagUrl, name) {
+            const flagEl = document.getElementById("selectedFlag");
+            const nameEl = document.getElementById("selectedLangName");
+            if (flagEl) flagEl.src = flagUrl;
+            if (nameEl) nameEl.innerText = name;
+            const menu = document.getElementById("langMenu");
+            if (menu) menu.classList.remove("show");
+            changeLanguage(lang);
+        }
+
+        window.onclick = function(event) {
+            const menu = document.getElementById("langMenu");
+            if (menu && menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            }
+        };
     </script>
 </body>
 </html>
