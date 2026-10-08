@@ -24,12 +24,17 @@ class PurchaseService {
 
   /// Inicializa el oyente del flujo de compras In-App de Google Play
   static void initializePurchaseListener() {
-    _subscription?.cancel();
-    _subscription = _iap.purchaseStream.listen(
-      _onPurchaseUpdated,
-      onDone: () => _subscription?.cancel(),
-      onError: (e) => debugPrint('[InAppPurchase Error] $e'),
-    );
+    if (kIsWeb) return;
+    try {
+      _subscription?.cancel();
+      _subscription = _iap.purchaseStream.listen(
+        _onPurchaseUpdated,
+        onDone: () => _subscription?.cancel(),
+        onError: (e) => debugPrint('[InAppPurchase Error] $e'),
+      );
+    } catch (e) {
+      debugPrint('[InAppPurchase Init Error] $e');
+    }
   }
 
   /// Procesa los eventos de compra (completada, restaurada o fallida)
@@ -76,6 +81,7 @@ class PurchaseService {
 
   /// Lanza el flujo oficial de compra In-App de Google Play
   static Future<bool> buyProduct(ProductDetails productDetails) async {
+    if (kIsWeb) return false;
     try {
       final purchaseParam = PurchaseParam(productDetails: productDetails);
       return await _iap.buyConsumable(purchaseParam: purchaseParam);
@@ -87,15 +93,22 @@ class PurchaseService {
 
   /// Solicita el listado oficial de precios y productos desde Google Play Console
   static Future<List<ProductDetails>> fetchProducts() async {
-    final bool available = await _iap.isAvailable();
-    if (!available) return [];
+    if (kIsWeb) return [];
+    try {
+      final bool available = await _iap.isAvailable();
+      if (!available) return [];
 
-    final response = await _iap.queryProductDetails(productIDs);
-    return response.productDetails;
+      final response = await _iap.queryProductDetails(productIDs);
+      return response.productDetails;
+    } catch (e) {
+      debugPrint('[InAppPurchase Fetch Error] $e');
+      return [];
+    }
   }
 
   /// Restaura las compras de usuarios que hayan cambiado o formateado su celular
   static Future<void> restorePurchases() async {
+    if (kIsWeb) return;
     try {
       await _iap.restorePurchases();
     } catch (e) {
