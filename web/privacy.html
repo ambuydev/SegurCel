@@ -105,6 +105,10 @@
             <button class="lang-btn" onclick="setLang('zh')">🇨🇳 中文</button>
             <button class="lang-btn" onclick="setLang('fr')">🇫🇷 Français</button>
             <button class="lang-btn" onclick="setLang('hi')">🇮🇳 हिन्दी</button>
+            <button class="lang-btn" onclick="setLang('de')">🇩🇪 Deutsch</button>
+            <button class="lang-btn" onclick="setLang('ja')">🇯🇵 日本語</button>
+            <button class="lang-btn" onclick="setLang('ko')">🇰🇷 한국어</button>
+            <button class="lang-btn" onclick="setLang('ru')">🇷🇺 Русский</button>
         </div>
 
         <h1>SegurCel</h1>
@@ -129,7 +133,7 @@
             <ul>
                 <li><strong>Cifrado Simétrico AES-256-GCM:</strong> La clave de cifrado se deriva localmente en tu dispositivo mediante el protocolo <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</li>
                 <li><strong>Protección por PIN y Biometría:</strong> Tu PIN de 4 dígitos y huella dactilar protegen la clave de descifrado almacenada en el hardware seguro de tu teléfono.</li>
-                <li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente de tu dispositivo para prevenir ataques por fuerza bruta.</li>
+                <li><strong>Protocolo de Autodestrucción Local:</strong> Tras 3 intentos fallidos consecutivos de PIN, los datos locales de la bóveda se eliminan permanentemente para prevenir ataques por fuerza bruta.</li>
             </ul>
         </div>
 
@@ -238,6 +242,62 @@
                 content_4: "<p>खाता हटाने से Firebase क्लाउड से सभी रिकॉर्ड अपरिवर्तनीय रूप से हटा दिए जाते हैं।</p>",
                 h2_5: "5. संपर्क और सहायता",
                 content_5: "<p>हमारी आधिकारिक वेबसाइट <a href='https://segurcel.app'>https://segurcel.app</a> पर जाएं या ईमेल करें: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>।</p>"
+            },
+            de: {
+                subtitle: "Datenschutzerklärung & Zero-Knowledge Sicherheitsarchitektur",
+                summary: "<strong>Datenschutz-Zusammenfassung:</strong> Bei SegurCel wenden wir das <strong>Zero-Knowledge</strong>-Prinzip an. Ihre Passwörter, Karten und Notizen werden auf Ihrem Gerät mit <strong>AES-256-GCM</strong> verschlüsselt, bevor sie in die Cloud gesendet werden.",
+                h2_1: "1. Informationen, die wir sammeln",
+                content_1: "<p>Um die Gerätesynchronisierung zu ermöglichen, erfassen wir minimale technische Daten:</p><ul><li><strong>E-Mail-Adresse:</strong> Nur zur Identifizierung Ihres Kontos in der SegurCel-Cloud.</li><li><strong>Verschlüsselte Tresordaten:</strong> Alle Passwörter, Kartennummern und Notizen werden als unlesbarer AES-256-Geheimtext gespeichert.</li></ul>",
+                h2_2: "2. Verschlüsselung & Sicherheitsarchitektur",
+                content_2: "<p>SegurCel wendet moderne kryptografische Standards an:</p><ul><li><strong>AES-256-GCM Verschlüsselung:</strong> Schlüsselableitung lokal über <strong>PBKDF2WithHmacSHA256</strong> mit 65.536 Iterationen.</li><li><strong>PIN- & Biometrie-Schutz:</strong> 4-stellige PIN und Fingerabdruck schützen den Schlüssel in sicherer Hardware.</li><li><strong>Lokale Selbstzerstörung:</strong> Nach 3 falschen PIN-Eingaben werden die lokalen Daten gelöscht.</li></ul>",
+                h2_3: "3. Datennutzung & Nicht-Kommerzieller Grundsatz",
+                content_3: "<p>SegurCel verkauft oder teilt Ihre Daten <strong>NIEMALS</strong> mit Dritten oder Werbetreibenden.</p>",
+                h2_4: "4. Rechte zur Datenlöschung",
+                content_4: "<p>Löschen Sie Ihr Konto, werden alle Cloud-Aufzeichnungen unwiderruflich gelöscht.</p>",
+                h2_5: "5. Kontakt & Support",
+                content_5: "<p>Besuchen Sie unsere Website <a href='https://segurcel.app'>https://segurcel.app</a> oder schreiben Sie an: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
+            },
+            ja: {
+                subtitle: "プライバシーポリシー＆ゼロナレッジセキュリティ構造",
+                summary: "<strong>プライバシーの概要：</strong>SegurCelでは<strong>ゼロナレッジ（Zero-Knowledge）</strong>原則を適用しています。パスワード、カード、メモはクラウドに送信される前に端末上で<strong>AES-256-GCM</strong>暗号化されます。",
+                h2_1: "1. 収集する情報",
+                content_1: "<p>同期と認証のために最小限の技術情報を収集します：</p><ul><li><strong>メールアドレス：</strong>SegurCel Cloudへのログインおよびアカウント特定のためのみに使用。</li><li><strong>暗号化された保管庫データ：</strong>すべてのパスワード、カード番号、メモは解読不能なAES-256暗号テキストとして保存。</li></ul>",
+                h2_2: "2. 暗号化とセキュリティ構造",
+                content_2: "<p>SegurCelは現代の高度な暗号化標準を適用しています：</p><ul><li><strong>AES-256-GCM暗号化：</strong>PBKDF2WithHmacSHA256（65,536回反復）でローカルにキー生成。</li><li><strong>PIN＆生体認証保護：</strong>4桁のPINと指紋が安全なハードウェア内でキーを保護。</li><li><strong>ローカル自己破壊プロトコル：</strong>3回連続でPINを間違えるとローカルデータを永久消去。</li></ul>",
+                h2_3: "3. データの利用および非商用化",
+                content_3: "<p>SegurCelはユーザーデータを第三者や広告主に販売または共有することは<strong>一切ありません</strong>。</p>",
+                h2_4: "4. データ削除の権利",
+                content_4: "<p>アカウントを削除すると、Firebaseクラウドからすべての記録が不可逆的に削除されます。</p>",
+                h2_5: "5. お問い合わせ",
+                content_5: "<p>公式サイト <a href='https://segurcel.app'>https://segurcel.app</a> またはメール：<a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>。</p>"
+            },
+            ko: {
+                subtitle: "개인정보 처리방침 및 Zero-Knowledge 보안 아키텍처",
+                summary: "<strong>개인정보 요약:</strong> SegurCel은 <strong>Zero-Knowledge(영지식)</strong> 원칙을 준수합니다. 비밀번호, 카드, 메모는 클라우드로 전송되기 전 사용자 기기에서 <strong>AES-256-GCM</strong>으로 암호화됩니다.",
+                h2_1: "1. 수집하는 정보",
+                content_1: "<p>다중 기기 동기화를 위해 최소한의 기술 정보를 수집합니다:</p><ul><li><strong>이메일 주소:</strong> 계정 식별 및 SegurCel Cloud 로그인용으로만 사용.</li><li><strong>암호화된 보관함 데이터:</strong> 모든 비밀번호, 카드 번호, 메모는 AES-256 암호문 형태로 저장.</li></ul>",
+                h2_2: "2. 암호화 및 보안 아키텍처",
+                content_2: "<p>SegurCel은 최신 암호화 표준을 적용합니다:</p><ul><li><strong>AES-256-GCM 암호화:</strong> PBKDF2WithHmacSHA256(65,536회)으로 기기에서 키 파생.</li><li><strong>PIN 및 지문 보호:</strong> 4자리 PIN 및 지문으로 보안 하드웨어 내의 키를 보호.</li><li><strong>로컬 자가 파괴 프로토콜:</strong> PIN 3회 오류 시 로컬 데이터 영구 삭제.</li></ul>",
+                h2_3: "3. 데이터 사용 및 비상업화",
+                content_3: "<p>SegurCel은 사용자 데이터를 제3자나 광고주에게 <strong>절대</strong> 판매하거나 공유하지 않습니다.</p>",
+                h2_4: "4. 데이터 삭제 권리",
+                content_4: "<p>계정을 삭제하면 Firebase 클라우드에서 모든 기록이 즉시 영구 삭제됩니다.</p>",
+                h2_5: "5. 문의처",
+                content_5: "<p>공식 웹사이트 <a href='https://segurcel.app'>https://segurcel.app</a> 또는 이메일: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
+            },
+            ru: {
+                subtitle: "Политика конфиденциальности и архитектура Zero-Knowledge",
+                summary: "<strong>Кратко о конфиденциальности:</strong> В SegurCel мы применяем принцип <strong>Zero-Knowledge (Нулевое знание)</strong>. Ваши данные шифруются на устройстве по стандарту <strong>AES-256-GCM</strong> до отправки в облако.",
+                h2_1: "1. Информация, которую мы собираем",
+                content_1: "<p>Для синхронизации мы собираем минимальные технические данные:</p><ul><li><strong>Email:</strong> Используется только для идентификации аккаунта в SegurCel Cloud.</li><li><strong>Зашифрованные данные хранилища:</strong> Все пароли, карты и заметки хранятся в виде зашифрованного текста AES-256.</li></ul>",
+                h2_2: "2. Шифрование и архитектура безопасности",
+                content_2: "<p>SegurCel использует передовые стандарты криптографии:</p><ul><li><strong>Шифрование AES-256-GCM:</strong> Ключ генерируется с помощью <strong>PBKDF2WithHmacSHA256</strong> (65 536 итераций).</li><li><strong>Защита по PIN и отпечатку:</strong> 4-значный PIN и биометрия защищают ключ в безопасном чипе.</li><li><strong>Локальное самоуничтожение:</strong> После 3 ошибок PIN-кода локальные данные удаляются.</li></ul>",
+                h2_3: "3. Использование данных и отказ от продажи",
+                content_3: "<p>SegurCel <strong>НИКОГДА</strong> не продает и не передает данные пользователей третьим лицам.</p>",
+                h2_4: "4. Права на удаление данных",
+                content_4: "<p>Удаление аккаунта безвозвратно стирает все записи из облака Firebase.</p>",
+                h2_5: "5. Контакты и поддержка",
+                content_5: "<p>Наш сайт <a href='https://segurcel.app'>https://segurcel.app</a> или email: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
             }
         };
 
@@ -258,7 +318,9 @@
 
             const btns = document.querySelectorAll('.lang-btn');
             btns.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
         }
     </script>
 </body>
