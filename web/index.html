@@ -689,13 +689,15 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 SegurCel. Todos los derechos reservados.</p>
+        <p id="footerCopyright">&copy; 2026 SegurCel. Todos los derechos reservados.</p>
         <p style="margin-top: 10px;">
             <a href="guide.html" id="linkFooterGuide">📘 Guía Rápida de Uso</a> |
             <a href="privacy.html" id="linkFooterPrivacy">Política de Privacidad</a> |
             <a href="mailto:support.segurcel@gmail.com">support.segurcel@gmail.com</a>
         </p>
     </footer>
+
+    <script src="navbar.js"></script>
 
     <!-- Multilingual Script -->
     <script>
@@ -1067,6 +1069,7 @@
             document.getElementById("btnCtaVault").href = "/vault.html?lang=" + currentLang;
             if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").href = "guide.html?lang=" + currentLang;
             if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").href = "guide.html?lang=" + currentLang;
+            if (window.SegurCelNav) window.SegurCelNav.updateFooter(currentLang);
         }
 
         window.onload = function() {

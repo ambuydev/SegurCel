@@ -387,10 +387,15 @@
         </div>
 
         <footer>
-            <p>&copy; 2026 SegurCel. Todos los derechos reservados.</p>
-            <p style="margin-top: 8px;"><a href="privacy.html">Política de Privacidad</a> | <a href="index.html">Sitio Oficial</a></p>
+            <p id="footerCopyright">&copy; 2026 SegurCel. Todos los derechos reservados.</p>
+            <p style="margin-top: 8px;">
+                <a href="privacy.html" id="linkFooterPrivacy">Política de Privacidad</a> |
+                <a href="index.html" id="linkFooterOfficial">Sitio Oficial</a>
+            </p>
         </footer>
     </div>
+
+    <script src="navbar.js"></script>
 
     <script>
         const flagsMap = {
@@ -801,6 +806,7 @@
             if (document.getElementById("s7_l2") && data.s7_2) document.getElementById("s7_l2").innerHTML = data.s7_2;
             if (document.getElementById("s7_l3") && data.s7_3) document.getElementById("s7_l3").innerHTML = data.s7_3;
             if (document.getElementById("s7_l4") && data.s7_4) document.getElementById("s7_l4").innerHTML = data.s7_4;
+            if (window.SegurCelNav) window.SegurCelNav.updateFooter(currentLang);
         }
 
         function toggleLangMenu(event) {
