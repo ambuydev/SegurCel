@@ -1,6 +1,6 @@
 /**
  * SegurCel Web - Shared Navbar & Dynamic Localizations Module
- * Gestiona el encabezado, banderas HD, selector desplegable de idiomas, botón 'Volver al Sitio Oficial' y pie de página en 10 idiomas.
+ * Gestiona el encabezado, banderas HD, selector desplegable de idiomas, botón 'Volver al Sitio Oficial' y pie de página en 10 idiomas con URLs Limpias.
  */
 
 const FLAGS_MAP = {
@@ -50,6 +50,10 @@ const FOOTER_DICT = {
 window.SegurCelNav = {
   activeLang: 'es',
 
+  getNavData(lang) {
+    return NAV_DICT[lang] || NAV_DICT.es;
+  },
+
   updateNav(lang) {
     this.activeLang = lang;
     const navData = NAV_DICT[lang] || NAV_DICT.es;
@@ -58,29 +62,25 @@ window.SegurCelNav = {
     const btnBack = document.getElementById('btnBack');
     if (btnBack) {
       btnBack.innerText = navData.btnBack;
-      btnBack.href = `index.html?lang=${lang}`;
+      btnBack.href = `/?lang=${lang}`;
     }
 
     // Actualizar botón 'Acceder a la Bóveda' en el header
     const btnHeaderVault = document.getElementById('btnHeaderVault');
     if (btnHeaderVault) {
       btnHeaderVault.innerText = navData.headerVault;
-      btnHeaderVault.href = `/vault.html?lang=${lang}`;
+      btnHeaderVault.href = `/vault?lang=${lang}`;
     }
 
     // Actualizar enlace a la Guía en el header
     const linkHeaderGuide = document.getElementById('linkHeaderGuide');
     if (linkHeaderGuide) {
       linkHeaderGuide.innerText = navData.headerGuide;
-      linkHeaderGuide.href = `guide.html?lang=${lang}`;
+      linkHeaderGuide.href = `/guide?lang=${lang}`;
     }
 
     // Actualizar Pie de Página (Footer)
     this.updateFooter(lang);
-  },
-
-  getNavData(lang) {
-    return NAV_DICT[lang] || NAV_DICT.es;
   },
 
   updateFooter(lang) {
@@ -92,19 +92,19 @@ window.SegurCelNav = {
     const guideEl = document.getElementById('linkFooterGuide');
     if (guideEl) {
       guideEl.innerText = data.guide;
-      guideEl.href = `guide.html?lang=${lang}`;
+      guideEl.href = `/guide?lang=${lang}`;
     }
 
     const privacyEl = document.getElementById('linkFooterPrivacy');
     if (privacyEl) {
       privacyEl.innerText = data.privacy;
-      privacyEl.href = `privacy.html?lang=${lang}`;
+      privacyEl.href = `/privacy?lang=${lang}`;
     }
 
     const officialEl = document.getElementById('linkFooterOfficial');
     if (officialEl) {
       officialEl.innerText = data.official;
-      officialEl.href = `index.html?lang=${lang}`;
+      officialEl.href = `/?lang=${lang}`;
     }
   },
 

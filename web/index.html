@@ -1064,11 +1064,11 @@
             document.getElementById("linkFooterPrivacy").innerText = data.priv;
 
             // Actualizar enlaces de destino conservando el idioma seleccionado
-            document.getElementById("btnHeaderVault").href = "/vault.html?lang=" + currentLang;
-            document.getElementById("btnHeroVault").href = "/vault.html?lang=" + currentLang;
-            document.getElementById("btnCtaVault").href = "/vault.html?lang=" + currentLang;
-            if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").href = "guide.html?lang=" + currentLang;
-            if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").href = "guide.html?lang=" + currentLang;
+            document.getElementById("btnHeaderVault").href = "/vault?lang=" + currentLang;
+            document.getElementById("btnHeroVault").href = "/vault?lang=" + currentLang;
+            document.getElementById("btnCtaVault").href = "/vault?lang=" + currentLang;
+            if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").href = "/guide?lang=" + currentLang;
+            if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").href = "/guide?lang=" + currentLang;
             if (window.SegurCelNav) window.SegurCelNav.updateFooter(currentLang);
         }
 

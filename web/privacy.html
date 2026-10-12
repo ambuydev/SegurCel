@@ -229,7 +229,7 @@
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="brand">
+            <a href="/" class="brand">
                 <img src="assets/assets/html/logo_solo.jpeg" alt="SegurCel Logo">
                 <span>SegurCel</span>
             </a>
@@ -256,7 +256,7 @@
     </header>
 
     <div class="container">
-        <a href="index.html" class="btn-back" id="btnBack">← Volver al Sitio Oficial</a>
+        <a href="/" class="btn-back" id="btnBack">← Volver al Sitio Oficial</a>
         <h1>SegurCel</h1>
         <div class="subtitle" id="subtitle">Política de Privacidad y Arquitectura de Seguridad Zero-Knowledge</div>
 
@@ -477,7 +477,7 @@
                 const navData = window.SegurCelNav.getNavData(lang);
                 if (navData) {
                     btnBack.innerText = navData.btnBack;
-                    btnBack.href = "index.html?lang=" + lang;
+                    btnBack.href = "/?lang=" + lang;
                 }
             }
         }
