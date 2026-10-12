@@ -1072,31 +1072,13 @@
             if (window.SegurCelNav) window.SegurCelNav.updateFooter(currentLang);
         }
 
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const langParam = urlParams.get('lang');
-            if (langParam && dict[langParam]) {
-                selectLanguage(langParam, flagsMapLanding[langParam], namesMapLanding[langParam]);
-            } else {
-                changeLanguage('es');
-            }
-        };
-
-        function toggleLangMenu(event) {
-            if (event) event.stopPropagation();
-            const menu = document.getElementById("langMenu");
-            if (menu) menu.classList.toggle("show");
-        }
-
         function selectLanguage(lang, flagUrl, name) {
-            const flagEl = document.getElementById("selectedFlag");
-            const nameEl = document.getElementById("selectedLangName");
-            if (flagEl) flagEl.src = flagUrl;
-            if (nameEl) nameEl.innerText = name;
-            const menu = document.getElementById("langMenu");
-            if (menu) menu.classList.remove("show");
-            changeLanguage(lang);
+            SegurCelNav.selectLanguage(lang, (l) => changeLanguage(l));
         }
+
+        window.onload = function() {
+            SegurCelNav.init((l) => changeLanguage(l));
+        };
 
         window.onclick = function(event) {
             const menu = document.getElementById("langMenu");

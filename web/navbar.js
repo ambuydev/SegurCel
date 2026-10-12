@@ -1,6 +1,6 @@
 /**
- * SegurCel Web - Shared Navbar & Dynamic Footer Module
- * Gestiona el encabezado, banderas HD, selector desplegable de idiomas y pie de página en 10 idiomas.
+ * SegurCel Web - Shared Navbar & Dynamic Localizations Module
+ * Gestiona el encabezado, banderas HD, selector desplegable de idiomas, botón 'Volver al Sitio Oficial' y pie de página en 10 idiomas.
  */
 
 const FLAGS_MAP = {
@@ -21,6 +21,19 @@ const NAMES_MAP = {
   hi: "हिन्दी", de: "Deutsch", ja: "日本語", ko: "한국어", ru: "Русский"
 };
 
+const NAV_DICT = {
+  es: { btnBack: "← Volver al Sitio Oficial", headerVault: "Acceder a la Bóveda", headerGuide: "📘 Guía de Uso" },
+  en: { btnBack: "← Back to Official Site", headerVault: "Access Vault", headerGuide: "📘 User Guide" },
+  pt: { btnBack: "← Voltar ao Site Oficial", headerVault: "Acessar Cofre", headerGuide: "📘 Guia do Usuário" },
+  zh: { btnBack: "← 返回官方网站", headerVault: "进入保险库", headerGuide: "📘 使用指南" },
+  fr: { btnBack: "← Retour au Site Officiel", headerVault: "Accéder au Coffre", headerGuide: "📘 Guide Utilisateur" },
+  hi: { btnBack: "← आधिकारिक साइट पर वापस जाएं", headerVault: "वॉल्ट एक्सेस करें", headerGuide: "📘 उपयोग निर्देशिका" },
+  de: { btnBack: "← Zurück zur offiziellen Website", headerVault: "Tresor öffnen", headerGuide: "📘 Benutzerhandbuch" },
+  ja: { btnBack: "← 公式サイトに戻る", headerVault: "保管庫に入る", headerGuide: "📘 ユーザーガイド" },
+  ko: { btnBack: "← 공식 사이트로 돌아가기", headerVault: "보관함 접속", headerGuide: "📘 사용자 설명서" },
+  ru: { btnBack: "← Вернуться на официальный сайт", headerVault: "Войти в хранилище", headerGuide: "📘 Руководство" }
+};
+
 const FOOTER_DICT = {
   es: { copyright: "© 2026 SegurCel. Todos los derechos reservados.", guide: "📘 Guía Rápida de Uso", privacy: "Política de Privacidad", official: "Sitio Oficial", vault: "Bóveda Web" },
   en: { copyright: "© 2026 SegurCel. All rights reserved.", guide: "📘 Quick User Guide", privacy: "Privacy Policy", official: "Official Site", vault: "Web Vault" },
@@ -37,9 +50,37 @@ const FOOTER_DICT = {
 window.SegurCelNav = {
   activeLang: 'es',
 
+  updateNav(lang) {
+    this.activeLang = lang;
+    const navData = NAV_DICT[lang] || NAV_DICT.es;
+
+    // Actualizar botón 'Volver al Sitio Oficial'
+    const btnBack = document.getElementById('btnBack');
+    if (btnBack) {
+      btnBack.innerText = navData.btnBack;
+      btnBack.href = `index.html?lang=${lang}`;
+    }
+
+    // Actualizar botón 'Acceder a la Bóveda' en el header
+    const btnHeaderVault = document.getElementById('btnHeaderVault');
+    if (btnHeaderVault) {
+      btnHeaderVault.innerText = navData.headerVault;
+      btnHeaderVault.href = `/vault.html?lang=${lang}`;
+    }
+
+    // Actualizar enlace a la Guía en el header
+    const linkHeaderGuide = document.getElementById('linkHeaderGuide');
+    if (linkHeaderGuide) {
+      linkHeaderGuide.innerText = navData.headerGuide;
+      linkHeaderGuide.href = `guide.html?lang=${lang}`;
+    }
+
+    // Actualizar Pie de Página (Footer)
+    this.updateFooter(lang);
+  },
+
   updateFooter(lang) {
     const data = FOOTER_DICT[lang] || FOOTER_DICT.es;
-    this.activeLang = lang;
 
     const copyEl = document.getElementById('footerCopyright');
     if (copyEl) copyEl.innerText = data.copyright;
@@ -72,7 +113,7 @@ window.SegurCelNav = {
     const menu = document.getElementById("langMenu");
     if (menu) menu.classList.remove("show");
 
-    this.updateFooter(lang);
+    this.updateNav(lang);
 
     if (typeof callback === 'function') {
       callback(lang);
