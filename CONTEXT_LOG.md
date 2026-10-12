@@ -22,7 +22,7 @@ Este archivo contiene el contexto completo de **SegurCel** para que cualquier nu
 ---
 
 ## 3. 🌐 ACCESO A LA BÓVEDA WEB & GATEKEEPER FREEMIUM
-- **App Móvil Android**: Modelo Freemium (gratuito hasta 15 contraseñas y 2 cuentas TOTP; ilimitado en suscripciones PRO/Familiar).
+- **App Móvil Android**: Modelo Freemium (gratuito hasta 20 contraseñas y 2 cuentas TOTP; ilimitado en suscripciones PRO/Familiar).
 - **Bóveda Web (`https://segurcel.app/vault.html`)**: Gatekeeper Premium forzado en el navegador de la raíz de Flutter (`main.dart`). Los usuarios con `isPremium == false` son redirigidos a la pantalla de suscripción (`PaywallScreen`).
 
 ---

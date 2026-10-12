@@ -969,7 +969,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final profile = await widget.vaultService.fetchUserProfile();
       final isPremium = profile?.isPremium ?? false;
 
-      if (!isPremium && widget.vaultService.entries.length >= 15) {
+      if (!isPremium && widget.vaultService.entries.length >= 20) {
         if (mounted) {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -1767,7 +1767,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           final item = searchFiltered[index];
                           final isPremium = _userProfile?.isPremium ?? false;
-                          final isLockedByLimit = !isPremium && index >= 15;
+                          final isLockedByLimit = !isPremium && index >= 20;
                           final isVisible = _visiblePasswordIds.contains(item.id);
                           final isCard = item.entryType == 'cards';
                           final isNote = item.entryType == 'notes';
