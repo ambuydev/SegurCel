@@ -79,6 +79,10 @@ window.SegurCelNav = {
     this.updateFooter(lang);
   },
 
+  getNavData(lang) {
+    return NAV_DICT[lang] || NAV_DICT.es;
+  },
+
   updateFooter(lang) {
     const data = FOOTER_DICT[lang] || FOOTER_DICT.es;
 
@@ -112,6 +116,11 @@ window.SegurCelNav = {
 
     const menu = document.getElementById("langMenu");
     if (menu) menu.classList.remove("show");
+
+    try {
+      const newUrl = window.location.pathname + '?lang=' + lang;
+      window.history.replaceState(null, '', newUrl);
+    } catch (_) {}
 
     this.updateNav(lang);
 

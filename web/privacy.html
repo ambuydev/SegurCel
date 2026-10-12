@@ -471,6 +471,15 @@
             if (window.SegurCelNav) {
                 window.SegurCelNav.updateNav(lang);
             }
+
+            const btnBack = document.getElementById('btnBack');
+            if (btnBack && window.SegurCelNav) {
+                const navData = window.SegurCelNav.getNavData(lang);
+                if (navData) {
+                    btnBack.innerText = navData.btnBack;
+                    btnBack.href = "index.html?lang=" + lang;
+                }
+            }
         }
 
         window.onload = function() {
