@@ -468,8 +468,9 @@
             document.getElementById('h2_5').innerHTML = data.h2_5;
             document.getElementById('content_5').innerHTML = data.content_5;
 
-            const btnBack = document.getElementById('btnBack');
-            if (btnBack) btnBack.href = "index.html?lang=" + lang;
+            if (window.SegurCelNav) {
+                window.SegurCelNav.updateNav(lang);
+            }
         }
 
         window.onload = function() {
