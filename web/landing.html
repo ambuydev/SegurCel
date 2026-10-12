@@ -539,7 +539,7 @@
             <div class="nav-actions">
                 <a href="guide.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; margin-right: 8px;" id="linkHeaderGuide">📘 Guía de Uso</a>
                 <div class="lang-dropdown">
-                    <button class="lang-dropbtn" onclick="toggleLangMenu(event)">
+                    <button class="lang-dropbtn" onclick="SegurCelNav.toggleLangMenu(event)">
                         <img src="https://flagcdn.com/20x15/es.png" id="selectedFlag" alt="Flag">
                         <span id="selectedLangName">Español</span>
                         <span style="font-size: 10px; opacity: 0.7;">▼</span>
@@ -1070,6 +1070,10 @@
             if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").href = "/guide?lang=" + currentLang;
             if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").href = "/guide?lang=" + currentLang;
             if (window.SegurCelNav) window.SegurCelNav.updateFooter(currentLang);
+        }
+
+        function toggleLangMenu(event) {
+            SegurCelNav.toggleLangMenu(event);
         }
 
         function selectLanguage(lang, flagUrl, name) {

@@ -810,9 +810,7 @@
         }
 
         function toggleLangMenu(event) {
-            if (event) event.stopPropagation();
-            const menu = document.getElementById("langMenu");
-            if (menu) menu.classList.toggle("show");
+            SegurCelNav.toggleLangMenu(event);
         }
 
         function selectLanguage(lang, flagUrl, name) {
