@@ -1,32 +1,20 @@
-# Plan de Implementación: Modal de Confirmación con Temporizador de 10s para Código de Recuperación
+# Plan de Implementación: Cláusula Estricta de Eliminación Autenticada en `privacy.html`
 
-Implementar un diálogo modal de confirmación secundaria con un **temporizador obligatorio de 10 segundos** al presionar *"Entrar a SegurCel"* en la pantalla de creación de bóveda (`setup_screen.dart`), garantizando que el usuario tome conciencia sobre guardar su Código de Recuperación.
+Actualizar la sección de Eliminación de Datos en `web/privacy.html` para especificar que la eliminación de cuenta se realiza de forma **exclusiva dentro de la sesión autenticada** del usuario en la aplicación móvil o en la Bóveda Web (`https://segurcel.app/vault`), impidiendo eliminaciones vía correo o formularios externos.
 
 ## Proposed Changes
 
-### Componente: Aplicación Flutter (`lib/`)
+### Componente: Sitio Web (`web/privacy.html`)
 
-#### [localization_service.dart](file:///C:/Users/aleja/StudioProjects/SegurCel/lib/services/localization_service.dart)
-- Añadir las siguientes claves traducidas en los 10 idiomas (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`):
-  - `confirm_recovery_title`: *"¿Confirmas que has guardado tu código?"*
-  - `confirm_recovery_desc`: *"Este código NO volverá a mostrarse jamás. El equipo de SegurCel no tiene acceso a tus claves ni forma de recuperarlas. Si olvidas tu PIN y no conservas este código, el acceso a tu bóveda se perderá para siempre."*
-  - `confirm_recovery_yes`: *"¡Sí, lo he guardado!"*
-  - `confirm_recovery_back`: *"Volver al código"*
-  - `understood_timer`: *"Entendido ({seconds}s)"*
-
-#### [setup_screen.dart](file:///C:/Users/aleja/StudioProjects/SegurCel/lib/screens/setup_screen.dart)
-- Modificar `_finishSetup()` para que despliegue un `showDialog` con un Widget con estado (`StatefulWidget` / `StatefulBuilder`) y un `Timer.periodic` de 1 segundo:
-  - Inicializa un contador en 10 segundos.
-  - Muestra el botón de confirmación en gris con el texto `Entendido (10s)`, `Entendido (9s)`, ...
-  - Al llegar a 0s, cancela el Timer, habilita el botón y cambia el texto a `¡Sí, lo he guardado!`.
-  - El botón secundario `Volver al código` cancela el Timer y cierra el modal permitiendo al usuario volver a revisar o copiar su código.
+#### [privacy.html](file:///C:/Users/aleja/StudioProjects/SegurCel/web/privacy.html)
+- Actualizar `content_4` en la plantilla HTML y en los objetos `texts` de todos los idiomas:
+  `"Por estrictos motivos de seguridad y arquitectura Zero-Knowledge, la eliminación de cuenta y purga de registros cifrados se realiza EXCLUSIVAMENTE mediante autenticación activa de sesión dentro de la aplicación móvil de SegurCel o en nuestra Bóveda Web oficial en https://segurcel.app/vault. No se procesan solicitudes de baja vía correos electrónicos ni formularios de terceros desautenticados para prevenir eliminaciones no autorizadas."`
 
 ---
 
 ## Verification Plan
 
-### Automated Tests
-- Ejecutar `flutter analyze` para asegurar 0 advertencias o errores en la sintaxis Dart.
-
-### Manual Verification
-- Probar el flujo de creación de bóveda en Flutter para verificar que el temporizador de 10 segundos descienda correctamente y que el botón se habilite al finalizar los 10 segundos.
+### Terminal / Deployment Commands
+- Sincronizar en `build/web/` y desplegar en Firebase Hosting:
+  `firebase deploy --only hosting`
+- Push a GitHub.

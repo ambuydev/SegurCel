@@ -23,3 +23,57 @@
     - [x] Add extension promotional section & download button to `web/landing.html` and `web/guide.html`
     - [x] Deploy updated web build to Firebase Hosting (`firebase deploy --only hosting`)
     - [x] Verify live site at `https://segurcel.app`
+- [x] Increase Free Password Limit from 15 to 20
+    - [x] Update limit checks in `lib/screens/home_screen.dart` (from 15 to 20)
+    - [x] Update `free_limits` strings in `lib/services/localization_service.dart` across all 10 languages
+    - [x] Update documentation (`CONTEXT_LOG.md`, `DESCRIPCION_PLAY_STORE.md`)
+    - [x] Synchronize web build and re-deploy to Firebase Hosting
+- [x] Implement Mandatory 10-Second Recovery Code Confirmation Modal
+    - [x] Add translation keys to `lib/services/localization_service.dart` across 10 languages (`confirm_recovery_title`, `confirm_recovery_desc`, `confirm_recovery_yes`, `confirm_recovery_back`, `understood_timer`)
+    - [x] Update `_finishSetup()` in `lib/screens/setup_screen.dart` to show Stateful AlertDialog with 10s Timer
+    - [x] Verify build with `flutter analyze`
+- [x] Refactor setup_screen.dart into Modular Reusable Widgets
+    - [x] Create `lib/widgets/pin_creation_form.dart`
+    - [x] Create `lib/widgets/recovery_code_card.dart`
+    - [x] Create `lib/widgets/recovery_confirmation_dialog.dart`
+    - [x] Refactor `lib/screens/setup_screen.dart` into a clean coordinator widget (~70 lines)
+    - [x] Verify build with `flutter analyze`
+- [x] Refactor home_screen.dart (2087 lines) into Modular Widgets (`lib/widgets/home/`)
+    - [x] Create `lib/widgets/home/about_app_sheet.dart`
+    - [x] Create `lib/widgets/home/password_generator_sheet.dart`
+    - [x] Create `lib/widgets/home/vault_health_audit_sheet.dart`
+    - [x] Create `lib/widgets/home/password_history_sheet.dart`
+    - [x] Create `lib/widgets/home/add_edit_entry_sheet.dart`
+    - [x] Create `lib/widgets/home/password_entry_tile.dart`
+    - [x] Refactor `lib/screens/home_screen.dart` down to 360 lines
+    - [x] Verify build with `flutter analyze`
+- [x] Create Reusable Web Component `navbar.js` and Localize Footers Across All Web Pages
+    - [x] Create `web/navbar.js` with shared Header, Flag Language Dropdown, Footer rendering, and dynamic 10-language translations
+    - [x] Include `navbar.js` in `web/landing.html`, `web/guide.html`, `web/privacy.html`, `web/index.html`
+    - [x] Synchronize `build/web/` and deploy to Firebase Hosting
+- [x] Centralize `btnBack` ("← Volver al Sitio Oficial") & Header Localizations in `navbar.js`
+    - [x] Update `web/navbar.js` with `btnBack` translations in all 10 languages
+    - [x] Update `btnBack` target href to `index.html?lang=code`
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+- [x] URL Parameter Sync (`history.replaceState`) & `btnBack` Text Fix in `privacy.html`
+    - [x] Update `web/navbar.js` to call `window.history.replaceState(null, '', '?lang=' + lang)` on language change
+    - [x] Add `btnBack` translation handling inside `setLang()` in `web/privacy.html`
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+- [x] Enforce Clean URLs Across Web Site to Fix ERR_TOO_MANY_REDIRECTS
+    - [x] Update all `.html` links in `web/navbar.js`, `web/landing.html`, `web/guide.html`, `web/privacy.html`, `web/index.html` to clean URLs (`/?lang=code`, `/guide?lang=code`, `/privacy?lang=code`, `/vault?lang=code`)
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+- [x] Fix Language Dropdown Click Handler on Landing Page
+    - [x] Bind dropdown button in `landing.html` and `index.html` to `SegurCelNav.toggleLangMenu(event)`
+    - [x] Add global fallback `function toggleLangMenu(event)` calling `SegurCelNav.toggleLangMenu(event)`
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+- [x] Upload Project Branches to Remote GitHub Repository
+    - [x] Add remote origin `https://github.com/ambuydev/SegurCel.git`
+    - [x] Push local branches (`master`, `feature/browser-extension`) to GitHub
+- [x] Update Privacy Policy Page with Google Play Compliance Additions
+    - [x] Update `web/privacy.html` with Google Play Billing processing clause and external email data deletion request clause
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Push update to GitHub
+- [x] Enforce Strict Authenticated Account Deletion Clause in Privacy Policy
+    - [x] Update `web/privacy.html` to state that account deletion is performed exclusively within the authenticated SegurCel mobile app or Web Vault (`https://segurcel.app/vault`)
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Push update to GitHub

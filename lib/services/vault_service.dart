@@ -148,8 +148,10 @@ class VaultService {
         if (doc.exists && doc.data() != null) {
           final data = doc.data()!;
 
-          // Auto-inyección silenciosa de campos faltantes para migrar usuarios antiguos
-          final Map<String, dynamic> updates = {};
+          // Auto-inyección silenciosa de campos faltantes y registro del último inicio de sesión
+          final Map<String, dynamic> updates = {
+            'last_login_at': FieldValue.serverTimestamp(),
+          };
           if (!data.containsKey('isPremium')) updates['isPremium'] = false;
           if (!data.containsKey('subscriptionType')) updates['subscriptionType'] = 'free';
           if (!data.containsKey('selfDestructedAt')) updates['selfDestructedAt'] = null;
@@ -157,9 +159,7 @@ class VaultService {
           if (!data.containsKey('createdAt')) updates['createdAt'] = FieldValue.serverTimestamp();
           if (!data.containsKey('updatedAt')) updates['updatedAt'] = FieldValue.serverTimestamp();
 
-          if (updates.isNotEmpty) {
-            await FirebaseFirestore.instance.collection('users').doc(user.uid).set(updates, SetOptions(merge: true));
-          }
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).set(updates, SetOptions(merge: true));
 
           // Cascada de Expiración del Plan Familiar:
           // Si el usuario es un miembro de familia, verificar si el titular (familyOwnerUid) sigue siendo Premium.
