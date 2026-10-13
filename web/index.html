@@ -233,68 +233,108 @@
             gap: 8px;
         }
 
-        /* PC Desktop Interactive Carousel */
-        .desktop-carousel-wrapper {
+        /* 3D Cover Flow Infinite PC Carousel */
+        .showcase-container {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .coverflow-wrapper {
             position: relative;
-            max-width: 720px;
+            max-width: 1000px;
             margin: 0 auto 10px;
-        }
-
-        .desktop-carousel {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
             padding: 10px 0;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .desktop-carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .desktop-carousel .desktop-frame {
-            flex: 0 0 100%;
-            scroll-snap-align: center;
-            max-width: 720px;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            border: 1.5px solid var(--border-color);
-            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.2);
             overflow: hidden;
         }
 
-        .carousel-btn {
+        .coverflow-container {
+            position: relative;
+            height: 440px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .coverflow-slide {
+            position: absolute;
+            width: 660px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .coverflow-slide .desktop-frame {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .coverflow-slide.active {
+            transform: translateX(0) scale(1) translateZ(0);
+            opacity: 1;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .coverflow-slide.active .desktop-frame {
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(108, 99, 255, 0.45);
+        }
+
+        .coverflow-slide.prev {
+            transform: translateX(-52%) scale(0.78) rotateY(16deg);
+            opacity: 0.55;
+            z-index: 5;
+            filter: blur(0.5px);
+        }
+
+        .coverflow-slide.next {
+            transform: translateX(52%) scale(0.78) rotateY(-16deg);
+            opacity: 0.55;
+            z-index: 5;
+            filter: blur(0.5px);
+        }
+
+        .coverflow-slide.hidden {
+            transform: translateX(0) scale(0.5) translateZ(-200px);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .coverflow-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background: rgba(30, 37, 56, 0.95);
             color: #FFFFFF;
             border: 1.5px solid var(--primary);
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            z-index: 10;
+            z-index: 20;
             transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
             user-select: none;
         }
 
-        .carousel-btn:hover {
+        .coverflow-btn:hover {
             background: var(--primary);
-            transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.15);
         }
 
-        .carousel-prev { left: -22px; }
-        .carousel-next { right: -22px; }
+        .coverflow-prev { left: 10px; }
+        .coverflow-next { right: 10px; }
 
         .carousel-indicators {
             display: flex;
@@ -319,8 +359,13 @@
         }
 
         @media (max-width: 768px) {
-            .carousel-prev { left: 6px; }
-            .carousel-next { right: 6px; }
+            .coverflow-container { height: 260px; }
+            .coverflow-slide { width: 310px; }
+            .coverflow-slide.prev { transform: translateX(-38%) scale(0.8); }
+            .coverflow-slide.next { transform: translateX(38%) scale(0.8); }
+            .coverflow-btn { width: 38px; height: 38px; font-size: 18px; }
+            .coverflow-prev { left: 2px; }
+            .coverflow-next { right: 2px; }
         }
 
         .desktop-header {
@@ -649,69 +694,77 @@
         </div>
     </section>
 
-    <!-- App Showcase Carousel (PC & Mobile) -->
+    <!-- App Showcase Carousel (PC 3D Cover Flow & Mobile) -->
     <section class="showcase-container">
-        <!-- Carrusel Interactivo de PC Desktop -->
-        <div class="desktop-carousel-wrapper">
-            <button class="carousel-btn carousel-prev" onclick="scrollCarousel(-1)" aria-label="Anterior">‹</button>
-            <div class="desktop-carousel" id="pcCarousel" onscroll="updateCarouselDots()">
-                <div class="desktop-frame">
-                    <div class="desktop-header">
-                        <div class="desktop-dots">
-                            <span class="desktop-dot dot-red"></span>
-                            <span class="desktop-dot dot-yellow"></span>
-                            <span class="desktop-dot dot-green"></span>
+        <!-- Carrusel 3D Cover Flow de PC Desktop -->
+        <div class="coverflow-wrapper">
+            <button class="coverflow-btn coverflow-prev" onclick="rotateCoverFlow(-1)" aria-label="Anterior">‹</button>
+            <div class="coverflow-container" id="coverflowContainer">
+                <div class="coverflow-slide active" onclick="setCoverSlide(0)">
+                    <div class="desktop-frame">
+                        <div class="desktop-header">
+                            <div class="desktop-dots">
+                                <span class="desktop-dot dot-red"></span>
+                                <span class="desktop-dot dot-yellow"></span>
+                                <span class="desktop-dot dot-green"></span>
+                            </div>
+                            <div class="desktop-url">https://segurcel.app/vault?screen=login</div>
                         </div>
-                        <div class="desktop-url">https://segurcel.app/vault?screen=login</div>
+                        <img src="assets/html/ingreso_pc.png" alt="SegurCel Cloud Login en PC">
                     </div>
-                    <img src="assets/html/ingreso_pc.png" alt="SegurCel Cloud Login en PC">
                 </div>
 
-                <div class="desktop-frame">
-                    <div class="desktop-header">
-                        <div class="desktop-dots">
-                            <span class="desktop-dot dot-red"></span>
-                            <span class="desktop-dot dot-yellow"></span>
-                            <span class="desktop-dot dot-green"></span>
+                <div class="coverflow-slide next" onclick="setCoverSlide(1)">
+                    <div class="desktop-frame">
+                        <div class="desktop-header">
+                            <div class="desktop-dots">
+                                <span class="desktop-dot dot-red"></span>
+                                <span class="desktop-dot dot-yellow"></span>
+                                <span class="desktop-dot dot-green"></span>
+                            </div>
+                            <div class="desktop-url">https://segurcel.app/vault</div>
                         </div>
-                        <div class="desktop-url">https://segurcel.app/vault</div>
+                        <img src="assets/html/pantalla_principal_pc.png" alt="Bóveda Web en PC / Laptop">
                     </div>
-                    <img src="assets/html/pantalla_principal_pc.png" alt="Bóveda Web en PC / Laptop">
                 </div>
 
-                <div class="desktop-frame">
-                    <div class="desktop-header">
-                        <div class="desktop-dots">
-                            <span class="desktop-dot dot-red"></span>
-                            <span class="desktop-dot dot-yellow"></span>
-                            <span class="desktop-dot dot-green"></span>
+                <div class="coverflow-slide hidden" onclick="setCoverSlide(2)">
+                    <div class="desktop-frame">
+                        <div class="desktop-header">
+                            <div class="desktop-dots">
+                                <span class="desktop-dot dot-red"></span>
+                                <span class="desktop-dot dot-yellow"></span>
+                                <span class="desktop-dot dot-green"></span>
+                            </div>
+                            <div class="desktop-url">https://segurcel.app/vault?screen=settings</div>
                         </div>
-                        <div class="desktop-url">https://segurcel.app/vault?screen=settings</div>
+                        <img src="assets/html/settings_pc.png" alt="Ajustes y Seguridad Bóveda en PC">
                     </div>
-                    <img src="assets/html/settings_pc.png" alt="Ajustes y Seguridad Bóveda en PC">
                 </div>
 
-                <div class="desktop-frame">
-                    <div class="desktop-header">
-                        <div class="desktop-dots">
-                            <span class="desktop-dot dot-red"></span>
-                            <span class="desktop-dot dot-yellow"></span>
-                            <span class="desktop-dot dot-green"></span>
+                <div class="coverflow-slide prev" onclick="setCoverSlide(3)">
+                    <div class="desktop-frame">
+                        <div class="desktop-header">
+                            <div class="desktop-dots">
+                                <span class="desktop-dot dot-red"></span>
+                                <span class="desktop-dot dot-yellow"></span>
+                                <span class="desktop-dot dot-green"></span>
+                            </div>
+                            <div class="desktop-url">https://segurcel.app/vault?screen=my_devices</div>
                         </div>
-                        <div class="desktop-url">https://segurcel.app/vault?screen=my_devices</div>
+                        <img src="assets/html/my_devices_pc.png" alt="Centro de Rastreo de Emergencia en PC">
                     </div>
-                    <img src="assets/html/my_devices_pc.png" alt="Centro de Rastreo de Emergencia en PC">
                 </div>
             </div>
-            <button class="carousel-btn carousel-next" onclick="scrollCarousel(1)" aria-label="Siguiente">›</button>
+            <button class="coverflow-btn coverflow-next" onclick="rotateCoverFlow(1)" aria-label="Siguiente">›</button>
         </div>
 
         <!-- Puntos Indicadores del Carrusel PC -->
         <div class="carousel-indicators">
-            <span class="carousel-dot active" onclick="goToSlide(0)"></span>
-            <span class="carousel-dot" onclick="goToSlide(1)"></span>
-            <span class="carousel-dot" onclick="goToSlide(2)"></span>
-            <span class="carousel-dot" onclick="goToSlide(3)"></span>
+            <span class="carousel-dot active" onclick="setCoverSlide(0)"></span>
+            <span class="carousel-dot" onclick="setCoverSlide(1)"></span>
+            <span class="carousel-dot" onclick="setCoverSlide(2)"></span>
+            <span class="carousel-dot" onclick="setCoverSlide(3)"></span>
         </div>
 
         <!-- Grid de Teléfonos Móviles -->
@@ -1241,31 +1294,47 @@
             SegurCelNav.selectLanguage(lang, (l) => changeLanguage(l));
         }
 
-        function scrollCarousel(direction) {
-            const carousel = document.getElementById("pcCarousel");
-            if (!carousel) return;
-            const scrollAmount = carousel.clientWidth;
-            carousel.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
-        }
+        let currentCoverIndex = 0;
+        const totalCoverSlides = 4;
 
-        function updateCarouselDots() {
-            const carousel = document.getElementById("pcCarousel");
-            if (!carousel) return;
-            const index = Math.round(carousel.scrollLeft / carousel.clientWidth);
-            const dots = document.querySelectorAll(".carousel-dot");
-            dots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.classList.add("active");
+        function updateCoverFlow() {
+            const slides = document.querySelectorAll('.coverflow-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            slides.forEach((slide, index) => {
+                slide.className = 'coverflow-slide';
+
+                let diff = (index - currentCoverIndex) % totalCoverSlides;
+                if (diff < 0) diff += totalCoverSlides;
+
+                if (diff === 0) {
+                    slide.classList.add('active');
+                } else if (diff === 1) {
+                    slide.classList.add('next');
+                } else if (diff === totalCoverSlides - 1) {
+                    slide.classList.add('prev');
                 } else {
-                    dot.classList.remove("active");
+                    slide.classList.add('hidden');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                if (index === currentCoverIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
                 }
             });
         }
 
-        function goToSlide(index) {
-            const carousel = document.getElementById("pcCarousel");
-            if (!carousel) return;
-            carousel.scrollTo({ left: index * carousel.clientWidth, behavior: "smooth" });
+        function rotateCoverFlow(direction) {
+            currentCoverIndex = (currentCoverIndex + direction + totalCoverSlides) % totalCoverSlides;
+            updateCoverFlow();
+        }
+
+        function setCoverSlide(index) {
+            currentCoverIndex = index;
+            updateCoverFlow();
         }
 
         window.onload = function() {
