@@ -583,78 +583,64 @@
 
         .circuit-infographic-container {
             display: grid;
-            grid-template-columns: 1fr 280px 1fr;
-            gap: 24px;
+            grid-template-columns: 1fr 220px 1fr;
+            gap: 20px;
             align-items: center;
             position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .circuit-lines-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
         }
 
         .circuit-col {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            z-index: 3;
         }
 
-        .central-hub-card, .circuit-center-hub {
-            background: linear-gradient(135deg, #1E2538 0%, #10141D 100%);
-            border: 2.5px solid var(--primary);
-            border-radius: 24px;
-            padding: 36px 20px;
+        .standalone-shield-node {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            box-shadow: 0 0 45px rgba(108, 99, 255, 0.45);
+            align-items: center;
             position: relative;
             z-index: 5;
         }
 
-        .shield-pulse-ring {
-            position: absolute;
+        .standalone-shield-badge {
             width: 130px;
             height: 130px;
-            border-radius: 26px;
-            border: 2px solid var(--primary);
-            animation: pulseShieldRing 2.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-            pointer-events: none;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #1E2538 0%, #10141D 100%);
+            border: 3px solid #00F0FF;
+            box-shadow: 0 0 35px #00F0FF, 0 0 70px rgba(108, 99, 255, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: shieldFloat 4s infinite ease-in-out;
         }
 
-        @keyframes pulseShieldRing {
-            0% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 10px #6C63FF; }
-            100% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 30px #00F0FF; }
+        @keyframes shieldFloat {
+            0%, 100% { transform: translateY(0); box-shadow: 0 0 35px #00F0FF, 0 0 70px rgba(108, 99, 255, 0.6); }
+            50% { transform: translateY(-6px); box-shadow: 0 0 45px #00F0FF, 0 0 90px rgba(108, 99, 255, 0.8); }
         }
 
-        .circuit-shield-logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.6);
-            margin-bottom: 14px;
-            z-index: 2;
-            border: 2px solid rgba(255, 255, 255, 0.25);
+        .standalone-shield-badge img {
+            width: 90px;
+            height: 90px;
+            border-radius: 18px;
             object-fit: cover;
-        }
-
-        .hub-brand-name {
-            color: #FFFFFF;
-            font-size: 20px;
-            font-weight: 900;
-            z-index: 2;
-            letter-spacing: 0.5px;
-        }
-
-        .hub-crypto-badge {
-            background-color: rgba(108, 99, 255, 0.2);
-            color: var(--accent);
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 12px;
-            border: 1px solid var(--accent);
-            margin-top: 8px;
-            z-index: 2;
-            letter-spacing: 1px;
         }
 
         @media (max-width: 950px) {
@@ -662,8 +648,10 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            .circuit-center-hub {
-                order: -1;
+            .circuit-lines-overlay {
+                display: none;
+            }
+            .standalone-shield-node {
                 margin-bottom: 10px;
             }
         }
@@ -994,6 +982,32 @@
         <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
 
         <div class="circuit-infographic-container">
+            <!-- SVG Circuit Lines Overlay (Visible on PC) -->
+            <svg class="circuit-lines-overlay" viewBox="0 0 1200 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Left Cards to Center Shield Traces -->
+                <path d="M 400,75 L 520,75 L 550,270 L 600,270" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
+                <path d="M 400,215 L 530,215 L 560,285 L 600,285" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
+                <path d="M 400,375 L 530,375 L 560,315 L 600,315" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
+                <path d="M 400,515 L 520,515 L 550,330 L 600,330" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
+
+                <!-- Right Cards to Center Shield Traces -->
+                <path d="M 800,75 L 680,75 L 650,270 L 600,270" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
+                <path d="M 800,215 L 670,215 L 640,285 L 600,285" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
+                <path d="M 800,375 L 670,375 L 640,315 L 600,315" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
+                <path d="M 800,515 L 680,515 L 650,330 L 600,330" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
+
+                <!-- Glowing Nodes at Connections -->
+                <circle cx="520" cy="75" r="4" fill="#00F0FF" />
+                <circle cx="530" cy="215" r="4" fill="#6C63FF" />
+                <circle cx="530" cy="375" r="4" fill="#6C63FF" />
+                <circle cx="520" cy="515" r="4" fill="#00F0FF" />
+
+                <circle cx="680" cy="75" r="4" fill="#00F0FF" />
+                <circle cx="670" cy="215" r="4" fill="#6C63FF" />
+                <circle cx="670" cy="375" r="4" fill="#6C63FF" />
+                <circle cx="680" cy="515" r="4" fill="#00F0FF" />
+            </svg>
+
             <!-- Columna Izquierda (4 Tarjetas) -->
             <div class="circuit-col">
                 <div class="feature-card">
@@ -1021,12 +1035,11 @@
                 </div>
             </div>
 
-            <!-- Escudo Central Neón -->
-            <div class="circuit-center-hub">
-                <div class="shield-pulse-ring"></div>
-                <img src="assets/html/logo_solo.jpeg" class="circuit-shield-logo" alt="SegurCel Shield Logo">
-                <div class="hub-brand-name">SegurCel Core</div>
-                <div class="hub-crypto-badge">AES-256 ZERO-KNOWLEDGE</div>
+            <!-- Escudo Central Exento Neón -->
+            <div class="standalone-shield-node">
+                <div class="standalone-shield-badge">
+                    <img src="assets/html/logo_solo.jpeg" alt="SegurCel Shield Logo">
+                </div>
             </div>
 
             <!-- Columna Derecha (4 Tarjetas) -->
