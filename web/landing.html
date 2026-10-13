@@ -559,9 +559,9 @@
             border-radius: 12px;
         }
 
-        /* Features Grid Section */
+        /* Features Grid / Circuit Infographic Layout */
         .features-section {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto 60px;
             padding: 0 20px;
         }
@@ -581,76 +581,91 @@
             margin-bottom: 36px;
         }
 
-        .features-grid {
+        .circuit-infographic-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 1fr 280px 1fr;
+            gap: 24px;
+            align-items: center;
+            position: relative;
+        }
+
+        .circuit-col {
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
 
-        @media (min-width: 900px) {
-            .features-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .central-hub-card {
+        .central-hub-card, .circuit-center-hub {
             background: linear-gradient(135deg, #1E2538 0%, #10141D 100%);
-            border: 2px solid var(--primary);
-            border-radius: 16px;
-            padding: 24px;
+            border: 2.5px solid var(--primary);
+            border-radius: 24px;
+            padding: 36px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            box-shadow: 0 0 35px rgba(108, 99, 255, 0.4);
+            box-shadow: 0 0 45px rgba(108, 99, 255, 0.45);
             position: relative;
-            overflow: hidden;
+            z-index: 5;
         }
 
-        .central-hub-card::before {
-            content: '';
+        .shield-pulse-ring {
             position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.25) 0%, transparent 70%);
-            animation: pulseGlow 3s infinite ease-in-out;
+            width: 130px;
+            height: 130px;
+            border-radius: 26px;
+            border: 2px solid var(--primary);
+            animation: pulseShieldRing 2.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+            pointer-events: none;
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.9; transform: scale(1.1); }
+        @keyframes pulseShieldRing {
+            0% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 10px #6C63FF; }
+            100% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 30px #00F0FF; }
         }
 
-        .hub-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
-            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.5);
-            margin-bottom: 12px;
+        .circuit-shield-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.6);
+            margin-bottom: 14px;
             z-index: 2;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.25);
             object-fit: cover;
         }
 
-        .hub-title {
+        .hub-brand-name {
             color: #FFFFFF;
-            font-size: 18px;
-            font-weight: 800;
+            font-size: 20px;
+            font-weight: 900;
             z-index: 2;
+            letter-spacing: 0.5px;
         }
 
-        .hub-subtitle {
+        .hub-crypto-badge {
+            background-color: rgba(108, 99, 255, 0.2);
             color: var(--accent);
-            font-size: 12px;
-            font-weight: 700;
-            margin-top: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            margin-top: 8px;
             z-index: 2;
             letter-spacing: 1px;
         }
 
-        @media (max-width: 899px) {
-            .central-hub-card { display: none; }
+        @media (max-width: 950px) {
+            .circuit-infographic-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .circuit-center-hub {
+                order: -1;
+                margin-bottom: 10px;
+            }
         }
 
         .feature-card {
@@ -973,65 +988,72 @@
         </div>
     </section>
 
-    <!-- Features Grid -->
+    <!-- Features Grid / Circuit Infographic Section -->
     <section class="features-section">
         <h2 class="section-title" id="secTitleFeatures">Características Principales</h2>
         <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
 
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
-                <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
+        <div class="circuit-infographic-container">
+            <!-- Columna Izquierda (4 Tarjetas) -->
+            <div class="circuit-col">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
+                    <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🩺</div>
+                    <h3 id="f4_title">Auditoría de Salud</h3>
+                    <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3 id="f6_title">Importar / Exportar Fácil</h3>
+                    <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3 id="f7_title">Extensión para Navegador</h3>
+                    <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
+                </div>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">⏱️</div>
-                <h3 id="f2_title">Autenticador 2FA TOTP</h3>
-                <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
+            <!-- Escudo Central Neón -->
+            <div class="circuit-center-hub">
+                <div class="shield-pulse-ring"></div>
+                <img src="assets/html/logo_solo.jpeg" class="circuit-shield-logo" alt="SegurCel Shield Logo">
+                <div class="hub-brand-name">SegurCel Core</div>
+                <div class="hub-crypto-badge">AES-256 ZERO-KNOWLEDGE</div>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">💣</div>
-                <h3 id="f3_title">3-Strike Autodestrucción</h3>
-                <p id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</p>
-            </div>
+            <!-- Columna Derecha (4 Tarjetas) -->
+            <div class="circuit-col">
+                <div class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3 id="f2_title">Autenticador 2FA TOTP</h3>
+                    <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
+                </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">🩺</div>
-                <h3 id="f4_title">Auditoría de Salud</h3>
-                <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
-            </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
+                    <p id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</p>
+                </div>
 
-            <!-- Central Hub Card (Visible on PC/Tablet Grid 3x3 Center) -->
-            <div class="central-hub-card">
-                <img src="assets/html/logo_circuitos.jpeg" class="hub-logo" alt="SegurCel Logo">
-                <div class="hub-title">SegurCel Ecosystem</div>
-                <div class="hub-subtitle">AES-256 ZERO-KNOWLEDGE</div>
-            </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💣</div>
+                    <h3 id="f3_title">3-Strike Autodestrucción</h3>
+                    <p id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</p>
+                </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">💳</div>
-                <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
-                <p id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📁</div>
-                <h3 id="f6_title">Importar / Exportar Fácil</h3>
-                <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🧩</div>
-                <h3 id="f7_title">Extensión para Navegador</h3>
-                <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🛰️</div>
-                <h3 id="f8_title">Rastreo de Emergencia</h3>
-                <p id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</p>
+                <div class="feature-card">
+                    <div class="feature-icon">🛰️</div>
+                    <h3 id="f8_title">Rastreo de Emergencia</h3>
+                    <p id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</p>
+                </div>
             </div>
         </div>
     </section>
