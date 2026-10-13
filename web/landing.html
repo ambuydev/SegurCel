@@ -3,23 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SegurCel - Bóveda de Contraseñas Cifrada Zero-Knowledge & 2FA</title>
-    <meta name="description" content="Protege tus contraseñas, tarjetas bancarias, notas y códigos 2FA con cifrado de nivel militar AES-256-GCM. Sincronización multidispositivo cifrada.">
-
-    <!-- Favicon e Ícono -->
-    <link rel="icon" type="image/jpeg" href="assets/assets/html/logo_solo.jpeg">
-
+    <title>SegurCel - Bóveda de Contraseñas & 2FA Zero-Knowledge</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
             --bg-color: #10141D;
             --card-bg: #1E2538;
-            --accent-purple: #6C63FF;
-            --accent-green: #80EE99;
-            --accent-cyan: #00F0FF;
-            --accent-amber: #FFD700;
-            --text-main: #FFFFFF;
+            --primary: #6C63FF;
+            --accent: #80EE99;
+            --text-main: #E2E8F0;
             --text-muted: #A0AEC0;
-            --border-color: rgba(108, 99, 255, 0.3);
+            --border-color: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -36,22 +30,19 @@
             overflow-x: hidden;
         }
 
-        /* Navbar & Idiomas */
+        /* Header Navigation */
         header {
-            background-color: rgba(30, 37, 56, 0.85);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
+            background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,30 +53,40 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            color: var(--text-main);
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 20px;
         }
 
         .brand img {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            border: 1px solid var(--accent-purple);
-        }
-
-        .brand-title {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
+        .btn-header {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-header:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Language Selector Dropdown */
         .lang-dropdown {
             position: relative;
             display: inline-block;
@@ -93,7 +94,7 @@
 
         .lang-dropbtn {
             background: #10141D;
-            color: var(--text-main);
+            color: #FFFFFF;
             border: 1px solid var(--border-color);
             padding: 6px 14px;
             border-radius: 20px;
@@ -132,7 +133,7 @@
         }
 
         .lang-dropdown-content div {
-            color: var(--text-main);
+            color: #FFFFFF;
             padding: 10px 14px;
             font-size: 13px;
             font-weight: 600;
@@ -144,7 +145,7 @@
         }
 
         .lang-dropdown-content div:hover {
-            background-color: var(--accent-purple);
+            background-color: var(--primary);
         }
 
         .lang-dropdown-content div img {
@@ -154,259 +155,266 @@
             object-fit: cover;
         }
 
-        .btn-header {
-            background-color: var(--accent-purple);
-            color: white;
-            padding: 8px 18px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
-        }
-
-        .btn-header:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.6);
-        }
-
         /* Hero Section */
         .hero {
-            padding: 130px 20px 60px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 80px 24px 60px;
             text-align: center;
-            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .hero-badge {
             display: inline-block;
             background: rgba(108, 99, 255, 0.15);
-            border: 1px solid var(--accent-purple);
-            color: #A39DFF;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 25px;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
         }
 
         .hero-title {
             font-size: 46px;
             font-weight: 900;
-            line-height: 1.2;
+            line-height: 1.25;
             margin-bottom: 20px;
+            color: #FFFFFF;
         }
 
         .hero-title span {
-            color: var(--accent-purple);
+            color: var(--primary);
         }
 
         .hero-subtitle {
             font-size: 18px;
             color: var(--text-muted);
+            margin-bottom: 36px;
             max-width: 750px;
-            margin: 0 auto 40px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
             margin-bottom: 50px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #6C63FF, #4A42E0);
-            color: white;
-            padding: 16px 36px;
-            border-radius: 30px;
+            background-color: var(--primary);
+            color: #FFFFFF;
+            padding: 14px 28px;
+            border-radius: 12px;
             text-decoration: none;
-            font-size: 17px;
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.5);
-            transition: all 0.3s;
-            display: flex;
+            font-weight: 800;
+            font-size: 16px;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.35);
+            transition: all 0.2s;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(108, 99, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(108, 99, 255, 0.5);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 16px 32px;
-            border-radius: 30px;
+            background-color: var(--card-bg);
+            color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 14px 28px;
+            border-radius: 12px;
             text-decoration: none;
-            font-size: 17px;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
+            font-weight: 700;
+            font-size: 16px;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
+            transition: all 0.2s;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
+            border-color: var(--primary);
+            background-color: rgba(108, 99, 255, 0.1);
         }
 
-        /* Banner Principal Imagen */
-        .hero-banner-wrapper {
+        /* Phone App Showcase Carousel */
+        .showcase-container {
             max-width: 1000px;
             margin: 0 auto 80px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            padding: 0 20px;
         }
 
-        .hero-banner-wrapper img {
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            justify-items: center;
+        }
+
+        .phone-frame {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            max-width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .phone-frame:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .phone-frame img {
             width: 100%;
             height: auto;
+            border-radius: 16px;
             display: block;
         }
 
-        /* Section Circuitos */
+        /* Zero-Knowledge Explainer Section */
         .zk-section {
-            background: rgba(0,0,0,0.3);
-            padding: 80px 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 70px 24px;
+            margin-bottom: 80px;
         }
 
         .zk-container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: center;
         }
 
-        .zk-image img {
-            width: 100%;
-            border-radius: 20px;
-            border: 1px solid var(--accent-purple);
-            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.3);
-        }
-
         .zk-text h2 {
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--text-main);
+            color: #FFFFFF;
+            margin-bottom: 16px;
         }
 
         .zk-text p {
             color: var(--text-muted);
             font-size: 16px;
-            margin-bottom: 20px;
-            line-height: 1.7;
+            margin-bottom: 16px;
         }
 
-        /* Features Section */
+        .zk-diagram {
+            background: #10141D;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px dashed var(--primary);
+            text-align: center;
+        }
+
+        .zk-diagram img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        /* Features Grid Section */
+        .features-section {
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+        }
+
         .section-title {
             text-align: center;
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            color: #FFFFFF;
         }
 
         .section-subtitle {
             text-align: center;
             color: var(--text-muted);
-            max-width: 650px;
-            margin: 0 auto 50px;
             font-size: 16px;
+            margin-bottom: 48px;
         }
 
         .features-grid {
-            max-width: 1200px;
-            margin: 0 auto 100px;
-            padding: 0 20px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 24px;
         }
 
         .feature-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
+            background-color: var(--card-bg);
             border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
             transition: all 0.3s;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-purple);
-            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-4px);
         }
 
         .feature-icon {
-            font-size: 36px;
-            margin-bottom: 18px;
+            font-size: 32px;
+            margin-bottom: 16px;
         }
 
         .feature-card h3 {
             font-size: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
             margin-bottom: 10px;
-            color: var(--text-main);
         }
 
         .feature-card p {
             color: var(--text-muted);
             font-size: 14px;
-            line-height: 1.6;
         }
 
-        /* Sección Freemium & Planes PRO */
+        /* Freemium & Subscriptions Section */
         .freemium-section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(108, 99, 255, 0.08) 0%, rgba(16, 20, 29, 0) 100%);
+            padding: 70px 24px;
+            border-top: 1px solid var(--border-color);
         }
 
         .freemium-grid {
+            max-width: 1000px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: center;
         }
 
-        .freemium-image img {
-            width: 100%;
-            border-radius: 20px;
-            border: 1px solid var(--accent-amber);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
-        }
-
         .freemium-box {
-            background: var(--card-bg);
-            padding: 30px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary);
             border-radius: 20px;
-            border: 1px solid var(--border-color);
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
         }
 
         .plan-badge {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.15);
-            border: 1px solid var(--accent-amber);
-            color: var(--accent-amber);
-            padding: 4px 14px;
-            border-radius: 20px;
+            background-color: var(--accent);
+            color: #10141D;
             font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
         }
 
         .plan-list {
@@ -415,43 +423,49 @@
         }
 
         .plan-list li {
+            color: var(--text-main);
+            font-size: 15px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 15px;
-            color: var(--text-main);
         }
 
         .plan-list li span {
-            color: var(--accent-green);
+            color: var(--accent);
             font-weight: bold;
         }
 
-        /* CTA Footer Section */
-        .cta-banner {
-            max-width: 1000px;
-            margin: 0 auto 80px;
-            padding: 50px 30px;
-            background: linear-gradient(135deg, #1E2538, #141A28);
-            border-radius: 24px;
-            border: 1px solid var(--accent-purple);
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        .freemium-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
         }
 
+        /* CTA Banner */
+        .cta-banner {
+            max-width: 1000px;
+            margin: 60px auto 80px;
+            padding: 50px 24px;
+            background: linear-gradient(135deg, #1E2538 0%, #2A334E 100%);
+            border-radius: 24px;
+            border: 1px solid var(--primary);
+            text-align: center;
+        }
+
+        /* Footer */
         footer {
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 30px 20px;
+            border-top: 1px solid var(--border-color);
+            padding: 30px 24px;
             text-align: center;
             color: var(--text-muted);
             font-size: 14px;
         }
 
         footer a {
-            color: var(--accent-purple);
+            color: var(--primary);
             text-decoration: none;
-            margin: 0 10px;
         }
 
         footer a:hover {
@@ -459,71 +473,10 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 28px; }
-            .hero-subtitle { font-size: 14px; }
-            .hero { padding-top: 140px; }
-            .zk-text h2 { font-size: 24px; }
-        }
-
-        @media (max-width: 600px) {
-            .nav-container {
-                padding: 10px 14px;
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .brand {
-                gap: 8px;
-            }
-
-            .brand img {
-                width: 32px;
-                height: 32px;
-            }
-
-            .brand-title {
-                font-size: 18px;
-            }
-
-            .nav-actions {
-                width: 100%;
-                justify-content: space-between;
-                gap: 6px;
-                padding-top: 6px;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-            }
-
-            #linkHeaderGuide {
-                font-size: 12px;
-                margin-right: 0;
-                white-space: nowrap;
-            }
-
-            .lang-select {
-                padding: 4px 8px;
-                font-size: 11px;
-            }
-
-            .btn-header {
-                padding: 6px 12px;
-                font-size: 12px;
-                white-space: nowrap;
-            }
-
-            .hero {
-                padding-top: 130px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                text-align: center;
-                justify-content: center;
-            }
+            .hero-title { font-size: 32px; }
+            .hero-subtitle { font-size: 15px; }
+            .zk-container, .freemium-grid { grid-template-columns: 1fr; }
+            .brand-title { display: none; }
         }
     </style>
 </head>
@@ -532,12 +485,12 @@
     <!-- Header Navigation -->
     <header>
         <div class="nav-container">
-            <a href="index.html" class="brand">
+            <a href="/" class="brand">
                 <img src="assets/assets/html/logo_solo.jpeg" alt="SegurCel Logo">
                 <span class="brand-title">SegurCel</span>
             </a>
             <div class="nav-actions">
-                <a href="guide.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; margin-right: 8px;" id="linkHeaderGuide">📘 Guía de Uso</a>
+                <a href="/guide" style="color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; margin-right: 8px;" id="linkHeaderGuide">📘 Guía de Uso</a>
                 <div class="lang-dropdown">
                     <button class="lang-dropbtn" onclick="SegurCelNav.toggleLangMenu(event)">
                         <img src="https://flagcdn.com/20x15/es.png" id="selectedFlag" alt="Flag">
@@ -557,7 +510,7 @@
                         <div onclick="selectLanguage('ru', 'https://flagcdn.com/20x15/ru.png', 'Русский')"><img src="https://flagcdn.com/20x15/ru.png" alt="ru"> Русский</div>
                     </div>
                 </div>
-                <a href="/vault.html" class="btn-header" id="btnHeaderVault">Acceder a la Bóveda</a>
+                <a href="/vault" class="btn-header" id="btnHeaderVault">Acceder a la Bóveda</a>
             </div>
         </div>
     </header>
@@ -571,51 +524,65 @@
         </p>
 
         <div class="hero-buttons">
-            <a href="/vault.html" class="btn-primary" id="btnHeroVault">
+            <a href="/vault" class="btn-primary" id="btnHeroVault">
                 <span>🚀</span> <span id="lblBtnVault">Acceder a la Bóveda Web</span>
             </a>
-            <a href="segurcel-extension.zip" download="segurcel-extension.zip" class="btn-primary" id="btnHeroExt">
-                <span>💻</span> <span id="lblBtnExt">Descargar Extensión PC/Mac (.zip)</span>
+            <a href="segurcel-extension.zip" class="btn-secondary" download id="btnDownloadExt">
+                <span>🧩</span> <span id="lblBtnExt">Descargar Extensión PC/Mac (.zip)</span>
             </a>
-            <a href="segurcel.bin" download="SegurCel-Android.apk" class="btn-secondary" id="btnHeroApk">
+            <a href="https://segurcel.app/app-release.apk" class="btn-secondary" id="btnDownloadApk">
                 <span>📲</span> <span id="lblBtnApk">Descargar APK Android</span>
             </a>
         </div>
+    </section>
 
-        <!-- Banner Principal Oficial -->
-        <div class="hero-banner-wrapper">
-            <img src="assets/assets/html/banner.jpeg" alt="SegurCel Banner Oficial">
+    <!-- App Showcase Carousel -->
+    <section class="showcase-container">
+        <div class="showcase-grid">
+            <div class="phone-frame">
+                <img src="assets/assets/html/pantalla_principal.jpeg" alt="Pantalla Principal Bóveda">
+            </div>
+            <div class="phone-frame">
+                <img src="assets/assets/html/agregar_contrasena.jpeg" alt="Agregar Contraseña Encrypted">
+            </div>
+            <div class="phone-frame">
+                <img src="assets/assets/html/autenticador_2fa.jpeg" alt="Autenticador 2FA TOTP">
+            </div>
         </div>
     </section>
 
-    <!-- Sección Cifrado Circuitos Zero-Knowledge -->
+    <!-- Zero Knowledge Explainer -->
     <section class="zk-section">
         <div class="zk-container">
-            <div class="zk-image">
-                <img src="assets/assets/html/logo_circuitos.jpeg" alt="Cifrado Zero-Knowledge SegurCel">
-            </div>
             <div class="zk-text">
                 <h2 id="zkTitle">Seguridad Criptográfica Indescifrable</h2>
-                <p id="zkDesc1">En SegurCel aplicamos el estricto principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. La clave de cifrado se deriva en tu propio dispositivo mediante <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.</p>
-                <p id="zkDesc2">Tus contraseñas se convierten en bloques de texto cifrado ilegible mediante <strong>AES-256-GCM</strong> antes de enviarse a la nube. Ningún empleado, servidor ni atacante externo puede leer tus datos.</p>
+                <p id="zkDesc1">
+                    En SegurCel aplicamos el estricto principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. La clave de cifrado se deriva en tu propio dispositivo mediante <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.
+                </p>
+                <p id="zkDesc2">
+                    Tus contraseñas se convierten en bloques de texto cifrado ilegible mediante <strong>AES-256-GCM</strong> antes de enviarse a la nube. Ningún empleado, servidor ni atacante externo puede leer tus datos.
+                </p>
+            </div>
+            <div class="zk-diagram">
+                <img src="assets/assets/html/logo_circuitos.jpeg" alt="Diagrama Seguridad Zero Knowledge">
             </div>
         </div>
     </section>
 
-    <!-- Features Grid Section -->
-    <section style="padding: 80px 0;">
+    <!-- Features Grid -->
+    <section class="features-section">
         <h2 class="section-title" id="secTitleFeatures">Características Principales</h2>
         <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
 
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
+                <div class="feature-icon">🔒</div>
                 <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
                 <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
             </div>
 
             <div class="feature-card">
-                <div class="feature-icon">🔑</div>
+                <div class="feature-icon">⏱️</div>
                 <h3 id="f2_title">Autenticador 2FA TOTP</h3>
                 <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
             </div>
@@ -669,19 +636,19 @@
                     <li><span>✓</span> <div id="proItem2">Respaldo Permanente Cifrado AES-256 en la Nube.</div></li>
                     <li><span>✓</span> <div id="proItem3">Historial Completo de Contraseñas Anteriores.</div></li>
                     <li><span>✓</span> <div id="proItem4">Rescate de Emergencia de Bóveda (48 Horas).</div></li>
-                    <li><span>✓</span> <div id="proItem5">Planes Flexibles: Individual Mensual ($1.99), Individual Anual ($10.99), Plan Familiar ($24.99/año) y Plan Rescate 6 Meses.</div></li>
+                    <li><span>✓</span> <div id="proItem5">Planes Flexibles: Mensual, Anual, Rescate 6 Meses y Licencia Vitalicia.</div></li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section Banner -->
-    <section style="padding: 0 20px;">
+    <!-- CTA Banner -->
+    <section style="padding: 0 24px;">
         <div class="cta-banner">
             <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 15px;" id="ctaTitle">¿Listo para proteger tu vida digital?</h2>
             <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.</p>
             <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <a href="/vault.html" class="btn-primary" id="btnCtaVault">🚀 Acceder a SegurCel Web</a>
+                <a href="/vault" class="btn-primary" id="btnCtaVault">🚀 Acceder a SegurCel Web</a>
                 <a href="javascript:void(0)" onclick="alert('Google Play Store: Próximamente disponible para Android. Mientras tanto, puedes disfrutar de todas las funciones en la Bóveda Web o descargar el APK directo arriba.')" class="btn-secondary" id="btnCtaApk">📲 Disponible en Google Play</a>
             </div>
         </div>
@@ -691,8 +658,8 @@
     <footer>
         <p id="footerCopyright">&copy; 2026 SegurCel. Todos los derechos reservados.</p>
         <p style="margin-top: 10px;">
-            <a href="guide.html" id="linkFooterGuide">📘 Guía Rápida de Uso</a> |
-            <a href="privacy.html" id="linkFooterPrivacy">Política de Privacidad</a> |
+            <a href="/guide" id="linkFooterGuide">📘 Guía Rápida de Uso</a> |
+            <a href="/privacy" id="linkFooterPrivacy">Política de Privacidad</a> |
             <a href="https://github.com/ambuydev/SegurCel" target="_blank" id="linkFooterGithub">⭐ GitHub (Código Auditable)</a> |
             <a href="mailto:support.segurcel@gmail.com">support.segurcel@gmail.com</a>
         </p>
@@ -723,6 +690,7 @@
                 f4_t: "Auditoría de Salud", f4_d: "Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.",
                 f5_t: "Tarjetas & Notas Seguras", f5_d: "Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.",
                 f6_t: "Importar / Exportar Fácil", f6_d: "Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.",
+                f7_t: "Extensión para Navegador", f7_d: "Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.",
                 proT: "Modelo Freemium & Planes PRO", proS: "Usa SegurCel gratis de forma local o suscríbete para respaldar y sincronizar tus contraseñas en la nube de forma permanente.",
                 proB: "MODELO FREEMIUM TRANSPARENTE", proV: "Ventajas de SegurCel PRO",
                 pi1: "Sincronización Ilimitada en Tiempo Real (Android, Windows, Web, iOS).",
@@ -753,6 +721,7 @@
                 f4_t: "Vault Health Audit", f4_d: "Smart analyzer that scores your password strength from 0 to 100% and flags weak, old, or reused passwords.",
                 f5_t: "Cards & Confidential Notes", f5_d: "Store credit cards, ATM PINs, and encrypted notes organized into category tabs and star favorites ⭐.",
                 f6_t: "Easy Import / Export", f6_d: "Migrate passwords in seconds from Google Chrome, Edge, Bitwarden, or 1Password in CSV and JSON formats.",
+                f7_t: "Browser Extension", f7_d: "Autofill credentials on Chrome, Edge, and Brave with 1 click. Same Zero-Knowledge encryption on PC and Mac.",
                 proT: "Freemium Model & PRO Plans", proS: "Use SegurCel for free locally or subscribe to back up and sync your passwords across devices via the cloud.",
                 proB: "TRANSPARENT FREEMIUM MODEL", proV: "SegurCel PRO Advantages",
                 pi1: "Unlimited Real-Time Sync (Android, Windows, Web, iOS).",
@@ -783,6 +752,7 @@
                 f4_t: "Auditoria de Saúde", f4_d: "Analisador inteligente que pontua a força das suas senhas de 0 a 100% e identifica senhas fracas ou reutilizadas.",
                 f5_t: "Cartões e Notas Seguras", f5_d: "Guarde cartões de crédito, PINs de caixas eletrônicos e notas confidenciais organizados com estrelas de favoritos ⭐.",
                 f6_t: "Importar / Exportar Fácil", f6_d: "Migre suas senhas em segundos do Google Chrome, Edge, Bitwarden ou 1Password em CSV e JSON.",
+                f7_t: "Extensão para Navegador", f7_d: "Preenchimento automático no Chrome, Edge e Brave com 1 clique. Criptografia Zero-Knowledge no seu PC e Mac.",
                 proT: "Modelo Freemium e Planos PRO", proS: "Use o SegurCel gratuitamente de forma local ou assine para sincronizar e salvar suas senhas na nuvem.",
                 proB: "MODELO FREEMIUM TRANSPARENTE", proV: "Vantagens do SegurCel PRO",
                 pi1: "Sincronização Ilimitada em Tempo Real (Android, Windows, Web, iOS).",
@@ -813,6 +783,7 @@
                 f4_t: "保险库健康审计", f4_d: "智能分析器为您的密码打分 (0-100%)，并自动检测弱密码或重复密码。",
                 f5_t: "银行卡与保密笔记", f5_d: "分类存储信用卡、取款密码和保密笔记，支持星标收藏 ⭐。",
                 f6_t: "轻松导入与导出", f6_d: "数秒内即可从 Google Chrome、Edge、Bitwarden 或 1Password 导入 CSV 与 JSON 格式的密码。",
+                f7_t: "浏览器扩展", f7_d: "在 Chrome、Edge 和 Brave 上一键自动填充凭据。PC 和 Mac 上享受同等零知识加密。",
                 proT: "Freemium 免费模式与 PRO 订阅", proS: "在本地免费使用 SegurCel，或订阅以通过云端备份和同步您的密码。",
                 proB: "透明 FREEMIUM 模式", proV: "SegurCel PRO 优势",
                 pi1: "无限实时同步（Android、Windows、Web、iOS）。",
@@ -843,6 +814,7 @@
                 f4_t: "Audit de Santé du Coffre", f4_d: "Analyseur intelligent qui évalue la force de vos mots de passe de 0 à 100% et détecte les doublons.",
                 f5_t: "Cartes & Notes Confidentielles", f5_d: "Stockez vos cartes bancaires, codes PIN et notes confidentielles organisés avec des favoris ⭐.",
                 f6_t: "Import / Export Facile", f6_d: "Migrez vos mots de passe en quelques secondes depuis Google Chrome, Edge, Bitwarden ou 1Password en CSV et JSON.",
+                f7_t: "Extension pour Navigateur", f7_d: "Saisie automatique sur Chrome, Edge et Brave en 1 clic. Chiffrement Zero-Knowledge identique sur PC et Mac.",
                 proT: "Modèle Freemium & Offres PRO", proS: "Utilisez SegurCel gratuitement en local ou abonnez-vous pour sauvegarder vos mots de passe sur le cloud.",
                 proB: "MODÈLE FREEMIUM TRANSPARENT", proV: "Avantages de SegurCel PRO",
                 pi1: "Synchronisation Illimitée en Temps Réel (Android, Windows, Web, iOS).",
@@ -873,6 +845,7 @@
                 f4_t: "वॉल्ट स्वास्थ्य लेखापरीक्षा", f4_d: "स्मार्ट विश्लेषक जो आपके पासवर्ड की ताकत को 0 से 100% तक आंकता है और कमजोर पासवर्ड को फ़्लैग करता है।",
                 f5_t: "कार्ड और गोपनीय नोट", f5_d: "क्रेडिट कार्ड, एटीएम पिन और गोपनीय नोट्स को पसंदीदा स्टार ⭐ के साथ सहेजें।",
                 f6_t: "आसान आयात / निर्यात", f6_d: "Google Chrome, Edge, Bitwarden या 1Password से कुछ ही सेकंड में अपने पासवर्ड माइग्रेट करें।",
+                f7_t: "ब्राउज़र एक्सटेंशन", f7_d: "1 क्लिक में Chrome, Edge और Brave पर क्रेडेंशियल ऑटोफिल करें। PC और Mac पर समान Zero-Knowledge एन्क्रिप्शन।",
                 proT: "Freemium मॉडल और PRO प्लान", proS: "SegurCel का मुफ़्त में स्थानीय रूप से उपयोग करें या क्लाउड के माध्यम से अपने पासवर्ड सिंक करने के लिए सदस्यता लें।",
                 proB: "पारदर्शी FREEMIUM मॉडल", proV: "SegurCel PRO के लाभ",
                 pi1: "अनलिमिटेड रीयल-टाइम सिंक (Android, Windows, Web, iOS)।",
@@ -903,6 +876,7 @@
                 f4_t: "Tresor-Sicherheitsaudit", f4_d: "Intelligente Analyse, die Ihre Passwortstärke bewertet und schwache oder alte Passwörter erkennt.",
                 f5_t: "Karten & Sichere Notizen", f5_d: "Speichern Sie Kreditkarten, Geldautomat-PINs und vertrauliche Notizen geordnet mit Favoriten ⭐.",
                 f6_t: "Einfacher Import / Export", f6_d: "Migrieren Sie Passwörter in Sekunden aus Chrome, Edge, Bitwarden oder 1Password als CSV und JSON.",
+                f7_t: "Browser-Erweiterung", f7_d: "Automatisches Ausfüllen in Chrome, Edge und Brave mit 1 Klick. Gleiche Zero-Knowledge-Verschlüsselung auf PC und Mac.",
                 proT: "Freemium-Modell & PRO-Pläne", proS: "Nutzen Sie SegurCel kostenlos lokal oder abonnieren Sie die Cloud-Sicherung zur Synchronisierung.",
                 proB: "TRANSPARENTES FREEMIUM-MODELL", proV: "Vorteile von SegurCel PRO",
                 pi1: "Unbegrenzte Echtzeit-Synchronisation (Android, Windows, Web, iOS).",
@@ -933,6 +907,7 @@
                 f4_t: "保管庫の健康診断", f4_d: "パスワードの強度を0〜100%でスコア化し、脆弱なパスワードや重複を検出します。",
                 f5_t: "カード＆秘密メモ", f5_d: "クレジットカード、暗証番号、機密メモをお気に入りスター⭐で整理して保存できます。",
                 f6_t: "簡単なインポート／エクスポート", f6_d: "Chrome、Edge、Bitwarden、1PasswordからCSV/JSON形式で数秒で移行できます。",
+                f7_t: "ブラウザ拡張機能", f7_d: "Chrome、Edge、Braveでログイン情報を1クリック自動入力。PC・Macで同等のゼロナレッジ暗号化。",
                 proT: "フリーミアムモデル＆PROプラン", proS: "SegurCelをローカルで無料で使うか、クラウド同期にサブスクリプション登録します。",
                 proB: "透明性の高いフリーミアムモデル", proV: "SegurCel PROのメリット",
                 pi1: "無制限リアルタイム同期（Android、Windows、Web、iOS）。",
@@ -963,6 +938,7 @@
                 f4_t: "보관함 보안 감사", f4_d: "비밀번호 강도를 0~100%로 진단하고 취약하거나 오래된 비밀번호를 감지합니다.",
                 f5_t: "카드 및 보안 메모", f5_d: "신용카드, ATM PIN, 보안 메모를 즐겨찾기 별표⭐로 깔끔하게 정리하여 저장합니다.",
                 f6_t: "간편한 가져오기 / 내보내기", f6_d: "Chrome, Edge, Bitwarden, 1Password에서 CSV/JSON 형식으로 빠르게 이전할 수 있습니다.",
+                f7_t: "브라우저 확장 프로그램", f7_d: "Chrome, Edge, Brave에서 클릭 한 번으로 자격 증명 자동 완성. PC 및 Mac에서 동일한 Zero-Knowledge 암호화.",
                 proT: "프리미엄 모델 및 PRO 요금제", proS: "SegurCel을 로컬에서 무료로 사용하거나, 클라우드 동기화를 위해 구독하세요.",
                 proB: "투명한 프리미엄 모델", proV: "SegurCel PRO 혜택",
                 pi1: "무제한 실시간 동기화 (Android, Windows, Web, iOS).",
@@ -993,6 +969,7 @@
                 f4_t: "Аудит безопасности хранилища", f4_d: "Умный анализатор оценивает надежность паролей от 0 до 100% и находит старые или повторяющиеся ключи.",
                 f5_t: "Карты и защищенные заметки", f5_d: "Храните банковские карты, PIN-коды банкоматов и конфиденциальные заметки с избранным ⭐.",
                 f6_t: "Простой импорт и экспорт", f6_d: "Переносите пароли за секунды из Chrome, Edge, Bitwarden или 1Password в CSV и JSON.",
+                f7_t: "Расширение для браузера", f7_d: "Автозаполнение в Chrome, Edge и Brave в 1 клик. То же шифрование Zero-Knowledge на ПК и Mac.",
                 proT: "Модель Freemium и тарифы PRO", proS: "Используйте SegurCel бесплатно локально или подпишитесь для синхронизации и резервного копирования в облаке.",
                 proB: "ПРОЗРАЧНАЯ МОДЕЛЬ FREEMIUM", proV: "Преимущества SegurCel PRO",
                 pi1: "Неограниченная синхронизация в реальном времени (Android, Windows, Web, iOS).",
@@ -1049,6 +1026,9 @@
             document.getElementById("f4_title").innerText = data.f4_t; document.getElementById("f4_desc").innerText = data.f4_d;
             document.getElementById("f5_title").innerText = data.f5_t; document.getElementById("f5_desc").innerText = data.f5_d;
             document.getElementById("f6_title").innerText = data.f6_t; document.getElementById("f6_desc").innerText = data.f6_d;
+            if (document.getElementById("f7_title") && data.f7_t) document.getElementById("f7_title").innerText = data.f7_t;
+            if (document.getElementById("f7_desc") && data.f7_d) document.getElementById("f7_desc").innerText = data.f7_d;
+
             document.getElementById("proTitle").innerText = data.proT;
             document.getElementById("proSub").innerText = data.proS;
             document.getElementById("badgeFreemium").innerText = data.proB;
