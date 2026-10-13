@@ -101,8 +101,13 @@
     - [x] Fix image paths (`assets/assets/html/` -> `assets/html/`) so all carousel screenshots load
     - [x] Fix mobile header responsive layout for long texts (German, Russian) in `web/landing.html`
     - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
-- [/] Fix MyDevicesScreen Translations Across All 10 Languages
-    - [ ] Add `my_devices_title`, `emergency_tracking_center`, `google_find_device`, `google_find_desc`, `open_google_find`, `apple_find_device`, `apple_find_desc`, `open_apple_find` keys to `lib/services/localization_service.dart` across all 10 languages
-    - [ ] Update `lib/screens/my_devices_screen.dart` to use `_loc.text(...)`
+- [x] Fix MyDevicesScreen Translations Across All 10 Languages
+    - [x] Add `my_devices_title`, `emergency_tracking_center`, `google_find_device`, `google_find_sub`, `google_find_desc`, `open_google_find`, `apple_find_device`, `apple_find_sub`, `apple_find_desc`, `open_apple_find` keys to `lib/services/localization_service.dart` across all 10 languages
+    - [x] Update `lib/screens/my_devices_screen.dart` to use `_loc.text(...)`
+    - [x] Recompile Web build (`flutter build web`) and re-deploy to Firebase Hosting
+    - [x] Push update to GitHub
+- [/] Evaluate & Implement Physical Keyboard Support (Enter/Digits) in Web Vault (Login & PinScreen)
+    - [ ] Add `onSubmitted: (_) => _signIn()` to LoginScreen password text field
+    - [ ] Add `KeyboardListener` or `FocusNode` with `HardwareKeyboard` events in `PinScreen` for physical numeric typing (0-9, Backspace, Enter)
     - [ ] Recompile Web build (`flutter build web`) and re-deploy to Firebase Hosting
     - [ ] Push update to GitHub

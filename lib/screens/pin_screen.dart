@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/vault_service.dart';
@@ -19,6 +20,8 @@ class PinScreen extends StatefulWidget {
 
 class _PinScreenState extends State<PinScreen> {
   final _loc = LocalizationService();
+  final FocusNode _focusNode = FocusNode();
+
   String _pin = '';
   bool _isLoading = false;
   bool _isAuthenticatingBiometrics = false;
@@ -29,6 +32,15 @@ class _PinScreenState extends State<PinScreen> {
   void initState() {
     super.initState();
     _checkBiometrics();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   Future<void> _checkBiometrics() async {
@@ -58,6 +70,37 @@ class _PinScreenState extends State<PinScreen> {
     } finally {
       if (mounted) {
         setState(() => _isAuthenticatingBiometrics = false);
+      }
+    }
+  }
+
+  void _handleKeyEvent(KeyEvent event) {
+    if (event is KeyDownEvent) {
+      final key = event.logicalKey;
+      if (key == LogicalKeyboardKey.digit0 || key == LogicalKeyboardKey.numpad0) {
+        _onKeyPress('0');
+      } else if (key == LogicalKeyboardKey.digit1 || key == LogicalKeyboardKey.numpad1) {
+        _onKeyPress('1');
+      } else if (key == LogicalKeyboardKey.digit2 || key == LogicalKeyboardKey.numpad2) {
+        _onKeyPress('2');
+      } else if (key == LogicalKeyboardKey.digit3 || key == LogicalKeyboardKey.numpad3) {
+        _onKeyPress('3');
+      } else if (key == LogicalKeyboardKey.digit4 || key == LogicalKeyboardKey.numpad4) {
+        _onKeyPress('4');
+      } else if (key == LogicalKeyboardKey.digit5 || key == LogicalKeyboardKey.numpad5) {
+        _onKeyPress('5');
+      } else if (key == LogicalKeyboardKey.digit6 || key == LogicalKeyboardKey.numpad6) {
+        _onKeyPress('6');
+      } else if (key == LogicalKeyboardKey.digit7 || key == LogicalKeyboardKey.numpad7) {
+        _onKeyPress('7');
+      } else if (key == LogicalKeyboardKey.digit8 || key == LogicalKeyboardKey.numpad8) {
+        _onKeyPress('8');
+      } else if (key == LogicalKeyboardKey.digit9 || key == LogicalKeyboardKey.numpad9) {
+        _onKeyPress('9');
+      } else if (key == LogicalKeyboardKey.backspace) {
+        _onDelete();
+      } else if (key == LogicalKeyboardKey.enter || key == LogicalKeyboardKey.numpadEnter) {
+        if (_pin.length == 4) _onSubmitPin();
       }
     }
   }
@@ -192,147 +235,151 @@ class _PinScreenState extends State<PinScreen> {
   Widget build(BuildContext context) {
     final remaining = widget.vaultService.remainingAttempts;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: kIsWeb
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.amberAccent),
-                tooltip: _loc.text('back_to_official_site'),
-                onPressed: () {
-                  FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
-                },
-              )
-            : null,
-        title: kIsWeb
-            ? TextButton.icon(
-                icon: const Icon(Icons.home, color: Colors.amberAccent, size: 18),
-                label: Text(
-                  _loc.text('back_to_official_site'),
-                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
-                ),
-                onPressed: () {
-                  FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
-                },
-              )
-            : null,
-        actions: [
-          _buildLanguagePicker(),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight - 16),
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/icon/pantalla_pin.png',
-                        height: 64,
-                        errorBuilder: (context, error, stackTrace) => const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        _loc.text('app_title'),
-                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _loc.text('enter_pin'),
-                        style: const TextStyle(color: Colors.white70, fontSize: 14),
-                      ),
-                      const SizedBox(height: 24),
+    return KeyboardListener(
+      focusNode: _focusNode,
+      onKeyEvent: _handleKeyEvent,
+      child: Scaffold(
+        backgroundColor: const Color(0xFF10141D),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: kIsWeb
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.amberAccent),
+                  tooltip: _loc.text('back_to_official_site'),
+                  onPressed: () {
+                    FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
+                  },
+                )
+              : null,
+          title: kIsWeb
+              ? TextButton.icon(
+                  icon: const Icon(Icons.home, color: Colors.amberAccent, size: 18),
+                  label: Text(
+                    _loc.text('back_to_official_site'),
+                    style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                  ),
+                  onPressed: () {
+                    FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
+                  },
+                )
+              : null,
+          actions: [
+            _buildLanguagePicker(),
+            const SizedBox(width: 8),
+          ],
+        ),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight - 16),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/icon/pantalla_pin.png',
+                          height: 64,
+                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.security, size: 54, color: Color(0xFF6C63FF)),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          _loc.text('app_title'),
+                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          _loc.text('enter_pin'),
+                          style: const TextStyle(color: Colors.white70, fontSize: 14),
+                        ),
+                        const SizedBox(height: 24),
 
-                      // Indicador de Puntos (Exactamente 4 Puntos)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(4, (index) {
-                          final isFilled = index < _pin.length;
-                          return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            width: 16,
-                            height: 16,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isFilled ? const Color(0xFF6C63FF) : Colors.white24,
-                              border: Border.all(
-                                color: isFilled ? const Color(0xFF6C63FF) : Colors.white38,
+                        // Indicador de Puntos (Exactamente 4 Puntos)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(4, (index) {
+                            final isFilled = index < _pin.length;
+                            return Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
+                              width: 16,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isFilled ? const Color(0xFF6C63FF) : Colors.white24,
+                                border: Border.all(
+                                  color: isFilled ? const Color(0xFF6C63FF) : Colors.white38,
+                                ),
                               ),
+                            );
+                          }),
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Mensaje de Error / Intentos restantes
+                        if (_errorMessage != null) ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              _errorMessage!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600),
                             ),
-                          );
-                        }),
-                      ),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
 
-                      const SizedBox(height: 16),
+                        if (widget.vaultService.failedAttempts > 0)
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withAlpha(38),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.redAccent.withAlpha(76)),
+                            ),
+                            child: Text(
+                              '${_loc.text("attempts_remaining")}: $remaining / ${VaultService.maxAttempts}',
+                              style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                            ),
+                          ),
 
-                      // Mensaje de Error / Intentos restantes
-                      if (_errorMessage != null) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                        const Spacer(),
+
+                        // Teclado Numérico
+                        if (_isLoading)
+                          const Padding(
+                            padding: EdgeInsets.all(24.0),
+                            child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+                          )
+                        else
+                          _buildNumericKeypad(),
+
+                        const SizedBox(height: 12),
+
+                        // Botón "Olvidé mi PIN"
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => RecoveryScreen(vaultService: widget.vaultService),
+                              ),
+                            );
+                          },
                           child: Text(
-                            _errorMessage!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600),
+                            _loc.text('forgot_pin'),
+                            style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 10),
                       ],
-
-                      if (widget.vaultService.failedAttempts > 0)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.red.withAlpha(38),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.redAccent.withAlpha(76)),
-                          ),
-                          child: Text(
-                            '${_loc.text("attempts_remaining")}: $remaining / ${VaultService.maxAttempts}',
-                            style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 12),
-                          ),
-                        ),
-
-                      const Spacer(),
-
-                      // Teclado Numérico
-                      if (_isLoading)
-                        const Padding(
-                          padding: EdgeInsets.all(24.0),
-                          child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
-                        )
-                      else
-                        _buildNumericKeypad(),
-
-                      const SizedBox(height: 12),
-
-                      // Botón "Olvidé mi PIN"
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => RecoveryScreen(vaultService: widget.vaultService),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          _loc.text('forgot_pin'),
-                          style: const TextStyle(color: Color(0xFF6C63FF), fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

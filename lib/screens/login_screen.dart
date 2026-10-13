@@ -300,6 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: Colors.white),
+                onSubmitted: (_) => _submit(),
                 decoration: InputDecoration(
                   labelText: _loc.text('email_label'),
                   labelStyle: const TextStyle(color: Colors.white70),
@@ -316,6 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _passwordController,
                 obscureText: _obscurePassword,
                 style: const TextStyle(color: Colors.white),
+                onSubmitted: (_) => _submit(),
                 decoration: InputDecoration(
                   labelText: _loc.text('account_pass_label'),
                   labelStyle: const TextStyle(color: Colors.white70),
