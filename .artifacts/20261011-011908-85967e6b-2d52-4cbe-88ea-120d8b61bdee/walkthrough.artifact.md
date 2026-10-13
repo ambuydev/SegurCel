@@ -1,24 +1,22 @@
-# Resumen de Trabajo Realizado: Integración de Insignias y Enlaces de Código Abierto (GitHub)
+# Resumen de Trabajo Realizado: Restauración Estética Original y Responsividad Móvil
 
-Se integraron enlaces y botones directos hacia el repositorio de GitHub **`https://github.com/ambuydev/SegurCel`** en la Bóveda Web, en la aplicación móvil y en todo el sitio web para dar a conocer la transparencia de la plataforma.
+Se restauró el diseño estético original del sitio web y se corrigieron los problemas de renderizado en dispositivos móviles.
 
 ---
 
-## 🛠️ Puntos de Difusión Integrados
+## 🛠️ Correcciones Aplicadas
 
-1. **Pie de Página Multilingüe (`web/navbar.js`):**
-   - Enlace traducido en los 10 idiomas en el pie de página de todo el sitio web:
-     `⭐ GitHub (Código Auditable)` (`https://github.com/ambuydev/SegurCel`).
+1. **Bordes Iluminados Fijos y Constantes:**
+   - Restaurado el borde violeta constante (`border: 1.5px solid rgba(108, 99, 255, 0.5);`) en el 100% de las tarjetas de características (`.feature-card`) y en los marcos de los teléfonos (`.phone-frame`).
 
-2. **Sección "Acerca de SegurCel" en la App Móvil (`lib/widgets/home/about_app_sheet.dart`):**
-   - Añadido el botón con ícono de código:
-     `⭐ GitHub - Código Auditable` con redirección directa al repositorio oficial.
+2. **Rutas de Imágenes Corregidas:**
+   - Corregida la ruta duplicada `assets/assets/html/` hacia **`assets/html/`**, logrando que todas las capturas de pantalla de la app en celular carguen instantáneamente.
 
-3. **Ficha de la Tienda de Google Play (Descripción Completa):**
-   - Incluida la referencia a la transparencia y auditabilidad del código fuente.
+3. **Encabezado Responsive Móvil Adaptativo:**
+   - Configurado `flex-wrap: wrap` con padding ajustado en `@media (max-width: 768px)` para que palabras largas en alemán o ruso no rompan ni desborden los botones del encabezado.
 
 ---
 
 ## 🚀 Estado
-- Desplegado en **`https://segurcel.app/`**.
-- Ambas ramas (`master` y `feature/browser-extension`) sincronizadas en GitHub.
+- Publicado en vivo en **`https://segurcel.app/`**.
+- Ramas `master` y `feature/browser-extension` sincronizadas en GitHub.

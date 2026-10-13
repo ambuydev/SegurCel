@@ -1,18 +1,35 @@
-# Plan de Implementación: Reversión de `about_app_sheet.dart` para Paridad Total con la Versión Enviada a Google Play
+# Plan de Implementación: Traducción Completa de `MyDevicesScreen` ("Mis Dispositivos") en los 10 Idiomas
 
-Revertir el cambio de `lib/widgets/home/about_app_sheet.dart` para mantener el código fuente de Flutter 100% idéntico al paquete ejecutable `.aab` enviado a revisión en Google Play Console.
+Añadir las claves de localización faltantes para el título `my_devices_title` y los elementos de la pantalla de rastreo de emergencia (`MyDevicesScreen`) en `lib/services/localization_service.dart` para los 10 idiomas oficiales (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`) y actualizar `lib/screens/my_devices_screen.dart`.
 
 ## Proposed Changes
 
-### Componente: Aplicación Móvil (`lib/widgets/home/about_app_sheet.dart`)
+### Componente: Servicios (`lib/services/localization_service.dart`)
 
-#### [about_app_sheet.dart](file:///C:/Users/aleja/StudioProjects/SegurCel/lib/widgets/home/about_app_sheet.dart)
-- Eliminar el botón estático de GitHub en la vista modal `about_app_sheet.dart` para evitar discrepancias con el binario `.aab` subido a Play Console.
-- La referencia a GitHub se mantiene activa en la web oficial (`https://segurcel.app`) y en la Ficha de Play Store.
+#### [localization_service.dart](file:///C:/Users/aleja/StudioProjects/SegurCel/lib/services/localization_service.dart)
+- Añadir las siguientes claves en los 10 idiomas:
+  - `my_devices_title`: "Mis Dispositivos & Rastreo de Emergencia" / "My Devices & Emergency Tracking" / "Meus Dispositivos & Rastreamento de Emergência" / etc.
+  - `emergency_tracking_center`: "Centro Oficial de Rastreo de Emergencia"
+  - `google_find_device`: "Google Encontrar mi Dispositivo"
+  - `google_find_sub`: "Servicio Oficial para Teléfonos Android"
+  - `google_find_desc`: "Rastrea la ubicación GPS en tiempo real de tu celular Android, hazlo sonar a máximo volumen o ejecuta el borrado remoto de fábrica utilizando la infraestructura oficial de Google."
+  - `open_google_find`: "Abrir Google Encontrar mi Dispositivo"
+  - `apple_find_device`: "Apple Buscar mi iPhone (iCloud)"
+  - `apple_find_sub`: "Servicio Oficial para iPhone / iPad / iOS"
+  - `apple_find_desc`: "Rastrea tu dispositivo Apple en la red Find My de iCloud, emite un sonido de reproducción de alerta o activa el Modo Perdido / Borrado Remoto."
+  - `open_apple_find`: "Abrir Apple iCloud Buscar mi iPhone"
+
+### Componente: Pantallas (`lib/screens/my_devices_screen.dart`)
+
+#### [my_devices_screen.dart](file:///C:/Users/aleja/StudioProjects/SegurCel/lib/screens/my_devices_screen.dart)
+- Reemplazar todos los textos literales en español por llamadas a `_loc.text(...)`.
 
 ---
 
 ## Verification Plan
 
 ### Terminal Commands
-- Verificar limpieza de estado con `git status` y hacer push a GitHub.
+- Compilar la Bóveda Web (`flutter build web`)
+- Sincronizar en `build/web/` y desplegar en Firebase Hosting:
+  `firebase deploy --only hosting`
+- Push a GitHub.

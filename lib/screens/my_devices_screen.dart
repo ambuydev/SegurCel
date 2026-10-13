@@ -45,13 +45,15 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.shield_outlined, color: Colors.amberAccent, size: 22),
-                        SizedBox(width: 8),
-                        Text(
-                          'Centro Oficial de Rastreo de Emergencia',
-                          style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14),
+                        const Icon(Icons.shield_outlined, color: Colors.amberAccent, size: 22),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _loc.text('emergency_tracking_center'),
+                            style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
                         ),
                       ],
                     ),
@@ -74,21 +76,21 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(Icons.android, color: Colors.greenAccent, size: 28),
-                          SizedBox(width: 12),
+                          const Icon(Icons.android, color: Colors.greenAccent, size: 28),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Google Encontrar mi Dispositivo',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                                  _loc.text('google_find_device'),
+                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
                                 Text(
-                                  'Servicio Oficial para Teléfonos Android',
-                                  style: TextStyle(color: Colors.greenAccent, fontSize: 12, fontWeight: FontWeight.w600),
+                                  _loc.text('google_find_sub'),
+                                  style: const TextStyle(color: Colors.greenAccent, fontSize: 12, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
@@ -96,9 +98,9 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                         ],
                       ),
                       const Divider(color: Colors.white12, height: 24),
-                      const Text(
-                        'Rastrea la ubicación GPS en tiempo real de tu celular Android, hazlo sonar a máximo volumen o ejecuta el borrado remoto de fábrica utilizando la infraestructura oficial de Google.',
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                      Text(
+                        _loc.text('google_find_desc'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const SizedBox(height: 16),
                       SizedBox(
@@ -111,9 +113,9 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
                           icon: const Icon(Icons.open_in_new, color: Colors.greenAccent, size: 20),
-                          label: const Text(
-                            'Abrir Google Encontrar mi Dispositivo',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                          label: Text(
+                            _loc.text('open_google_find'),
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                           onPressed: () {
                             FileHelper.openUrl('https://google.com/android/find');
@@ -139,21 +141,21 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(Icons.apple, color: Colors.cyanAccent, size: 28),
-                          SizedBox(width: 12),
+                          const Icon(Icons.apple, color: Colors.cyanAccent, size: 28),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Apple Buscar mi iPhone (iCloud)',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                                  _loc.text('apple_find_device'),
+                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
                                 Text(
-                                  'Servicio Oficial para iPhone / iPad / iOS',
-                                  style: TextStyle(color: Colors.cyanAccent, fontSize: 12, fontWeight: FontWeight.w600),
+                                  _loc.text('apple_find_sub'),
+                                  style: const TextStyle(color: Colors.cyanAccent, fontSize: 12, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
@@ -161,9 +163,9 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                         ],
                       ),
                       const Divider(color: Colors.white12, height: 24),
-                      const Text(
-                        'Rastrea tu dispositivo Apple en la red Find My de iCloud, emite un sonido de reproducción de alerta o activa el Modo Perdido / Borrado Remoto.',
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                      Text(
+                        _loc.text('apple_find_desc'),
+                        style: const TextStyle(color: Colors.white70, fontSize: 13),
                       ),
                       const SizedBox(height: 16),
                       SizedBox(
@@ -176,9 +178,9 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
                           icon: const Icon(Icons.open_in_new, color: Colors.cyanAccent, size: 20),
-                          label: const Text(
-                            'Abrir Apple iCloud Buscar mi iPhone',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                          label: Text(
+                            _loc.text('open_apple_find'),
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                           onPressed: () {
                             FileHelper.openUrl('https://icloud.com/find');

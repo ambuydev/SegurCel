@@ -91,3 +91,18 @@
     - [x] Add GitHub repository link/badge to `web/navbar.js`, `web/landing.html`, `web/guide.html`
     - [x] Revert `about_app_sheet.dart` to match 100% the submitted Google Play .aab binary
     - [x] Push update to GitHub
+- [x] Fix Feature Card #7 (Browser Extension) Translations Across All 10 Languages
+    - [x] Audit `web/landing.html` `dict` dictionary for `f7_t` and `f7_d` across all 10 languages (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`)
+    - [x] Translate Feature Card #7 in Portuguese, English, Chinese, French, Hindi, German, Japanese, Korean, and Russian
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Push update to GitHub
+- [x] Restore Constant Illuminated Borders, Fix Image Paths, and Fix Mobile Header Layout
+    - [x] Restore constant illuminated borders (`border: 1.5px solid rgba(108, 99, 255, 0.5);`) on all cards
+    - [x] Fix image paths (`assets/assets/html/` -> `assets/html/`) so all carousel screenshots load
+    - [x] Fix mobile header responsive layout for long texts (German, Russian) in `web/landing.html`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [/] Fix MyDevicesScreen Translations Across All 10 Languages
+    - [ ] Add `my_devices_title`, `emergency_tracking_center`, `google_find_device`, `google_find_desc`, `open_google_find`, `apple_find_device`, `apple_find_desc`, `open_apple_find` keys to `lib/services/localization_service.dart` across all 10 languages
+    - [ ] Update `lib/screens/my_devices_screen.dart` to use `_loc.text(...)`
+    - [ ] Recompile Web build (`flutter build web`) and re-deploy to Firebase Hosting
+    - [ ] Push update to GitHub
