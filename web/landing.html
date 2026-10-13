@@ -368,6 +368,88 @@
             .coverflow-next { right: 2px; }
         }
 
+        /* Mobile Phone Parallel Layered Carousel */
+        .phone-carousel-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 10px;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .phone-carousel-container {
+            position: relative;
+            height: 480px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .phone-carousel-slide {
+            position: absolute;
+            width: 220px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .phone-carousel-slide .phone-frame {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 10px;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .phone-carousel-slide .phone-frame img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            display: block;
+        }
+
+        .phone-carousel-slide.active {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .phone-carousel-slide.active .phone-frame {
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.45);
+        }
+
+        .phone-carousel-slide.prev {
+            transform: translateX(-55%) scale(0.8);
+            opacity: 0.55;
+            z-index: 5;
+            filter: brightness(0.7);
+        }
+
+        .phone-carousel-slide.next {
+            transform: translateX(55%) scale(0.8);
+            opacity: 0.55;
+            z-index: 5;
+            filter: brightness(0.7);
+        }
+
+        .phone-carousel-slide.hidden {
+            transform: translateX(0) scale(0.5);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .phone-carousel-container { height: 420px; }
+            .phone-carousel-slide { width: 190px; }
+            .phone-carousel-slide.prev { transform: translateX(-42%) scale(0.8); }
+            .phone-carousel-slide.next { transform: translateX(42%) scale(0.8); }
+        }
+
         .desktop-header {
             background-color: #10141D;
             padding: 10px 16px;
@@ -767,20 +849,43 @@
             <span class="carousel-dot" onclick="setCoverSlide(3)"></span>
         </div>
 
-        <!-- Grid de Teléfonos Móviles -->
-        <div class="showcase-grid">
-            <div class="phone-frame">
-                <img src="assets/html/ingreso_pin.png" alt="Desbloqueo por PIN Maestro">
+        <!-- Carrusel Interactivo de Teléfonos Móviles -->
+        <div class="phone-carousel-wrapper">
+            <button class="coverflow-btn coverflow-prev" onclick="rotatePhoneCarousel(-1)" aria-label="Anterior">‹</button>
+            <div class="phone-carousel-container" id="phoneCarouselContainer">
+                <div class="phone-carousel-slide active" onclick="setPhoneSlide(0)">
+                    <div class="phone-frame">
+                        <img src="assets/html/ingreso_pin.png" alt="Desbloqueo por PIN Maestro">
+                    </div>
+                </div>
+
+                <div class="phone-carousel-slide next" onclick="setPhoneSlide(1)">
+                    <div class="phone-frame">
+                        <img src="assets/html/pantalla_principal.png" alt="Bóveda de Contraseñas Móvil">
+                    </div>
+                </div>
+
+                <div class="phone-carousel-slide hidden" onclick="setPhoneSlide(2)">
+                    <div class="phone-frame">
+                        <img src="assets/html/auditoria_boveda.png" alt="Auditoría de Salud de la Bóveda">
+                    </div>
+                </div>
+
+                <div class="phone-carousel-slide prev" onclick="setPhoneSlide(3)">
+                    <div class="phone-frame">
+                        <img src="assets/html/agregar_elementos.png" alt="Notas y Tarjetas Cifradas">
+                    </div>
+                </div>
             </div>
-            <div class="phone-frame">
-                <img src="assets/html/pantalla_principal.png" alt="Bóveda de Contraseñas Móvil">
-            </div>
-            <div class="phone-frame">
-                <img src="assets/html/auditoria_boveda.png" alt="Auditoría de Salud de la Bóveda">
-            </div>
-            <div class="phone-frame">
-                <img src="assets/html/agregar_elementos.png" alt="Notas y Tarjetas Cifradas">
-            </div>
+            <button class="coverflow-btn coverflow-next" onclick="rotatePhoneCarousel(1)" aria-label="Siguiente">›</button>
+        </div>
+
+        <!-- Puntos Indicadores del Carrusel Móvil -->
+        <div class="carousel-indicators">
+            <span class="carousel-dot phone-dot active" onclick="setPhoneSlide(0)"></span>
+            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(1)"></span>
+            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(2)"></span>
+            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(3)"></span>
         </div>
     </section>
 
@@ -1335,6 +1440,49 @@
         function setCoverSlide(index) {
             currentCoverIndex = index;
             updateCoverFlow();
+        }
+
+        let currentPhoneIndex = 0;
+        const totalPhoneSlides = 4;
+
+        function updatePhoneCarousel() {
+            const slides = document.querySelectorAll('.phone-carousel-slide');
+            const dots = document.querySelectorAll('.phone-dot');
+
+            slides.forEach((slide, index) => {
+                slide.className = 'phone-carousel-slide';
+
+                let diff = (index - currentPhoneIndex) % totalPhoneSlides;
+                if (diff < 0) diff += totalPhoneSlides;
+
+                if (diff === 0) {
+                    slide.classList.add('active');
+                } else if (diff === 1) {
+                    slide.classList.add('next');
+                } else if (diff === totalPhoneSlides - 1) {
+                    slide.classList.add('prev');
+                } else {
+                    slide.classList.add('hidden');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                if (index === currentPhoneIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function rotatePhoneCarousel(direction) {
+            currentPhoneIndex = (currentPhoneIndex + direction + totalPhoneSlides) % totalPhoneSlides;
+            updatePhoneCarousel();
+        }
+
+        function setPhoneSlide(index) {
+            currentPhoneIndex = index;
+            updatePhoneCarousel();
         }
 
         window.onload = function() {
