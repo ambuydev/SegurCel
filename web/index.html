@@ -559,37 +559,32 @@
             border-radius: 12px;
         }
 
-        /* Features Grid / Circuit Infographic Layout */
+        /* Features Section Glassmorphism & Circuit Board Background */
         .features-section {
             max-width: 1200px;
             margin: 0 auto 60px;
             padding: 0 20px;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: #FFFFFF;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 15px;
-            margin-bottom: 36px;
+        .circuit-board-section {
+            background-image: linear-gradient(180deg, rgba(16, 20, 29, 0.75) 0%, rgba(16, 20, 29, 0.9) 100%), url('assets/html/logo_circuitos.jpeg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 24px;
+            padding: 40px 24px;
+            position: relative;
+            border: 1.5px solid rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 40px rgba(108, 99, 255, 0.3);
+            overflow: hidden;
         }
 
         .circuit-infographic-container {
             display: grid;
             grid-template-columns: 1fr 220px 1fr;
-            gap: 20px;
+            gap: 24px;
             align-items: center;
             position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 0;
+            z-index: 5;
         }
 
         .circuit-lines-overlay {
@@ -605,8 +600,25 @@
         .circuit-col {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             z-index: 3;
+        }
+
+        .feature-card {
+            background: rgba(20, 26, 40, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(0, 240, 255, 0.5);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(108, 99, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #00F0FF;
+            box-shadow: 0 12px 35px rgba(0, 240, 255, 0.35);
+            transform: translateY(-2px);
         }
 
         .standalone-shield-node {
@@ -618,12 +630,12 @@
         }
 
         .standalone-shield-badge {
-            width: 130px;
-            height: 130px;
-            border-radius: 28px;
+            width: 140px;
+            height: 140px;
+            border-radius: 30px;
             background: linear-gradient(135deg, #1E2538 0%, #10141D 100%);
-            border: 3px solid #00F0FF;
-            box-shadow: 0 0 35px #00F0FF, 0 0 70px rgba(108, 99, 255, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.3);
+            border: 3.5px solid #00F0FF;
+            box-shadow: 0 0 45px #00F0FF, 0 0 90px rgba(108, 99, 255, 0.7), inset 0 0 25px rgba(0, 240, 255, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -632,14 +644,14 @@
         }
 
         @keyframes shieldFloat {
-            0%, 100% { transform: translateY(0); box-shadow: 0 0 35px #00F0FF, 0 0 70px rgba(108, 99, 255, 0.6); }
-            50% { transform: translateY(-6px); box-shadow: 0 0 45px #00F0FF, 0 0 90px rgba(108, 99, 255, 0.8); }
+            0%, 100% { transform: translateY(0); box-shadow: 0 0 40px #00F0FF, 0 0 80px rgba(108, 99, 255, 0.7); }
+            50% { transform: translateY(-8px); box-shadow: 0 0 55px #00F0FF, 0 0 110px rgba(108, 99, 255, 0.9); }
         }
 
         .standalone-shield-badge img {
-            width: 90px;
-            height: 90px;
-            border-radius: 18px;
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
             object-fit: cover;
         }
 
@@ -981,91 +993,102 @@
         <h2 class="section-title" id="secTitleFeatures">Características Principales</h2>
         <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
 
-        <div class="circuit-infographic-container">
-            <!-- SVG Circuit Lines Overlay (Visible on PC) -->
-            <svg class="circuit-lines-overlay" viewBox="0 0 1200 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Left Cards to Center Shield Traces -->
-                <path d="M 400,75 L 520,75 L 550,270 L 600,270" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
-                <path d="M 400,215 L 530,215 L 560,285 L 600,285" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
-                <path d="M 400,375 L 530,375 L 560,315 L 600,315" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
-                <path d="M 400,515 L 520,515 L 550,330 L 600,330" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
+        <div class="circuit-board-section">
+            <div class="circuit-infographic-container">
+                <!-- SVG Circuit Lines Overlay (Visible on PC) -->
+                <svg class="circuit-lines-overlay" viewBox="0 0 1200 650" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="neonGlowCyan" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.9"/>
+                        </filter>
+                        <filter id="neonGlowPurple" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#6C63FF" flood-opacity="0.9"/>
+                        </filter>
+                    </defs>
 
-                <!-- Right Cards to Center Shield Traces -->
-                <path d="M 800,75 L 680,75 L 650,270 L 600,270" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
-                <path d="M 800,215 L 670,215 L 640,285 L 600,285" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
-                <path d="M 800,375 L 670,375 L 640,315 L 600,315" stroke="#6C63FF" stroke-width="2.5" fill="none" opacity="0.8" />
-                <path d="M 800,515 L 680,515 L 650,330 L 600,330" stroke="#00F0FF" stroke-width="2.5" fill="none" opacity="0.8" stroke-dasharray="6,4" />
+                    <!-- Left Column Traces -->
+                    <path d="M 410,75 L 510,75 L 550,290 L 600,290" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
+                    <path d="M 410,230 L 525,230 L 560,305 L 600,305" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
+                    <path d="M 410,400 L 525,400 L 560,340 L 600,340" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
+                    <path d="M 410,560 L 510,560 L 550,355 L 600,355" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
 
-                <!-- Glowing Nodes at Connections -->
-                <circle cx="520" cy="75" r="4" fill="#00F0FF" />
-                <circle cx="530" cy="215" r="4" fill="#6C63FF" />
-                <circle cx="530" cy="375" r="4" fill="#6C63FF" />
-                <circle cx="520" cy="515" r="4" fill="#00F0FF" />
+                    <!-- Right Column Traces -->
+                    <path d="M 790,75 L 690,75 L 650,290 L 600,290" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
+                    <path d="M 790,230 L 675,230 L 640,305 L 600,305" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
+                    <path d="M 790,400 L 675,400 L 640,340 L 600,340" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
+                    <path d="M 790,560 L 690,560 L 650,355 L 600,355" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
 
-                <circle cx="680" cy="75" r="4" fill="#00F0FF" />
-                <circle cx="670" cy="215" r="4" fill="#6C63FF" />
-                <circle cx="670" cy="375" r="4" fill="#6C63FF" />
-                <circle cx="680" cy="515" r="4" fill="#00F0FF" />
-            </svg>
+                    <!-- Glowing Connection Nodes -->
+                    <circle cx="510" cy="75" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
+                    <circle cx="525" cy="230" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
+                    <circle cx="525" cy="400" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
+                    <circle cx="510" cy="560" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
 
-            <!-- Columna Izquierda (4 Tarjetas) -->
-            <div class="circuit-col">
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
-                    <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
+                    <circle cx="690" cy="75" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
+                    <circle cx="675" cy="230" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
+                    <circle cx="675" cy="400" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
+                    <circle cx="690" cy="560" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
+                </svg>
+
+                <!-- Columna Izquierda (4 Tarjetas) -->
+                <div class="circuit-col">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
+                        <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🩺</div>
+                        <h3 id="f4_title">Auditoría de Salud</h3>
+                        <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📁</div>
+                        <h3 id="f6_title">Importar / Exportar Fácil</h3>
+                        <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🧩</div>
+                        <h3 id="f7_title">Extensión para Navegador</h3>
+                        <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
+                    </div>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🩺</div>
-                    <h3 id="f4_title">Auditoría de Salud</h3>
-                    <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
+                <!-- Escudo Central Exento Neón -->
+                <div class="standalone-shield-node">
+                    <div class="standalone-shield-badge">
+                        <img src="assets/html/logo_solo.jpeg" alt="SegurCel Shield Logo">
+                    </div>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📁</div>
-                    <h3 id="f6_title">Importar / Exportar Fácil</h3>
-                    <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
-                </div>
+                <!-- Columna Derecha (4 Tarjetas) -->
+                <div class="circuit-col">
+                    <div class="feature-card">
+                        <div class="feature-icon">⏱️</div>
+                        <h3 id="f2_title">Autenticador 2FA TOTP</h3>
+                        <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
+                    </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🧩</div>
-                    <h3 id="f7_title">Extensión para Navegador</h3>
-                    <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
-                </div>
-            </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💳</div>
+                        <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
+                        <p id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</p>
+                    </div>
 
-            <!-- Escudo Central Exento Neón -->
-            <div class="standalone-shield-node">
-                <div class="standalone-shield-badge">
-                    <img src="assets/html/logo_solo.jpeg" alt="SegurCel Shield Logo">
-                </div>
-            </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💣</div>
+                        <h3 id="f3_title">3-Strike Autodestrucción</h3>
+                        <p id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</p>
+                    </div>
 
-            <!-- Columna Derecha (4 Tarjetas) -->
-            <div class="circuit-col">
-                <div class="feature-card">
-                    <div class="feature-icon">⏱️</div>
-                    <h3 id="f2_title">Autenticador 2FA TOTP</h3>
-                    <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💳</div>
-                    <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
-                    <p id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💣</div>
-                    <h3 id="f3_title">3-Strike Autodestrucción</h3>
-                    <p id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛰️</div>
-                    <h3 id="f8_title">Rastreo de Emergencia</h3>
-                    <p id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛰️</div>
+                        <h3 id="f8_title">Rastreo de Emergencia</h3>
+                        <p id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</p>
+                    </div>
                 </div>
             </div>
         </div>
