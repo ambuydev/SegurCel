@@ -131,28 +131,6 @@ class AboutAppSheet extends StatelessWidget {
               }
             },
           ),
-
-          const SizedBox(height: 10),
-
-          OutlinedButton.icon(
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.white24),
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            ),
-            icon: const Icon(Icons.code, color: Colors.amberAccent),
-            label: const Text(
-              '⭐ GitHub - Código Auditable',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              try {
-                FileHelper.openUrl('https://github.com/ambuydev/SegurCel');
-              } catch (_) {
-                _copyToClipboard(context, 'https://github.com/ambuydev/SegurCel', 'GitHub');
-              }
-            },
-          ),
         ],
       ),
     );

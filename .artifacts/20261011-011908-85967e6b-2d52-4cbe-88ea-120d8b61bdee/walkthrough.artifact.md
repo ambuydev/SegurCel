@@ -1,18 +1,24 @@
-# Resumen de Trabajo Realizado: Generación de Clave Oficial de Firma de Producción (Keystore)
+# Resumen de Trabajo Realizado: Integración de Insignias y Enlaces de Código Abierto (GitHub)
 
-Se creó la clave criptográfica oficial de producción (`upload-keystore.jks`) para la firma de paquetes de Google Play y se configuró Gradle para firmar compilaciones de versión oficial.
+Se integraron enlaces y botones directos hacia el repositorio de GitHub **`https://github.com/ambuydev/SegurCel`** en la Bóveda Web, en la aplicación móvil y en todo el sitio web para dar a conocer la transparencia de la plataforma.
 
 ---
 
-## 🛠️ Acciones Realizadas
+## 🛠️ Puntos de Difusión Integrados
 
-1. **Generación de Almacén de Claves de Producción (`upload-keystore.jks`):**
-   - Creado archivo de claves seguro con cifrado RSA 2048-bit y validez por 10.000 días.
-   - Credenciales protegidas en `android/key.properties` (excluido de Git por seguridad en `.gitignore`).
+1. **Pie de Página Multilingüe (`web/navbar.js`):**
+   - Enlace traducido en los 10 idiomas en el pie de página de todo el sitio web:
+     `⭐ GitHub (Código Auditable)` (`https://github.com/ambuydev/SegurCel`).
 
-2. **Configuración de Gradle (`android/app/build.gradle.kts`):**
-   - Configurada la propiedad `signingConfigs.create("release")` para firmar automáticamente los paquetes `.aab` compilados en modo `--release`.
+2. **Sección "Acerca de SegurCel" en la App Móvil (`lib/widgets/home/about_app_sheet.dart`):**
+   - Añadido el botón con ícono de código:
+     `⭐ GitHub - Código Auditable` con redirección directa al repositorio oficial.
 
-3. **Recompilación Exitosa del Paquete:**
-   - Generado nuevamente el archivo `app-release.aab` firmado en **Modo Lanzamiento de Producción**.
-   - Ubicación: `build/app/outputs/bundle/release/app-release.aab`.
+3. **Ficha de la Tienda de Google Play (Descripción Completa):**
+   - Incluida la referencia a la transparencia y auditabilidad del código fuente.
+
+---
+
+## 🚀 Estado
+- Desplegado en **`https://segurcel.app/`**.
+- Ambas ramas (`master` y `feature/browser-extension`) sincronizadas en GitHub.

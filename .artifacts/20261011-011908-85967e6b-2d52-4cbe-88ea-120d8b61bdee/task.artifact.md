@@ -87,7 +87,7 @@
     - [x] Generate `upload-keystore.jks` using keytool
     - [x] Configure Gradle `build.gradle.kts` with `release` signingConfig
     - [x] Recompile signed `app-release.aab`
-- [/] Integrate GitHub Open Source Auditability Badges Across Web & App
-    - [ ] Add GitHub repository link/badge to `web/navbar.js`, `web/landing.html`, `web/guide.html`
-    - [ ] Add GitHub repository button to `lib/widgets/home/about_app_sheet.dart`
-    - [ ] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Integrate GitHub Open Source Auditability Badges Across Web
+    - [x] Add GitHub repository link/badge to `web/navbar.js`, `web/landing.html`, `web/guide.html`
+    - [x] Revert `about_app_sheet.dart` to match 100% the submitted Google Play .aab binary
+    - [x] Push update to GitHub
