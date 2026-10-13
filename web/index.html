@@ -776,9 +776,48 @@
         </div>
     </section>
 
-    <!-- App Showcase Carousel (PC 3D Cover Flow & Mobile) -->
+    <!-- App Showcase Carousel (Mobile First & PC Desktop) -->
     <section class="showcase-container">
-        <!-- Carrusel 3D Cover Flow de PC Desktop -->
+        <!-- Carrusel Interactivo de Teléfonos Móviles (Mobile First) -->
+        <div class="phone-carousel-wrapper">
+            <button class="coverflow-btn coverflow-prev" onclick="rotatePhoneCarousel(-1)" aria-label="Anterior">‹</button>
+            <div class="phone-carousel-container" id="phoneCarouselContainer">
+                <div class="phone-carousel-slide active" onclick="setPhoneSlide(0)">
+                    <div class="phone-frame">
+                        <img src="assets/html/ingreso_pin.png" alt="Desbloqueo por PIN Maestro">
+                    </div>
+                </div>
+
+                <div class="phone-carousel-slide next" onclick="setPhoneSlide(1)">
+                    <div class="phone-frame">
+                        <img src="assets/html/pantalla_principal.png" alt="Bóveda de Contraseñas Móvil">
+                    </div>
+                </div>
+
+                <div class="phone-carousel-slide hidden" onclick="setPhoneSlide(2)">
+                    <div class="phone-frame">
+                        <img src="assets/html/auditoria_boveda.png" alt="Auditoría de Salud de la Bóveda">
+                    </div>
+                </div>
+
+                <div class="phone-carousel-slide prev" onclick="setPhoneSlide(3)">
+                    <div class="phone-frame">
+                        <img src="assets/html/agregar_elementos.png" alt="Notas y Tarjetas Cifradas">
+                    </div>
+                </div>
+            </div>
+            <button class="coverflow-btn coverflow-next" onclick="rotatePhoneCarousel(1)" aria-label="Siguiente">›</button>
+        </div>
+
+        <!-- Puntos Indicadores del Carrusel Móvil -->
+        <div class="carousel-indicators" style="margin-bottom: 50px;">
+            <span class="carousel-dot phone-dot active" onclick="setPhoneSlide(0)"></span>
+            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(1)"></span>
+            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(2)"></span>
+            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(3)"></span>
+        </div>
+
+        <!-- Carrusel de Pantallas de PC Desktop -->
         <div class="coverflow-wrapper">
             <button class="coverflow-btn coverflow-prev" onclick="rotateCoverFlow(-1)" aria-label="Anterior">‹</button>
             <div class="coverflow-container" id="coverflowContainer">
@@ -847,45 +886,6 @@
             <span class="carousel-dot" onclick="setCoverSlide(1)"></span>
             <span class="carousel-dot" onclick="setCoverSlide(2)"></span>
             <span class="carousel-dot" onclick="setCoverSlide(3)"></span>
-        </div>
-
-        <!-- Carrusel Interactivo de Teléfonos Móviles -->
-        <div class="phone-carousel-wrapper">
-            <button class="coverflow-btn coverflow-prev" onclick="rotatePhoneCarousel(-1)" aria-label="Anterior">‹</button>
-            <div class="phone-carousel-container" id="phoneCarouselContainer">
-                <div class="phone-carousel-slide active" onclick="setPhoneSlide(0)">
-                    <div class="phone-frame">
-                        <img src="assets/html/ingreso_pin.png" alt="Desbloqueo por PIN Maestro">
-                    </div>
-                </div>
-
-                <div class="phone-carousel-slide next" onclick="setPhoneSlide(1)">
-                    <div class="phone-frame">
-                        <img src="assets/html/pantalla_principal.png" alt="Bóveda de Contraseñas Móvil">
-                    </div>
-                </div>
-
-                <div class="phone-carousel-slide hidden" onclick="setPhoneSlide(2)">
-                    <div class="phone-frame">
-                        <img src="assets/html/auditoria_boveda.png" alt="Auditoría de Salud de la Bóveda">
-                    </div>
-                </div>
-
-                <div class="phone-carousel-slide prev" onclick="setPhoneSlide(3)">
-                    <div class="phone-frame">
-                        <img src="assets/html/agregar_elementos.png" alt="Notas y Tarjetas Cifradas">
-                    </div>
-                </div>
-            </div>
-            <button class="coverflow-btn coverflow-next" onclick="rotatePhoneCarousel(1)" aria-label="Siguiente">›</button>
-        </div>
-
-        <!-- Puntos Indicadores del Carrusel Móvil -->
-        <div class="carousel-indicators">
-            <span class="carousel-dot phone-dot active" onclick="setPhoneSlide(0)"></span>
-            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(1)"></span>
-            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(2)"></span>
-            <span class="carousel-dot phone-dot" onclick="setPhoneSlide(3)"></span>
         </div>
     </section>
 
