@@ -7,9 +7,12 @@
 build/
 .firebase/
 
-# Android / Gradle
+# Android / Gradle / Release Keystore
 .gradle/
 local.properties
+android/key.properties
+*.jks
+*.keystore
 
 # IntelliJ IDEA
 out/
