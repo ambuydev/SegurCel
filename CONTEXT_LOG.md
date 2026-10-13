@@ -1,76 +1,68 @@
-# CONTEXT_LOG.md - RESUMEN DE PROYECTO Y ESTADO PARA AGENTE IA
+# CONTEXT_LOG.md - RESUMEN COMPLETO DE PROYECTO Y ESTADO PARA AGENTE IA
 
-Este archivo contiene el contexto completo de **SegurCel** para que cualquier nuevo agente IA comprenda la arquitectura, el estado de producción y los pasos inmediatos al iniciar una nueva sesión de chat.
+Este archivo contiene el contexto completo de **SegurCel** para que cualquier nuevo agente IA comprenda la arquitectura, el estado de producción en Google Play Console, la configuración de GitHub, la extensión de navegador y los pasos inmediatos al iniciar una nueva sesión de chat.
 
 ---
 
-## 1. 📌 INFORMACIÓN GENERAL DEL PROYECTO
-- **Nombre de la App**: SegurCel (com.segurcel.segurcel)
-- **Versión**: 1.0.0 (Build 1)
+## 1. 📌 INFORMACIÓN GENERAL Y RESORTES DEL PROYECTO
+- **Nombre de la App**: SegurCel - Bóveda & 2FA (`com.segurcel.segurcel`)
+- **Versión Actual**: 1.0.0 (Build 1)
 - **Framework**: Flutter 3.41.8 / Dart 3.11.5 (Android & Web)
 - **Dominio Oficial & Hosting**: `https://segurcel.app` (Proyecto Firebase: `segurcel-45c92`)
-- **Rama Principal de Git**: `master` (Código limpio, verificado y libre de errores).
+- **Usuario GitHub**: `ambuydev`
+- **Repositorio Público GitHub**: `https://github.com/ambuydev/SegurCel.git`
+- **Ramas Sincronizadas**: `master` y `feature/browser-extension`
 
 ---
 
-## 2. 🛡️ ARQUITECTURA Y SEGURIDAD ZERO-KNOWLEDGE
-- **Cifrado E2EE**: Cifrado local en dispositivo usando **AES-256-GCM** y derivación de clave clave maestra con **PBKDF2WithHmacSHA256** (65,536 iteraciones).
+## 2. 🛡️ ARQUITECTURA DE SEGURIDAD ZERO-KNOWLEDGE
+- **Cifrado E2EE**: Cifrado local en dispositivo usando **AES-256-GCM** y derivación de clave maestra con **PBKDF2WithHmacSHA256** (65,536 iteraciones).
 - **Protección Anti-Fuerza Bruta**: Autodestrucción de datos locales tras 3 intentos fallidos de PIN de 4 dígitos.
-- **Autenticador 2FA TOTP**: Generador integrado de códigos de 6 dígitos que cambian cada 30 segundos, con temporizador circular y copia en 1 toque.
-- **Salud de la Bóveda**: Escáner inteligente que analiza la seguridad de las contraseñas (0 al 100%) y alerta sobre claves débiles, repetidas o antiguas.
+- **Confirmación Obligatoria de Código de Recuperación**: Modal con temporizador de 10 segundos antes de finalizar la instalación inicial para evitar pérdida accidental del código.
+- **Autenticador 2FA TOTP**: Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos y copia en 1 toque.
+- **Salud de la Bóveda**: Escáner inteligente de fortaleza global (0 al 100%) que detecta contraseñas débiles, repetidas o antiguas.
+- **Límite Freemium**: 20 contraseñas y 2 cuentas 2FA TOTP en el plan gratuito. Ilimitado en planes PRO/Familiar.
 
 ---
 
-## 3. 🌐 ACCESO A LA BÓVEDA WEB & GATEKEEPER FREEMIUM
-- **App Móvil Android**: Modelo Freemium (gratuito hasta 20 contraseñas y 2 cuentas TOTP; ilimitado en suscripciones PRO/Familiar).
-- **Bóveda Web (`https://segurcel.app/vault.html`)**: Gatekeeper Premium forzado en el navegador de la raíz de Flutter (`main.dart`). Los usuarios con `isPremium == false` son redirigidos a la pantalla de suscripción (`PaywallScreen`).
+## 3. 🌐 EXTENSIÓN DE NAVEGADOR MANIFEST V3 Y SITIO WEB
+- **Extensión para Navegadores (PC/Mac)**: Ubicada en `extension/` (Manifest V3, Web Crypto API y Firebase REST API). Empaquetada en `web/segurcel-extension.zip`.
+- **Módulo JavaScript Reutilizable (`web/navbar.js`)**: Encabezado compartido, banderas HD (`https://flagcdn.com`), selector desplegable de 10 idiomas, traducción de `btnBack` y footer multilingüe.
+- **Rutas Limpias Nativas (*Clean URLs*)**: Todos los enlaces utilizan rutas sin `.html` (`/`, `/guide`, `/privacy`, `/vault`) compatibles con `"cleanUrls": true` de Firebase Hosting para prevenir errores `ERR_TOO_MANY_REDIRECTS`.
+- **Sincronización de Parámetros URL**: `SegurCelNav.selectLanguage()` actualiza la barra de direcciones con `window.history.replaceState(null, '', '?lang=' + lang)`.
 
 ---
 
-## 4. 👨‍👩‍👧‍👦 SISTEMA DE PASES DE INVITACIÓN VIP (PLAN FAMILIAR)
-- Los dueños de Plan Familiar (`isFamilyOwner`) pueden generar hasta 4 códigos VIP únicos (`SEG-XXXXXX-V`) guardados en la colección Firestore `promo_codes/{code}`.
-- Un familiar canjea el código en `PaywallScreen`, vinculando `familyOwnerUid: ownerUid` en su documento `users/{uid}`.
-- **Cascada de Expiración**: `VaultService.fetchUserProfile()` verifica la suscripción del dueño. Si vence o se cancela, los miembros revierten a cuenta gratuita y los códigos antiguos pasan a `disabled: true`. Al renovar, el dueño recibe 4 nuevos cupos limpios (0/4).
-- Se eliminó la colección redundante `family_invites`. Reglas desplegadas en `firestore.rules`.
+## 4. 📜 POLÍTICA DE PURGA POR INACTIVIDAD (180 DÍAS) & GOOGLE PLAY
+- **Seguimiento de Actividad**: `VaultService.fetchUserProfile()` registra automáticamente `last_login_at: FieldValue.serverTimestamp()` en Firestore en cada uso de la app o Bóveda Web.
+- **Sección 4 de la Política de Privacidad (`https://segurcel.app/privacy`)**:
+  - *Eliminación Autónoma:* Exclusiva dentro de la sesión autenticada en la App o Bóveda Web (`https://segurcel.app/vault`).
+  - *Purga Automática por Inactividad (180 Días):* Notificación de advertencia previa al correo registrado tras 180 días sin logins y eliminación definitiva automática si no se reconfirma el uso activo.
+  - *Cláusula Google Play Billing:* Procesa suscripciones únicamente por el sistema de Google sin almacenar datos bancarios.
+- **Traducida en 10 Idiomas**: `es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`.
 
 ---
 
-## 5. 🌍 INTERNACIONALIZACIÓN (10 IDIOMAS GLOBALES)
-- Soporte completo en la app y web para:
-  `es` (Español), `en` (English), `pt` (Português), `zh` (中文), `fr` (Français),
-  `hi` (हिन्दी), `de` (Deutsch), `ja` (日本語), `ko` (한국어), `ru` (Русский).
-- **Persistencia de Idioma**: Navegación Web propaga el idioma usando `?lang=code` (`https://segurcel.app/?lang=de`, `https://segurcel.app/vault.html?lang=ja`, `https://segurcel.app/guide.html?lang=ru`).
-- `LocalizationService.initLanguage()` lee `Uri.base.queryParameters['lang']` al arrancar.
+## 5. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (EN REVISIÓN)
+- **Cuenta de Desarrollador**: Verificación de identidad **APROBADA** en Google Play Console (`ID: 7478631796851696861`).
+- **Lanzamiento de Pruebas Cerradas (14 Cambios Enviados a Revisión)**:
+  - **Paquete Firmado Oficial de Producción**: `build/app/outputs/bundle/release/app-release.aab` (55.1 MB) firmado con `upload-keystore.jks` (configurado en `android/key.properties` y `android/app/build.gradle.kts`).
+  - **Credenciales de Revisor de Google**:  
+    - Email: `google.reviewer@segurcel.app`  
+    - Contraseña: `ReviewerPass2026!`  
+    - PIN Maestro de Prueba: `1234`
+  - **Formularios de Contenido**: Política de Privacidad (`https://segurcel.app/privacy`), Acceso a la App (Instrucciones con credenciales), Anuncios (No), Clasificación (PEGI 3 / All ages), Público (18+), Funciones Financieras (No), ID de Publicidad (No), Datos Recopilados (Email, ID de Usuario y ID de Dispositivo obligatorios para gestión de cuenta cifrada en tránsito TLS 1.3).
+  - **Imágenes de la Tienda**: Ícono 512x512 PNG (`build/app/icon_512.png`) y Banner 1024x500 PNG (`build/app/feature_graphic_1024x500.png`).
 
 ---
 
-## 6. 📱 SITIO WEB Y GUÍA DE USO
-- **Página Principal**: `https://segurcel.app/` (`web/landing.html`) con menú de idiomas y banderas HD universales PNG (`https://flagcdn.com`).
-- **Manual de Botones y Secciones**: `https://segurcel.app/guide.html` (`web/guide.html`) adaptado 100% a celulares móviles (`@media (max-width: 600px)`).
-- **Bóveda Web**: `https://segurcel.app/vault.html` (Con botón traducido `← Volver al Sitio Oficial` que preserva el idioma).
+## 6. 🛠️ ESTRUCTURA Y CÓDIGO REFACTORIZADO
+- `lib/screens/setup_screen.dart` refactorizado en componentes modulares (`lib/widgets/pin_creation_form.dart`, `recovery_code_card.dart`, `recovery_confirmation_dialog.dart`).
+- `lib/screens/home_screen.dart` refactorizado de 2087 a 360 líneas en componentes modulares en `lib/widgets/home/`.
 
 ---
 
-## 7. 🚀 ESTADO DE PREPARACIÓN PARA GOOGLE PLAY STORE
-- **Cuenta de Desarrollador**: Creada y membresía de $35 pagada por el usuario. **Actualmente en espera de la confirmación de verificación de identidad por correo electrónico de Google.**
-- **Paquete Ejecutable Firmado**: `build/app/outputs/bundle/release/app-release.aab` (55.1 MB).
-- **Textos de la Tienda**: Guardados en `DESCRIPCION_PLAY_STORE.md` y disponibles en `https://segurcel.app/play_store.txt`.
-- **Ícono de Alta Resolución (1024x1024 px)**: Guardado en `PLAY_STORE_ICON_1024x1024.png` y en `https://segurcel.app/play_store_icon_1024.png`.
-- **IDs de Producto IAP (Google Play Billing SDK)**:
-  1. `segurcel_pro_monthly` ($1.99 USD / mes)
-  2. `segurcel_pro_yearly` ($10.99 USD / año)
-  3. `segurcel_family_monthly` ($3.99 USD / mes)
-  4. `segurcel_family_yearly` ($24.99 USD / año)
-  5. `segurcel_pro_rescue_6m` ($8.99 USD / 6 meses)
-- **URLs de Cumplimiento**:
-  - Política de Privacidad: `https://segurcel.app/privacy.html`
-  - Eliminación de Cuenta: `https://segurcel.app/privacy.html#delete-account`
-  - Guía Rápida: `https://segurcel.app/guide.html`
-
----
-
-## 8. 🎯 INSTRUCCIÓN PARA LA NUEVA SESIÓN DE CHAT
-En cuanto el usuario reciba la verificación de identidad de Google, abrirá un nuevo chat e indicará:
-*"Google Play ya me verificó la identidad, lee CONTEXT_LOG.md y continuemos con la subida del AAB y la configuración de suscripciones."*
-
-El nuevo agente IA leerá este archivo `CONTEXT_LOG.md` o `log.md` y podrá continuar inmediatamente el lanzamiento sin perder ningún detalle.
+## 7. 🎯 INSTRUCCIONES PARA EL PRÓXIMO CHAT / AGENTE IA
+Cuando se abra una nueva sesión de chat:
+1. El agente debe leer este `CONTEXT_LOG.md`.
+2. Si Google aprueba la revisión de Pruebas Cerradas, el próximo paso será revisar los comentarios de los 20 testers durante los 14 días y preparar la promoción final a **Producción**.
