@@ -235,9 +235,16 @@
 
         /* Phone & PC App Showcase Carousel */
         .showcase-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto 60px;
             padding: 0 20px;
+        }
+
+        .desktop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
         .desktop-frame {
@@ -245,8 +252,6 @@
             border-radius: 16px;
             border: 1.5px solid var(--border-color);
             box-shadow: 0 15px 40px rgba(108, 99, 255, 0.2);
-            max-width: 900px;
-            margin: 0 auto 30px;
             overflow: hidden;
         }
 
@@ -578,17 +583,55 @@
 
     <!-- App Showcase Carousel (PC & Mobile) -->
     <section class="showcase-container">
-        <!-- Frame PC Desktop -->
-        <div class="desktop-frame">
-            <div class="desktop-header">
-                <div class="desktop-dots">
-                    <span class="desktop-dot dot-red"></span>
-                    <span class="desktop-dot dot-yellow"></span>
-                    <span class="desktop-dot dot-green"></span>
+        <!-- Grid de Pantallas de PC -->
+        <div class="desktop-grid">
+            <div class="desktop-frame">
+                <div class="desktop-header">
+                    <div class="desktop-dots">
+                        <span class="desktop-dot dot-red"></span>
+                        <span class="desktop-dot dot-yellow"></span>
+                        <span class="desktop-dot dot-green"></span>
+                    </div>
+                    <div class="desktop-url">https://segurcel.app/vault</div>
                 </div>
-                <div class="desktop-url">https://segurcel.app/vault</div>
+                <img src="assets/html/pantalla_principal_pc.png" alt="Bóveda Web en PC / Laptop">
             </div>
-            <img src="assets/html/my_devices_pc.png" alt="SegurCel Bóveda Web en PC / Laptop">
+
+            <div class="desktop-frame">
+                <div class="desktop-header">
+                    <div class="desktop-dots">
+                        <span class="desktop-dot dot-red"></span>
+                        <span class="desktop-dot dot-yellow"></span>
+                        <span class="desktop-dot dot-green"></span>
+                    </div>
+                    <div class="desktop-url">https://segurcel.app/vault?screen=my_devices</div>
+                </div>
+                <img src="assets/html/my_devices_pc.png" alt="Centro de Rastreo de Emergencia en PC">
+            </div>
+
+            <div class="desktop-frame">
+                <div class="desktop-header">
+                    <div class="desktop-dots">
+                        <span class="desktop-dot dot-red"></span>
+                        <span class="desktop-dot dot-yellow"></span>
+                        <span class="desktop-dot dot-green"></span>
+                    </div>
+                    <div class="desktop-url">https://segurcel.app/vault?screen=settings</div>
+                </div>
+                <img src="assets/html/settings_pc.png" alt="Ajustes y Seguridad Bóveda en PC">
+            </div>
+
+            <div class="desktop-frame">
+                <div class="desktop-header">
+                    <div class="desktop-dots">
+                        <span class="desktop-dot dot-red"></span>
+                        <span class="desktop-dot dot-yellow"></span>
+                        <span class="desktop-dot dot-green"></span>
+                    </div>
+                    <div class="desktop-url">https://segurcel.app/vault?screen=login</div>
+                </div>
+                <img src="assets/html/ingreso_pc.png" alt="SegurCel Cloud Login en PC">
+            </div>
         </div>
 
         <!-- Grid de Teléfonos Móviles -->
