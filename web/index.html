@@ -233,11 +233,63 @@
             gap: 8px;
         }
 
-        /* Phone App Showcase Carousel */
+        /* Phone & PC App Showcase Carousel */
         .showcase-container {
             max-width: 1000px;
             margin: 0 auto 60px;
             padding: 0 20px;
+        }
+
+        .desktop-frame {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.2);
+            max-width: 900px;
+            margin: 0 auto 30px;
+            overflow: hidden;
+        }
+
+        .desktop-header {
+            background-color: #10141D;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .desktop-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .desktop-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background-color: #FF5F56; }
+        .dot-yellow { background-color: #FFBD2E; }
+        .dot-green { background-color: #27C93F; }
+
+        .desktop-url {
+            background-color: #1E2538;
+            color: var(--text-muted);
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            flex-grow: 1;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .desktop-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         .showcase-grid {
@@ -524,17 +576,34 @@
         </div>
     </section>
 
-    <!-- App Showcase Carousel -->
+    <!-- App Showcase Carousel (PC & Mobile) -->
     <section class="showcase-container">
+        <!-- Frame PC Desktop -->
+        <div class="desktop-frame">
+            <div class="desktop-header">
+                <div class="desktop-dots">
+                    <span class="desktop-dot dot-red"></span>
+                    <span class="desktop-dot dot-yellow"></span>
+                    <span class="desktop-dot dot-green"></span>
+                </div>
+                <div class="desktop-url">https://segurcel.app/vault</div>
+            </div>
+            <img src="assets/html/my_devices_pc.png" alt="SegurCel Bóveda Web en PC / Laptop">
+        </div>
+
+        <!-- Grid de Teléfonos Móviles -->
         <div class="showcase-grid">
             <div class="phone-frame">
-                <img src="assets/html/pantalla_principal.jpeg" alt="Pantalla Principal Bóveda">
+                <img src="assets/html/pantalla_principal.png" alt="Bóveda de Contraseñas Móvil">
             </div>
             <div class="phone-frame">
-                <img src="assets/html/agregar_contrasena.jpeg" alt="Agregar Contraseña Encrypted">
+                <img src="assets/html/auditoria_boveda.png" alt="Auditoría de Salud de la Bóveda">
             </div>
             <div class="phone-frame">
-                <img src="assets/html/autenticador_2fa.jpeg" alt="Autenticador 2FA TOTP">
+                <img src="assets/html/ingreso_pin.png" alt="Desbloqueo por PIN Maestro">
+            </div>
+            <div class="phone-frame">
+                <img src="assets/html/agregar_elementos.png" alt="Notas y Tarjetas Cifradas">
             </div>
         </div>
     </section>
