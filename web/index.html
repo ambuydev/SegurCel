@@ -13,7 +13,7 @@
             --accent: #80EE99;
             --text-main: #E2E8F0;
             --text-muted: #A0AEC0;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(108, 99, 255, 0.5);
         }
 
         * {
@@ -33,8 +33,8 @@
         /* Header Navigation */
         header {
             background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -51,7 +51,7 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             color: #FFFFFF;
             font-weight: 800;
@@ -59,31 +59,31 @@
         }
 
         .brand img {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-header {
             background-color: var(--primary);
             color: #FFFFFF;
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
+            white-space: nowrap;
             transition: all 0.2s;
         }
 
         .btn-header:hover {
             opacity: 0.9;
-            transform: translateY(-1px);
         }
 
         /* Language Selector Dropdown */
@@ -96,15 +96,16 @@
             background: #10141D;
             color: #FFFFFF;
             border: 1px solid var(--border-color);
-            padding: 6px 14px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             outline: none;
+            white-space: nowrap;
         }
 
         .lang-dropbtn img {
@@ -157,7 +158,7 @@
 
         /* Hero Section */
         .hero {
-            padding: 80px 24px 60px;
+            padding: 60px 20px 40px;
             text-align: center;
             max-width: 900px;
             margin: 0 auto;
@@ -172,14 +173,14 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: 700;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .hero-title {
-            font-size: 46px;
+            font-size: 42px;
             font-weight: 900;
             line-height: 1.25;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             color: #FFFFFF;
         }
 
@@ -188,9 +189,9 @@
         }
 
         .hero-subtitle {
-            font-size: 18px;
+            font-size: 17px;
             color: var(--text-muted);
-            margin-bottom: 36px;
+            margin-bottom: 30px;
             max-width: 750px;
             margin-left: auto;
             margin-right: auto;
@@ -199,94 +200,76 @@
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: #FFFFFF;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 15px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 8px 20px rgba(108, 99, 255, 0.35);
-            transition: all 0.2s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(108, 99, 255, 0.5);
         }
 
         .btn-secondary {
             background-color: var(--card-bg);
             color: #FFFFFF;
-            border: 1px solid var(--border-color);
-            padding: 14px 28px;
+            border: 1.5px solid var(--border-color);
+            padding: 12px 24px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            background-color: rgba(108, 99, 255, 0.1);
+            gap: 8px;
         }
 
         /* Phone App Showcase Carousel */
         .showcase-container {
             max-width: 1000px;
-            margin: 0 auto 80px;
+            margin: 0 auto 60px;
             padding: 0 20px;
         }
 
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             justify-items: center;
         }
 
         .phone-frame {
             background-color: var(--card-bg);
-            border-radius: 24px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            max-width: 300px;
-            transition: transform 0.3s;
-        }
-
-        .phone-frame:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+            border-radius: 20px;
+            padding: 10px;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.15);
+            max-width: 280px;
         }
 
         .phone-frame img {
             width: 100%;
             height: auto;
-            border-radius: 16px;
+            border-radius: 14px;
             display: block;
         }
 
         /* Zero-Knowledge Explainer Section */
         .zk-section {
             background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 70px 24px;
-            margin-bottom: 80px;
+            border-top: 1.5px solid var(--border-color);
+            border-bottom: 1.5px solid var(--border-color);
+            padding: 60px 20px;
+            margin-bottom: 60px;
         }
 
         .zk-container {
@@ -294,28 +277,28 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 30px;
             align-items: center;
         }
 
         .zk-text h2 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: #FFFFFF;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .zk-text p {
             color: var(--text-muted);
-            font-size: 16px;
-            margin-bottom: 16px;
+            font-size: 15px;
+            margin-bottom: 14px;
         }
 
         .zk-diagram {
             background: #10141D;
             border-radius: 16px;
-            padding: 24px;
-            border: 1px dashed var(--primary);
+            padding: 20px;
+            border: 1.5px solid var(--primary);
             text-align: center;
         }
 
@@ -327,66 +310,61 @@
         /* Features Grid Section */
         .features-section {
             max-width: 1100px;
-            margin: 0 auto 80px;
-            padding: 0 24px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
         }
 
         .section-title {
             text-align: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #FFFFFF;
         }
 
         .section-subtitle {
             text-align: center;
             color: var(--text-muted);
-            font-size: 16px;
-            margin-bottom: 48px;
+            font-size: 15px;
+            margin-bottom: 36px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .feature-card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             border-radius: 16px;
-            padding: 28px;
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.1);
         }
 
         .feature-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
+            font-size: 30px;
+            margin-bottom: 12px;
         }
 
         .feature-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #FFFFFF;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .feature-card p {
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 13.5px;
         }
 
         /* Freemium & Subscriptions Section */
         .freemium-section {
             background: linear-gradient(180deg, rgba(108, 99, 255, 0.08) 0%, rgba(16, 20, 29, 0) 100%);
-            padding: 70px 24px;
-            border-top: 1px solid var(--border-color);
+            padding: 60px 20px;
+            border-top: 1.5px solid var(--border-color);
         }
 
         .freemium-grid {
@@ -394,41 +372,41 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 30px;
             align-items: center;
         }
 
         .freemium-box {
             background-color: var(--card-bg);
-            border: 1px solid var(--primary);
+            border: 1.5px solid var(--primary);
             border-radius: 20px;
-            padding: 32px;
+            padding: 28px;
             box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
         }
 
         .plan-badge {
             background-color: var(--accent);
             color: #10141D;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 10px;
             display: inline-block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .plan-list {
             list-style: none;
-            margin: 20px 0;
+            margin: 16px 0;
         }
 
         .plan-list li {
             color: var(--text-main);
-            font-size: 15px;
-            margin-bottom: 12px;
+            font-size: 14px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .plan-list li span {
@@ -440,27 +418,27 @@
             width: 100%;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
         }
 
         /* CTA Banner */
         .cta-banner {
             max-width: 1000px;
-            margin: 60px auto 80px;
-            padding: 50px 24px;
+            margin: 40px auto 60px;
+            padding: 40px 20px;
             background: linear-gradient(135deg, #1E2538 0%, #2A334E 100%);
-            border-radius: 24px;
-            border: 1px solid var(--primary);
+            border-radius: 20px;
+            border: 1.5px solid var(--primary);
             text-align: center;
         }
 
         /* Footer */
         footer {
-            border-top: 1px solid var(--border-color);
-            padding: 30px 24px;
+            border-top: 1.5px solid var(--border-color);
+            padding: 24px 20px;
             text-align: center;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         footer a {
@@ -473,10 +451,20 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 32px; }
-            .hero-subtitle { font-size: 15px; }
+            header { padding: 10px 12px; }
+            .nav-container { flex-wrap: wrap; gap: 8px; justify-content: space-between; }
+            .nav-actions { gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+            .btn-header { padding: 6px 12px; font-size: 12px; white-space: nowrap; }
+            .lang-dropbtn { padding: 5px 10px; font-size: 12px; white-space: nowrap; }
+            #linkHeaderGuide { font-size: 12px; margin-right: 4px; white-space: nowrap; }
+            .hero { padding: 40px 16px 30px; }
+            .hero-title { font-size: 26px; }
+            .hero-subtitle { font-size: 14px; margin-bottom: 24px; }
             .zk-container, .freemium-grid { grid-template-columns: 1fr; }
-            .brand-title { display: none; }
+            .brand-title { font-size: 16px; }
+            .feature-card { padding: 18px; }
+            .showcase-grid { grid-template-columns: 1fr; }
+            .phone-frame { max-width: 240px; }
         }
     </style>
 </head>
@@ -486,11 +474,11 @@
     <header>
         <div class="nav-container">
             <a href="/" class="brand">
-                <img src="assets/assets/html/logo_solo.jpeg" alt="SegurCel Logo">
+                <img src="assets/html/logo_solo.jpeg" alt="SegurCel Logo">
                 <span class="brand-title">SegurCel</span>
             </a>
             <div class="nav-actions">
-                <a href="/guide" style="color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; margin-right: 8px;" id="linkHeaderGuide">📘 Guía de Uso</a>
+                <a href="/guide" style="color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600; margin-right: 4px;" id="linkHeaderGuide">📘 Guía de Uso</a>
                 <div class="lang-dropdown">
                     <button class="lang-dropbtn" onclick="SegurCelNav.toggleLangMenu(event)">
                         <img src="https://flagcdn.com/20x15/es.png" id="selectedFlag" alt="Flag">
@@ -540,13 +528,13 @@
     <section class="showcase-container">
         <div class="showcase-grid">
             <div class="phone-frame">
-                <img src="assets/assets/html/pantalla_principal.jpeg" alt="Pantalla Principal Bóveda">
+                <img src="assets/html/pantalla_principal.jpeg" alt="Pantalla Principal Bóveda">
             </div>
             <div class="phone-frame">
-                <img src="assets/assets/html/agregar_contrasena.jpeg" alt="Agregar Contraseña Encrypted">
+                <img src="assets/html/agregar_contrasena.jpeg" alt="Agregar Contraseña Encrypted">
             </div>
             <div class="phone-frame">
-                <img src="assets/assets/html/autenticador_2fa.jpeg" alt="Autenticador 2FA TOTP">
+                <img src="assets/html/autenticador_2fa.jpeg" alt="Autenticador 2FA TOTP">
             </div>
         </div>
     </section>
@@ -564,7 +552,7 @@
                 </p>
             </div>
             <div class="zk-diagram">
-                <img src="assets/assets/html/logo_circuitos.jpeg" alt="Diagrama Seguridad Zero Knowledge">
+                <img src="assets/html/logo_circuitos.jpeg" alt="Diagrama Seguridad Zero Knowledge">
             </div>
         </div>
     </section>
@@ -611,7 +599,7 @@
                 <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
             </div>
 
-            <div class="feature-card" style="border-color: #00F0FF;">
+            <div class="feature-card">
                 <div class="feature-icon">🧩</div>
                 <h3 id="f7_title">Extensión para Navegador</h3>
                 <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
@@ -626,7 +614,7 @@
 
         <div class="freemium-grid">
             <div class="freemium-image">
-                <img src="assets/assets/html/suscripcion.jpeg" alt="Planes SegurCel PRO">
+                <img src="assets/html/suscripcion.jpeg" alt="Planes SegurCel PRO">
             </div>
             <div class="freemium-box">
                 <span class="plan-badge" id="badgeFreemium">MODELO FREEMIUM TRANSPARENTE</span>
@@ -643,11 +631,11 @@
     </section>
 
     <!-- CTA Banner -->
-    <section style="padding: 0 24px;">
+    <section style="padding: 0 20px;">
         <div class="cta-banner">
-            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 15px;" id="ctaTitle">¿Listo para proteger tu vida digital?</h2>
-            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.</p>
-            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 12px;" id="ctaTitle">¿Listo para proteger tu vida digital?</h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 24px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.</p>
+            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
                 <a href="/vault" class="btn-primary" id="btnCtaVault">🚀 Acceder a SegurCel Web</a>
                 <a href="javascript:void(0)" onclick="alert('Google Play Store: Próximamente disponible para Android. Mientras tanto, puedes disfrutar de todas las funciones en la Bóveda Web o descargar el APK directo arriba.')" class="btn-secondary" id="btnCtaApk">📲 Disponible en Google Play</a>
             </div>
