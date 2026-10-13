@@ -587,6 +587,72 @@
             gap: 20px;
         }
 
+        @media (min-width: 900px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .central-hub-card {
+            background: linear-gradient(135deg, #1E2538 0%, #10141D 100%);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 0 35px rgba(108, 99, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .central-hub-card::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.25) 0%, transparent 70%);
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.1); }
+        }
+
+        .hub-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.5);
+            margin-bottom: 12px;
+            z-index: 2;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+        }
+
+        .hub-title {
+            color: #FFFFFF;
+            font-size: 18px;
+            font-weight: 800;
+            z-index: 2;
+        }
+
+        .hub-subtitle {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 4px;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 899px) {
+            .central-hub-card { display: none; }
+        }
+
         .feature-card {
             background-color: var(--card-bg);
             border: 1.5px solid var(--border-color);
@@ -937,6 +1003,13 @@
                 <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
             </div>
 
+            <!-- Central Hub Card (Visible on PC/Tablet Grid 3x3 Center) -->
+            <div class="central-hub-card">
+                <img src="assets/html/logo_circuitos.jpeg" class="hub-logo" alt="SegurCel Logo">
+                <div class="hub-title">SegurCel Ecosystem</div>
+                <div class="hub-subtitle">AES-256 ZERO-KNOWLEDGE</div>
+            </div>
+
             <div class="feature-card">
                 <div class="feature-icon">💳</div>
                 <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
@@ -953,6 +1026,12 @@
                 <div class="feature-icon">🧩</div>
                 <h3 id="f7_title">Extensión para Navegador</h3>
                 <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛰️</div>
+                <h3 id="f8_title">Rastreo de Emergencia</h3>
+                <p id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</p>
             </div>
         </div>
     </section>
@@ -1029,6 +1108,7 @@
                 f5_t: "Tarjetas & Notas Seguras", f5_d: "Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.",
                 f6_t: "Importar / Exportar Fácil", f6_d: "Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.",
                 f7_t: "Extensión para Navegador", f7_d: "Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.",
+                f8_t: "Rastreo de Emergencia", f8_d: "Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.",
                 proT: "Modelo Freemium & Planes PRO", proS: "Usa SegurCel gratis de forma local o suscríbete para respaldar y sincronizar tus contraseñas en la nube de forma permanente.",
                 proB: "MODELO FREEMIUM TRANSPARENTE", proV: "Ventajas de SegurCel PRO",
                 pi1: "Sincronización Ilimitada en Tiempo Real (Android, Windows, Web, iOS).",
@@ -1060,6 +1140,7 @@
                 f5_t: "Cards & Confidential Notes", f5_d: "Store credit cards, ATM PINs, and encrypted notes organized into category tabs and star favorites ⭐.",
                 f6_t: "Easy Import / Export", f6_d: "Migrate passwords in seconds from Google Chrome, Edge, Bitwarden, or 1Password in CSV and JSON formats.",
                 f7_t: "Browser Extension", f7_d: "Autofill credentials on Chrome, Edge, and Brave with 1 click. Same Zero-Knowledge encryption on PC and Mac.",
+                f8_t: "Emergency Device Tracking", f8_d: "Direct access from your vault to Google Find My Device and Apple iCloud Find My iPhone.",
                 proT: "Freemium Model & PRO Plans", proS: "Use SegurCel for free locally or subscribe to back up and sync your passwords across devices via the cloud.",
                 proB: "TRANSPARENT FREEMIUM MODEL", proV: "SegurCel PRO Advantages",
                 pi1: "Unlimited Real-Time Sync (Android, Windows, Web, iOS).",
@@ -1091,6 +1172,7 @@
                 f5_t: "Cartões e Notas Seguras", f5_d: "Guarde cartões de crédito, PINs de caixas eletrônicos e notas confidenciais organizados com estrelas de favoritos ⭐.",
                 f6_t: "Importar / Exportar Fácil", f6_d: "Migre suas senhas em segundos do Google Chrome, Edge, Bitwarden ou 1Password em CSV e JSON.",
                 f7_t: "Extensão para Navegador", f7_d: "Preenchimento automático no Chrome, Edge e Brave com 1 clique. Criptografia Zero-Knowledge no seu PC e Mac.",
+                f8_t: "Rastreamento de Emergência", f8_d: "Acesso direto do seu cofre ao Google Encontrar Meu Dispositivo e Apple iCloud Buscar Meu iPhone.",
                 proT: "Modelo Freemium e Planos PRO", proS: "Use o SegurCel gratuitamente de forma local ou assine para sincronizar e salvar suas senhas na nuvem.",
                 proB: "MODELO FREEMIUM TRANSPARENTE", proV: "Vantagens do SegurCel PRO",
                 pi1: "Sincronização Ilimitada em Tempo Real (Android, Windows, Web, iOS).",
@@ -1122,6 +1204,7 @@
                 f5_t: "银行卡与保密笔记", f5_d: "分类存储信用卡、取款密码和保密笔记，支持星标收藏 ⭐。",
                 f6_t: "轻松导入与导出", f6_d: "数秒内即可从 Google Chrome、Edge、Bitwarden 或 1Password 导入 CSV 与 JSON 格式的密码。",
                 f7_t: "浏览器扩展", f7_d: "在 Chrome、Edge 和 Brave 上一键自动填充凭据。PC 和 Mac 上享受同等零知识加密。",
+                f8_t: "紧急设备追踪", f8_d: "从您的保险库直接访问 Google 查找我的设备与 Apple iCloud 查找我的 iPhone。",
                 proT: "Freemium 免费模式与 PRO 订阅", proS: "在本地免费使用 SegurCel，或订阅以通过云端备份和同步您的密码。",
                 proB: "透明 FREEMIUM 模式", proV: "SegurCel PRO 优势",
                 pi1: "无限实时同步（Android、Windows、Web、iOS）。",
@@ -1153,6 +1236,7 @@
                 f5_t: "Cartes & Notes Confidentielles", f5_d: "Stockez vos cartes bancaires, codes PIN et notes confidentielles organisés avec des favoris ⭐.",
                 f6_t: "Import / Export Facile", f6_d: "Migrez vos mots de passe en quelques secondes depuis Google Chrome, Edge, Bitwarden ou 1Password en CSV et JSON.",
                 f7_t: "Extension pour Navigateur", f7_d: "Saisie automatique sur Chrome, Edge et Brave en 1 clic. Chiffrement Zero-Knowledge identique sur PC et Mac.",
+                f8_t: "Traçage d'Urgence", f8_d: "Accès direct depuis votre coffre à Google Localiser mon appareil et Apple iCloud Localiser mon iPhone.",
                 proT: "Modèle Freemium & Offres PRO", proS: "Utilisez SegurCel gratuitement en local ou abonnez-vous pour sauvegarder vos mots de passe sur le cloud.",
                 proB: "MODÈLE FREEMIUM TRANSPARENT", proV: "Avantages de SegurCel PRO",
                 pi1: "Synchronisation Illimitée en Temps Réel (Android, Windows, Web, iOS).",
@@ -1184,6 +1268,7 @@
                 f5_t: "कार्ड और गोपनीय नोट", f5_d: "क्रेडिट कार्ड, एटीएम पिन और गोपनीय नोट्स को पसंदीदा स्टार ⭐ के साथ सहेजें।",
                 f6_t: "आसान आयात / निर्यात", f6_d: "Google Chrome, Edge, Bitwarden या 1Password से कुछ ही सेकंड में अपने पासवर्ड माइग्रेट करें।",
                 f7_t: "ब्राउज़र एक्सटेंशन", f7_d: "1 क्लिक में Chrome, Edge और Brave पर क्रेडेंशियल ऑटोफिल करें। PC और Mac पर समान Zero-Knowledge एन्क्रिप्शन।",
+                f8_t: "आपातकालीन डिवाइस ट्रैकिंग", f8_d: "अपने वॉल्ट से Google फाइंड माई डिवाइस और Apple iCloud फाइंड माई आईफोन तक सीधी पहुंच।",
                 proT: "Freemium मॉडल और PRO प्लान", proS: "SegurCel का मुफ़्त में स्थानीय रूप से उपयोग करें या क्लाउड के माध्यम से अपने पासवर्ड सिंक करने के लिए सदस्यता लें।",
                 proB: "पारदर्शी FREEMIUM मॉडल", proV: "SegurCel PRO के लाभ",
                 pi1: "अनलिमिटेड रीयल-टाइम सिंक (Android, Windows, Web, iOS)।",
@@ -1215,6 +1300,7 @@
                 f5_t: "Karten & Sichere Notizen", f5_d: "Speichern Sie Kreditkarten, Geldautomat-PINs und vertrauliche Notizen geordnet mit Favoriten ⭐.",
                 f6_t: "Einfacher Import / Export", f6_d: "Migrieren Sie Passwörter in Sekunden aus Chrome, Edge, Bitwarden oder 1Password als CSV und JSON.",
                 f7_t: "Browser-Erweiterung", f7_d: "Automatisches Ausfüllen in Chrome, Edge und Brave mit 1 Klick. Gleiche Zero-Knowledge-Verschlüsselung auf PC und Mac.",
+                f8_t: "Notfall-Geräteortung", f8_d: "Direkter Zugriff aus Ihrem Tresor auf Google Mein Gerät finden und Apple iCloud Mein iPhone suchen.",
                 proT: "Freemium-Modell & PRO-Pläne", proS: "Nutzen Sie SegurCel kostenlos lokal oder abonnieren Sie die Cloud-Sicherung zur Synchronisierung.",
                 proB: "TRANSPARENTES FREEMIUM-MODELL", proV: "Vorteile von SegurCel PRO",
                 pi1: "Unbegrenzte Echtzeit-Synchronisation (Android, Windows, Web, iOS).",
@@ -1246,6 +1332,7 @@
                 f5_t: "カード＆秘密メモ", f5_d: "クレジットカード、暗証番号、機密メモをお気に入りスター⭐で整理して保存できます。",
                 f6_t: "簡単なインポート／エクスポート", f6_d: "Chrome、Edge、Bitwarden、1PasswordからCSV/JSON形式で数秒で移行できます。",
                 f7_t: "ブラウザ拡張機能", f7_d: "Chrome、Edge、Braveでログイン情報を1クリック自動入力。PC・Macで同等のゼロナレッジ暗号化。",
+                f8_t: "緊急デバイス追跡", f8_d: "保管庫から Google デバイスを探す および Apple iCloud iPhoneを探す へ直接アクセス。",
                 proT: "フリーミアムモデル＆PROプラン", proS: "SegurCelをローカルで無料で使うか、クラウド同期にサブスクリプション登録します。",
                 proB: "透明性の高いフリーミアムモデル", proV: "SegurCel PROのメリット",
                 pi1: "無制限リアルタイム同期（Android、Windows、Web、iOS）。",
@@ -1277,6 +1364,7 @@
                 f5_t: "카드 및 보안 메모", f5_d: "신용카드, ATM PIN, 보안 메모를 즐겨찾기 별표⭐로 깔끔하게 정리하여 저장합니다.",
                 f6_t: "간편한 가져오기 / 내보내기", f6_d: "Chrome, Edge, Bitwarden, 1Password에서 CSV/JSON 형식으로 빠르게 이전할 수 있습니다.",
                 f7_t: "브라우저 확장 프로그램", f7_d: "Chrome, Edge, Brave에서 클릭 한 번으로 자격 증명 자동 완성. PC 및 Mac에서 동일한 Zero-Knowledge 암호화.",
+                f8_t: "긴급 기기 추적", f8_d: "보관함에서 Google 내 기기 찾기 및 Apple iCloud 나의 iPhone 찾기로 직접 이동。",
                 proT: "프리미엄 모델 및 PRO 요금제", proS: "SegurCel을 로컬에서 무료로 사용하거나, 클라우드 동기화를 위해 구독하세요.",
                 proB: "투명한 프리미엄 모델", proV: "SegurCel PRO 혜택",
                 pi1: "무제한 실시간 동기화 (Android, Windows, Web, iOS).",
@@ -1308,6 +1396,7 @@
                 f5_t: "Карты и защищенные заметки", f5_d: "Храните банковские карты, PIN-коды банкоматов и конфиденциальные заметки с избранным ⭐.",
                 f6_t: "Простой импорт и экспорт", f6_d: "Переносите пароли за секунды из Chrome, Edge, Bitwarden или 1Password в CSV и JSON.",
                 f7_t: "Расширение для браузера", f7_d: "Автозаполнение в Chrome, Edge и Brave в 1 клик. То же шифрование Zero-Knowledge на ПК и Mac.",
+                f8_t: "Экстренный поиск устройств", f8_d: "Прямой доступ из хранилища к Google Найти устройство и Apple iCloud Найти iPhone.",
                 proT: "Модель Freemium и тарифы PRO", proS: "Используйте SegurCel бесплатно локально или подпишитесь для синхронизации и резервного копирования в облаке.",
                 proB: "ПРОЗРАЧНАЯ МОДЕЛЬ FREEMIUM", proV: "Преимущества SegurCel PRO",
                 pi1: "Неограниченная синхронизация в реальном времени (Android, Windows, Web, iOS).",
@@ -1366,6 +1455,8 @@
             document.getElementById("f6_title").innerText = data.f6_t; document.getElementById("f6_desc").innerText = data.f6_d;
             if (document.getElementById("f7_title") && data.f7_t) document.getElementById("f7_title").innerText = data.f7_t;
             if (document.getElementById("f7_desc") && data.f7_d) document.getElementById("f7_desc").innerText = data.f7_d;
+            if (document.getElementById("f8_title") && data.f8_t) document.getElementById("f8_title").innerText = data.f8_t;
+            if (document.getElementById("f8_desc") && data.f8_d) document.getElementById("f8_desc").innerText = data.f8_d;
 
             document.getElementById("proTitle").innerText = data.proT;
             document.getElementById("proSub").innerText = data.proS;
