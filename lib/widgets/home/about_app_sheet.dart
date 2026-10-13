@@ -125,9 +125,31 @@ class AboutAppSheet extends StatelessWidget {
             ),
             onPressed: () {
               try {
-                FileHelper.openUrl('https://segurcel.app/privacy.html');
+                FileHelper.openUrl('https://segurcel.app/privacy');
               } catch (_) {
-                _copyToClipboard(context, 'https://segurcel.app/privacy.html', loc.text('privacy_policy'));
+                _copyToClipboard(context, 'https://segurcel.app/privacy', loc.text('privacy_policy'));
+              }
+            },
+          ),
+
+          const SizedBox(height: 10),
+
+          OutlinedButton.icon(
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.white24),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            icon: const Icon(Icons.code, color: Colors.amberAccent),
+            label: const Text(
+              '⭐ GitHub - Código Auditable',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              try {
+                FileHelper.openUrl('https://github.com/ambuydev/SegurCel');
+              } catch (_) {
+                _copyToClipboard(context, 'https://github.com/ambuydev/SegurCel', 'GitHub');
               }
             },
           ),

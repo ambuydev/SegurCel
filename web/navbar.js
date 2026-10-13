@@ -1,6 +1,6 @@
 /**
  * SegurCel Web - Shared Navbar & Dynamic Localizations Module
- * Gestiona el encabezado, banderas HD, selector desplegable de idiomas, botón 'Volver al Sitio Oficial' y pie de página en 10 idiomas con URLs Limpias.
+ * Gestiona el encabezado, banderas HD, selector desplegable de idiomas, botón 'Volver al Sitio Oficial', enlace a GitHub y pie de página en 10 idiomas con URLs Limpias.
  */
 
 const FLAGS_MAP = {
@@ -35,16 +35,16 @@ const NAV_DICT = {
 };
 
 const FOOTER_DICT = {
-  es: { copyright: "© 2026 SegurCel. Todos los derechos reservados.", guide: "📘 Guía Rápida de Uso", privacy: "Política de Privacidad", official: "Sitio Oficial", vault: "Bóveda Web" },
-  en: { copyright: "© 2026 SegurCel. All rights reserved.", guide: "📘 Quick User Guide", privacy: "Privacy Policy", official: "Official Site", vault: "Web Vault" },
-  pt: { copyright: "© 2026 SegurCel. Todos os direitos reservados.", guide: "📘 Guia Rápido do Usuário", privacy: "Política de Privacidade", official: "Site Oficial", vault: "Cofre Web" },
-  zh: { copyright: "© 2026 SegurCel。版权所有。", guide: "📘 快速使用指南", privacy: "隐私政策", official: "官方网站", vault: "网页版保险库" },
-  fr: { copyright: "© 2026 SegurCel. Tous droits réservés.", guide: "📘 Guide Rapide d'Utilisation", privacy: "Politique de Confidentialité", official: "Site Officiel", vault: "Coffre Web" },
-  hi: { copyright: "© 2026 SegurCel. सर्वाधिकार सुरक्षित।", guide: "📘 त्वरित उपयोग निर्देशिका", privacy: "गोपनीयता नीति", official: "आधिकारिक साइट", vault: "वेब वॉल्ट" },
-  de: { copyright: "© 2026 SegurCel. Alle Rechte vorbehalten.", guide: "📘 Schnellstartanleitung", privacy: "Datenschutzerklärung", official: "Offizielle Website", vault: "Web-Tresor" },
-  ja: { copyright: "© 2026 SegurCel. 全著作権所有。", guide: "📘 クイックユーザーガイド", privacy: "プライバシーポリシー", official: "公式サイト", vault: "Web保管庫" },
-  ko: { copyright: "© 2026 SegurCel. 모든 권리 보유.", guide: "📘 빠른 사용자 설명서", privacy: "개인정보 처리방침", official: "공식 사이트", vault: "웹 보관함" },
-  ru: { copyright: "© 2026 SegurCel. Все права защищены.", guide: "📘 Краткое руководство", privacy: "Политика конфиденциальности", official: "Официальный сайт", vault: "Веб-хранилище" }
+  es: { copyright: "© 2026 SegurCel. Todos los derechos reservados.", guide: "📘 Guía Rápida de Uso", privacy: "Política de Privacidad", official: "Sitio Oficial", github: "⭐ GitHub (Código Auditable)" },
+  en: { copyright: "© 2026 SegurCel. All rights reserved.", guide: "📘 Quick User Guide", privacy: "Privacy Policy", official: "Official Site", github: "⭐ GitHub (Auditable Code)" },
+  pt: { copyright: "© 2026 SegurCel. Todos os direitos reservados.", guide: "📘 Guia Rápido do Usuário", privacy: "Política de Privacidade", official: "Site Oficial", github: "⭐ GitHub (Código Auditável)" },
+  zh: { copyright: "© 2026 SegurCel。版权所有。", guide: "📘 快速使用指南", privacy: "隐私政策", official: "官方网站", github: "⭐ GitHub (可审计源码)" },
+  fr: { copyright: "© 2026 SegurCel. Tous droits réservés.", guide: "📘 Guide Rapide d'Utilisation", privacy: "Politique de Confidentialité", official: "Site Officiel", github: "⭐ GitHub (Code Auditable)" },
+  hi: { copyright: "© 2026 SegurCel. सर्वाधिकार सुरक्षित।", guide: "📘 त्वरित उपयोग निर्देशिका", privacy: "गोपनीयता नीति", official: "आधिकारिक साइट", github: "⭐ GitHub (ऑडिट योग्य कोड)" },
+  de: { copyright: "© 2026 SegurCel. Alle Rechte vorbehalten.", guide: "📘 Schnellstartanleitung", privacy: "Datenschutzerklärung", official: "Offizielle Website", github: "⭐ GitHub (Prüfbarer Code)" },
+  ja: { copyright: "© 2026 SegurCel. 全著作権所有。", guide: "📘 クイックユーザーガイド", privacy: "プライバシーポリシー", official: "公式サイト", github: "⭐ GitHub (監査可能コード)" },
+  ko: { copyright: "© 2026 SegurCel. 모든 권리 보유.", guide: "📘 빠른 사용자 설명서", privacy: "개인정보 처리방침", official: "공식 사이트", github: "⭐ GitHub (감사 가능 코드)" },
+  ru: { copyright: "© 2026 SegurCel. Все права защищены.", guide: "📘 Краткое руководство", privacy: "Политика конфиденциальности", official: "Официальный сайт", github: "⭐ GitHub (Проверяемый код)" }
 };
 
 window.SegurCelNav = {
@@ -105,6 +105,12 @@ window.SegurCelNav = {
     if (officialEl) {
       officialEl.innerText = data.official;
       officialEl.href = `/?lang=${lang}`;
+    }
+
+    const githubEl = document.getElementById('linkFooterGithub');
+    if (githubEl) {
+      githubEl.innerText = data.github;
+      githubEl.href = "https://github.com/ambuydev/SegurCel";
     }
   },
 

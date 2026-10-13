@@ -1,14 +1,23 @@
-# Plan de Implementación: Cláusula Estricta de Eliminación Autenticada en `privacy.html`
+# Plan de Implementación: Integración de Insignias y Enlaces de Código Abierto (GitHub)
 
-Actualizar la sección de Eliminación de Datos en `web/privacy.html` para especificar que la eliminación de cuenta se realiza de forma **exclusiva dentro de la sesión autenticada** del usuario en la aplicación móvil o en la Bóveda Web (`https://segurcel.app/vault`), impidiendo eliminaciones vía correo o formularios externos.
+Integrar insignias y enlaces directos hacia el repositorio público de GitHub (`https://github.com/ambuydev/SegurCel`) en el sitio web (`landing.html`, `guide.html`, `navbar.js`) y en el menú *"Acerca de SegurCel"* de la aplicación móvil para comunicar la auditabilidad del código.
 
 ## Proposed Changes
 
-### Componente: Sitio Web (`web/privacy.html`)
+### Componente: Sitio Web (`web/`) y Módulo Reutilizable (`web/navbar.js`)
 
-#### [privacy.html](file:///C:/Users/aleja/StudioProjects/SegurCel/web/privacy.html)
-- Actualizar `content_4` en la plantilla HTML y en los objetos `texts` de todos los idiomas:
-  `"Por estrictos motivos de seguridad y arquitectura Zero-Knowledge, la eliminación de cuenta y purga de registros cifrados se realiza EXCLUSIVAMENTE mediante autenticación activa de sesión dentro de la aplicación móvil de SegurCel o en nuestra Bóveda Web oficial en https://segurcel.app/vault. No se procesan solicitudes de baja vía correos electrónicos ni formularios de terceros desautenticados para prevenir eliminaciones no autorizadas."`
+#### [navbar.js](file:///C:/Users/aleja/StudioProjects/SegurCel/web/navbar.js)
+- Añadir en el footer dinámico el enlace directo:
+  `<a href="https://github.com/ambuydev/SegurCel" target="_blank">⭐ GitHub (Código Auditable)</a>`
+
+#### [landing.html](file:///C:/Users/aleja/StudioProjects/SegurCel/web/landing.html) & [guide.html](file:///C:/Users/aleja/StudioProjects/SegurCel/web/guide.html)
+- Añadir insignia promocional en la sección Hero / Seguridad:
+  `"🛡️ Código Fuente 100% Auditable y Transparente en GitHub"`
+
+### Componente: Aplicación Móvil (`lib/widgets/home/about_app_sheet.dart`)
+
+#### [about_app_sheet.dart](file:///C:/Users/aleja/StudioProjects/SegurCel/lib/widgets/home/about_app_sheet.dart)
+- Añadir un botón con el ícono de código hacia `https://github.com/ambuydev/SegurCel`.
 
 ---
 
