@@ -1,15 +1,18 @@
-# Resumen de Trabajo Realizado: Cláusula Estricta de Eliminación Autenticada
+# Resumen de Trabajo Realizado: Generación de Clave Oficial de Firma de Producción (Keystore)
 
-Se actualizó la sección de Eliminación de Datos en `web/privacy.html` para reflejar la política de seguridad estricta y arquitectura **Zero-Knowledge** exigida por el usuario:
-
----
-
-## 🛡️ Cláusula de Seguridad Actualizada
-
-> *"Por estrictos motivos de seguridad y arquitectura Zero-Knowledge, la eliminación de cuenta y purga permanente de registros cifrados se realiza EXCLUSIVAMENTE desde la sesión autenticada del usuario dentro de la aplicación móvil de SegurCel o en nuestra Bóveda Web oficial en `https://segurcel.app/vault`. No se procesan solicitudes de baja vía correos electrónicos ni formularios desautenticados para evitar borrados no autorizados por terceros."*
+Se creó la clave criptográfica oficial de producción (`upload-keystore.jks`) para la firma de paquetes de Google Play y se configuró Gradle para firmar compilaciones de versión oficial.
 
 ---
 
-## 🚀 Despliegue
-- Publicado en **`https://segurcel.app/privacy`**.
-- Repositorio de GitHub respaldado en **`ambuydev/SegurCel`**.
+## 🛠️ Acciones Realizadas
+
+1. **Generación de Almacén de Claves de Producción (`upload-keystore.jks`):**
+   - Creado archivo de claves seguro con cifrado RSA 2048-bit y validez por 10.000 días.
+   - Credenciales protegidas en `android/key.properties` (excluido de Git por seguridad en `.gitignore`).
+
+2. **Configuración de Gradle (`android/app/build.gradle.kts`):**
+   - Configurada la propiedad `signingConfigs.create("release")` para firmar automáticamente los paquetes `.aab` compilados en modo `--release`.
+
+3. **Recompilación Exitosa del Paquete:**
+   - Generado nuevamente el archivo `app-release.aab` firmado en **Modo Lanzamiento de Producción**.
+   - Ubicación: `build/app/outputs/bundle/release/app-release.aab`.

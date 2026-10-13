@@ -77,3 +77,13 @@
     - [x] Update `web/privacy.html` to state that account deletion is performed exclusively within the authenticated SegurCel mobile app or Web Vault (`https://segurcel.app/vault`)
     - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
     - [x] Push update to GitHub
+- [x] Implement Inactivity Auto-Purge Policy (180 Days) Across App, Web, and Firebase
+    - [x] Update `lib/services/vault_service.dart` to auto-record `last_login_at: FieldValue.serverTimestamp()` on every user session
+    - [x] Update `web/privacy.html` Section 4 with 180-day inactivity auto-purge policy and warning notification clause
+    - [x] Translate Section 4 across all 10 languages (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`)
+    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Push update to GitHub
+- [x] Generate Official Production Keystore & Recompile Signed App Bundle
+    - [x] Generate `upload-keystore.jks` using keytool
+    - [x] Configure Gradle `build.gradle.kts` with `release` signingConfig
+    - [x] Recompile signed `app-release.aab`
