@@ -559,7 +559,7 @@
             border-radius: 12px;
         }
 
-        /* Features Section Glassmorphism & Circuit Board Background */
+        /* Features Section Glassmorphism & Custom Circuit Board Background */
         .features-section {
             max-width: 1200px;
             margin: 0 auto 60px;
@@ -567,7 +567,7 @@
         }
 
         .circuit-board-section {
-            background-image: linear-gradient(180deg, rgba(16, 20, 29, 0.75) 0%, rgba(16, 20, 29, 0.9) 100%), url('assets/html/logo_circuitos.jpeg');
+            background-image: url('assets/html/circuit_hub_custom.png');
             background-size: cover;
             background-position: center;
             border-radius: 24px;
@@ -576,41 +576,35 @@
             border: 1.5px solid rgba(0, 240, 255, 0.4);
             box-shadow: 0 0 40px rgba(108, 99, 255, 0.3);
             overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
         }
 
         .circuit-infographic-container {
             display: grid;
-            grid-template-columns: 1fr 220px 1fr;
+            grid-template-columns: 1fr 200px 1fr;
             gap: 24px;
             align-items: center;
             position: relative;
             z-index: 5;
-        }
-
-        .circuit-lines-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
         }
 
         .circuit-col {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
             z-index: 3;
         }
 
         .feature-card {
-            background: rgba(20, 26, 40, 0.85);
+            background: rgba(16, 20, 29, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(0, 240, 255, 0.5);
+            border: 1.5px solid rgba(0, 240, 255, 0.4);
             border-radius: 16px;
-            padding: 22px;
+            padding: 20px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(108, 99, 255, 0.2);
             transition: all 0.3s ease;
         }
@@ -621,31 +615,25 @@
             transform: translateY(-2px);
         }
 
-        .standalone-shield-node {
+        .center-space-node {
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 5;
+            min-height: 200px;
         }
 
-        .standalone-shield-badge {
-            width: 140px;
-            height: 140px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, #1E2538 0%, #10141D 100%);
-            border: 3.5px solid #00F0FF;
-            box-shadow: 0 0 45px #00F0FF, 0 0 90px rgba(108, 99, 255, 0.7), inset 0 0 25px rgba(0, 240, 255, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: shieldFloat 4s infinite ease-in-out;
-        }
-
-        @keyframes shieldFloat {
-            0%, 100% { transform: translateY(0); box-shadow: 0 0 40px #00F0FF, 0 0 80px rgba(108, 99, 255, 0.7); }
-            50% { transform: translateY(-8px); box-shadow: 0 0 55px #00F0FF, 0 0 110px rgba(108, 99, 255, 0.9); }
+        @media (max-width: 950px) {
+            .circuit-board-section {
+                background-image: none;
+                background-color: var(--card-bg);
+            }
+            .circuit-infographic-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .center-space-node {
+                display: none;
+            }
         }
 
         .standalone-shield-badge img {
@@ -995,41 +983,6 @@
 
         <div class="circuit-board-section">
             <div class="circuit-infographic-container">
-                <!-- SVG Circuit Lines Overlay (Visible on PC) -->
-                <svg class="circuit-lines-overlay" viewBox="0 0 1200 650" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <filter id="neonGlowCyan" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00F0FF" flood-opacity="0.9"/>
-                        </filter>
-                        <filter id="neonGlowPurple" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#6C63FF" flood-opacity="0.9"/>
-                        </filter>
-                    </defs>
-
-                    <!-- Left Column Traces -->
-                    <path d="M 410,75 L 510,75 L 550,290 L 600,290" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
-                    <path d="M 410,230 L 525,230 L 560,305 L 600,305" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
-                    <path d="M 410,400 L 525,400 L 560,340 L 600,340" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
-                    <path d="M 410,560 L 510,560 L 550,355 L 600,355" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
-
-                    <!-- Right Column Traces -->
-                    <path d="M 790,75 L 690,75 L 650,290 L 600,290" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
-                    <path d="M 790,230 L 675,230 L 640,305 L 600,305" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
-                    <path d="M 790,400 L 675,400 L 640,340 L 600,340" stroke="#6C63FF" stroke-width="3" fill="none" filter="url(#neonGlowPurple)" />
-                    <path d="M 790,560 L 690,560 L 650,355 L 600,355" stroke="#00F0FF" stroke-width="3" fill="none" filter="url(#neonGlowCyan)" stroke-dasharray="8,4" />
-
-                    <!-- Glowing Connection Nodes -->
-                    <circle cx="510" cy="75" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
-                    <circle cx="525" cy="230" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
-                    <circle cx="525" cy="400" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
-                    <circle cx="510" cy="560" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
-
-                    <circle cx="690" cy="75" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
-                    <circle cx="675" cy="230" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
-                    <circle cx="675" cy="400" r="5" fill="#6C63FF" filter="url(#neonGlowPurple)" />
-                    <circle cx="690" cy="560" r="5" fill="#00F0FF" filter="url(#neonGlowCyan)" />
-                </svg>
-
                 <!-- Columna Izquierda (4 Tarjetas) -->
                 <div class="circuit-col">
                     <div class="feature-card">
@@ -1057,12 +1010,8 @@
                     </div>
                 </div>
 
-                <!-- Escudo Central Exento Neón -->
-                <div class="standalone-shield-node">
-                    <div class="standalone-shield-badge">
-                        <img src="assets/html/logo_solo.jpeg" alt="SegurCel Shield Logo">
-                    </div>
-                </div>
+                <!-- Espacio Transparente Central (Revela el Escudo de la Imagen de Fondo) -->
+                <div class="center-space-node"></div>
 
                 <!-- Columna Derecha (4 Tarjetas) -->
                 <div class="circuit-col">
