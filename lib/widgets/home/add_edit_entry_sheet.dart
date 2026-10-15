@@ -84,7 +84,21 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
   late TextEditingController _cardCvvController;
   late TextEditingController _cardPinController;
 
+  late String _selectedCategoryOption;
+  late bool _isCreatingNewCategory;
+
   String? _dialogError;
+
+  List<String> _getExistingCategories() {
+    final set = <String>{'General', 'Tarjetas', 'Notas'};
+    for (final e in widget.vaultService.entries) {
+      final c = e.category.trim();
+      if (c.isNotEmpty) set.add(c);
+    }
+    final list = set.toList();
+    list.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    return list;
+  }
 
   @override
   void initState() {
@@ -95,7 +109,22 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
     _titleController = TextEditingController(text: widget.existingEntry?.title ?? '');
     _usernameController = TextEditingController(text: widget.existingEntry?.username ?? '');
     _passwordController = TextEditingController(text: widget.existingEntry?.password ?? '');
-    _categoryController = TextEditingController(text: widget.existingEntry?.category ?? 'General');
+    
+    final initialCat = (widget.existingEntry?.category ?? 'General').trim();
+    _categoryController = TextEditingController(text: initialCat);
+
+    final categories = _getExistingCategories();
+    if (categories.contains(initialCat)) {
+      _selectedCategoryOption = initialCat;
+      _isCreatingNewCategory = false;
+    } else if (initialCat.isNotEmpty) {
+      _selectedCategoryOption = initialCat;
+      _isCreatingNewCategory = false;
+    } else {
+      _selectedCategoryOption = '__NEW_CATEGORY__';
+      _isCreatingNewCategory = true;
+    }
+
     _notesController = TextEditingController(text: widget.existingEntry?.notes ?? '');
     _totpController = TextEditingController(text: widget.existingEntry?.totpSecret ?? '');
 
@@ -156,6 +185,126 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
     );
   }
 
+  Widget _buildCategorySection() {
+    final categories = _getExistingCategories();
+    const newCategoryKey = '__NEW_CATEGORY__';
+
+    final dropdownItems = <DropdownMenuItem<String>>[];
+    for (final cat in categories) {
+      dropdownItems.add(
+        DropdownMenuItem<String>(
+          value: cat,
+          child: Text(
+            cat,
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        ),
+      );
+    }
+
+    if (!categories.contains(_selectedCategoryOption) && _selectedCategoryOption != newCategoryKey) {
+      dropdownItems.add(
+        DropdownMenuItem<String>(
+          value: _selectedCategoryOption,
+          child: Text(
+            _selectedCategoryOption,
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        ),
+      );
+    }
+
+    dropdownItems.add(
+      DropdownMenuItem<String>(
+        value: newCategoryKey,
+        child: Row(
+          children: [
+            const Icon(Icons.add_circle_outline, color: Colors.amberAccent, size: 18),
+            const SizedBox(width: 8),
+            Text(
+              widget.loc.text('new_category_option'),
+              style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DropdownButtonFormField<String>(
+          value: dropdownItems.any((item) => item.value == _selectedCategoryOption)
+              ? _selectedCategoryOption
+              : newCategoryKey,
+          dropdownColor: const Color(0xFF1E2538),
+          decoration: InputDecoration(
+            labelText: widget.loc.text('category_label'),
+            labelStyle: const TextStyle(color: Colors.white70),
+            prefixIcon: const Icon(Icons.folder_outlined, color: Color(0xFF6C63FF), size: 20),
+            filled: true,
+            fillColor: const Color(0xFF10141D),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.white24),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.white24),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFF6C63FF)),
+            ),
+          ),
+          items: dropdownItems,
+          onChanged: (val) {
+            if (val == null) return;
+            setState(() {
+              _selectedCategoryOption = val;
+              if (val == newCategoryKey) {
+                _isCreatingNewCategory = true;
+                _categoryController.text = '';
+              } else {
+                _isCreatingNewCategory = false;
+                _categoryController.text = val;
+              }
+            });
+          },
+        ),
+        if (_isCreatingNewCategory) ...[
+          const SizedBox(height: 12),
+          TextField(
+            controller: _categoryController,
+            autofocus: true,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              labelText: widget.loc.text('new_category_label'),
+              labelStyle: const TextStyle(color: Colors.amberAccent),
+              hintText: 'Ej. Trabajo, Personal...',
+              hintStyle: const TextStyle(color: Colors.white30),
+              prefixIcon: const Icon(Icons.create_new_folder_outlined, color: Colors.amberAccent, size: 20),
+              filled: true,
+              fillColor: const Color(0xFF10141D),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.amberAccent),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.amberAccent.withAlpha(150)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.amberAccent),
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -197,7 +346,11 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
                     isSelected: _selectedType == 'cards',
                     onTap: () => setState(() {
                       _selectedType = 'cards';
-                      if (_categoryController.text == 'General') _categoryController.text = 'Tarjetas';
+                      if (_categoryController.text == 'General' || _categoryController.text.isEmpty) {
+                        _categoryController.text = 'Tarjetas';
+                        _selectedCategoryOption = 'Tarjetas';
+                        _isCreatingNewCategory = false;
+                      }
                     }),
                   ),
                 ),
@@ -210,7 +363,11 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
                     isSelected: _selectedType == 'notes',
                     onTap: () => setState(() {
                       _selectedType = 'notes';
-                      if (_categoryController.text == 'General') _categoryController.text = 'Notas';
+                      if (_categoryController.text == 'General' || _categoryController.text.isEmpty) {
+                        _categoryController.text = 'Notas';
+                        _selectedCategoryOption = 'Notas';
+                        _isCreatingNewCategory = false;
+                      }
                     }),
                   ),
                 ),
@@ -369,32 +526,16 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
 
             const SizedBox(height: 12),
 
-            if (_selectedType != 'notes') ...[
-              TextField(
-                controller: _categoryController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('category_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
+            _buildCategorySection(),
 
+            if (_selectedType != 'notes') ...[
+              const SizedBox(height: 12),
               TextField(
                 controller: _notesController,
                 style: const TextStyle(color: Colors.white),
                 maxLines: 2,
                 decoration: InputDecoration(
                   labelText: widget.loc.text('notes_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-            ] else ...[
-              TextField(
-                controller: _categoryController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('category_label'),
                   labelStyle: const TextStyle(color: Colors.white70),
                 ),
               ),
@@ -478,7 +619,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
               },
               child: Text(
                 _isEditing ? widget.loc.text('save_changes') : widget.loc.text('add_password'),
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ],

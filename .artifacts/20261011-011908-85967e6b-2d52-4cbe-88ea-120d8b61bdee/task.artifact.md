@@ -223,3 +223,11 @@
 - [x] Standardize PRO Plan Bullets (pi5) Across All 10 Languages (Remove Dollar Prices & Lifetime License)
     - [x] Updated `pi5` across all 10 languages in `web/landing.html` and `web/index.html` to `"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)"`
     - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [/] Implement Category Selector Menu (Dropdown + New Category Option) & Bump Version to 1.0.1+2
+    - [ ] Add translation keys (`select_category`, `new_category_option`, `new_category_label`) in `lib/services/localization_service.dart` across 10 languages
+    - [ ] Refactor `lib/widgets/home/add_edit_entry_sheet.dart` to include `DropdownButtonFormField` for category selection + dynamic text field
+    - [ ] Update `pubspec.yaml` to `version: 1.0.1+2`
+    - [ ] Update `lib/widgets/home/about_app_sheet.dart` and `CONTEXT_LOG.md` to `1.0.1 (Build 2)`
+    - [ ] Recompile Web (`flutter build web --release`), copy to `build/web/`, deploy to Firebase Hosting
+    - [ ] Recompile Signed Android Bundle (`flutter build appbundle --release`)
+    - [ ] Push all changes to GitHub (`master` and `feature/browser-extension`)

@@ -1,24 +1,39 @@
-# Plan de Implementación: Estandarización de Lista de Planes PRO (pi5) en los 10 Idiomas
+# Plan de Implementación: Menú Desplegable de Categorías y Elevación de Versión a 1.0.1 (Build 2)
 
-Eliminar cualquier mención de precios fijos en dólares ($1.99, $10.99, $24.99) y referencias obsoletas a "Licencia Vitalicia" / "Lifetime License" en la clave `pi5` del diccionario multilingüe `dict` en `web/landing.html` e `index.html`:
+Implementar el selector desplegable de categorías existentes con la opción de crear nueva categoría en el modal `AddEditEntrySheet`, y elevar el número de versión oficial de la aplicación de `1.0.0+1` a `1.0.1+2` en todos los archivos correspondientes:
 
-1. **Traducciones Estandarizadas de `pi5`:**
-   - **`es`:** `"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)."`
-   - **`en`:** `"Flexible Plans: Monthly, Yearly, Family Plan, and Emergency Rescue (6 Months)."`
-   - **`pt`:** `"Planos Flexíveis: Mensal, Anual, Plano Familiar e Resgate de Emergência (6 Meses)."`
-   - **`zh`:** `"灵活订阅方案：按月、按年、家庭方案与紧急救援方案 (6 个月)。"`
-   - **`fr`:** `"Offres Flexibles : Mensuel, Annuel, Offre Familiale et Sauvetage d'Urgence (6 Mois)."`
-   - **`hi`:** `"लचीले प्लान: मासिक, वार्षिक, फैमिली प्लान और आपातकालीन बचाव (6 महीने)।"`
-   - **`de`:** `"Flexible Pläne: Monatlich, Jährlich, Familien-Tarif und Notfall-Rettung (6 Monate)."`
-   - **`ja`:** `"柔軟なプラン：月額、年額、ファミリープラン、6ヶ月緊急レスキュー。"`
-   - **`ko`:** `"유연한 요금제: 월간, 연간, 패밀리 요금제, 6개월 긴급 구조."`
-   - **`ru`:** `"Гибкие тарифы: Ежемесячный, Годовой, Семейный и Аварийный (6 месяцев)."`
+1. **Traducciones en `lib/services/localization_service.dart` (10 Idiomas):**
+   - `select_category`: "Seleccionar categoría" / "Select category" / "Selecionar categoria"
+   - `new_category_option`: "+ Nueva categoría..." / "+ New category..." / "+ Nova categoria..."
+   - `new_category_label`: "Nombre de la nueva categoría" / "New category name" / "Nome da nova categoria"
+
+2. **Lógica de Categorías en `lib/widgets/home/add_edit_entry_sheet.dart`:**
+   - Extraer todas las categorías únicas creadas en la bóveda (`widget.vaultService.entries`).
+   - Agregar opciones predeterminadas ("General", "Tarjetas", "Notas").
+   - Construir `DropdownButtonFormField<String>` con opciones existentes + `'__NEW_CATEGORY__'`.
+   - Si el usuario selecciona `'__NEW_CATEGORY__'`, mostrar el `TextField` para ingresar el nuevo nombre.
+
+3. **Incremento de Versión:**
+   - `pubspec.yaml`: `version: 1.0.1+2`
+   - `lib/widgets/home/about_app_sheet.dart`: `1.0.1 (Build 2)`
+   - `CONTEXT_LOG.md`: `Versión Actual: 1.0.1 (Build 2)`
+
+4. **Compilación y Despliegue:**
+   - Recompilar Web (`flutter build web --release`), copiar a `build/web/` y desplegar en Firebase Hosting.
+   - Recompilar paquete firmado oficial `.aab` (`flutter build appbundle --release`).
+   - Push a GitHub en las ramas `master` y `feature/browser-extension`.
 
 ---
 
 ## Verification Plan
 
 ### Terminal Commands
-- Sincronizar en `build/web/` y desplegar en Firebase Hosting:
+- Verificar análisis estático en Flutter:
+  `flutter analyze`
+- Recompilar Bóveda Web y desplegar:
+  `flutter build web --release`
+  `powershell -Command "Copy-Item -Path build/web/* -Destination web/ -Recurse -Force"`
   `firebase deploy --only hosting`
+- Recompilar Bundle Firmado para Android:
+  `flutter build appbundle --release`
 - Push a GitHub.
