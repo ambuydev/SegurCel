@@ -953,11 +953,11 @@
             <a href="/vault" class="btn-primary" id="btnHeroVault">
                 <span>🚀</span> <span id="lblBtnVault">Acceder a la Bóveda Web</span>
             </a>
+            <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #00C853 0%, #009688 100%); color: #FFF;" id="btnPlayTesting">
+                <span>📲</span> <span id="lblBtnPlay">Unirse a la Prueba en Google Play</span>
+            </a>
             <a href="segurcel-extension.zip" class="btn-secondary" download id="btnDownloadExt">
                 <span>🧩</span> <span id="lblBtnExt">Descargar Extensión PC/Mac (.zip)</span>
-            </a>
-            <a href="https://segurcel.app/app-release.apk" class="btn-secondary" id="btnDownloadApk">
-                <span>📲</span> <span id="lblBtnApk">Descargar APK Android</span>
             </a>
         </div>
     </section>
@@ -1217,7 +1217,7 @@
             <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 24px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.</p>
             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
                 <a href="/vault" class="btn-primary" id="btnCtaVault">🚀 Acceder a SegurCel Web</a>
-                <a href="javascript:void(0)" onclick="alert('Google Play Store: Próximamente disponible para Android. Mientras tanto, puedes disfrutar de todas las funciones en la Bóveda Web o descargar el APK directo arriba.')" class="btn-secondary" id="btnCtaApk">📲 Disponible en Google Play</a>
+                <a href="https://play.google.com/store/apps/details?id=com.segurcel.segurcel" target="_blank" class="btn-secondary" id="btnCtaPlayStore">📲 Ver en Google Play Store</a>
             </div>
         </div>
     </section>
@@ -1244,8 +1244,8 @@
                 sub: "SegurCel es el gestor de contraseñas de nueva generación. Almacena contraseñas, tarjetas bancarias, notas confidenciales y genera códigos 2FA TOTP con cifrado AES-256 de nivel militar.",
                 btnVault: "Acceder a la Bóveda Web",
                 btnExt: "Descargar Extensión PC/Mac (.zip)",
-                btnApk: "Descargar APK Android",
-                btnPlay: "Disponible en Google Play",
+                btnPlay: "Unirse a la Prueba en Google Play",
+                btnApk: "📲 Ver en Google Play Store",
                 btnHeader: "Acceder a la Bóveda",
                 zkT: "Seguridad Criptográfica Indescifrable",
                 zkD1: "En SegurCel aplicamos el estricto principio de <strong>Zero-Knowledge (Conocimiento Cero)</strong>. La clave de cifrado se deriva en tu propio dispositivo mediante <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iteraciones.",
@@ -1276,8 +1276,8 @@
                 sub: "SegurCel is the next-generation password manager. Store passwords, bank cards, confidential notes, and generate 2FA TOTP codes with military-grade AES-256 encryption.",
                 btnVault: "Access Web Vault",
                 btnExt: "Download PC/Mac Extension (.zip)",
-                btnApk: "Download Android APK",
-                btnPlay: "Available on Google Play",
+                btnPlay: "Join Beta Test on Google Play",
+                btnApk: "📲 View on Google Play Store",
                 btnHeader: "Access Vault",
                 zkT: "Unbreakable Cryptographic Security",
                 zkD1: "At SegurCel we enforce the strict <strong>Zero-Knowledge</strong> principle. Key derivation takes place locally on your device via <strong>PBKDF2WithHmacSHA256</strong> with 65,536 iterations.",
@@ -1308,8 +1308,8 @@
                 sub: "O SegurCel é o gerenciador de senhas de nova geração. Armazene senhas, cartões bancários, notas confidenciais e gere códigos 2FA TOTP com criptografia AES-256 de nível militar.",
                 btnVault: "Acessar Cofre Web",
                 btnExt: "Baixar Extensão PC/Mac (.zip)",
-                btnApk: "Baixar APK Android",
-                btnPlay: "Disponível no Google Play",
+                btnPlay: "Participar do Teste no Google Play",
+                btnApk: "📲 Ver no Google Play Store",
                 btnHeader: "Acessar Cofre",
                 zkT: "Segurança Criptográfica Inquebrável",
                 zkD1: "No SegurCel aplicamos o princípio estrito de <strong>Zero-Knowledge (Conhecimento Zero)</strong>. A chave é derivada localmente via <strong>PBKDF2WithHmacSHA256</strong> com 65.536 iterações.",
@@ -1586,7 +1586,8 @@
             document.getElementById("heroSubtitle").innerText = data.sub;
             document.getElementById("lblBtnVault").innerText = data.btnVault;
             if (document.getElementById("lblBtnExt") && data.btnExt) document.getElementById("lblBtnExt").innerText = data.btnExt;
-            document.getElementById("lblBtnApk").innerText = data.btnApk;
+            if (document.getElementById("lblBtnPlay") && data.btnPlay) document.getElementById("lblBtnPlay").innerText = data.btnPlay;
+            if (document.getElementById("btnCtaPlayStore") && data.btnApk) document.getElementById("btnCtaPlayStore").innerText = data.btnApk;
             document.getElementById("btnHeaderVault").innerText = data.btnHeader;
 
             const guideText = guideTextMap[currentLang] || "📘 Guía de Uso";
