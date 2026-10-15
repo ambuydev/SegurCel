@@ -667,7 +667,7 @@
 
         .shield-wrapper {
             position: relative;
-            width: 220px;
+            width: 260px;
             height: 480px;
             display: flex;
             align-items: center;
@@ -678,32 +678,32 @@
         @keyframes segurcelShieldPulse {
             0% {
                 transform: scale(1);
-                filter: drop-shadow(0 0 25px rgba(41, 182, 246, 0.75))
-                        drop-shadow(0 0 35px rgba(171, 71, 188, 0.75));
+                filter: drop-shadow(0 0 30px rgba(41, 182, 246, 0.85))
+                        drop-shadow(0 0 45px rgba(171, 71, 188, 0.85));
             }
             50% {
                 transform: scale(1.05);
-                filter: drop-shadow(0 0 40px rgba(41, 182, 246, 0.95))
-                        drop-shadow(0 0 55px rgba(171, 71, 188, 0.95));
+                filter: drop-shadow(0 0 45px rgba(41, 182, 246, 1))
+                        drop-shadow(0 0 65px rgba(171, 71, 188, 1));
             }
             100% {
                 transform: scale(1);
-                filter: drop-shadow(0 0 25px rgba(41, 182, 246, 0.75))
-                        drop-shadow(0 0 35px rgba(171, 71, 188, 0.75));
+                filter: drop-shadow(0 0 30px rgba(41, 182, 246, 0.85))
+                        drop-shadow(0 0 45px rgba(171, 71, 188, 0.85));
             }
         }
 
         .segurcel-logo {
-            width: 180px;
-            height: 180px;
-            border-radius: 36px;
+            width: 220px;
+            height: 220px;
+            border-radius: 40px;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.25);
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
             z-index: 10;
             position: relative;
             animation: segurcelShieldPulse 4.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 25px rgba(41, 182, 246, 0.75))
-                    drop-shadow(0 0 35px rgba(171, 71, 188, 0.75));
+            filter: drop-shadow(0 0 30px rgba(41, 182, 246, 0.85))
+                    drop-shadow(0 0 45px rgba(171, 71, 188, 0.85));
         }
 
         @keyframes segurcelConnectorPulse {
@@ -1139,15 +1139,15 @@
                 <img src="assets/html/logo_circuitos.jpeg" class="segurcel-logo" alt="SegurCel Logo" />
 
                 <!-- CONECTORES CONVERGENTES HACIA EL ESCUDO -->
-                <div class="connector left" style="top: 14%; left: -30px; width: 145px; transform: rotate(18deg); transform-origin: left center;"></div>
-                <div class="connector left" style="top: 38%; left: -30px; width: 140px;"></div>
-                <div class="connector left" style="top: 62%; left: -30px; width: 140px;"></div>
-                <div class="connector left" style="top: 86%; left: -30px; width: 145px; transform: rotate(-18deg); transform-origin: left center;"></div>
+                <div class="connector left" style="top: 10%; left: -30px; width: 185px; transform: rotate(28deg); transform-origin: left center;"></div>
+                <div class="connector left" style="top: 36%; left: -30px; width: 155px;"></div>
+                <div class="connector left" style="top: 64%; left: -30px; width: 155px;"></div>
+                <div class="connector left" style="top: 90%; left: -30px; width: 185px; transform: rotate(-28deg); transform-origin: left center;"></div>
 
-                <div class="connector right" style="top: 14%; right: -30px; width: 145px; transform: rotate(-18deg); transform-origin: right center;"></div>
-                <div class="connector right" style="top: 38%; right: -30px; width: 140px;"></div>
-                <div class="connector right" style="top: 62%; right: -30px; width: 140px;"></div>
-                <div class="connector right" style="top: 86%; right: -30px; width: 145px; transform: rotate(18deg); transform-origin: right center;"></div>
+                <div class="connector right" style="top: 10%; right: -30px; width: 185px; transform: rotate(-28deg); transform-origin: right center;"></div>
+                <div class="connector right" style="top: 36%; right: -30px; width: 155px;"></div>
+                <div class="connector right" style="top: 64%; right: -30px; width: 155px;"></div>
+                <div class="connector right" style="top: 90%; right: -30px; width: 185px; transform: rotate(28deg); transform-origin: right center;"></div>
             </div>
 
             <!-- TARJETAS DERECHA -->
