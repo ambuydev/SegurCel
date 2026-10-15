@@ -559,81 +559,230 @@
             border-radius: 12px;
         }
 
-        /* Features Section Glassmorphism & Custom Circuit Board Background */
+        /* User Native SegurCel Circuit Hub Infographic */
+        :root {
+            --seg-bg-color: #050712;
+            --seg-blue: #29b6f6;
+            --seg-purple: #ab47bc;
+            --seg-card-bg: rgba(10, 14, 30, 0.75);
+            --seg-border-radius: 14px;
+            --seg-glow-soft: 0 0 20px rgba(171, 71, 188, 0.55);
+            --seg-glow-soft-blue: 0 0 20px rgba(41, 182, 246, 0.55);
+        }
+
         .features-section {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto 60px;
             padding: 0 20px;
         }
 
-        .circuit-board-section {
-            background-image: url('assets/html/circuit_hub_custom.png');
-            background-size: 85% auto;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: var(--card-bg);
-            border-radius: 24px;
-            padding: 40px 24px;
-            position: relative;
-            border: 1.5px solid rgba(0, 240, 255, 0.4);
-            box-shadow: 0 0 40px rgba(108, 99, 255, 0.3);
-            overflow: hidden;
-            min-height: 580px;
-            display: flex;
-            align-items: center;
-        }
-
-        .circuit-infographic-container {
-            display: grid;
-            grid-template-columns: 1fr 200px 1fr;
-            gap: 24px;
-            align-items: center;
-            position: relative;
-            z-index: 5;
+        .segurcel-wrapper {
             width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            background: radial-gradient(circle at top, #111633 0, #050712 55%, #020309 100%);
+            border-radius: 24px;
+            padding: 40px 30px;
+            border: 1.5px solid rgba(171, 71, 188, 0.4);
+            box-shadow: 0 0 40px rgba(41, 182, 246, 0.2);
+            overflow: hidden;
         }
 
-        .circuit-col {
+        @keyframes segurcelGlow {
+            0% { opacity: 0.55; transform: scale(1); filter: blur(0px); }
+            50% { opacity: 0.85; transform: scale(1.05); filter: blur(4px); }
+            100% { opacity: 0.55; transform: scale(1); filter: blur(0px); }
+        }
+
+        .segurcel-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(41, 182, 246, 0.15) 0, transparent 55%),
+                radial-gradient(circle at 90% 80%, rgba(171, 71, 188, 0.15) 0, transparent 55%);
+            opacity: 0.9;
+            pointer-events: none;
+            z-index: 0;
+            animation: segurcelGlow 6s ease-in-out infinite;
+        }
+
+        .cards-column {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            z-index: 3;
+            z-index: 1;
         }
 
-        .feature-card {
-            background: rgba(16, 20, 29, 0.85);
+        .card {
+            border-radius: var(--seg-border-radius);
+            background: var(--seg-card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(0, 240, 255, 0.4);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(108, 99, 255, 0.2);
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
-            border-color: #00F0FF;
-            box-shadow: 0 12px 35px rgba(0, 240, 255, 0.35);
+        .card:hover {
             transform: translateY(-2px);
         }
 
-        .center-space-node {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 200px;
+        .card.left {
+            border: 1.5px solid rgba(41, 182, 246, 0.65);
+            box-shadow: var(--seg-glow-soft-blue);
         }
 
-        @media (max-width: 950px) {
-            .circuit-board-section {
-                background-image: none;
-                background-color: var(--card-bg);
+        .card.right {
+            border: 1.5px solid rgba(171, 71, 188, 0.65);
+            box-shadow: var(--seg-glow-soft);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .card-icon {
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .shield-wrapper {
+            position: relative;
+            width: 220px;
+            height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        @keyframes segurcelShieldPulse {
+            0% {
+                transform: scale(1);
+                box-shadow:
+                    0 0 25px rgba(41, 182, 246, 0.7),
+                    0 0 35px rgba(171, 71, 188, 0.7);
             }
-            .circuit-infographic-container {
+            50% {
+                transform: scale(1.05);
+                box-shadow:
+                    0 0 45px rgba(41, 182, 246, 0.95),
+                    0 0 60px rgba(171, 71, 188, 0.95);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow:
+                    0 0 25px rgba(41, 182, 246, 0.7),
+                    0 0 35px rgba(171, 71, 188, 0.7);
+            }
+        }
+
+        .shield {
+            width: 170px;
+            height: 190px;
+            border-radius: 40% 40% 50% 50%;
+            background: linear-gradient(180deg, var(--seg-blue), var(--seg-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: segurcelShieldPulse 4.5s ease-in-out infinite;
+        }
+
+        .lock {
+            width: 65px;
+            height: 85px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #263238, #000000);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(41, 182, 246, 0.85);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lock::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            width: 42px;
+            height: 36px;
+            border-radius: 50px 50px 0 0;
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            border-bottom: none;
+            box-shadow: 0 0 14px rgba(171, 71, 188, 0.85);
+        }
+
+        .lock-keyhole {
+            width: 12px;
+            height: 22px;
+            background: var(--seg-blue);
+            border-radius: 6px;
+            box-shadow: 0 0 8px #00F0FF;
+        }
+
+        @keyframes segurcelConnectorPulse {
+            0% { opacity: 0.55; box-shadow: 0 0 6px currentColor; }
+            50% { opacity: 1; box-shadow: 0 0 14px currentColor; }
+            100% { opacity: 0.55; box-shadow: 0 0 6px currentColor; }
+        }
+
+        .connector {
+            position: absolute;
+            height: 2px;
+            background: currentColor;
+            opacity: 0.8;
+            z-index: 1;
+            animation: segurcelConnectorPulse 4.5s ease-in-out infinite;
+        }
+
+        .connector.left {
+            color: var(--seg-blue);
+            left: -30px;
+            width: 140px;
+        }
+
+        .connector.right {
+            color: var(--seg-purple);
+            right: -30px;
+            width: 140px;
+        }
+
+        @media (max-width: 1024px) {
+            .segurcel-wrapper {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 24px;
+                padding: 24px 16px;
             }
-            .center-space-node {
+            .cards-column {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .shield-wrapper {
+                order: -1;
+                height: 220px;
+                margin: 0 auto;
+            }
+            .connector {
                 display: none;
             }
         }
@@ -983,63 +1132,94 @@
         <h2 class="section-title" id="secTitleFeatures">Características Principales</h2>
         <p class="section-subtitle" id="secSubFeatures">Diseñado con los más estrictos estándares de ciberseguridad mundial.</p>
 
-        <div class="circuit-board-section">
-            <div class="circuit-infographic-container">
-                <!-- Columna Izquierda (4 Tarjetas) -->
-                <div class="circuit-col">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
-                        <h3 id="f1_title">Cifrado Zero-Knowledge</h3>
-                        <p id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</p>
+        <div class="segurcel-wrapper">
+            <!-- TARJETAS IZQUIERDA -->
+            <div class="cards-column">
+                <div class="card left">
+                    <div class="card-header">
+                        <span class="card-icon">🔒</span>
+                        <span class="card-title" id="f1_title">Cifrado Zero-Knowledge</span>
                     </div>
+                    <div class="card-desc" id="f1_desc">Tus datos se cifran en tu propio dispositivo utilizando AES-256-GCM + PBKDF2 (65.536 iteraciones). Nadie más puede acceder a tus claves.</div>
+                </div>
 
-                    <div class="feature-card">
-                        <div class="feature-icon">🩺</div>
-                        <h3 id="f4_title">Auditoría de Salud</h3>
-                        <p id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</p>
+                <div class="card left">
+                    <div class="card-header">
+                        <span class="card-icon">🩺</span>
+                        <span class="card-title" id="f4_title">Auditoría de Salud</span>
                     </div>
+                    <div class="card-desc" id="f4_desc">Analizador inteligente que califica la fortaleza de tus contraseñas del 0 al 100% y detecta claves repetidas o antiguas.</div>
+                </div>
 
-                    <div class="feature-card">
-                        <div class="feature-icon">📁</div>
-                        <h3 id="f6_title">Importar / Exportar Fácil</h3>
-                        <p id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</p>
+                <div class="card left">
+                    <div class="card-header">
+                        <span class="card-icon">📁</span>
+                        <span class="card-title" id="f6_title">Importar / Exportar Fácil</span>
                     </div>
+                    <div class="card-desc" id="f6_desc">Migra tus contraseñas en segundos desde Google Chrome, Edge, Bitwarden o 1Password en formato CSV y JSON.</div>
+                </div>
 
-                    <div class="feature-card">
-                        <div class="feature-icon">🧩</div>
-                        <h3 id="f7_title">Extensión para Navegador</h3>
-                        <p id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</p>
+                <div class="card left">
+                    <div class="card-header">
+                        <span class="card-icon">🧩</span>
+                        <span class="card-title" id="f7_title">Extensión para Navegador</span>
+                    </div>
+                    <div class="card-desc" id="f7_desc">Autocompleta tus credenciales en Chrome, Edge y Brave con 1 solo clic. Mismo cifrado Zero-Knowledge en tu PC y Mac.</div>
+                </div>
+            </div>
+
+            <!-- ESCUDO CENTRAL -->
+            <div class="shield-wrapper">
+                <div class="shield">
+                    <div class="lock">
+                        <div class="lock-keyhole"></div>
                     </div>
                 </div>
 
-                <!-- Espacio Transparente Central (Revela el Escudo de la Imagen de Fondo) -->
-                <div class="center-space-node"></div>
+                <!-- CONECTORES -->
+                <div class="connector left" style="top: 12%;"></div>
+                <div class="connector left" style="top: 37%;"></div>
+                <div class="connector left" style="top: 62%;"></div>
+                <div class="connector left" style="top: 87%;"></div>
 
-                <!-- Columna Derecha (4 Tarjetas) -->
-                <div class="circuit-col">
-                    <div class="feature-card">
-                        <div class="feature-icon">⏱️</div>
-                        <h3 id="f2_title">Autenticador 2FA TOTP</h3>
-                        <p id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</p>
-                    </div>
+                <div class="connector right" style="top: 12%;"></div>
+                <div class="connector right" style="top: 37%;"></div>
+                <div class="connector right" style="top: 62%;"></div>
+                <div class="connector right" style="top: 87%;"></div>
+            </div>
 
-                    <div class="feature-card">
-                        <div class="feature-icon">💳</div>
-                        <h3 id="f5_title">Tarjetas & Notas Seguras</h3>
-                        <p id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</p>
+            <!-- TARJETAS DERECHA -->
+            <div class="cards-column">
+                <div class="card right">
+                    <div class="card-header">
+                        <span class="card-icon">⏱️</span>
+                        <span class="card-title" id="f2_title">Autenticador 2FA TOTP</span>
                     </div>
+                    <div class="card-desc" id="f2_desc">Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos. Olvídate de usar aplicaciones secundarias.</div>
+                </div>
 
-                    <div class="feature-card">
-                        <div class="feature-icon">💣</div>
-                        <h3 id="f3_title">3-Strike Autodestrucción</h3>
-                        <p id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</p>
+                <div class="card right">
+                    <div class="card-header">
+                        <span class="card-icon">💳</span>
+                        <span class="card-title" id="f5_title">Tarjetas & Notas Seguras</span>
                     </div>
+                    <div class="card-desc" id="f5_desc">Guarda tarjetas de crédito, PINs de cajero y notas confidenciales organizados por pestañas y marcas de favoritos ⭐.</div>
+                </div>
 
-                    <div class="feature-card">
-                        <div class="feature-icon">🛰️</div>
-                        <h3 id="f8_title">Rastreo de Emergencia</h3>
-                        <p id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</p>
+                <div class="card right">
+                    <div class="card-header">
+                        <span class="card-icon">💣</span>
+                        <span class="card-title" id="f3_title">3-Strike Autodestrucción</span>
                     </div>
+                    <div class="card-desc" id="f3_desc">Protección anti-fuerza bruta: tras 3 intentos fallidos de PIN de 4 dígitos, la bóveda local se destruye permanentemente.</div>
+                </div>
+
+                <div class="card right">
+                    <div class="card-header">
+                        <span class="card-icon">🛰️</span>
+                        <span class="card-title" id="f8_title">Rastreo de Emergencia</span>
+                    </div>
+                    <div class="card-desc" id="f8_desc">Acceso directo desde tu bóveda a Google Encontrar mi Dispositivo y Apple iCloud Buscar mi iPhone.</div>
                 </div>
             </div>
         </div>
