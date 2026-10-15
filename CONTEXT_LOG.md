@@ -6,7 +6,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ## 1. 📌 INFORMACIÓN GENERAL Y RECURSOS DEL PROYECTO
 - **Nombre Oficial de la App**: SegurCel - Bóveda & 2FA (`com.segurcel.segurcel`)
-- **Versión Actual**: 1.0.0 (Build 1)
+- **Versión Actual**: 1.0.1 (Build 2)
 - **Framework**: Flutter 3.41.8 / Dart 3.11.5 (Android & Web)
 - **Dominio Oficial & Hosting**: `https://segurcel.app` (Proyecto Firebase: `segurcel-45c92`)
 - **Dominio de Respaldo Directo**: `https://segurcel-45c92.web.app`
