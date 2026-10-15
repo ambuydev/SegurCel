@@ -25,6 +25,7 @@
     "rules": "firestore.rules"
   },
   "hosting": {
+    "site": "segurcel-45c92",
     "public": "build/web",
     "ignore": [
       "firebase.json",

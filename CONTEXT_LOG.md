@@ -9,6 +9,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 - **Versión Actual**: 1.0.0 (Build 1)
 - **Framework**: Flutter 3.41.8 / Dart 3.11.5 (Android & Web)
 - **Dominio Oficial & Hosting**: `https://segurcel.app` (Proyecto Firebase: `segurcel-45c92`)
+- **Dominio de Respaldo Directo**: `https://segurcel-45c92.web.app`
 - **Usuario GitHub**: `ambuydev`
 - **Repositorio Público GitHub**: `https://github.com/ambuydev/SegurCel.git`
 - **Ramas Sincronizadas**: `master` y `feature/browser-extension`
@@ -38,9 +39,17 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ---
 
 ## 4. 🖼️ DISEÑO Y ESTÉTICA DE LA LANDING PAGE (`https://segurcel.app`)
-- **Bordes Iluminados Fijos**: Tarjetas de características (`.feature-card`) y marcos de teléfono (`.phone-frame`) con borde violeta fijo e iluminado (`border: 1.5px solid rgba(108, 99, 255, 0.5);`) constante.
-- **Capturas PNG en Alta Definición**: Muestra capturas reales de la aplicación móvil en marcos HD (`pantalla_principal.png`, `auditoria_boveda.png`, `ingreso_pin.png`, `agregar_elementos.png`).
-- **Responsividad Móvil**: Reglas CSS `@media (max-width: 768px)` con `flex-wrap: wrap` y paddings flexibles para garantizar que textos extensos en alemán (`Benutzerhandbuch`, `Tresor öffnen`) y ruso no se desborden.
+- **Infografía Nativa Cibersegura CSS3/HTML**:
+  - **Escudo Central Imponente (`250px x 250px`)**: Muestra la imagen oficial `assets/html/logo_circuitos.jpeg` con esquinas de `46px`, superpuesta en la capa superior (`z-index: 10; position: relative;`) con animación de pulso y doble resplandor neón cian/púrpura.
+  - **8 Conectores Convergentes**: Conectores cian y púrpura pulsantes inclinados a 35° (200px de longitud) que convergen desde las 4 tarjetas de la izquierda y las 4 tarjetas de la derecha directamente hacia los bordes del escudo central.
+  - **8 Tarjetas Vivas de Características**: Fondo glassmorphism con resplandor suave y traducción automática en los 10 idiomas oficiales.
+- **Carruseles de Demostración Paralelos (Mobile First & PC)**:
+  - **Carrusel Móvil**: Primero en secuencia, marcos HD de 220px en rotación circular de plano paralelo (`ingreso_pin.png`, `pantalla_principal.png`, `auditoria_boveda.png`, `agregar_elementos.png`).
+  - **Carrusel PC Desktop**: Segundo en secuencia, marcos PC HD de 590px x 395px (`ingreso_pc.png`, `pantalla_principal_pc.png`, `settings_pc.png`, `my_devices_pc.png`).
+- **Re-orientación de Botones Android para Pruebas Cerradas**:
+  - **Botón Hero Destacado**: Redirige al enlace de invitación web oficial de la prueba cerrada (`https://play.google.com/apps/testing/com.segurcel.segurcel`).
+  - **Botón CTA Inferior**: Conserva únicamente el acceso directo a la Bóveda Web (`/vault`).
+  - **Sincronización Multilingüe**: Auditada en los 10 idiomas (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`).
 
 ---
 
@@ -54,17 +63,17 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ---
 
-## 6. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (EN REVISIÓN)
+## 6. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (APROBADO Y EN PRUEBAS CERRADAS)
 - **Cuenta de Desarrollador**: Verificación de identidad **APROBADA** en Google Play Console (`ID: 7478631796851696861`).
-- **Lanzamiento de Pruebas Cerradas (14 Cambios Enviados a Revisión)**:
-  - **Paquete Firmado Oficial de Producción**: `build/app/outputs/bundle/release/app-release.aab` (55.1 MB) firmado con `upload-keystore.jks` (configurado en `android/key.properties` y `android/app/build.gradle.kts`).
-  - **Aislamiento Garantizado**: El archivo `.aab` subido a Google Play Console permanece 100% congelado, sellado e inalterado por las actualizaciones web.
-  - **Credenciales de Revisor de Google**:  
-    - Email: `google.reviewer@segurcel.app`  
-    - Contraseña: `ReviewerPass2026!`  
-    - PIN Maestro de Prueba: `1234`
-  - **Formularios de Contenido**: Política de Privacidad (`https://segurcel.app/privacy`), Acceso a la App (Instrucciones con credenciales), Anuncios (No), Clasificación (PEGI 3 / All ages), Público (18+), Funciones Financieras (No), ID de Publicidad (No), Datos Recopilados (Email, ID de Usuario y ID de Dispositivo obligatorios para gestión de cuenta cifrada en tránsito TLS 1.3).
-  - **Imágenes de la Tienda**: Ícono 512x512 PNG (`build/app/icon_512.png`) y Banner 1024x500 PNG (`build/app/feature_graphic_1024x500.png`).
+- **Estado de Publicación**: **APROBADO Y PUBLICADO EN PISTA ALPHA**. "No tienes cambios no publicados".
+- **Paquete Firmado Oficial de Producción**: `build/app/outputs/bundle/release/app-release.aab` (55.1 MB) firmado con `upload-keystore.jks` (configurado en `android/key.properties` y `android/app/build.gradle.kts`).
+- **Credenciales de Revisor de Google**:  
+  - Email: `google.reviewer@segurcel.app`  
+  - Contraseña: `ReviewerPass2026!`  
+  - PIN Maestro de Prueba: `1234`
+- **Mecanismo de Opt-In para Testers (Brasil / LATAM)**:
+  - Enlace de invitación oficial: `https://play.google.com/apps/testing/com.segurcel.segurcel`
+  - Requisito: Los correos Gmail de los testers deben agregarse previamente en Google Play Console para que puedan presionar **"Convertirse en probador"** e iniciar el contador obligatorio de **14 días**.
 
 ---
 
@@ -77,7 +86,9 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ---
 
 ## 8. 🗺️ HOJA DE RUTA (ROADMAP) Y PRÓXIMOS PASOS
-1. **[EN PROGRESO] Pruebas Cerradas de Google Play:**
-   - Mantener a los 20 testers probando activamente la app durante los 14 días consecutivos requeridos por Google Play.
+1. **[EN PROGRESO] Reclutamiento y Ejecución de Pruebas Cerradas (14 Días):**
+   - Cargar las direcciones Gmail de los testers (Brasil / LATAM) en la lista de probadores de Google Play Console.
+   - Compartir el enlace `https://segurcel.app/` o `https://play.google.com/apps/testing/com.segurcel.segurcel`.
+   - Completar el período obligatorio de 14 días consecutivos con al menos 20 testers activos.
 2. **[PRÓXIMO PASO] Promoción a Producción:**
-   - Tras la aprobación oficial de los 14 cambios y la finalización del período de 14 días de pruebas cerradas, promover el lanzamiento a la pista de **Producción** en Google Play Console.
+   - Promover la versión aprobada `1.0.0 (1)` a la pista de **Producción Pública** en Google Play Console.

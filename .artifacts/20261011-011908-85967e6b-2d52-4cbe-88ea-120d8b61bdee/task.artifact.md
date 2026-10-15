@@ -65,24 +65,21 @@
 - [x] Fix Language Dropdown Click Handler on Landing Page
     - [x] Bind dropdown button in `landing.html` and `index.html` to `SegurCelNav.toggleLangMenu(event)`
     - [x] Add global fallback `function toggleLangMenu(event)` calling `SegurCelNav.toggleLangMenu(event)`
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Upload Project Branches to Remote GitHub Repository
     - [x] Add remote origin `https://github.com/ambuydev/SegurCel.git`
     - [x] Push local branches (`master`, `feature/browser-extension`) to GitHub
 - [x] Update Privacy Policy Page with Google Play Compliance Additions
     - [x] Update `web/privacy.html` with Google Play Billing processing clause and external email data deletion request clause
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
-    - [x] Push update to GitHub
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Enforce Strict Authenticated Account Deletion Clause in Privacy Policy
     - [x] Update `web/privacy.html` to state that account deletion is performed exclusively within the authenticated SegurCel mobile app or Web Vault (`https://segurcel.app/vault`)
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
-    - [x] Push update to GitHub
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Implement Inactivity Auto-Purge Policy (180 Days) Across App, Web, and Firebase
     - [x] Update `lib/services/vault_service.dart` to auto-record `last_login_at: FieldValue.serverTimestamp()` on every user session
     - [x] Update `web/privacy.html` Section 4 with 180-day inactivity auto-purge policy and warning notification clause
     - [x] Translate Section 4 across all 10 languages (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`)
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
-    - [x] Push update to GitHub
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Generate Official Production Keystore & Recompile Signed App Bundle
     - [x] Generate `upload-keystore.jks` using keytool
     - [x] Configure Gradle `build.gradle.kts` with `release` signingConfig
@@ -94,8 +91,7 @@
 - [x] Fix Feature Card #7 (Browser Extension) Translations Across All 10 Languages
     - [x] Audit `web/landing.html` `dict` dictionary for `f7_t` and `f7_d` across all 10 languages (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`)
     - [x] Translate Feature Card #7 in Portuguese, English, Chinese, French, Hindi, German, Japanese, Korean, and Russian
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
-    - [x] Push update to GitHub
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Restore Constant Illuminated Borders, Fix Image Paths, and Fix Mobile Header Layout
     - [x] Restore constant illuminated borders (`border: 1.5px solid rgba(108, 99, 255, 0.5);`) on all cards
     - [x] Fix image paths (`assets/assets/html/` -> `assets/html/`) so all carousel screenshots load
@@ -106,8 +102,121 @@
     - [x] Update `lib/screens/my_devices_screen.dart` to use `_loc.text(...)`
     - [x] Recompile Web build (`flutter build web`) and re-deploy to Firebase Hosting
     - [x] Push update to GitHub
-- [/] Evaluate & Implement Physical Keyboard Support (Enter/Digits) in Web Vault (Login & PinScreen)
-    - [ ] Add `onSubmitted: (_) => _signIn()` to LoginScreen password text field
-    - [ ] Add `KeyboardListener` or `FocusNode` with `HardwareKeyboard` events in `PinScreen` for physical numeric typing (0-9, Backspace, Enter)
-    - [ ] Recompile Web build (`flutter build web`) and re-deploy to Firebase Hosting
-    - [ ] Push update to GitHub
+- [x] Implement Physical Keyboard Support in Web Vault (Login & PinScreen)
+    - [x] Add `onSubmitted: (_) => _submit()` in `LoginScreen` email and password fields
+    - [x] Add `KeyboardListener` with `FocusNode` listening to `0`-`9`, `Backspace`, and `Enter` in `PinScreen`
+    - [x] Recompile Flutter Web (`flutter build web --release`), re-deploy to Firebase Hosting, and push to GitHub
+- [x] Comprehensive Context Log & Roadmap Update (`CONTEXT_LOG.md`)
+    - [x] Update `CONTEXT_LOG.md` with physical keyboard navigation details, MyDevicesScreen localizations, web aesthetic restorations, and complete system roadmap for future AI instances
+    - [x] Push update to GitHub
+- [x] Implement Dual-Device Showcase Gallery (PC Browser Frame + Mobile Grid)
+    - [x] Add `.desktop-frame` CSS styling in `web/landing.html`
+    - [x] Copy image assets to `web/assets/html/` and `build/web/assets/html/` so Firebase Hosting serves them
+    - [x] Update `showcase-container` HTML to include PC frame (`my_devices_pc.png`) and 4 mobile frames (`pantalla_principal.png`, `auditoria_boveda.png`, `ingreso_pin.png`, `agregar_elementos.png`)
+    - [x] Synchronize `build/web/`, re-deploy 118 files to Firebase Hosting, and push to GitHub
+- [x] Expand PC Desktop Showcase Section with 4 PC Screenshots
+    - [x] Create 2x2 grid `.desktop-grid` for PC screenshots (`pantalla_principal_pc.png`, `my_devices_pc.png`, `settings_pc.png`, `ingreso_pc.png`)
+    - [x] Update `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Reorder Showcase Gallery Sequences (Login Screens First for Both PC and Mobile)
+    - [x] Update PC Desktop Grid order: 1) `ingreso_pc.png`, 2) `pantalla_principal_pc.png`, 3) `settings_pc.png`, 4) `my_devices_pc.png`
+    - [x] Update Mobile Phone Grid order: 1) `ingreso_pin.png`, 2) `pantalla_principal.png`, 3) `auditoria_boveda.png`, 4) `agregar_elementos.png`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Implement Interactive PC Desktop Horizontal Carousel
+    - [x] Add `.desktop-carousel-wrapper`, `.desktop-carousel`, `.carousel-btn`, `.carousel-dot` CSS styling
+    - [x] Add JS event listeners and functions (`scrollCarousel`, `updateCarouselDots`, `goToSlide`)
+    - [x] Update `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Scale PC Desktop Carousel Frame Down by 20% (max-width: 720px)
+    - [x] Update `.desktop-carousel-wrapper` and `.desktop-carousel .desktop-frame` `max-width` from `900px` to `720px` in `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Design & Implement 3D CoverFlow Infinite Circular Carousel Effect for PC Screenshots
+    - [x] Create 3D Cover Flow CSS layout with `perspective: 1000px`, `transform: rotateY() scale()`, `.slide.active`, `.slide.prev`, `.slide.next`
+    - [x] Write modulo JavaScript rotation logic for endless loop (`0 -> 1 -> 2 -> 3 -> 0 ...`)
+    - [x] Update `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Convert 3D Skew to Flat Parallel Layered Depth Carousel (No RotateY)
+    - [x] Remove `rotateY` transforms in `.coverflow-slide.prev` and `.coverflow-slide.next` CSS rules
+    - [x] Apply `transform: translateX(-48%) scale(0.8)` and `translateX(48%) scale(0.8)` for parallel plane depth
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Further Reduce PC Desktop Carousel Dimensions by 10% (width: 590px, height: 395px)
+    - [x] Update `.coverflow-slide` `width` to `590px` and `.coverflow-container` `height` to `395px` in `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Convert Mobile Phone Grid to Parallel Plane Infinite Carousel (20% Smaller Phone Frames)
+    - [x] Add `.phone-carousel-wrapper`, `.phone-carousel-container`, `.phone-carousel-slide` CSS styling with 20% smaller phone frames (width: 220px)
+    - [x] Add JS functions `rotatePhoneCarousel(dir)` and `setPhoneSlide(idx)` for circular modulo rotation
+    - [x] Update `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Swap Showcase Sections: Mobile Phone Carousel First, PC Desktop Carousel Second
+    - [x] Place `.phone-carousel-wrapper` first inside `.showcase-container`, followed by `.coverflow-wrapper`
+    - [x] Update `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Implement 3x3 Orbital Central Hub Layout with Card #8 in 10 Languages
+    - [x] Translate `f8_t` and `f8_d` in `web/landing.html` `dict` across all 10 languages
+    - [x] Create `.central-hub-card` CSS layout with pulsing glow and SegurCel logo
+    - [x] Arrange 8 feature cards around the central hub in 3x3 grid on PC/Tablet (`min-width: 900px`) and 1-column list on mobile
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Build 4-Left / Central Shield / 4-Right Cyber Circuit Diagram Infographic
+    - [x] Create `.circuit-infographic-container`, `.circuit-center-hub`, `.shield-pulse-ring` CSS/HTML layout
+    - [x] Arrange 4 cards on left (Cifrado, Auditoría, Importar, Extensión) and 4 cards on right (2FA, Notas, Autodestrucción, Rastreo) on PC (`min-width: 950px`)
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Re-engineer PCB Circuit Diagram Exact Replica (Standalone Shield Badge + SVG Animated Neon Traces)
+    - [x] Remove background box around central shield logo (pure standalone shield icon with glowing circular/shield border)
+    - [x] Implement SVG animated neon circuit traces (`stroke="#00F0FF"`, `stroke="#6C63FF"`, glowing animated pulse dots) connecting left and right cards directly to the central shield
+    - [x] Update `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Re-engineer Glassmorphism Cyber Infographic with High-Res Circuit Board Background & Glowing Multi-Segment Traces
+    - [x] Apply `logo_circuitos.jpeg` high-res dark circuit background overlay to `circuit-board-section`
+    - [x] Create glassmorphism cards (`background: rgba(20, 26, 40, 0.85)`, `backdrop-filter: blur(12px)`) with glowing cyan borders
+    - [x] Create standalone floating shield badge with cyan neon glow and SVG drop-shadow filter paths
+    - [x] Synchronize `build/web/`, re-deploy 121 files to Firebase Hosting, and push to GitHub
+- [x] Diagnose & Resolve Temporary DNS Lookup Error
+    - [x] Confirm default Firebase Hosting domain `https://segurcel-45c92.web.app` is 100% active and functioning
+    - [x] Provide user with instructions to refresh local DNS cache or access `https://segurcel-45c92.web.app`
+- [x] Prepare Layout for User's Custom Circuit Hub Background Graphic
+    - [x] Found `circuit_hub_custom.png` in `Downloads/` and copied to `web/assets/html/` and `build/web/assets/html/`
+    - [x] Integrated `circuit_hub_custom.png` as background of `.circuit-board-section` with transparent center space allowing the custom shield & neon circuits to shine through
+    - [x] Positioned 4 live glassmorphism cards on left and 4 on right with dynamic 10-language localizations
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Scale Custom Circuit Background Graphic Down by 15%
+    - [x] Update `background-size` to `85% auto; background-repeat: no-repeat; background-position: center;` in `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Integrate User Provided Pure CSS/HTML SegurCel Infographic Component
+    - [x] Inserted native CSS rules (`.segurcel-wrapper`, `@keyframes segurcelGlow`, `@keyframes segurcelShieldPulse`, `@keyframes segurcelConnectorPulse`, `.shield`, `.lock`, `.connector.left`, `.connector.right`)
+    - [x] Inserted HTML structure with 4 left cards (cyan) and 4 right cards (purple) wired to localization IDs (`f1_title`, `f1_desc`, etc.)
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Replace CSS Lock with Official SegurCel Logo Image (`assets/html/logo_solo.jpeg`)
+    - [x] Updated `.shield-wrapper` HTML to insert `<img src="assets/html/logo_solo.jpeg" class="segurcel-logo" alt="SegurCel Logo" />`
+    - [x] Added `.segurcel-logo` CSS with `width: 180px; height: 180px; border-radius: 36px; object-fit: cover; animation: segurcelShieldPulse 4.5s ease-in-out infinite; filter: drop-shadow(0 0 25px rgba(41,182,246,0.75)) drop-shadow(0 0 35px rgba(171,71,188,0.75));`
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Swap Image to `assets/html/logo_circuitos.jpeg` and Position in Front of Connectors (z-index)
+    - [x] Updated `.shield-wrapper` HTML image src to `assets/html/logo_circuitos.jpeg`
+    - [x] Set `z-index: 10; position: relative;` on `.segurcel-logo` so it sits above `.connector` lines (`z-index: 1`)
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Angle Top & Bottom Connectors to Converge Directly into Central Shield Logo
+    - [x] Angled top left & right connectors (`transform: rotate(18deg)` and `rotate(-18deg)`) downwards and bottom left & right connectors (`transform: rotate(-18deg)` and `rotate(18deg)`) upwards
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Enlarge Central Shield Logo to 220px & Steepen Attack Angles to 28deg with 185px Reach
+    - [x] Increased `.segurcel-logo` dimensions to `220px x 220px` (`border-radius: 40px;`) and `.shield-wrapper` width to `260px`
+    - [x] Steepened top connectors (`transform: rotate(28deg)`, `width: 185px`) and bottom connectors (`transform: rotate(-28deg)`, `width: 185px`) so all 8 connectors physically plug into shield logo edges
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Scale Central Shield Logo to 250px x 250px (border-radius: 46px) & Precision Align Connectors
+    - [x] Updated `.segurcel-logo` dimensions to `250px x 250px` (`border-radius: 46px;`) and `.shield-wrapper` width to `290px`
+    - [x] Fine-tuned top connectors (`top: 8%`, `width: 200px`, `rotate(35deg)`), middle connectors (`top: 36%` & `64%`, `width: 170px`), and bottom connectors (`top: 92%`, `width: 200px`, `rotate(-35deg)`)
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Eliminate Legacy index.html Links Across Web Pages to Prevent ERR_TOO_MANY_REDIRECTS
+    - [x] Updated remaining links in `web/guide.html` and `web/privacy.html` to clean URL `/?lang=es`
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Re-orient Android Buttons to Google Play Testing & Store Official URLs
+    - [x] Set primary green Hero button to Google Play Closed Testing Web Invite: `https://play.google.com/apps/testing/com.segurcel.segurcel`
+    - [x] Set CTA Store button to Google Play App Details page: `https://play.google.com/store/apps/details?id=com.segurcel.segurcel`
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Audit & Synchronize Google Play Testing Button Texts Across All 10 Languages
+    - [x] Updated `dict` in `web/landing.html` and `web/index.html` for `btnPlay` ("Unirse a la prueba en Google Play") and `btnApk` ("Ver en Google Play Store") in es, en, pt, zh, fr, hi, de, ja, ko, ru
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Remove Secondary Store Button from CTA Banner Section
+    - [x] Removed `btnCtaPlayStore` from CTA Banner in `web/landing.html` and `web/index.html`, leaving only `btnCtaVault` ("🚀 Acceder a SegurCel Web")
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+- [x] Explain Google Play Closed Testing Opt-In Rules & Tester Registration Mechanics
+    - [x] Explained that accounts must be added to Google Play Console tester list first
+    - [x] Confirmed web invite link https://play.google.com/apps/testing/com.segurcel.segurcel is the official Google Opt-In page
