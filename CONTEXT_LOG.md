@@ -49,7 +49,10 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 - **Re-orientación de Botones Android para Pruebas Cerradas**:
   - **Botón Hero Destacado**: Redirige al enlace de invitación web oficial de la prueba cerrada (`https://play.google.com/apps/testing/com.segurcel.segurcel`).
   - **Botón CTA Inferior**: Conserva únicamente el acceso directo a la Bóveda Web (`/vault`).
-  - **Sincronización Multilingüe**: Auditada en los 10 idiomas (`es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`).
+- **Sección de Planes PRO Estandarizada en los 10 Idiomas**:
+  - Eliminados todos los precios rígidos en dólares ($1.99, $10.99, $24.99) para permitir la conversión automática en moneda local por la Google Play Store.
+  - Eliminadas las referencias obsoletas a "Licencia Vitalicia".
+  - Viñeta `pi5` estandarizada: *"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)"* traducido fielmente en `es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`.
 
 ---
 

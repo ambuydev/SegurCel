@@ -220,3 +220,6 @@
 - [x] Explain Google Play Closed Testing Opt-In Rules & Tester Registration Mechanics
     - [x] Explained that accounts must be added to Google Play Console tester list first
     - [x] Confirmed web invite link https://play.google.com/apps/testing/com.segurcel.segurcel is the official Google Opt-In page
+- [x] Standardize PRO Plan Bullets (pi5) Across All 10 Languages (Remove Dollar Prices & Lifetime License)
+    - [x] Updated `pi5` across all 10 languages in `web/landing.html` and `web/index.html` to `"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)"`
+    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
