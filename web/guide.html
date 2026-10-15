@@ -249,8 +249,8 @@
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="brand">
-                <img src="assets/assets/html/logo_solo.jpeg" alt="SegurCel Logo">
+            <a href="/?lang=es" class="brand">
+                <img src="assets/html/logo_solo.jpeg" alt="SegurCel Logo">
                 <span>SegurCel</span>
             </a>
             <div class="lang-dropdown">
@@ -276,7 +276,7 @@
     </header>
 
     <div class="container">
-        <a href="index.html" class="btn-back" id="btnBack">← Volver al Sitio Oficial</a>
+        <a href="/?lang=es" class="btn-back" id="btnBack">← Volver al Sitio Oficial</a>
         <h1 class="guide-title" id="guideTitle">Manual de Botones y Secciones de SegurCel</h1>
         <p class="guide-subtitle" id="guideSub">Conoce en detalle qué hace cada botón, pantalla y función dentro de tu aplicación y la Bóveda Web.</p>
 
@@ -754,7 +754,7 @@
             if (nameEl && namesMap[currentLang]) nameEl.innerText = namesMap[currentLang];
 
             if (document.getElementById("btnBack")) document.getElementById("btnBack").innerText = data.btnBack;
-            if (document.getElementById("btnBack")) document.getElementById("btnBack").href = "index.html?lang=" + currentLang;
+            if (document.getElementById("btnBack")) document.getElementById("btnBack").href = "/?lang=" + currentLang;
             if (document.getElementById("guideTitle")) document.getElementById("guideTitle").innerText = data.title;
             if (document.getElementById("guideSub")) document.getElementById("guideSub").innerText = data.sub;
 
