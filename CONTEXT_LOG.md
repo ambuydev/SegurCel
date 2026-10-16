@@ -6,7 +6,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ## 1. 📌 INFORMACIÓN GENERAL Y RECURSOS DEL PROYECTO
 - **Nombre Oficial de la App**: SegurCel - Bóveda & 2FA (`com.segurcel.segurcel`)
-- **Versión Actual**: 1.0.1 (Build 2)
+- **Versión Actual**: 1.0.1 (Build 2) (`1.0.1+2`)
 - **Framework**: Flutter 3.41.8 / Dart 3.11.5 (Android & Web)
 - **Dominio Oficial & Hosting**: `https://segurcel.app` (Proyecto Firebase: `segurcel-45c92`)
 - **Dominio de Respaldo Directo**: `https://segurcel-45c92.web.app`
@@ -16,11 +16,14 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ---
 
-## 2. 🛡️ ARQUITECTURA DE SEGURIDAD ZERO-KNOWLEDGE
+## 2. 🛡️ ARQUITECTURA DE SEGURIDAD ZERO-KNOWLEDGE & UX DE CATEGORÍAS
 - **Cifrado End-to-End (E2EE)**: Cifrado local en dispositivo usando **AES-256-GCM** y derivación de clave maestra con **PBKDF2WithHmacSHA256** (65.536 iteraciones).
 - **Protección Anti-Fuerza Bruta**: Autodestrucción de datos locales tras 3 intentos fallidos de PIN de 4 dígitos.
 - **Confirmación Obligatoria de Código de Recuperación**: Modal interactivo con temporizador de 10 segundos antes de finalizar la instalación inicial para evitar pérdida accidental del código.
 - **Autenticador 2FA TOTP**: Generador integrado de códigos de 6 dígitos con temporizador circular de 30 segundos y copia en 1 toque.
+- **Nuevo Selector Inteligente de Categorías (`AddEditEntrySheet`)**:
+  - `DropdownButtonFormField` que reúne las categorías creadas por el usuario en su bóveda para evitar duplicidades accidentales ("Casa" vs "Hogar").
+  - Opción fija `"+ Nueva categoría..."` traducida en los 10 idiomas oficiales que despliega automáticamente un campo de texto dedicado con autoenfoque.
 - **Salud de la Bóveda**: Escáner inteligente de fortaleza global (0 al 100%) que detecta contraseñas débiles, repetidas o antiguas.
 - **Límite Freemium Transparente**: 20 contraseñas y 2 cuentas 2FA TOTP en el plan gratuito. Ilimitado en planes PRO/Familiar.
 
@@ -41,8 +44,11 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ## 4. 🖼️ DISEÑO Y ESTÉTICA DE LA LANDING PAGE (`https://segurcel.app`)
 - **Infografía Nativa Cibersegura CSS3/HTML**:
   - **Escudo Central Imponente (`250px x 250px`)**: Muestra la imagen oficial `assets/html/logo_circuitos.jpeg` con esquinas de `46px`, superpuesta en la capa superior (`z-index: 10; position: relative;`) con animación de pulso y doble resplandor neón cian/púrpura.
-  - **8 Conectores Convergentes**: Conectores cian y púrpura pulsantes inclinados a 35° (200px de longitud) que convergen desde las 4 tarjetas de la izquierda y las 4 tarjetas de la derecha directamente hacia los bordes del escudo central.
-  - **8 Tarjetas Vivas de Características**: Fondo glassmorphism con resplandor suave y traducción automática en los 10 idiomas oficiales.
+  - **8 Conectores Convergentes**: Conectores cian y púrpura pulsantes inclinados a 35° (200px de longitud) que convergen directamente hacia los bordes del escudo central.
+  - **Agrupamiento Semántico de Tarjetas por Colores**:
+    - *Columna Izquierda (Cian `#00F0FF` — Seguridad Core):* Cifrado Zero-Knowledge, Auditoría de Salud, 3-Strike Autodestrucción y Autenticador 2FA TOTP.
+    - *Columna Derecha (Púrpura `#AB47BC` — Herramientas Interactivas del Usuario):* Tarjetas & Notas Seguras, Importar / Exportar Fácil, Extensión para Navegador y Rastreo de Emergencia.
+  - **Estética Ultra Limpia:** Sin íconos de emojis distractores en tarjetas, botones o badges.
 - **Carruseles de Demostración Paralelos (Mobile First & PC)**:
   - **Carrusel Móvil**: Primero en secuencia, marcos HD de 220px en rotación circular de plano paralelo (`ingreso_pin.png`, `pantalla_principal.png`, `auditoria_boveda.png`, `agregar_elementos.png`).
   - **Carrusel PC Desktop**: Segundo en secuencia, marcos PC HD de 590px x 395px (`ingreso_pc.png`, `pantalla_principal_pc.png`, `settings_pc.png`, `my_devices_pc.png`).
@@ -52,7 +58,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 - **Sección de Planes PRO Estandarizada en los 10 Idiomas**:
   - Eliminados todos los precios rígidos en dólares ($1.99, $10.99, $24.99) para permitir la conversión automática en moneda local por la Google Play Store.
   - Eliminadas las referencias obsoletas a "Licencia Vitalicia".
-  - Viñeta `pi5` estandarizada: *"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)"* traducido fielmente en `es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`.
+  - Formato ortográfico *Sentence Case*: *"Planes flexibles: mensual, anual, plan familiar y rescate de emergencia (6 meses)"* traducido fielmente en `es`, `en`, `pt`, `zh`, `fr`, `hi`, `de`, `ja`, `ko`, `ru`.
 
 ---
 
@@ -66,9 +72,9 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ---
 
-## 6. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (APROBADO Y EN PRUEBAS CERRADAS)
+## 6. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (VERSIÓN 2 1.0.1+2 EN REVISIÓN DE PRUEBAS CERRADAS)
 - **Cuenta de Desarrollador**: Verificación de identidad **APROBADA** en Google Play Console (`ID: 7478631796851696861`).
-- **Estado de Publicación**: **VERSIÓN 2 (1.0.1) ENVIADA Y EN PROCESO DE REVISIÓN EN PISTA ALPHA**.
+- **Estado de Publicación**: **VERSIÓN 2 (1.0.1+2) ENVIADA Y EN REVISIÓN EN PISTA ALPHA**.
 - **Paquete Firmado Oficial de Producción**: `build/app/outputs/bundle/release/app-release.aab` (57.8 MB) versión `1.0.1+2` firmado con `upload-keystore.jks` (configurado en `android/key.properties` y `android/app/build.gradle.kts`).
 - **Credenciales de Revisor de Google**:  
   - Email: `google.reviewer@segurcel.app`  
@@ -81,6 +87,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ---
 
 ## 7. 🛠️ CÓDIGO REFACTORIZADO Y COMPONENTES
+- `lib/widgets/home/add_edit_entry_sheet.dart` refactorizado con selector desplegable de categorías inteligente y entrada para nueva categoría.
 - `lib/screens/setup_screen.dart` refactorizado en componentes modulares (`lib/widgets/pin_creation_form.dart`, `recovery_code_card.dart`, `recovery_confirmation_dialog.dart`).
 - `lib/screens/home_screen.dart` refactorizado de 2087 a 360 líneas en componentes modulares en `lib/widgets/home/`.
 - `lib/screens/my_devices_screen.dart` adaptado para traducción dinámica mediante `LocalizationService`.
@@ -94,4 +101,4 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
    - Compartir el enlace `https://segurcel.app/` o `https://play.google.com/apps/testing/com.segurcel.segurcel`.
    - Completar el período obligatorio de 14 días consecutivos con al menos 20 testers activos.
 2. **[PRÓXIMO PASO] Promoción a Producción:**
-   - Promover la versión aprobada `1.0.0 (1)` a la pista de **Producción Pública** en Google Play Console.
+   - Promover la versión aprobada `1.0.1 (2)` a la pista de **Producción Pública** en Google Play Console.
