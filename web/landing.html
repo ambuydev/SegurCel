@@ -1612,8 +1612,8 @@
             document.getElementById("proItem5").innerText = data.pi5;
             document.getElementById("ctaTitle").innerText = data.ctaT;
             document.getElementById("ctaSub").innerText = data.ctaS;
-            document.getElementById("btnCtaVault").innerText = "🚀 " + data.btnVault;
-            document.getElementById("btnCtaApk").innerText = "📲 " + data.btnPlay;
+            if (document.getElementById("btnCtaVault")) document.getElementById("btnCtaVault").innerText = data.btnVault;
+            if (document.getElementById("btnCtaApk")) document.getElementById("btnCtaApk").innerText = data.btnPlay;
             document.getElementById("linkFooterPrivacy").innerText = data.priv;
 
             // Actualizar enlaces de destino conservando el idioma seleccionado
