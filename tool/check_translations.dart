@@ -1,4 +1,4 @@
-import '../lib/services/localization_service.dart';
+import 'package:segurcel/services/localization_service.dart';
 
 void main() {
   final loc = LocalizationService();

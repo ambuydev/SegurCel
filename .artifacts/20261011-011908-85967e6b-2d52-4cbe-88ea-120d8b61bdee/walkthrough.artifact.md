@@ -1,29 +1,28 @@
-# Resumen de Trabajo Realizado: Auditoría y Estandarización de Planes PRO (pi5) en los 10 Idiomas
+# Resumen de Estado General de SegurCel y Registros del Sistema
 
-Se realizó una auditoría completa del viñeta de Planes PRO (`pi5`) en el diccionario multilingüe `dict` para eliminar discrepancias y unificar la oferta en todos los idiomas oficiales.
-
----
-
-## 🌍 Estandarización de Planes PRO en los 10 Idiomas (`https://segurcel.app/`)
-
-1. **Eliminación de Precios Fijos en Dólares:**
-   - Se removieron los montos explícitos ($1.99, $10.99, $24.99) en alemán (`de`), japonés (`ja`), coreano (`ko`) y ruso (`ru`), evitando precios rígidos ya que Google Play Billing adapta la moneda local según la región de cada usuario.
-2. **Eliminación de Referencias a "Licencia Vitalicia":**
-   - Se removió la mención a "Licencia Vitalicia" / "Lifetime License" en español, inglés, portugués, chino, francés e hindi.
-3. **Texto Unificado Estandarizado:**
-   - **`es`:** *"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)."*
-   - **`en`:** *"Flexible Plans: Monthly, Yearly, Family Plan, and Emergency Rescue (6 Months)."*
-   - **`pt`:** *"Planos Flexíveis: Mensal, Anual, Plano Familiar e Resgate de Emergência (6 Meses)."*
-   - **`zh`:** *"灵活订阅方案：按月、按年、家庭方案与紧急救援方案 (6 个月)。"*
-   - **`fr`:** *"Offres Flexibles : Mensuel, Annuel, Offre Familiale et Sauvetage d'Urgence (6 Mois)."*
-   - **`hi`:** *"लचीले प्लान: मासिक, वार्षिक, फैमिली प्लान और आपातकालीन बचाव (6 महीने)।"*
-   - **`de`:** *"Flexible Pläne: Monatlich, Jährlich, Familien-Tarif und Notfall-Rettung (6 Monate)."*
-   - **`ja`:** *"柔軟なプラン：月額、年額、ファミリープラン、6ヶ月緊急レスキュー。"*
-   - **`ko`:** *"유연한 요금제: 월간, 연간, 패밀리 요금제, 6개월 긴급 구조."*
-   - **`ru`:** *"Гибкие тарифы: Ежемесячный, Годовой, Семейный и Аварийный (6 месяцев)."*
+Se auditó de forma integral todo el estado del sistema, registrando las últimas actualizaciones en `CONTEXT_LOG.md` y sincronizando el repositorio público de GitHub.
 
 ---
 
-## 🚀 Despliegue y Repositorio
-- Publicado en vivo en **`https://segurcel.app/`** y **`https://segurcel-45c92.web.app/`**.
-- Sincronizado e impulsado a GitHub en las ramas `master` y `feature/browser-extension`.
+## 📌 Resumen de Registros del Ecosistema SegurCel (`v1.0.1+2`)
+
+1. **Google Play Console:**
+   - **Versión 2 (`1.0.1+2`):** Paquete firmado `app-release.aab` (57.8 MB) enviado a revisión en la vía **Prueba cerrada (Alpha)**.
+   - **Enlace Opt-In Oficial para Testers:** **`https://play.google.com/apps/testing/com.segurcel.segurcel`**
+
+2. **Bóveda Web (`https://segurcel.app/vault`):**
+   - **Selector Inteligente de Categorías:** `DropdownButtonFormField` con opción `"+ Nueva categoría..."` traducido en los 10 idiomas.
+   - **Soporte de Teclado Físico:** `Enter`, `0`-`9` y `Backspace` plenamente funcionales.
+
+3. **Sitio Web Oficial (`https://segurcel.app/`):**
+   - **Infografía Reagrupada Semánticamente:**
+     - *Izquierda (Cian `#00F0FF` — Seguridad Core):* Cifrado Zero-Knowledge, Auditoría de Salud, 3-Strike Autodestrucción y Autenticador 2FA TOTP.
+     - *Derecha (Púrpura `#AB47BC` — Herramientas Interactivas):* Tarjetas & Notas Seguras, Importar / Exportar Fácil, Extensión para Navegador y Rastreo de Emergencia.
+   - **Estética Ultramoderna:** Cero emojis en badges, botones o tarjetas. Formato ortográfico *Sentence Case*.
+
+4. **Repositorio GitHub (`https://github.com/ambuydev/SegurCel`):**
+   - Ramas **`master`** y **`feature/browser-extension`** 100% sincronizadas.
+
+5. **Optimizaciones del Sistema:**
+   - Disco C: con **`23.47 GB`** libres (**+11.65 GB** recuperados en la sesión).
+   - JDK 17 (`Eclipse Temurin 17.0.16+8`) confirmado como la versión oficial activa para desarrollo sin conflictos.

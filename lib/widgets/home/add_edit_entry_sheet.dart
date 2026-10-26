@@ -234,7 +234,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DropdownButtonFormField<String>(
-          value: dropdownItems.any((item) => item.value == _selectedCategoryOption)
+          initialValue: dropdownItems.any((item) => item.value == _selectedCategoryOption)
               ? _selectedCategoryOption
               : newCategoryKey,
           dropdownColor: const Color(0xFF1E2538),

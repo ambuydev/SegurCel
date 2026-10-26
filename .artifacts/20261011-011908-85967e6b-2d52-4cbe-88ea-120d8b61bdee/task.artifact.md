@@ -57,11 +57,11 @@
     - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
 - [x] URL Parameter Sync (`history.replaceState`) & `btnBack` Text Fix in `privacy.html`
     - [x] Update `web/navbar.js` to call `window.history.replaceState(null, '', '?lang=' + lang)` on language change
-    - [x] Add `btnBack` translation handling inside `setLang()` in `web/privacy.html`
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Add `btnBack` translation handling inside `setLang()` in `privacy.html`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Enforce Clean URLs Across Web Site to Fix ERR_TOO_MANY_REDIRECTS
     - [x] Update all `.html` links in `web/navbar.js`, `web/landing.html`, `web/guide.html`, `web/privacy.html`, `web/index.html` to clean URLs (`/?lang=code`, `/guide?lang=code`, `/privacy?lang=code`, `/vault?lang=code`)
-    - [x] Synchronize `build/web/` and re-deploy to Firebase Hosting
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Fix Language Dropdown Click Handler on Landing Page
     - [x] Bind dropdown button in `landing.html` and `index.html` to `SegurCelNav.toggleLangMenu(event)`
     - [x] Add global fallback `function toggleLangMenu(event)` calling `SegurCelNav.toggleLangMenu(event)`
@@ -223,11 +223,56 @@
 - [x] Standardize PRO Plan Bullets (pi5) Across All 10 Languages (Remove Dollar Prices & Lifetime License)
     - [x] Updated `pi5` across all 10 languages in `web/landing.html` and `web/index.html` to `"Planes Flexibles: Mensual, Anual, Plan Familiar y Rescate de Emergencia (6 Meses)"`
     - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
-- [/] Implement Category Selector Menu (Dropdown + New Category Option) & Bump Version to 1.0.1+2
-    - [ ] Add translation keys (`select_category`, `new_category_option`, `new_category_label`) in `lib/services/localization_service.dart` across 10 languages
-    - [ ] Refactor `lib/widgets/home/add_edit_entry_sheet.dart` to include `DropdownButtonFormField` for category selection + dynamic text field
-    - [ ] Update `pubspec.yaml` to `version: 1.0.1+2`
-    - [ ] Update `lib/widgets/home/about_app_sheet.dart` and `CONTEXT_LOG.md` to `1.0.1 (Build 2)`
-    - [ ] Recompile Web (`flutter build web --release`), copy to `build/web/`, deploy to Firebase Hosting
-    - [ ] Recompile Signed Android Bundle (`flutter build appbundle --release`)
-    - [ ] Push all changes to GitHub (`master` and `feature/browser-extension`)
+- [x] Implement Category Selector Menu (Dropdown + New Category Option) & Bump Version to 1.0.1+2
+    - [x] Added translation keys (`select_category`, `new_category_option`, `new_category_label`) in `lib/services/localization_service.dart` across 10 languages
+    - [x] Refactored `lib/widgets/home/add_edit_entry_sheet.dart` to include `DropdownButtonFormField` for category selection + dynamic text field
+    - [x] Updated `pubspec.yaml` to `version: 1.0.1+2`
+    - [x] Updated `lib/widgets/home/about_app_sheet.dart` and `CONTEXT_LOG.md` to `1.0.1 (Build 2)`
+    - [x] Recompiled Web (`flutter build web --release`), copied to `build/web/`, deployed to Firebase Hosting
+    - [x] Recompiled Signed Android Bundle (`flutter build appbundle --release`)
+    - [x] Pushed all changes to GitHub (`master` and `feature/browser-extension`)
+- [x] Remove Small Emoji Icons from Feature Cards in Web Infographic
+    - [x] Removed `<span class="card-icon">...</span>` inside card headers in `web/landing.html` and `web/index.html`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Remove Emoji Icons from Hero Buttons, Hero Badge, and CTA Banner
+    - [x] Removed shield, rocket, smartphone, puzzle emojis from buttons and hero badge across all 10 languages
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Remove Dynamic Rocket Emoji Prefix from btnCtaVault in changeLanguage JS Function
+    - [x] Fixed line in `changeLanguage()` JS function that was prepending `"🚀 "` to `btnCtaVault`
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Convert Freemium Box Bullets (pi1-pi5) to Standard Sentence Case
+    - [x] Capitalized only initial letter and proper acronyms/names (AES-256, Android, Windows, Web, iOS)
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Re-group Infographic Cards Semantically (Left Cyan Core Security vs Right Purple User Actions)
+    - [x] Moved Autenticador 2FA TOTP (f2) to Left Column (Cyan)
+    - [x] Moved Rastreo de Emergencia (f8) to Right Column (Purple)
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Remove Star Emoji (⭐) from Card f5 (Cards & Notes) Description Across All 10 Languages
+    - [x] Removed ⭐ from f5_desc across HTML and dict dictionary in all 10 languages
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
+- [x] Provide Step-by-Step Instructions to Upload AAB v1.0.1+2 to Google Play Console
+    - [x] Confirmed uploading AAB v1.0.1+2 does NOT reset the 14-day counter and demonstrates active iteration to Google
+    - [x] Provided exact path `build/app/outputs/bundle/release/app-release.aab` and upload steps
+- [x] Clean Up PC Disk Space Across Projects and Caches
+    - [x] Deleted build, .dart_tool, and android/.gradle folders in other StudioProjects (bodyguard, MisFinanzas, plan-guardias, untitled)
+    - [x] Cleaned Windows Temp files and old Gradle caches/daemons
+    - [x] Increased free space on drive C: from 11.8 GB to 22.1 GB (+10.3 GB freed)
+- [x] Clean Up Legacy C:\Users\aleja\AndroidStudioProjects Folder
+    - [x] Deleted build, .dart_tool, and .gradle folders in C:\Users\aleja\AndroidStudioProjects\ribalake_app
+    - [x] Reduced AndroidStudioProjects size from 1.83 GB to 347 MB
+    - [x] Increased total free C: drive space to 23.5 GB (totaling +11.65 GB freed in session)
+- [x] Analyze Installed Eclipse Temurin JDK Versions
+    - [x] Identified JDK 17 (17.0.16) as the official mandatory LTS standard required for Flutter and AGP 8.x
+    - [x] Identified JDK 11 (obsolete) and JDK 25 (experimental non-LTS) as safe to uninstall
+- [x] Confirm SegurCel Development Capabilities with JDK 17
+    - [x] Confirmed that SegurCel development and compilation remain 100% active and unimpacted using JDK 17
+- [x] Explain Microsoft Edge and Copilot Disk Size Reporting & Safe Cache Cleanup
+    - [x] Explained shared WebView2 binary double-counting in Windows Settings (2.94 GB + 2.76 GB)
+    - [x] Provided steps to clear Edge web cache via Ctrl+Shift+Del (reclaiming 0.5 - 1.5 GB) and uninstall Copilot PWA wrapper if desired
+- [x] Comprehensive Log & Context Audit for Ecosystem SegurCel
+    - [x] Updated CONTEXT_LOG.md with v1.0.1+2 release, category selector UX, AAB submission status, semantic infographic grouping, and 23.5 GB free C: drive status
+    - [x] Pushed all updates to GitHub remote repository branches master and feature/browser-extension
+- [/] Execute Dart Automated Code Health Fixes (`dart fix --apply`)
+    - [ ] Run `dart fix --apply` for `deprecated_member_use` in `add_edit_entry_sheet.dart` and `avoid_relative_lib_imports` in `tool/check_translations.dart`
+    - [ ] Verify build with `flutter analyze`
+    - [ ] Push updates to GitHub
