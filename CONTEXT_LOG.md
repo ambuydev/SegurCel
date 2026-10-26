@@ -6,7 +6,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ## 1. 📌 INFORMACIÓN GENERAL Y RECURSOS DEL PROYECTO
 - **Nombre Oficial de la App**: SegurCel - Bóveda & 2FA (`com.segurcel.segurcel`)
-- **Versión Actual**: 1.0.1 (Build 2) (`1.0.1+2`)
+- **Versión Actual**: 1.0.2 (Build 3) (`1.0.2+3`)
 - **Framework**: Flutter 3.41.8 / Dart 3.11.5 (Android & Web)
 - **Dominio Oficial & Hosting**: `https://segurcel.app` (Proyecto Firebase: `segurcel-45c92`)
 - **Dominio de Respaldo Directo**: `https://segurcel-45c92.web.app`
@@ -87,7 +87,7 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ---
 
 ## 7. 🛠️ CÓDIGO REFACTORIZADO Y COMPONENTES
-- `lib/widgets/home/add_edit_entry_sheet.dart` refactorizado con selector desplegable de categorías inteligente y entrada para nueva categoría.
+- `lib/widgets/home/add_edit_entry_sheet.dart` refactorizado con selector desplegable de categorías inteligente, entrada para nueva categoría y margen inferior dinámico `MediaQuery.viewPadding.bottom` + `useSafeArea: true` para evitar superposición con la barra de navegación de Android de 3 botones.
 - `lib/screens/setup_screen.dart` refactorizado en componentes modulares (`lib/widgets/pin_creation_form.dart`, `recovery_code_card.dart`, `recovery_confirmation_dialog.dart`).
 - `lib/screens/home_screen.dart` refactorizado de 2087 a 360 líneas en componentes modulares en `lib/widgets/home/`.
 - `lib/screens/my_devices_screen.dart` adaptado para traducción dinámica mediante `LocalizationService`.
