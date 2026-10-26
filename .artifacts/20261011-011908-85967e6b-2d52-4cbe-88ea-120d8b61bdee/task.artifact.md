@@ -272,7 +272,13 @@
 - [x] Comprehensive Log & Context Audit for Ecosystem SegurCel
     - [x] Updated CONTEXT_LOG.md with v1.0.1+2 release, category selector UX, AAB submission status, semantic infographic grouping, and 23.5 GB free C: drive status
     - [x] Pushed all updates to GitHub remote repository branches master and feature/browser-extension
-- [/] Execute Dart Automated Code Health Fixes (`dart fix --apply`)
-    - [ ] Run `dart fix --apply` for `deprecated_member_use` in `add_edit_entry_sheet.dart` and `avoid_relative_lib_imports` in `tool/check_translations.dart`
-    - [ ] Verify build with `flutter analyze`
-    - [ ] Push updates to GitHub
+- [x] Execute Dart Automated Code Health Fixes (`dart fix --apply`)
+    - [x] Ran dart fix --apply for deprecated_member_use in add_edit_entry_sheet.dart and avoid_relative_lib_imports in tool/check_translations.dart
+    - [x] Verified build with flutter analyze
+    - [x] Pushed updates to GitHub
+- [/] Add Android 15 enableEdgeToEdge Kotlin Support & Fix Bottom Sheet Safe Area Overlap
+    - [ ] Added `enableEdgeToEdge()` in `MainActivity.kt`
+    - [ ] Updated `add_edit_entry_sheet.dart` with `useSafeArea: true` and dynamic `MediaQuery.viewPadding.bottom` padding
+    - [ ] Bumped version to `1.0.2+3`
+    - [ ] Recompiled Web release and Android App Bundle (`app-release.aab`)
+    - [ ] Pushed all updates to GitHub
