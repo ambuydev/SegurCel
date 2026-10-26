@@ -51,6 +51,7 @@ class AddEditEntrySheet extends StatefulWidget {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
+        useSafeArea: true,
         backgroundColor: const Color(0xFF1E2538),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -307,14 +308,22 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 20,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-      ),
-      child: SingleChildScrollView(
+    final viewInsetsBottom = MediaQuery.of(context).viewInsets.bottom;
+    final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
+    final bottomPadding = viewInsetsBottom > 0
+        ? viewInsetsBottom + 20
+        : viewPaddingBottom + 24;
+
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: bottomPadding,
+        ),
+        child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -625,6 +634,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 }
