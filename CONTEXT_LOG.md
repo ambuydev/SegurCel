@@ -72,10 +72,10 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 
 ---
 
-## 6. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (VERSIÓN 2 1.0.1+2 EN REVISIÓN DE PRUEBAS CERRADAS)
+## 6. 🚀 ESTADO EN GOOGLE PLAY CONSOLE (VERSIÓN 3 1.0.2+3 PUBLICADA EN PRUEBAS CERRADAS)
 - **Cuenta de Desarrollador**: Verificación de identidad **APROBADA** en Google Play Console (`ID: 7478631796851696861`).
-- **Estado de Publicación**: **VERSIÓN 2 (1.0.1+2) ENVIADA Y EN REVISIÓN EN PISTA ALPHA**.
-- **Paquete Firmado Oficial de Producción**: `build/app/outputs/bundle/release/app-release.aab` (57.8 MB) versión `1.0.1+2` firmado con `upload-keystore.jks` (configurado en `android/key.properties` y `android/app/build.gradle.kts`).
+- **Estado de Publicación**: **VERSIÓN 3 (1.0.2+3) PUBLICADA EN PISTA ALPHA**. "Cambios listos para publicarse".
+- **Paquete Firmado Oficial de Producción**: `build/app/outputs/bundle/release/app-release.aab` (60.0 MB) versión `1.0.2+3` firmado con `upload-keystore.jks` (configurado en `android/key.properties` y `android/app/build.gradle.kts`).
 - **Credenciales de Revisor de Google**:  
   - Email: `google.reviewer@segurcel.app`  
   - Contraseña: `ReviewerPass2026!`  
