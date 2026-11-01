@@ -201,7 +201,7 @@
     - [x] Steepened top connectors (`transform: rotate(28deg)`, `width: 185px`) and bottom connectors (`transform: rotate(-28deg)`, `width: 185px`) so all 8 connectors physically plug into shield logo edges
     - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
 - [x] Scale Central Shield Logo to 250px x 250px (border-radius: 46px) & Precision Align Connectors
-    - [x] Updated `.segurcel-logo` dimensions to `250px x 250px` (`border-radius: 46px;`) and `.shield-wrapper` width to `290px`
+    - [x] Updated `.shield-wrapper` HTML image src to `assets/html/logo_circuitos.jpeg`
     - [x] Fine-tuned top connectors (`top: 8%`, `width: 200px`, `rotate(35deg)`), middle connectors (`top: 36%` & `64%`, `width: 170px`), and bottom connectors (`top: 92%`, `width: 200px`, `rotate(-35deg)`)
     - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
 - [x] Eliminate Legacy index.html Links Across Web Pages to Prevent ERR_TOO_MANY_REDIRECTS
@@ -276,9 +276,42 @@
     - [x] Ran dart fix --apply for deprecated_member_use in add_edit_entry_sheet.dart and avoid_relative_lib_imports in tool/check_translations.dart
     - [x] Verified build with flutter analyze
     - [x] Pushed updates to GitHub
-- [/] Add Android 15 enableEdgeToEdge Kotlin Support & Fix Bottom Sheet Safe Area Overlap
-    - [ ] Added `enableEdgeToEdge()` in `MainActivity.kt`
-    - [ ] Updated `add_edit_entry_sheet.dart` with `useSafeArea: true` and dynamic `MediaQuery.viewPadding.bottom` padding
-    - [ ] Bumped version to `1.0.2+3`
-    - [ ] Recompiled Web release and Android App Bundle (`app-release.aab`)
-    - [ ] Pushed all updates to GitHub
+- [x] Add Android 15 enableEdgeToEdge Support & Fix Bottom Sheet Safe Area Overlap
+    - [x] Configured SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge) in main.dart
+    - [x] Updated add_edit_entry_sheet.dart with useSafeArea: true and dynamic MediaQuery.viewPadding.bottom padding
+    - [x] Bumped version to 1.0.2+3
+    - [x] Recompiled Web release and Android App Bundle (app-release.aab)
+    - [x] Pushed all updates to GitHub
+- [x] Provide Strategic Guidance on Release Cadence for 14-Day Closed Testing
+    - [x] Recommended uploading v1.0.2+3 immediately on Day 1 so paid testers receive the fixed navigation bar layout
+    - [x] Outlined 3-update roadmap across 14-day testing window (Day 1, Day 6-7, Day 11-12)
+- [x] Evaluate Backup Export Strategy Concept (.segurcel Free vs .json PRO)
+    - [x] Evaluated user proposal for .segurcel encrypted backup (Free plan) and .json/CSV interoperability export (PRO plan)
+    - [x] Responded without taking action as requested
+- [x] Explain In-App Purchase Sandbox Billing Mechanics in Google Play Closed Testing
+    - [x] Explained Google Play Sandbox Test Payment Mode ('Licencia de prueba - Sin cargo') for testers and reviewers
+    - [x] Confirmed compliance with Google Play review requirements
+- [x] Explain Production Google Play Billing Lifecycle & Verification Architecture
+    - [x] Explained automatic transition from Sandbox to real local-currency payments in Production
+    - [x] Outlined PurchaseService listener verification via signed purchaseTokens and Firestore profile activation
+- [x] Evaluate Light Mode Theme Feature Concept for SegurCel
+    - [x] Evaluated user proposal for Light/Dark/System theme toggle
+    - [x] Confirmed technical feasibility in Flutter (MaterialApp theme/darkTheme/themeMode + SharedPreferences)
+    - [x] Responded without taking action as requested
+- [x] Explain Firebase Hosting Re-deploy Rationale
+    - [x] Explained multiplatform Web Vault 1:1 synchronization (https://segurcel.app/vault) and Firebase Spark Plan executable restrictions
+- [x] Explain Android Signature Mismatch & Google Play Protect Sideloading Fix
+    - [x] Explained that 'No se instaló la app' occurs when installing a Release APK over a Debug APK due to Android signature key mismatch
+    - [x] Provided 2-step fix: 1) Uninstall existing SegurCel app from phone, 2) Tap 'Más detalles' -> 'Instalar de todas formas' in Play Protect
+    - [x] Recommended adding user's own Gmail to Google Play Console tester list for seamless Play Store updates
+- [x] Explain Analytics and Active User Tracking Mechanics for SegurCel
+    - [x] Outlined 3 official methods for tracking active users: Google Play Console testing dashboard, Firebase Authentication & Firestore last_login_at timestamp, and Firebase Analytics console
+- [x] Formulate Play Store ASO Description & Framed Screenshot Strategy
+    - [x] Created enriched short and long description texts with ASO keywords (Zero-Knowledge, AES-256, 2FA, Bóveda)
+    - [x] Designed framed screenshot gallery guide with captions for Google Play Console Main Store Listing
+- [x] Evaluate Weekly Update Schedule (Monday v1.0.3 & Friday v1.0.4 + ASO)
+    - [x] Evaluated user proposed update schedule: Monday for Update #2 (v1.0.3) and Friday for Update #3 (v1.0.4 + ASO Store Listing)
+    - [x] Confirmed optimal release cadence and strategic alignment
+- [x] Evaluate 3-Stage Release Cadence (Mon v1.0.3, Wed v1.0.4, Fri v1.0.5 + ASO)
+    - [x] Evaluated user proposal to split updates into 3 releases (Monday v1.0.3, Wednesday v1.0.4, Friday v1.0.5 + ASO)
+    - [x] Confirmed technical superiority, 48h golden cadence, and reduced blast radius benefits
