@@ -142,21 +142,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _deleteEntry(PasswordEntry entry) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF1E2538),
-        title: Text(_loc.text('delete_password'), style: const TextStyle(color: Colors.white)),
-        content: Text('${_loc.text("delete_confirm")} (${entry.title})', style: const TextStyle(color: Colors.white70)),
+        backgroundColor: isDark ? const Color(0xFF1E2538) : Colors.white,
+        title: Text(_loc.text('delete_password'), style: TextStyle(color: isDark ? Colors.white : const Color(0xFF10141D))),
+        content: Text('${_loc.text("delete_confirm")} (${entry.title})', style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF4A5568))),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(_loc.text('cancel'), style: const TextStyle(color: Colors.white60)),
+            child: Text(_loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white60 : Colors.black54)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(_loc.text('delete'), style: const TextStyle(color: Colors.white)),
+            child: Text(_loc.text('delete'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ),
         ],
       ),

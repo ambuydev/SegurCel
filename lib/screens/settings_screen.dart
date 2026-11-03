@@ -892,7 +892,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(height: 16),
                     Text(
                       _loc.text('export_subtitle'),
-                      style: const TextStyle(color: Colors.white70, fontSize: 13),
+                      style: TextStyle(color: textSubColor, fontSize: 13),
                     ),
                     const SizedBox(height: 12),
                     Row(
