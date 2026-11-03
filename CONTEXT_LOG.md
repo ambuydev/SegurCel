@@ -98,16 +98,22 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ---
 
 ## 8. 🗺️ HOJA DE RUTA (ROADMAP) Y PRÓXIMOS PASOS
-1. **[COMPLETADO] Configuración e Inscripción en Apple Developer Program (iOS):**
+1. **[COMPLETADO] Hito #2 - Versión 1.0.4+5 (Publicado):**
+   - Guía interactiva de onboarding de 3 pasos para nuevos usuarios (`OnboardingSheet`).
+   - Selector de Tema Adaptativo (Modo Oscuro, Modo Claro y Tema del Sistema - `ThemeService`).
+   - Temporizador configurable de auto-bloqueo por inactividad (1 min, 5 min, 15 min, Nunca).
+   - Detección dinámica de la tienda de aplicaciones para el botón de "Calificar SegurCel" (`App Store` en iOS, `Google Play` en Android, `segurcel.app` en Web).
+   - Lanzamiento oficial del 11º idioma: **Italiano (🇮🇹 Italiano)** en app móvil y Bóveda Web.
+   - Binarios re-compilados: `app-release.aab` (57.5 MB) y `app-release.apk` (68.1 MB).
+   - Bóveda Web re-desplegada en vivo en Firebase Hosting (`https://segurcel.app`).
+2. **[COMPLETADO] Configuración e Inscripción en Apple Developer Program (iOS):**
    - Inscripción completada y pago de US$99/año procesado para la cuenta `amb.uy.dev@gmail.com` (Alejandro Martínez Briao).
-   - Carpeta `ios/Runner/Info.plist` 100% configurada: Nombre `SegurCel - Bóveda & 2FA`, `NSFaceIDUsageDescription`, `NSCameraUsageDescription`, y 11 idiomas declarados en `CFBundleLocalizations`.
+   - Ficha creada en App Store Connect: **`SegurCel - Bóveda & 2FA`** (`🟡 iOS 1.0 En preparación para el envío`).
+   - Carpeta `ios/Runner/Info.plist` 100% configurada con Face ID, Cámara QR y 11 idiomas declarados.
    - Flujo CI/CD automatizado creado en `.github/workflows/build_ios.yml` para compilación `.ipa` sin necesidad de Mac física.
-2. **[EN PROGRESO] Reclutamiento y Ejecución de Pruebas Cerradas (14 Días):**
-   - Cargar las direcciones Gmail de los testers en la lista de probadores / Grupos de Google (`segurcel-testers@googlegroups.com` y `testers-community@googlegroups.com`).
+3. **[EN PROGRESO] Reclutamiento y Ejecución de Pruebas Cerradas (14 Días):**
    - Monitorear el período obligatorio de 14 días consecutivos (8 de 14 días completados con 12 testers activos).
-3. **[PRÓXIMO PASO] Hito #2 - Versión 1.0.4 (Miércoles):**
-   - Guía interactiva de onboarding de 3 pasos para nuevos usuarios.
-   - Selector de Tema Adaptativo (Oscuro / Claro / Sistema).
-   - Temporizador configurable de auto-bloqueo por inactividad.
-   - Lanzamiento oficial del 11º idioma: **Italiano (🇮🇹 Italiano)**.
+4. **[PRÓXIMO PASO] Hito #3 - Versión 1.0.5 + ASO:**
+   - Importación y Exportación de Respaldos Cifrados Locales (`.segurcel` Gratuito / `.json` PRO).
+   - Actualización de Ficha de la Tienda de Google Play Console con Descripciones ASO y Galería de Capturas de Pantalla Marqueadas.
 

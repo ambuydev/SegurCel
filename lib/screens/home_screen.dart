@@ -262,17 +262,24 @@ class _HomeScreenState extends State<HomeScreen> {
       return a.title.toLowerCase().compareTo(b.title.toLowerCase());
     });
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final appBarBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final cardBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E2538),
+        backgroundColor: appBarBg,
+        foregroundColor: textColor,
         elevation: 2,
         titleSpacing: 12,
         title: GestureDetector(
           onTap: () => AboutAppSheet.show(context, _loc),
           child: Text(
             _loc.text('app_title'),
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: textColor),
           ),
         ),
         actions: [
@@ -393,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: const EdgeInsets.only(left: 16, right: 16, top: 12),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1E2538),
+                    color: cardBg,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: healthColor.withAlpha(100)),
                   ),
@@ -407,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               _loc.text('vault_health'),
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                              style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             Text(
                               '${_loc.text("security_score")}: ${healthReport.overallScore}/100',
@@ -437,14 +444,14 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: textColor),
                 onChanged: (val) => setState(() => _searchQuery = val),
                 decoration: InputDecoration(
                   hintText: _loc.text('search_placeholder'),
-                  hintStyle: const TextStyle(color: Colors.white38),
-                  prefixIcon: const Icon(Icons.search, color: Colors.white54),
+                  hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38),
+                  prefixIcon: Icon(Icons.search, color: isDark ? Colors.white54 : Colors.black54),
                   filled: true,
-                  fillColor: const Color(0xFF1E2538),
+                  fillColor: cardBg,
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -464,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     final isSelected = cat.toLowerCase() == _selectedCategory.toLowerCase();
 
                     IconData catIcon = Icons.folder_outlined;
-                    Color catIconColor = isSelected ? const Color(0xFF6C63FF) : Colors.white54;
+                    Color catIconColor = isSelected ? const Color(0xFF6C63FF) : (isDark ? Colors.white54 : Colors.black54);
 
                     if (cat == allCatText) {
                       catIcon = Icons.folder_copy_outlined;
@@ -486,19 +493,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: const EdgeInsets.only(right: 6),
                         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                         decoration: BoxDecoration(
-                          color: isSelected ? const Color(0xFF1E2538) : const Color(0xFF141A28),
+                          color: isSelected ? cardBg : (isDark ? const Color(0xFF141A28) : const Color(0xFFE2E8F0)),
                           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                           border: Border(
                             top: BorderSide(
-                              color: isSelected ? const Color(0xFF6C63FF) : Colors.white12,
+                              color: isSelected ? const Color(0xFF6C63FF) : Colors.black12,
                               width: isSelected ? 2.5 : 1,
                             ),
                             left: BorderSide(
-                              color: isSelected ? const Color(0xFF6C63FF) : Colors.white12,
+                              color: isSelected ? const Color(0xFF6C63FF) : Colors.black12,
                               width: isSelected ? 1.5 : 1,
                             ),
                             right: BorderSide(
-                              color: isSelected ? const Color(0xFF6C63FF) : Colors.white12,
+                              color: isSelected ? const Color(0xFF6C63FF) : Colors.black12,
                               width: isSelected ? 1.5 : 1,
                             ),
                             bottom: BorderSide.none,
@@ -517,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                                color: isSelected ? Colors.white : Colors.white60,
+                                color: isSelected ? textColor : (isDark ? Colors.white60 : Colors.black87),
                               ),
                             ),
                           ],
@@ -535,7 +542,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1E2538),
+                  color: cardBg,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),

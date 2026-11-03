@@ -606,12 +606,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final currentUser = _authService.currentUser;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final appBarBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E2538),
-        title: Text(_loc.text('settings_title'), style: const TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: appBarBg,
+        foregroundColor: textColor,
+        title: Text(_loc.text('settings_title'), style: TextStyle(fontWeight: FontWeight.bold, color: textColor)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -1371,9 +1376,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     required Color iconColor,
     required Widget child,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Card(
-      color: const Color(0xFF1E2538),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      color: isDark ? const Color(0xFF1E2538) : Colors.white,
+      elevation: isDark ? 1 : 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: isDark ? const Color(0xFF6C63FF).withAlpha(100) : Colors.black12,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -1386,12 +1398,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: isDark ? Colors.white : const Color(0xFF10141D),
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
-            const Divider(color: Colors.white12, height: 24),
+            Divider(color: isDark ? Colors.white12 : Colors.black12, height: 24),
             child,
           ],
         ),

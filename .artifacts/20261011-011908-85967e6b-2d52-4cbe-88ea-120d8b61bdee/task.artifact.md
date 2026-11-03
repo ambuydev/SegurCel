@@ -426,7 +426,7 @@
     - [x] Verify screenshot showing registered App ID SegurCel Vault (com.segurcel.segurcel)
     - [x] Instruct user to open appstoreconnect.apple.com/apps and create 'SegurCel - Bóveda & 2FA'
 - [x] Celebrating App Store Connect App Record Creation & Summarizing Day's Achievements
-    - [x] Verify screenshot showing 'SegurCel - Bóveda & 2FA' created with status '🟡 iOS 1.0 En preparation para el envío'
+    - [x] Verify screenshot showing 'SegurCel - Bóveda & 2FA' created with status '🟡 iOS 1.0 En preparación para el envío'
     - [x] Summarize all accomplishments completed today across Android, Web, Extension, and iOS
 - [x] Formulating iOS Cloud Build and App Store Submission Plan Without Action
     - [x] Detail step-by-step plan for App Store Connect API Key generation (.p8), GitHub Secrets configuration, automated iOS build via GitHub Actions, and App Store product metadata setup
@@ -435,3 +435,5 @@
 - [x] Evaluating Advance Release Strategy for Milestone 2 Version 1.0.4 Without Action
     - [x] Compare Option A (implementing Milestone 2 Version 1.0.4 today and submitting to both Google Play and App Store Connect) vs Option B (submitting 1.0.3 today and 1.0.4 tomorrow)
     - [x] Endorse Option A as technically superior to gain 24-48h
+- [x] Providing Phone Installation Instructions for Release APK v1.0.4+5
+    - [x] Provide clear instructions for installing app-release.apk (68.1 MB) on Android phone for testing
