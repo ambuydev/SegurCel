@@ -172,6 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildLanguagePicker() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primaryIconColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
     final languages = [
       {'code': 'es', 'name': '🇪🇸 Español'},
       {'code': 'en', 'name': '🇺🇸 English'},
@@ -187,9 +189,9 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.language, color: Colors.amberAccent, size: 24),
+      icon: Icon(Icons.language, color: primaryIconColor, size: 24),
       tooltip: _loc.text('language'),
-      color: const Color(0xFF1E2538),
+      color: isDark ? const Color(0xFF1E2538) : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       onSelected: (String code) async {
         await _loc.changeLanguage(code);
@@ -208,13 +210,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   lang['name']!,
                   style: TextStyle(
-                    color: isSelected ? Colors.amberAccent : Colors.white,
+                    color: isSelected ? primaryIconColor : (isDark ? Colors.white : const Color(0xFF10141D)),
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                     fontSize: 14,
                   ),
                 ),
                 if (isSelected)
-                  const Icon(Icons.check, color: Colors.amberAccent, size: 18),
+                  Icon(Icons.check, color: primaryIconColor, size: 18),
               ],
             ),
           );
@@ -235,11 +237,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final healthReport = PasswordHealthService.analyzeVault(widget.vaultService.entries);
 
-    Color healthColor = Colors.greenAccent;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final appBarBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final cardBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+
+    final amberAccentColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+    final settingsIconColor = isDark ? Colors.white70 : const Color(0xFF10141D);
+
+    Color healthColor = isDark ? Colors.greenAccent : const Color(0xFF137333);
     if (healthReport.overallScore < 50) {
-      healthColor = Colors.redAccent;
+      healthColor = isDark ? Colors.redAccent : Colors.red.shade800;
     } else if (healthReport.overallScore < 80) {
-      healthColor = Colors.amberAccent;
+      healthColor = amberAccentColor;
     }
 
     final categoryFiltered = widget.vaultService.entries.where((e) {
@@ -262,12 +273,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return a.title.toLowerCase().compareTo(b.title.toLowerCase());
     });
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
-    final appBarBg = isDark ? const Color(0xFF1E2538) : Colors.white;
-    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
-    final cardBg = isDark ? const Color(0xFF1E2538) : Colors.white;
-
     return Scaffold(
       backgroundColor: scaffoldBg,
       appBar: AppBar(
@@ -284,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.info_outline, color: Colors.amberAccent, size: 22),
+            icon: Icon(Icons.info_outline, color: amberAccentColor, size: 22),
             tooltip: _loc.text('user_guide'),
             onPressed: () {
               FileHelper.openUrl('https://segurcel.app/guide.html');
@@ -304,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           IconButton(
-            icon: const Icon(Icons.settings_outlined, color: Colors.white70),
+            icon: Icon(Icons.settings_outlined, color: settingsIconColor),
             tooltip: _loc.text('settings'),
             onPressed: () {
               Navigator.of(context).push(
@@ -315,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.lock_outline, color: Colors.amberAccent),
+            icon: Icon(Icons.lock_outline, color: amberAccentColor),
             tooltip: _loc.text('lock_vault'),
             onPressed: _lockVault,
           ),
@@ -333,16 +338,16 @@ class _HomeScreenState extends State<HomeScreen> {
             // Banner de Estado de la Nube
             if (AuthService().currentUser == null)
               Container(
-                color: const Color(0xFF6C63FF).withAlpha(51),
+                color: isDark ? const Color(0xFF6C63FF).withAlpha(51) : const Color(0xFFEEF2FF),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   children: [
-                    const Icon(Icons.cloud_off_outlined, color: Colors.amberAccent, size: 20),
+                    Icon(Icons.cloud_off_outlined, color: amberAccentColor, size: 20),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         _loc.text('local_mode_banner'),
-                        style: const TextStyle(color: Colors.white, fontSize: 13),
+                        style: TextStyle(color: isDark ? Colors.white : const Color(0xFF3730A3), fontSize: 13, fontWeight: FontWeight.w500),
                       ),
                     ),
                     TextButton(
@@ -364,16 +369,16 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             else
               Container(
-                color: Colors.green.withAlpha(38),
+                color: isDark ? Colors.green.withAlpha(38) : const Color(0xFFE6F4EA),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 child: Row(
                   children: [
-                    const Icon(Icons.cloud_done_outlined, color: Colors.greenAccent, size: 18),
+                    Icon(Icons.cloud_done_outlined, color: isDark ? Colors.greenAccent : const Color(0xFF137333), size: 18),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         '${_loc.text("cloud_active_banner")} (${AuthService().currentUser?.email})',
-                        style: const TextStyle(color: Colors.white70, fontSize: 12),
+                        style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF137333), fontSize: 12, fontWeight: FontWeight.w600),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -477,13 +482,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       catIcon = Icons.folder_copy_outlined;
                     } else if (cat == favCatText) {
                       catIcon = Icons.star;
-                      catIconColor = isSelected ? Colors.amber : Colors.amber.withAlpha(180);
+                      catIconColor = amberAccentColor;
                     } else if (cat == 'Tarjetas') {
                       catIcon = Icons.credit_card;
-                      catIconColor = isSelected ? Colors.amberAccent : Colors.amberAccent.withAlpha(180);
+                      catIconColor = amberAccentColor;
                     } else if (cat == 'Notas') {
                       catIcon = Icons.note_alt_outlined;
-                      catIconColor = isSelected ? Colors.tealAccent : Colors.tealAccent.withAlpha(180);
+                      catIconColor = isDark ? Colors.tealAccent : Colors.teal.shade800;
                     }
 
                     return GestureDetector(
