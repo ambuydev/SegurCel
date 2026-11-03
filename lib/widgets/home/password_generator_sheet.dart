@@ -18,7 +18,7 @@ class PasswordGeneratorSheet extends StatefulWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: const Color(0xFF1E2538),
+      backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -94,50 +94,62 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.loc.text('generator_title'),
-                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white54),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final cardBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
 
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: const Color(0xFF10141D),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFF6C63FF)),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _generatedPassword,
-                      style: const TextStyle(
-                        color: Color(0xFF80EE99),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.loc.text('generator_title'),
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: textColor),
                       ),
                     ),
+                    IconButton(
+                      icon: Icon(Icons.close, color: isDark ? Colors.white54 : Colors.black54),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: cardBg,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFF6C63FF)),
                   ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _generatedPassword,
+                          style: TextStyle(
+                            color: isDark ? const Color(0xFF80EE99) : Colors.green.shade800,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
                   IconButton(
                     icon: const Icon(Icons.copy_outlined, color: Color(0xFF6C63FF), size: 20),
                     tooltip: widget.loc.text('copy'),
@@ -219,7 +231,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
             const SizedBox(height: 8),
 
             CheckboxListTile(
-              title: Text(widget.loc.text('include_uppercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+              title: Text(widget.loc.text('include_uppercase'), style: TextStyle(color: textColor, fontSize: 13)),
               value: _includeUpper,
               activeColor: const Color(0xFF6C63FF),
               dense: true,
@@ -232,7 +244,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
               },
             ),
             CheckboxListTile(
-              title: Text(widget.loc.text('include_lowercase'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+              title: Text(widget.loc.text('include_lowercase'), style: TextStyle(color: textColor, fontSize: 13)),
               value: _includeLower,
               activeColor: const Color(0xFF6C63FF),
               dense: true,
@@ -245,7 +257,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
               },
             ),
             CheckboxListTile(
-              title: Text(widget.loc.text('include_numbers'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+              title: Text(widget.loc.text('include_numbers'), style: TextStyle(color: textColor, fontSize: 13)),
               value: _includeNumbers,
               activeColor: const Color(0xFF6C63FF),
               dense: true,
@@ -258,7 +270,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
               },
             ),
             CheckboxListTile(
-              title: Text(widget.loc.text('include_symbols'), style: const TextStyle(color: Colors.white, fontSize: 13)),
+              title: Text(widget.loc.text('include_symbols'), style: TextStyle(color: textColor, fontSize: 13)),
               value: _includeSymbols,
               activeColor: const Color(0xFF6C63FF),
               dense: true,
@@ -271,7 +283,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
               },
             ),
             CheckboxListTile(
-              title: Text(widget.loc.text('avoid_ambiguous'), style: const TextStyle(color: Colors.white70, fontSize: 12)),
+              title: Text(widget.loc.text('avoid_ambiguous'), style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF4A5568), fontSize: 12)),
               value: _avoidAmbiguous,
               activeColor: const Color(0xFF6C63FF),
               dense: true,
@@ -304,6 +316,8 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
           ],
         ),
       ),
-    );
+    ),
+  ),
+);
   }
 }

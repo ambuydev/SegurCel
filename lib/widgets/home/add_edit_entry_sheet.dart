@@ -52,7 +52,7 @@ class AddEditEntrySheet extends StatefulWidget {
         context: context,
         isScrollControlled: true,
         useSafeArea: true,
-        backgroundColor: const Color(0xFF1E2538),
+        backgroundColor: Colors.transparent,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
@@ -110,7 +110,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
     _titleController = TextEditingController(text: widget.existingEntry?.title ?? '');
     _usernameController = TextEditingController(text: widget.existingEntry?.username ?? '');
     _passwordController = TextEditingController(text: widget.existingEntry?.password ?? '');
-    
+
     final initialCat = (widget.existingEntry?.category ?? 'General').trim();
     _categoryController = TextEditingController(text: initialCat);
 
@@ -122,8 +122,8 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
       _selectedCategoryOption = initialCat;
       _isCreatingNewCategory = false;
     } else {
-      _selectedCategoryOption = '__NEW_CATEGORY__';
-      _isCreatingNewCategory = true;
+      _selectedCategoryOption = 'General';
+      _isCreatingNewCategory = false;
     }
 
     _notesController = TextEditingController(text: widget.existingEntry?.notes ?? '');
@@ -154,6 +154,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
     required IconData icon,
     required bool isSelected,
     required VoidCallback onTap,
+    required bool isDark,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -161,20 +162,20 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF6C63FF) : const Color(0xFF10141D),
+          color: isSelected ? const Color(0xFF6C63FF) : (isDark ? const Color(0xFF10141D) : const Color(0xFFE2E8F0)),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: isSelected ? const Color(0xFF6C63FF) : Colors.white24),
+          border: Border.all(color: isSelected ? const Color(0xFF6C63FF) : (isDark ? Colors.white24 : Colors.black12)),
         ),
         child: Column(
           children: [
-            Icon(icon, size: 20, color: isSelected ? Colors.white : Colors.white60),
+            Icon(icon, size: 20, color: isSelected ? Colors.white : (isDark ? Colors.white60 : Colors.black87)),
             const SizedBox(height: 4),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.white70,
+                  color: isSelected ? Colors.white : (isDark ? Colors.white70 : Colors.black87),
                   fontSize: 11,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
@@ -186,7 +187,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
     );
   }
 
-  Widget _buildCategorySection() {
+  Widget _buildCategorySection(bool isDark, Color textColor, Color textSubColor, Color inputFillColor, Color accentAmber) {
     final categories = _getExistingCategories();
     const newCategoryKey = '__NEW_CATEGORY__';
 
@@ -197,7 +198,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
           value: cat,
           child: Text(
             cat,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: TextStyle(color: textColor, fontSize: 14),
           ),
         ),
       );
@@ -209,7 +210,7 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
           value: _selectedCategoryOption,
           child: Text(
             _selectedCategoryOption,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: TextStyle(color: textColor, fontSize: 14),
           ),
         ),
       );
@@ -220,11 +221,11 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
         value: newCategoryKey,
         child: Row(
           children: [
-            const Icon(Icons.add_circle_outline, color: Colors.amberAccent, size: 18),
+            Icon(Icons.add_circle_outline, color: accentAmber, size: 18),
             const SizedBox(width: 8),
             Text(
               widget.loc.text('new_category_option'),
-              style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(color: accentAmber, fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ],
         ),
@@ -238,20 +239,20 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
           initialValue: dropdownItems.any((item) => item.value == _selectedCategoryOption)
               ? _selectedCategoryOption
               : newCategoryKey,
-          dropdownColor: const Color(0xFF1E2538),
+          dropdownColor: isDark ? const Color(0xFF1E2538) : Colors.white,
           decoration: InputDecoration(
             labelText: widget.loc.text('category_label'),
-            labelStyle: const TextStyle(color: Colors.white70),
+            labelStyle: TextStyle(color: textSubColor),
             prefixIcon: const Icon(Icons.folder_outlined, color: Color(0xFF6C63FF), size: 20),
             filled: true,
-            fillColor: const Color(0xFF10141D),
+            fillColor: inputFillColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.white24),
+              borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.white24),
+              borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -278,26 +279,22 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
           TextField(
             controller: _categoryController,
             autofocus: true,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: textColor),
             decoration: InputDecoration(
               labelText: widget.loc.text('new_category_label'),
-              labelStyle: const TextStyle(color: Colors.amberAccent),
+              labelStyle: TextStyle(color: accentAmber),
               hintText: 'Ej. Trabajo, Personal...',
-              hintStyle: const TextStyle(color: Colors.white30),
-              prefixIcon: const Icon(Icons.create_new_folder_outlined, color: Colors.amberAccent, size: 20),
+              hintStyle: TextStyle(color: isDark ? Colors.white30 : Colors.black38),
+              prefixIcon: Icon(Icons.create_new_folder_outlined, color: accentAmber, size: 20),
               filled: true,
-              fillColor: const Color(0xFF10141D),
+              fillColor: inputFillColor,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.amberAccent),
+                borderSide: BorderSide(color: accentAmber),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.amberAccent.withAlpha(150)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.amberAccent),
+                borderSide: BorderSide(color: accentAmber),
               ),
             ),
           ),
@@ -306,335 +303,338 @@ class _AddEditEntrySheetState extends State<AddEditEntrySheet> {
     );
   }
 
+  void _saveEntry() async {
+    final title = _titleController.text.trim();
+    var category = _categoryController.text.trim();
+
+    if (title.isEmpty) {
+      setState(() => _dialogError = widget.loc.text('title_required'));
+      return;
+    }
+
+    if (category.isEmpty) {
+      if (_selectedType == 'cards') {
+        category = 'Tarjetas';
+      } else if (_selectedType == 'notes') {
+        category = 'Notas';
+      } else {
+        category = 'General';
+      }
+    }
+
+    final now = DateTime.now().toIso8601String();
+
+    final entry = PasswordEntry(
+      id: widget.existingEntry?.id ?? now,
+      title: title,
+      username: _selectedType == 'cards'
+          ? _usernameController.text.trim()
+          : (_selectedType == 'notes' ? '' : _usernameController.text.trim()),
+      password: _selectedType == 'notes' ? '' : _passwordController.text.trim(),
+      category: category,
+      notes: _notesController.text.trim(),
+      totpSecret: _totpController.text.trim().replaceAll(' ', ''),
+      cardExpiry: _selectedType == 'cards' ? _cardExpiryController.text.trim() : '',
+      cardCvv: _selectedType == 'cards' ? _cardCvvController.text.trim() : '',
+      cardPin: _selectedType == 'cards' ? _cardPinController.text.trim() : '',
+      isFavorite: widget.existingEntry?.isFavorite ?? false,
+      entryType: _selectedType,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    );
+
+    final currentList = List<PasswordEntry>.from(widget.vaultService.entries);
+    final idx = currentList.indexWhere((e) => e.id == entry.id);
+
+    if (idx != -1) {
+      currentList[idx] = entry;
+    } else {
+      currentList.insert(0, entry);
+    }
+
+    await widget.vaultService.saveEntries(currentList);
+    widget.onSaved(category);
+
+    if (mounted) Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
+    InputDecoration buildInputDecoration(String label, {String? hintText, Widget? prefixIcon}) {
+      return InputDecoration(
+        labelText: label,
+        hintText: hintText,
+        prefixIcon: prefixIcon,
+        filled: true,
+        fillColor: inputFillColor,
+        labelStyle: TextStyle(color: textSubColor),
+        hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFF6C63FF), width: 1.5),
+        ),
+      );
+    }
+
     final viewInsetsBottom = MediaQuery.of(context).viewInsets.bottom;
     final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
     final bottomPadding = viewInsetsBottom > 0
         ? viewInsetsBottom + 20
         : viewPaddingBottom + 24;
 
-    return SafeArea(
-      top: false,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 20,
-          bottom: bottomPadding,
-        ),
-        child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              _isEditing ? widget.loc.text('edit_password') : widget.loc.text('add_password'),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            const SizedBox(height: 16),
-
-            Row(
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: bottomPadding,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: _buildTypeSegmentChip(
-                    id: 'logins',
-                    label: widget.loc.text('type_login'),
-                    icon: Icons.key_outlined,
-                    isSelected: _selectedType == 'logins',
-                    onTap: () => setState(() => _selectedType = 'logins'),
-                  ),
+                Text(
+                  _isEditing ? widget.loc.text('edit_password') : widget.loc.text('add_password'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor),
                 ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: _buildTypeSegmentChip(
-                    id: 'cards',
-                    label: widget.loc.text('type_card'),
-                    icon: Icons.credit_card,
-                    isSelected: _selectedType == 'cards',
-                    onTap: () => setState(() {
-                      _selectedType = 'cards';
-                      if (_categoryController.text == 'General' || _categoryController.text.isEmpty) {
-                        _categoryController.text = 'Tarjetas';
-                        _selectedCategoryOption = 'Tarjetas';
-                        _isCreatingNewCategory = false;
-                      }
-                    }),
-                  ),
+                const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildTypeSegmentChip(
+                        id: 'logins',
+                        label: widget.loc.text('type_login'),
+                        icon: Icons.key_outlined,
+                        isSelected: _selectedType == 'logins',
+                        onTap: () => setState(() => _selectedType = 'logins'),
+                        isDark: isDark,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: _buildTypeSegmentChip(
+                        id: 'cards',
+                        label: widget.loc.text('type_card'),
+                        icon: Icons.credit_card,
+                        isSelected: _selectedType == 'cards',
+                        onTap: () => setState(() {
+                          _selectedType = 'cards';
+                          if (_categoryController.text == 'General' || _categoryController.text.isEmpty) {
+                            _categoryController.text = 'Tarjetas';
+                            _selectedCategoryOption = 'Tarjetas';
+                            _isCreatingNewCategory = false;
+                          }
+                        }),
+                        isDark: isDark,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: _buildTypeSegmentChip(
+                        id: 'notes',
+                        label: widget.loc.text('type_note'),
+                        icon: Icons.note_alt_outlined,
+                        isSelected: _selectedType == 'notes',
+                        onTap: () => setState(() {
+                          _selectedType = 'notes';
+                          if (_categoryController.text == 'General' || _categoryController.text.isEmpty) {
+                            _categoryController.text = 'Notas';
+                            _selectedCategoryOption = 'Notas';
+                            _isCreatingNewCategory = false;
+                          }
+                        }),
+                        isDark: isDark,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: _buildTypeSegmentChip(
-                    id: 'notes',
-                    label: widget.loc.text('type_note'),
-                    icon: Icons.note_alt_outlined,
-                    isSelected: _selectedType == 'notes',
-                    onTap: () => setState(() {
-                      _selectedType = 'notes';
-                      if (_categoryController.text == 'General' || _categoryController.text.isEmpty) {
-                        _categoryController.text = 'Notas';
-                        _selectedCategoryOption = 'Notas';
-                        _isCreatingNewCategory = false;
-                      }
-                    }),
+
+                const SizedBox(height: 16),
+
+                if (_selectedType == 'logins') ...[
+                  TextField(
+                    controller: _titleController,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('title_label')),
                   ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: _usernameController,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('username_label')),
+                  ),
+                  const SizedBox(height: 12),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _passwordController,
+                          style: TextStyle(color: textColor),
+                          decoration: buildInputDecoration(widget.loc.text('password_label')),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.tune, color: Color(0xFF6C63FF), size: 24),
+                        tooltip: widget.loc.text('generate_password'),
+                        onPressed: () => PasswordGeneratorSheet.show(context, _passwordController, widget.loc),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: _totpController,
+                    textCapitalization: TextCapitalization.characters,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(
+                      widget.loc.text('totp_label'),
+                      hintText: widget.loc.text('totp_hint'),
+                      prefixIcon: Icon(Icons.security, color: isDark ? Colors.cyanAccent : Colors.cyan.shade800, size: 20),
+                    ),
+                  ),
+                ] else if (_selectedType == 'cards') ...[
+                  TextField(
+                    controller: _titleController,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('card_title')),
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: _usernameController,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('card_holder')),
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: _passwordController,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('card_number')),
+                  ),
+                  const SizedBox(height: 12),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _cardExpiryController,
+                          keyboardType: TextInputType.datetime,
+                          style: TextStyle(color: textColor),
+                          decoration: buildInputDecoration(widget.loc.text('card_expiry'), hintText: 'MM/AA'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: _cardCvvController,
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          style: TextStyle(color: textColor),
+                          decoration: buildInputDecoration(widget.loc.text('card_cvv'), hintText: '123'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: _cardPinController,
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          style: TextStyle(color: textColor),
+                          decoration: buildInputDecoration(widget.loc.text('card_pin'), hintText: '1234'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ] else ...[
+                  TextField(
+                    controller: _titleController,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('note_title')),
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: _notesController,
+                    maxLines: 4,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('note_content')),
+                  ),
+                ],
+
+                const SizedBox(height: 12),
+                _buildCategorySection(isDark, textColor, textSubColor, inputFillColor, accentAmber),
+
+                if (_selectedType == 'logins' || _selectedType == 'cards') ...[
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _notesController,
+                    maxLines: 2,
+                    style: TextStyle(color: textColor),
+                    decoration: buildInputDecoration(widget.loc.text('notes_label')),
+                  ),
+                ],
+
+                if (_dialogError != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _dialogError!,
+                    style: const TextStyle(color: Colors.redAccent, fontSize: 13),
+                  ),
+                ],
+
+                const SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(widget.loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white60 : Colors.black54)),
+                    ),
+                    const SizedBox(width: 12),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6C63FF),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      onPressed: _saveEntry,
+                      child: Text(
+                        _isEditing ? widget.loc.text('save_changes') : widget.loc.text('save_password'),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-
-            const SizedBox(height: 16),
-
-            if (_selectedType == 'logins') ...[
-              TextField(
-                controller: _titleController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('title_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              TextField(
-                controller: _usernameController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('username_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _passwordController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: widget.loc.text('password_label'),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.tune, color: Color(0xFF6C63FF), size: 24),
-                    tooltip: widget.loc.text('generate_password'),
-                    onPressed: () => PasswordGeneratorSheet.show(context, _passwordController, widget.loc),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-
-              TextField(
-                controller: _totpController,
-                textCapitalization: TextCapitalization.characters,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('totp_label'),
-                  hintText: widget.loc.text('totp_hint'),
-                  hintStyle: const TextStyle(color: Colors.white30),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                  prefixIcon: const Icon(Icons.security, color: Colors.cyanAccent, size: 20),
-                ),
-              ),
-            ] else if (_selectedType == 'cards') ...[
-              TextField(
-                controller: _titleController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('card_title'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              TextField(
-                controller: _usernameController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('card_holder'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              TextField(
-                controller: _passwordController,
-                keyboardType: TextInputType.number,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('card_number'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _cardExpiryController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: widget.loc.text('card_expiry'),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: _cardCvvController,
-                      keyboardType: TextInputType.number,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: widget.loc.text('card_cvv'),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: _cardPinController,
-                      keyboardType: TextInputType.number,
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: widget.loc.text('card_pin'),
-                        labelStyle: const TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ] else ...[
-              TextField(
-                controller: _titleController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('note_title'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              TextField(
-                controller: _notesController,
-                style: const TextStyle(color: Colors.white),
-                maxLines: 4,
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('note_content'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-            ],
-
-            const SizedBox(height: 12),
-
-            _buildCategorySection(),
-
-            if (_selectedType != 'notes') ...[
-              const SizedBox(height: 12),
-              TextField(
-                controller: _notesController,
-                style: const TextStyle(color: Colors.white),
-                maxLines: 2,
-                decoration: InputDecoration(
-                  labelText: widget.loc.text('notes_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
-                ),
-              ),
-            ],
-
-            if (_dialogError != null) ...[
-              const SizedBox(height: 10),
-              Text(_dialogError!, style: const TextStyle(color: Colors.redAccent)),
-            ],
-
-            const SizedBox(height: 20),
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6C63FF),
-                padding: const EdgeInsets.symmetric(vertical: 14),
-              ),
-              onPressed: () async {
-                final title = _titleController.text.trim();
-                final username = _usernameController.text.trim();
-                final password = _passwordController.text.trim();
-
-                if (title.isEmpty) {
-                  setState(() {
-                    _dialogError = widget.loc.text('pin_error');
-                  });
-                  return;
-                }
-
-                final now = DateTime.now().millisecondsSinceEpoch;
-                List<HistoricalPassword> history = [];
-
-                if (_isEditing && _selectedType == 'logins' && widget.existingEntry != null) {
-                  history = List<HistoricalPassword>.from(widget.existingEntry!.history);
-                  if (widget.existingEntry!.password != password && password.isNotEmpty) {
-                    history.insert(
-                      0,
-                      HistoricalPassword(
-                        password: widget.existingEntry!.password,
-                        changedAt: widget.existingEntry!.updatedAt,
-                      ),
-                    );
-                  }
-                }
-
-                final catText = _categoryController.text.trim();
-                final newEntry = PasswordEntry(
-                  id: _isEditing ? widget.existingEntry!.id : now.toString(),
-                  title: title,
-                  username: username,
-                  password: password,
-                  category: catText.isEmpty
-                      ? (_selectedType == 'cards'
-                          ? 'Tarjetas'
-                          : (_selectedType == 'notes' ? 'Notas' : 'General'))
-                      : catText,
-                  notes: _notesController.text.trim(),
-                  entryType: _selectedType,
-                  cardExpiry: _cardExpiryController.text.trim(),
-                  cardCvv: _cardCvvController.text.trim(),
-                  cardPin: _cardPinController.text.trim(),
-                  totpSecret: _totpController.text.trim(),
-                  isFavorite: widget.existingEntry?.isFavorite ?? false,
-                  updatedAt: now,
-                  history: history,
-                );
-
-                final currentList = List<PasswordEntry>.from(widget.vaultService.entries);
-                if (_isEditing) {
-                  final idx = currentList.indexWhere((e) => e.id == widget.existingEntry!.id);
-                  if (idx != -1) currentList[idx] = newEntry;
-                } else {
-                  currentList.add(newEntry);
-                }
-
-                await widget.vaultService.saveEntries(currentList);
-                if (context.mounted) {
-                  widget.onSaved(catText);
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text(
-                _isEditing ? widget.loc.text('save_changes') : widget.loc.text('add_password'),
-                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-    ),
-  );
+    );
   }
 }

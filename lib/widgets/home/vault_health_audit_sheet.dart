@@ -27,7 +27,7 @@ class VaultHealthAuditSheet extends StatefulWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: const Color(0xFF1E2538),
+      backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -103,12 +103,19 @@ class _VaultHealthAuditSheetState extends State<VaultHealthAuditSheet> {
     Color scoreColor = Colors.greenAccent;
     String statusText = widget.loc.text('health_excellent');
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final cardBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+
     if (report.overallScore < 50) {
-      scoreColor = Colors.redAccent;
+      scoreColor = isDark ? Colors.redAccent : Colors.red.shade800;
       statusText = widget.loc.text('health_action_needed');
     } else if (report.overallScore < 80) {
-      scoreColor = Colors.amberAccent;
+      scoreColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
       statusText = widget.loc.text('health_good');
+    } else {
+      scoreColor = isDark ? Colors.greenAccent : const Color(0xFF137333);
     }
 
     List<PasswordEntry> currentFilteredList = [];
@@ -122,32 +129,39 @@ class _VaultHealthAuditSheetState extends State<VaultHealthAuditSheet> {
       currentFilteredList = report.strongEntries;
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                widget.loc.text('audit_vault'),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.loc.text('audit_vault'),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close, color: isDark ? Colors.white54 : Colors.black54),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: const Icon(Icons.close, color: Colors.white54),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF10141D),
-              borderRadius: BorderRadius.circular(16),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: cardBg,
+                  borderRadius: BorderRadius.circular(16),
               border: Border.all(color: scoreColor.withAlpha(128)),
             ),
             child: Row(
@@ -251,48 +265,50 @@ class _VaultHealthAuditSheetState extends State<VaultHealthAuditSheet> {
                     margin: const EdgeInsets.only(bottom: 8),
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF10141D),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white12),
+                      color: cardBg,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: isDark ? Colors.white12 : Colors.black12),
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(item.title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                              if (item.username.isNotEmpty)
-                                Text(item.username, style: const TextStyle(color: Colors.white60, fontSize: 12)),
-                            ],
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(item.title, style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+                                if (item.username.isNotEmpty)
+                                  Text(item.username, style: TextStyle(color: isDark ? Colors.white60 : const Color(0xFF4A5568), fontSize: 12)),
+                              ],
+                            ),
                           ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF6C63FF),
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF6C63FF),
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              AddEditEntrySheet.show(
+                                context,
+                                widget.vaultService,
+                                widget.loc,
+                                widget.onEntryUpdated,
+                                item,
+                              );
+                            },
+                            child: Text(widget.loc.text('edit_password'), style: const TextStyle(color: Colors.white, fontSize: 12)),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            AddEditEntrySheet.show(
-                              context,
-                              widget.vaultService,
-                              widget.loc,
-                              widget.onEntryUpdated,
-                              item,
-                            );
-                          },
-                          child: Text(widget.loc.text('edit_password'), style: const TextStyle(color: Colors.white, fontSize: 12)),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
-    );
+    ),
+  );
   }
 }

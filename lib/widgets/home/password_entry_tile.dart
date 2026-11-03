@@ -295,24 +295,24 @@ class PasswordEntryTile extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.cyan.withAlpha(30),
+                  color: isDark ? Colors.cyan.withAlpha(30) : const Color(0xFFE0F7FA),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.cyanAccent.withAlpha(100)),
+                  border: Border.all(color: isDark ? Colors.cyanAccent.withAlpha(100) : const Color(0xFF00838F)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.security, color: Colors.cyanAccent, size: 18),
+                    Icon(Icons.security, color: isDark ? Colors.cyanAccent : const Color(0xFF00796B), size: 18),
                     const SizedBox(width: 8),
-                    const Text(
+                    Text(
                       '2FA:',
-                      style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 12),
+                      style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF004D40), fontWeight: FontWeight.bold, fontSize: 12),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         totp.code,
-                        style: const TextStyle(
-                          color: Colors.cyanAccent,
+                        style: TextStyle(
+                          color: isDark ? Colors.cyanAccent : const Color(0xFF00695C),
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 2,
@@ -325,13 +325,13 @@ class PasswordEntryTile extends StatelessWidget {
                       child: CircularProgressIndicator(
                         value: totp.progress,
                         strokeWidth: 3,
-                        color: totp.remainingSeconds < 6 ? Colors.redAccent : Colors.cyanAccent,
-                        backgroundColor: Colors.white12,
+                        color: totp.remainingSeconds < 6 ? Colors.redAccent : (isDark ? Colors.cyanAccent : const Color(0xFF00796B)),
+                        backgroundColor: isDark ? Colors.white12 : Colors.black12,
                       ),
                     ),
                     const SizedBox(width: 6),
                     IconButton(
-                      icon: const Icon(Icons.copy, color: Colors.cyanAccent, size: 18),
+                      icon: Icon(Icons.copy, color: isDark ? Colors.cyanAccent : const Color(0xFF00796B), size: 18),
                       tooltip: loc.text('totp_code_copied'),
                       onPressed: () => _copyToClipboard(context, totp.rawCode, 'Código 2FA'),
                     ),
@@ -345,7 +345,7 @@ class PasswordEntryTile extends StatelessWidget {
               children: [
                 if (!isCard && !isNote)
                   IconButton(
-                    icon: const Icon(Icons.history, color: Colors.amberAccent, size: 18),
+                    icon: Icon(Icons.history, color: isDark ? Colors.amberAccent : const Color(0xFFD97706), size: 18),
                     tooltip: loc.text('history_title'),
                     onPressed: () => PasswordHistorySheet.show(
                       context,
@@ -356,7 +356,8 @@ class PasswordEntryTile extends StatelessWidget {
                     ),
                   ),
                 IconButton(
-                  icon: const Icon(Icons.edit_outlined, color: Colors.white54, size: 18),
+                  icon: Icon(Icons.edit_outlined, color: isDark ? Colors.white70 : const Color(0xFF6C63FF), size: 20),
+                  tooltip: loc.text('edit_password'),
                   onPressed: () => AddEditEntrySheet.show(
                     context,
                     vaultService,
@@ -367,6 +368,7 @@ class PasswordEntryTile extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 18),
+                  tooltip: loc.text('delete'),
                   onPressed: () => onDeleteEntry(item),
                 ),
               ],

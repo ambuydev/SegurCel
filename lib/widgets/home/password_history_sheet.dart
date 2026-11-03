@@ -29,7 +29,7 @@ class PasswordHistorySheet extends StatefulWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: const Color(0xFF1E2538),
+      backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -85,29 +85,39 @@ class _PasswordHistorySheetState extends State<PasswordHistorySheet> {
   @override
   Widget build(BuildContext context) {
     final historyList = widget.entry.history;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
 
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: Text(
-                  '${widget.loc.text("history_title")} - ${widget.entry.title}',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              if (historyList.isNotEmpty)
-                IconButton(
-                  icon: const Icon(Icons.delete_sweep, color: Colors.redAccent),
-                  tooltip: widget.loc.text('clear_history'),
-                  onPressed: () async {
-                    final confirm = await showDialog<bool>(
-                      context: context,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${widget.loc.text("history_title")} - ${widget.entry.title}',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
+                    ),
+                  ),
+                  if (historyList.isNotEmpty)
+                    IconButton(
+                      icon: const Icon(Icons.delete_sweep, color: Colors.redAccent),
+                      tooltip: widget.loc.text('clear_history'),
+                      onPressed: () async {
+                        final confirm = await showDialog<bool>(
+                          context: context,
                       builder: (dCtx) => AlertDialog(
                         backgroundColor: const Color(0xFF10141D),
                         title: Text(widget.loc.text('clear_history'), style: const TextStyle(color: Colors.white)),
@@ -155,16 +165,16 @@ class _PasswordHistorySheetState extends State<PasswordHistorySheet> {
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF10141D),
+                      color: isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white12),
+                      border: Border.all(color: isDark ? Colors.white12 : Colors.black12),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           '${widget.loc.text("modified_on")} ${_formatDateTime(h.changedAt)}',
-                          style: const TextStyle(color: Colors.amberAccent, fontSize: 12, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: isDark ? Colors.amberAccent : const Color(0xFFD97706), fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 6),
                         Row(
@@ -173,7 +183,7 @@ class _PasswordHistorySheetState extends State<PasswordHistorySheet> {
                               child: Text(
                                 isRevealed ? h.password : '••••••••••••',
                                 style: TextStyle(
-                                  color: isRevealed ? const Color(0xFF80EE99) : Colors.white70,
+                                  color: isRevealed ? (isDark ? const Color(0xFF80EE99) : Colors.green.shade800) : (isDark ? Colors.white70 : const Color(0xFF4A5568)),
                                   fontSize: 14,
                                   letterSpacing: isRevealed ? 1 : 2,
                                 ),
@@ -182,7 +192,7 @@ class _PasswordHistorySheetState extends State<PasswordHistorySheet> {
                             IconButton(
                               icon: Icon(
                                 isRevealed ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                                color: Colors.white54,
+                                color: isDark ? Colors.white54 : Colors.black54,
                                 size: 18,
                               ),
                               onPressed: () {
@@ -218,6 +228,8 @@ class _PasswordHistorySheetState extends State<PasswordHistorySheet> {
             ),
         ],
       ),
-    );
+    ),
+  ),
+);
   }
 }
