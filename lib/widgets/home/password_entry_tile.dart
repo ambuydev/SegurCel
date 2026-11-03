@@ -55,15 +55,30 @@ class PasswordEntryTile extends StatelessWidget {
     final isNote = item.entryType == 'notes';
     final totp = isLockedByLimit ? null : TotpService.generateTotp(item.totpSecret);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? const Color(0xFF10141D) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white60 : const Color(0xFF4A5568);
+    final iconMutedColor = isDark ? Colors.white54 : Colors.black54;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFF10141D),
+        color: cardBg,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: item.isFavorite ? Colors.amber.withAlpha(100) : Colors.white12,
+          color: item.isFavorite ? Colors.amber.withAlpha(120) : (isDark ? Colors.white12 : Colors.black12),
           width: item.isFavorite ? 1.5 : 1,
         ),
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -87,9 +102,9 @@ class PasswordEntryTile extends StatelessWidget {
                         : (isNote ? Icons.note_alt_outlined : Icons.vpn_key_outlined),
                     size: 18,
                     color: isCard
-                        ? Colors.amberAccent
+                        ? Colors.amber
                         : (isNote
-                            ? Colors.tealAccent
+                            ? Colors.teal
                             : (item.isFavorite ? Colors.amber : const Color(0xFF6C63FF))),
                   ),
                 ),
@@ -102,8 +117,8 @@ class PasswordEntryTile extends StatelessWidget {
                         item.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: textColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -113,7 +128,7 @@ class PasswordEntryTile extends StatelessWidget {
                           item.username,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(color: Colors.white60, fontSize: 12),
+                          style: TextStyle(color: textSubColor, fontSize: 12),
                         ),
                     ],
                   ),
@@ -121,7 +136,7 @@ class PasswordEntryTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     item.isFavorite ? Icons.star : Icons.star_border,
-                    color: item.isFavorite ? Colors.amber : Colors.white38,
+                    color: item.isFavorite ? Colors.amber : iconMutedColor,
                     size: 22,
                   ),
                   tooltip: 'Favorito',
@@ -129,7 +144,7 @@ class PasswordEntryTile extends StatelessWidget {
                 ),
               ],
             ),
-            const Divider(color: Colors.white12, height: 12),
+            Divider(color: isDark ? Colors.white12 : Colors.black12, height: 12),
 
             if (isLockedByLimit) ...[
               Container(
@@ -178,7 +193,7 @@ class PasswordEntryTile extends StatelessWidget {
                       maxLines: isVisible ? 3 : 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: isVisible ? Colors.tealAccent : Colors.white70,
+                        color: isVisible ? (isDark ? Colors.tealAccent : Colors.teal.shade800) : textSubColor,
                         fontSize: 14,
                         letterSpacing: isVisible ? 0 : 2,
                       ),
@@ -187,7 +202,7 @@ class PasswordEntryTile extends StatelessWidget {
                   IconButton(
                     icon: Icon(
                       isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                      color: Colors.white54,
+                      color: iconMutedColor,
                       size: 20,
                     ),
                     onPressed: () => onToggleVisibility(item.id),
@@ -213,7 +228,7 @@ class PasswordEntryTile extends StatelessWidget {
                                   ? '•••• •••• •••• ${item.password.substring(item.password.length - 4)}'
                                   : '•••• •••• •••• ••••'),
                           style: TextStyle(
-                            color: isVisible ? Colors.amberAccent : Colors.white70,
+                            color: isVisible ? (isDark ? Colors.amberAccent : Colors.amber.shade900) : textSubColor,
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 2,
@@ -223,7 +238,7 @@ class PasswordEntryTile extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             '${loc.text("card_expiry")}: ${item.cardExpiry}  |  CVV: ${item.cardCvv}  |  PIN: ${item.cardPin}',
-                            style: const TextStyle(color: Colors.amberAccent, fontSize: 12),
+                            style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12),
                           ),
                         ],
                       ],
@@ -232,7 +247,7 @@ class PasswordEntryTile extends StatelessWidget {
                   IconButton(
                     icon: Icon(
                       isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                      color: Colors.white54,
+                      color: iconMutedColor,
                       size: 20,
                     ),
                     onPressed: () => onToggleVisibility(item.id),
@@ -251,7 +266,7 @@ class PasswordEntryTile extends StatelessWidget {
                     child: Text(
                       isVisible ? item.password : '••••••••••••',
                       style: TextStyle(
-                        color: isVisible ? const Color(0xFF80EE99) : Colors.white70,
+                        color: isVisible ? (isDark ? const Color(0xFF80EE99) : Colors.green.shade800) : textSubColor,
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         letterSpacing: isVisible ? 1 : 2,
@@ -261,7 +276,7 @@ class PasswordEntryTile extends StatelessWidget {
                   IconButton(
                     icon: Icon(
                       isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                      color: Colors.white54,
+                      color: iconMutedColor,
                       size: 20,
                     ),
                     onPressed: () => onToggleVisibility(item.id),

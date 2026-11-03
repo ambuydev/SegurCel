@@ -2432,6 +2432,8 @@ class LocalizationService extends ChangeNotifier {
       'export_passwords': 'Esporta Password (CSV / JSON)',
       'import_subtitle': 'Supporta file CSV da Google Chrome, Edge, Bitwarden e 1Password.',
       'export_subtitle': 'Salva una copia di backup di tutte le tue password.',
+      'export_csv_btn': 'Esporta come CSV',
+      'export_json_btn': 'Esporta come JSON',
       'import_success_toast': 'Password importate con successo!',
       'import_preview_title': 'Importazione Password',
       'import_found_count': 'Password trovate da importare:',

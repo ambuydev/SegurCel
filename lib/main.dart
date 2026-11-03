@@ -178,15 +178,45 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
               primary: Color(0xFF6C63FF),
               surface: Color(0xFF1E2538),
             ),
+            cardTheme: CardThemeData(
+              color: const Color(0xFF1E2538),
+              elevation: 1,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
             useMaterial3: true,
           ),
           theme: ThemeData(
             brightness: Brightness.light,
-            scaffoldBackgroundColor: const Color(0xFFF4F6FB),
+            scaffoldBackgroundColor: const Color(0xFFF0F4F8),
             primaryColor: const Color(0xFF6C63FF),
             colorScheme: const ColorScheme.light(
               primary: Color(0xFF6C63FF),
               surface: Colors.white,
+              onSurface: Color(0xFF10141D),
+            ),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+              foregroundColor: Color(0xFF10141D),
+              elevation: 1,
+            ),
+            cardTheme: CardThemeData(
+              color: Colors.white,
+              elevation: 2,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: Colors.white,
+              labelStyle: const TextStyle(color: Color(0xFF4A5568)),
+              hintStyle: const TextStyle(color: Colors.black38),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.black12),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.black12),
+              ),
             ),
             useMaterial3: true,
           ),

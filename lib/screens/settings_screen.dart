@@ -610,6 +610,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
     final appBarBg = isDark ? const Color(0xFF1E2538) : Colors.white;
     final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final dividerColor = isDark ? Colors.white12 : Colors.black12;
 
     return Scaffold(
       backgroundColor: scaffoldBg,
@@ -850,17 +852,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Text(
                       _loc.text('import_subtitle'),
-                      style: const TextStyle(color: Colors.white70, fontSize: 13),
+                      style: TextStyle(color: textSubColor, fontSize: 13),
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1E2538),
+                        backgroundColor: isDark ? const Color(0xFF1E2538) : Colors.white,
                         side: const BorderSide(color: Color(0xFF6C63FF)),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       icon: const Icon(Icons.file_upload_outlined, color: Color(0xFF6C63FF)),
-                      label: Text(_loc.text('import_passwords'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                      label: Text(_loc.text('import_passwords'), style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13)),
                       onPressed: _importPasswords,
                     ),
                     const SizedBox(height: 16),
@@ -874,12 +876,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Expanded(
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1E2538),
+                              backgroundColor: isDark ? const Color(0xFF1E2538) : Colors.white,
                               side: const BorderSide(color: Colors.amberAccent),
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
-                            icon: const Icon(Icons.file_download_outlined, color: Colors.amberAccent, size: 18),
-                            label: Text(_loc.text('export_csv_btn'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            icon: const Icon(Icons.file_download_outlined, color: Colors.amber, size: 18),
+                            label: Text(_loc.text('export_csv_btn'), style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.bold)),
                             onPressed: () => _exportPasswords('csv'),
                           ),
                         ),
@@ -887,12 +889,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Expanded(
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1E2538),
+                              backgroundColor: isDark ? const Color(0xFF1E2538) : Colors.white,
                               side: const BorderSide(color: Colors.greenAccent),
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
-                            icon: const Icon(Icons.code, color: Colors.greenAccent, size: 18),
-                            label: Text(_loc.text('export_json_btn'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            icon: const Icon(Icons.code, color: Colors.teal, size: 18),
+                            label: Text(_loc.text('export_json_btn'), style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.bold)),
                             onPressed: () => _exportPasswords('json'),
                           ),
                         ),
@@ -914,7 +916,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Text(
                       _loc.text('change_pin_subtitle'),
-                      style: const TextStyle(color: Colors.white70, fontSize: 13),
+                      style: TextStyle(color: textSubColor, fontSize: 13),
                     ),
                     const SizedBox(height: 16),
                     TextField(
@@ -922,10 +924,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       keyboardType: TextInputType.number,
                       obscureText: true,
                       maxLength: 4,
-                      style: const TextStyle(color: Colors.white, letterSpacing: 6),
+                      style: TextStyle(color: textColor, letterSpacing: 6),
                       decoration: InputDecoration(
                         labelText: _loc.text('current_pin'),
-                        labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+                        labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -934,10 +936,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       keyboardType: TextInputType.number,
                       obscureText: true,
                       maxLength: 4,
-                      style: const TextStyle(color: Colors.white, letterSpacing: 6),
+                      style: TextStyle(color: textColor, letterSpacing: 6),
                       decoration: InputDecoration(
                         labelText: _loc.text('new_pin'),
-                        labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+                        labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -946,10 +948,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       keyboardType: TextInputType.number,
                       obscureText: true,
                       maxLength: 4,
-                      style: const TextStyle(color: Colors.white, letterSpacing: 6),
+                      style: TextStyle(color: textColor, letterSpacing: 6),
                       decoration: InputDecoration(
                         labelText: _loc.text('confirm_new_pin'),
-                        labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+                        labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
                       ),
                     ),
                     if (_pinErrorMessage != null) ...[
@@ -995,25 +997,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Text(
                         '${currentUser.email}',
-                        style: const TextStyle(color: Colors.amberAccent, fontSize: 13, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 13, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         _loc.text('change_pass_subtitle'),
-                        style: const TextStyle(color: Colors.white70, fontSize: 13),
+                        style: TextStyle(color: textSubColor, fontSize: 13),
                       ),
                       const SizedBox(height: 12),
                       TextField(
                         controller: _currentPasswordController,
                         obscureText: _obscureCurrentPass,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                           labelText: _loc.text('current_pass'),
-                          labelStyle: const TextStyle(color: Colors.white70),
+                          labelStyle: TextStyle(color: textSubColor),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscureCurrentPass ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                              color: Colors.white54,
+                              color: isDark ? Colors.white54 : Colors.black54,
                             ),
                             onPressed: () => setState(() => _obscureCurrentPass = !_obscureCurrentPass),
                           ),
@@ -1023,14 +1025,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       TextField(
                         controller: _newPasswordController,
                         obscureText: _obscureNewPass,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                           labelText: _loc.text('new_pass'),
-                          labelStyle: const TextStyle(color: Colors.white70),
+                          labelStyle: TextStyle(color: textSubColor),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscureNewPass ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                              color: Colors.white54,
+                              color: isDark ? Colors.white54 : Colors.black54,
                             ),
                             onPressed: () => setState(() => _obscureNewPass = !_obscureNewPass),
                           ),
@@ -1040,14 +1042,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       TextField(
                         controller: _confirmPasswordController,
                         obscureText: _obscureConfirmPass,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                           labelText: _loc.text('confirm_new_pass'),
-                          labelStyle: const TextStyle(color: Colors.white70),
+                          labelStyle: TextStyle(color: textSubColor),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscureConfirmPass ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                              color: Colors.white54,
+                              color: isDark ? Colors.white54 : Colors.black54,
                             ),
                             onPressed: () => setState(() => _obscureConfirmPass = !_obscureConfirmPass),
                           ),
@@ -1102,10 +1104,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.language, color: Colors.cyanAccent, size: 20),
-                      title: Text(_loc.text('official_website'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: const Text('https://segurcel.app', style: TextStyle(color: Colors.cyanAccent, fontSize: 12)),
-                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      leading: const Icon(Icons.language, color: Colors.cyan, size: 20),
+                      title: Text(_loc.text('official_website'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text('https://segurcel.app', style: TextStyle(color: isDark ? Colors.cyanAccent : Colors.cyan.shade800, fontSize: 12)),
+                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
                         try {
                           FileHelper.openUrl('https://segurcel.app');
@@ -1114,13 +1116,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         }
                       },
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.email_outlined, color: Colors.amberAccent, size: 20),
-                      title: Text(_loc.text('support_email'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: const Text('support.segurcel@gmail.com', style: TextStyle(color: Colors.amberAccent, fontSize: 12)),
-                      trailing: const Icon(Icons.copy, color: Colors.white54, size: 18),
+                      leading: const Icon(Icons.email_outlined, color: Colors.amber, size: 20),
+                      title: Text(_loc.text('support_email'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text('support.segurcel@gmail.com', style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12)),
+                      trailing: Icon(Icons.copy, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
                         Clipboard.setData(const ClipboardData(text: 'support.segurcel@gmail.com'));
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -1131,13 +1133,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         );
                       },
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.star_rate_rounded, color: Colors.amber, size: 20),
-                      title: Text(_loc.text('rate_app'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('rate_app_sub'), style: const TextStyle(color: Colors.amberAccent, fontSize: 12)),
-                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      title: Text(_loc.text('rate_app'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('rate_app_sub'), style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12)),
+                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
                         String targetUrl = 'https://play.google.com/apps/testing/com.segurcel.segurcel';
                         if (kIsWeb) {
@@ -1152,25 +1154,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         }
                       },
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     // Tema de la Aplicación
                     ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.palette_outlined, color: Colors.cyanAccent, size: 20),
-                      title: Text(_loc.text('app_theme'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      leading: const Icon(Icons.palette_outlined, color: Colors.cyan, size: 20),
+                      title: Text(_loc.text('app_theme'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
                       subtitle: Text(
                         _themeService.themeMode == ThemeMode.light
                             ? _loc.text('theme_light')
                             : _themeService.themeMode == ThemeMode.system
                                 ? _loc.text('theme_system')
                                 : _loc.text('theme_dark'),
-                        style: const TextStyle(color: Colors.cyanAccent, fontSize: 12),
+                        style: TextStyle(color: isDark ? Colors.cyanAccent : Colors.cyan.shade800, fontSize: 12),
                       ),
                       trailing: DropdownButton<ThemeMode>(
-                        dropdownColor: const Color(0xFF1E2538),
+                        dropdownColor: isDark ? const Color(0xFF1E2538) : Colors.white,
                         value: _themeService.themeMode,
                         underline: const SizedBox(),
-                        icon: const Icon(Icons.arrow_drop_down, color: Colors.white54),
+                        icon: Icon(Icons.arrow_drop_down, color: isDark ? Colors.white54 : Colors.black54),
                         onChanged: (ThemeMode? mode) {
                           if (mode != null) {
                             _themeService.changeTheme(mode);
@@ -1180,36 +1182,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         items: [
                           DropdownMenuItem(
                             value: ThemeMode.dark,
-                            child: Text(_loc.text('theme_dark'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('theme_dark'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                           DropdownMenuItem(
                             value: ThemeMode.light,
-                            child: Text(_loc.text('theme_light'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('theme_light'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                           DropdownMenuItem(
                             value: ThemeMode.system,
-                            child: Text(_loc.text('theme_system'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('theme_system'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                         ],
                       ),
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     // Auto-bloqueo por Inactividad
                     ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.timer_outlined, color: Colors.amberAccent, size: 20),
-                      title: Text(_loc.text('autolock_timer'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      leading: const Icon(Icons.timer_outlined, color: Colors.amber, size: 20),
+                      title: Text(_loc.text('autolock_timer'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
                       subtitle: Text(
                         _autoLockMinutes == 0
                             ? _loc.text('autolock_never')
                             : '$_autoLockMinutes ${_loc.text("autolock_5m").contains("Minut") ? "Min" : "m"}',
-                        style: const TextStyle(color: Colors.amberAccent, fontSize: 12),
+                        style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12),
                       ),
                       trailing: DropdownButton<int>(
-                        dropdownColor: const Color(0xFF1E2538),
+                        dropdownColor: isDark ? const Color(0xFF1E2538) : Colors.white,
                         value: _autoLockMinutes,
                         underline: const SizedBox(),
-                        icon: const Icon(Icons.arrow_drop_down, color: Colors.white54),
+                        icon: Icon(Icons.arrow_drop_down, color: isDark ? Colors.white54 : Colors.black54),
                         onChanged: (int? mins) {
                           if (mins != null) {
                             _setAutoLockMinutes(mins);
@@ -1218,52 +1220,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         items: [
                           DropdownMenuItem(
                             value: 0,
-                            child: Text(_loc.text('autolock_never'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('autolock_never'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                           DropdownMenuItem(
                             value: 1,
-                            child: Text(_loc.text('autolock_1m'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('autolock_1m'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                           DropdownMenuItem(
                             value: 5,
-                            child: Text(_loc.text('autolock_5m'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('autolock_5m'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                           DropdownMenuItem(
                             value: 15,
-                            child: Text(_loc.text('autolock_15m'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                            child: Text(_loc.text('autolock_15m'), style: TextStyle(color: textColor, fontSize: 12)),
                           ),
                         ],
                       ),
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     // Guía / Tutorial de Bienvenida
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.auto_awesome, color: Color(0xFF00F0FF), size: 20),
-                      title: Text(_loc.text('view_tutorial'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('view_tutorial_sub'), style: const TextStyle(color: Colors.white60, fontSize: 12)),
-                      trailing: const Icon(Icons.chevron_right, color: Colors.white54, size: 20),
+                      title: Text(_loc.text('view_tutorial'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('view_tutorial_sub'), style: TextStyle(color: textSubColor, fontSize: 12)),
+                      trailing: Icon(Icons.chevron_right, color: isDark ? Colors.white54 : Colors.black54, size: 20),
                       onTap: () => OnboardingSheet.show(context, _loc),
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.share_rounded, color: Color(0xFF6C63FF), size: 20),
-                      title: Text(_loc.text('share_app'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('share_app_sub'), style: const TextStyle(color: Colors.white60, fontSize: 12)),
-                      trailing: const Icon(Icons.send_rounded, color: Colors.white54, size: 18),
+                      title: Text(_loc.text('share_app'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('share_app_sub'), style: TextStyle(color: textSubColor, fontSize: 12)),
+                      trailing: Icon(Icons.send_rounded, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
                         // ignore: deprecated_member_use
                         Share.share(_loc.text('share_app_msg'));
                       },
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.menu_book_outlined, color: Colors.greenAccent, size: 20),
-                      title: Text(_loc.text('user_guide'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: const Text('https://segurcel.app/guide.html', style: TextStyle(color: Colors.white60, fontSize: 12)),
-                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      leading: const Icon(Icons.menu_book_outlined, color: Colors.teal, size: 20),
+                      title: Text(_loc.text('user_guide'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text('https://segurcel.app/guide.html', style: TextStyle(color: textSubColor, fontSize: 12)),
+                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
                         try {
                           FileHelper.openUrl('https://segurcel.app/guide.html');
@@ -1272,13 +1274,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         }
                       },
                     ),
-                    const Divider(color: Colors.white12, height: 8),
+                    Divider(color: dividerColor, height: 8),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF), size: 20),
-                      title: Text(_loc.text('privacy_policy'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: const Text('https://segurcel.app/privacy.html', style: TextStyle(color: Colors.white60, fontSize: 12)),
-                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      title: Text(_loc.text('privacy_policy'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text('https://segurcel.app/privacy.html', style: TextStyle(color: textSubColor, fontSize: 12)),
+                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
                         try {
                           FileHelper.openUrl('https://segurcel.app/privacy.html');
