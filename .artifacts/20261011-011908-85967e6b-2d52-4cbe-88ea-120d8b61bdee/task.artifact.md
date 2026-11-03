@@ -348,3 +348,30 @@
 - [x] Compile Signed Production Release APK for Direct Phone Testing
     - [x] Executed flutter build apk --release to generate app-release.apk (68.1 MB) at build/app/outputs/flutter-apk/app-release.apk
     - [x] Provided step-by-step sideloading installation instructions
+- [x] Diagnose Closed Testing Play Store Link Error & Provide Solutions
+    - [x] Explained Play Store app active Google Account mismatch (Chrome account vs Play Store app account)
+    - [x] Provided 2-step resolution: 1) Switch to tester account in Play Store app top-right avatar, 2) Force stop & clear Play Store app cache
+- [x] Clarify Tester Membership & Deep Link Handling
+    - [x] Validated user's deduction ('You are a tester' proves email is registered in Play Console)
+    - [x] Explained Chrome deep link to market:// vs play.google.com store URL
+- [x] Diagnose Google Play Console Track Settings and Country Restrictions
+    - [x] Outlined 3 Play Console checks: Country/Region availability (Uruguay), Tester email list tick mark, and AAB v1.0.3+4 upload
+- [x] Analyze Play Store Availability Status & Review Freeze Mechanics
+    - [x] Reassured user that app is NOT removed or suspended (which always triggers an official Google email and status change to RECHAZADO/QUITADO)
+    - [x] Explained Play Console status check (PUBLICADO vs EN REVISIÓN) and how pending updates temporarily freeze store downloads until review completion
+- [x] Validate Active Closed Testing Track Segment (1 Active Segment, 8/14 Days)
+    - [x] Confirmed from screenshots that 'Prueba cerrada: Activo · 1 segmento' and 'Prueba interna: Activo' are 100% active and healthy
+    - [x] Celebrated major milestone: 12 testers completed 8 consecutive days out of 14 required days (only 6 days remaining)
+- [x] Formulate Google Group Creation Guide for SegurCel Testers
+    - [x] Created step-by-step guide for creating a Google Group (groups.google.com) and linking it to Google Play Console closed testing track
+    - [x] Extracted and formatted 15 family/friend Gmail addresses ready for 1-click copy-paste
+- [x] Format Email List in Multiple Plaintext Code Blocks
+    - [x] Provided comma-separated single line and multiline plaintext blocks for 1-click copying
+- [x] Provide Unformatted Plain Text Email List
+    - [x] Provided the 15 email addresses as simple unformatted plain text to allow easy long-press selection on Android Studio / Web Chat interfaces
+- [x] Explain Direct Add vs Opt-In Confirmation Mechanics for Google Groups
+    - [x] Confirmed that using 'Direct Add' in Google Groups adds users immediately without requiring individual user acceptance
+    - [x] Reconfirmed that testers only tap the testing link once to enable Play Store download/rating access
+- [x] Evaluate User Decision to Remove Haptic Feedback Feature
+    - [x] Evaluated user proposal to remove HapticFeedback code: 100% endorsed as a pragmatic engineering decision to prevent release delays
+    - [x] Prepared cleanup of HapticFeedback references and AndroidManifest.xml VIBRATE permission

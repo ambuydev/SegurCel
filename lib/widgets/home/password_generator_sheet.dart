@@ -82,8 +82,6 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
   }
 
   void _copyToClipboard(String text, String label) {
-    HapticFeedback.mediumImpact();
-    HapticFeedback.vibrate();
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -208,7 +206,6 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
                       ),
                     ),
                     onPressed: () {
-                      HapticFeedback.selectionClick();
                       setState(() {
                         _length = len.toDouble();
                         _generatedPassword = _generatePassword();
