@@ -35,14 +35,21 @@ jobs:
           path: build/ios/archive/Runner.xcarchive
 
       - name: Prepare App Store Connect Auth Key
-        if: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
+        env:
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+        if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
           mkdir -p ~/.appstoreconnect/private_keys
-          echo "${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8
+          echo "$APP_STORE_CONNECT_PRIVATE_KEY" > ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8
 
       - name: Validate App Store Connect Credentials
-        if: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
+        env:
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
           xcrun altool --list-apps \
-            --apiKey "${{ secrets.APP_STORE_CONNECT_KEY_ID }}" \
-            --apiIssuer "${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}" || echo "Credentials validated!"
+            --apiKey "$APP_STORE_CONNECT_KEY_ID" \
+            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" || echo "Credentials validated!"
