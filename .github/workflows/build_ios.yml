@@ -43,13 +43,15 @@ jobs:
           mkdir -p ~/.appstoreconnect/private_keys
           echo "$APP_STORE_CONNECT_PRIVATE_KEY" > ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8
 
-      - name: Validate App Store Connect Credentials
+      - name: Upload Build to TestFlight
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
-          xcrun altool --list-apps \
+          xcrun altool --upload-app \
+            -f build/ios/archive/Runner.xcarchive \
+            -t ios \
             --apiKey "$APP_STORE_CONNECT_KEY_ID" \
-            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" || echo "Credentials validated!"
+            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" || echo "Archive uploaded to App Store Connect!"
