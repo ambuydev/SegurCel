@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 import '../models/password_entry.dart';
 import '../models/user_profile.dart';
 import '../services/auth_service.dart';
@@ -1094,6 +1095,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             duration: const Duration(seconds: 2),
                           ),
                         );
+                      },
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.star_rate_rounded, color: Colors.amber, size: 20),
+                      title: Text(_loc.text('rate_app'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('rate_app_sub'), style: const TextStyle(color: Colors.amberAccent, fontSize: 12)),
+                      trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        try {
+                          FileHelper.openUrl('https://play.google.com/store/apps/details?id=com.segurcel.segurcel');
+                        } catch (_) {
+                          Clipboard.setData(const ClipboardData(text: 'https://play.google.com/store/apps/details?id=com.segurcel.segurcel'));
+                        }
+                      },
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.share_rounded, color: Color(0xFF6C63FF), size: 20),
+                      title: Text(_loc.text('share_app'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('share_app_sub'), style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                      trailing: const Icon(Icons.send_rounded, color: Colors.white54, size: 18),
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        // ignore: deprecated_member_use
+                        Share.share(_loc.text('share_app_msg'));
                       },
                     ),
                     const Divider(color: Colors.white12, height: 8),

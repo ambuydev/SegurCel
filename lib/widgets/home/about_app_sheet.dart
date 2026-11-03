@@ -22,6 +22,7 @@ class AboutAppSheet extends StatelessWidget {
   }
 
   void _copyToClipboard(BuildContext context, String text, String label) {
+    HapticFeedback.lightImpact();
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -82,6 +82,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
   }
 
   void _copyToClipboard(String text, String label) {
+    HapticFeedback.lightImpact();
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -181,6 +182,40 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
                   _generatedPassword = _generatePassword();
                 });
               },
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [12, 16, 24, 32].map((len) {
+                final isSelected = _length.toInt() == len;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: ActionChip(
+                    label: Text(
+                      '$len',
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.white70,
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        fontSize: 12,
+                      ),
+                    ),
+                    backgroundColor: isSelected ? const Color(0xFF6C63FF) : const Color(0xFF10141D),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(
+                        color: isSelected ? const Color(0xFF6C63FF) : Colors.white24,
+                      ),
+                    ),
+                    onPressed: () {
+                      HapticFeedback.selectionClick();
+                      setState(() {
+                        _length = len.toDouble();
+                        _generatedPassword = _generatePassword();
+                      });
+                    },
+                  ),
+                );
+              }).toList(),
             ),
 
             const SizedBox(height: 8),
