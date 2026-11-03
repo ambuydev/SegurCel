@@ -527,7 +527,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           SelectableText(
                                             code,
                                             style: TextStyle(
-                                              color: used ? (isDark ? Colors.white38 : Colors.black38) : accentAmber,
+                                              color: used ? (isDark ? Colors.white38 : const Color(0xFF4A5568)) : accentAmber,
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'monospace',
@@ -537,7 +537,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           Text(
                                             used ? '${_loc.text("family_code_used")} $usedByEmail' : _loc.text('family_code_available'),
                                             style: TextStyle(
-                                              color: used ? Colors.grey : (isDark ? Colors.greenAccent : const Color(0xFF137333)),
+                                              color: used ? (isDark ? Colors.white54 : const Color(0xFF718096)) : (isDark ? Colors.greenAccent : const Color(0xFF137333)),
                                               fontSize: 11,
                                             ),
                                           ),
@@ -569,14 +569,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(height: 12),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: count >= 4 ? Colors.grey : accentAmber,
+                        backgroundColor: count >= 4 ? (isDark ? Colors.white12 : const Color(0xFFE2E8F0)) : accentAmber,
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      icon: const Icon(Icons.add, color: Colors.white, size: 18),
+                      icon: Icon(
+                        count >= 4 ? Icons.lock : Icons.add,
+                        color: count >= 4 ? (isDark ? Colors.white54 : const Color(0xFF4A5568)) : Colors.white,
+                        size: 18,
+                      ),
                       label: Text(
                         count >= 4 ? _loc.text('family_code_limit_reached') : '${_loc.text("generate_family_code")} ($count/4)',
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                        style: TextStyle(
+                          color: count >= 4 ? (isDark ? Colors.white54 : const Color(0xFF2D3748)) : Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
                       onPressed: count >= 4
                           ? null
@@ -1083,8 +1091,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF1E2538),
-                            side: const BorderSide(color: Color(0xFF6C63FF)),
+                            backgroundColor: const Color(0xFF6C63FF),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           ),
