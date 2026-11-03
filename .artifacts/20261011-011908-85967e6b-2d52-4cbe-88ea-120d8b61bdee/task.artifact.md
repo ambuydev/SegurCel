@@ -387,8 +387,12 @@
     - [x] Confirmed 178 countries are enabled and Version 4 (1.0.3) is actively in Google review
 - [x] Respond to Active Check and Confirm Availability
     - [x] Confirmed active presence and readiness to assist with next steps
-- [/] Plan iOS App Store Deployment and Project Configuration
+- [x] Plan iOS App Store Deployment and Project Configuration
     - [x] Formulate iOS deployment roadmap (Apple Developer Account, App Store Connect, TestFlight)
-    - [ ] Add Italian ('it') as 11th official language in `lib/services/localization_service.dart`, `HomeScreen`, and Web
-    - [ ] Configure `ios/Runner/Info.plist` with Privacy Descriptions (NSFaceIDUsageDescription, NSCameraUsageDescription, CFBundleLocalizations)
-    - [ ] Align Bundle Identifier `com.segurcel.segurcel` in `ios/Runner.xcodeproj`
+    - [x] Add Italian ('it') as 11th official language in `lib/services/localization_service.dart`, `HomeScreen`, and Web
+    - [x] Configure `ios/Runner/Info.plist` with Privacy Descriptions (NSFaceIDUsageDescription, NSCameraUsageDescription, CFBundleLocalizations)
+    - [x] Align Bundle Identifier `com.segurcel.segurcel` in `ios/Runner.xcodeproj`
+- [x] Update Version Release Notes to Include Italian Language Addition
+    - [x] Updated Spanish release notes text to include Italian language (🇮🇹 Italiano) support
+- [x] Clarify Wednesday Version 1.0.4 Release Notes Roadmap
+    - [x] Clarified that Italian language addition belongs to tomorrow's Version 1.0.4 release notes alongside Onboarding tutorial, Light/Dark/System theme, and Auto-lock timer
