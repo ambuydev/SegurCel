@@ -12,6 +12,7 @@ import 'screens/setup_screen.dart';
 import 'services/auth_service.dart';
 import 'services/localization_service.dart';
 import 'services/purchase_service.dart';
+import 'services/theme_service.dart';
 import 'services/vault_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -37,6 +38,7 @@ void main() async {
   }
 
   await LocalizationService().initLanguage();
+  await ThemeService().initTheme();
   PurchaseService.initializePurchaseListener();
 
   final vaultService = VaultService();
@@ -161,19 +163,30 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: LocalizationService(),
+      listenable: Listenable.merge([LocalizationService(), ThemeService()]),
       builder: (context, _) {
         return MaterialApp(
           navigatorKey: navigatorKey,
           title: 'SegurCel',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
+          themeMode: ThemeService().themeMode,
+          darkTheme: ThemeData(
             brightness: Brightness.dark,
             scaffoldBackgroundColor: const Color(0xFF10141D),
             primaryColor: const Color(0xFF6C63FF),
             colorScheme: const ColorScheme.dark(
               primary: Color(0xFF6C63FF),
               surface: Color(0xFF1E2538),
+            ),
+            useMaterial3: true,
+          ),
+          theme: ThemeData(
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: const Color(0xFFF4F6FB),
+            primaryColor: const Color(0xFF6C63FF),
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF6C63FF),
+              surface: Colors.white,
             ),
             useMaterial3: true,
           ),

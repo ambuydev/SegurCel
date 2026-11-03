@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/password_entry.dart';
 import '../models/user_profile.dart';
@@ -8,9 +10,11 @@ import '../services/auth_service.dart';
 import '../services/import_export_service.dart';
 import '../services/localization_service.dart';
 import '../services/purchase_service.dart';
+import '../services/theme_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../utils/promo_code_helper.dart';
+import '../widgets/home/onboarding_sheet.dart';
 import 'login_screen.dart';
 import 'paywall_screen.dart';
 
@@ -26,6 +30,31 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final _authService = AuthService();
   final _loc = LocalizationService();
+  final _themeService = ThemeService();
+
+  int _autoLockMinutes = 0; // 0 = Nunca, 1 = 1m, 5 = 5m, 15 = 15m
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAutoLockMinutes();
+  }
+
+  Future<void> _loadAutoLockMinutes() async {
+    const storage = FlutterSecureStorage();
+    final val = await storage.read(key: 'segurcel_autolock_minutes');
+    if (val != null && mounted) {
+      setState(() => _autoLockMinutes = int.tryParse(val) ?? 0);
+    }
+  }
+
+  Future<void> _setAutoLockMinutes(int mins) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: 'segurcel_autolock_minutes', value: mins.toString());
+    if (mounted) {
+      setState(() => _autoLockMinutes = mins);
+    }
+  }
 
   // Formulario Cambio de PIN
   final _currentPinController = TextEditingController();
@@ -1105,12 +1134,111 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       subtitle: Text(_loc.text('rate_app_sub'), style: const TextStyle(color: Colors.amberAccent, fontSize: 12)),
                       trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
                       onTap: () {
+                        String targetUrl = 'https://play.google.com/apps/testing/com.segurcel.segurcel';
+                        if (kIsWeb) {
+                          targetUrl = 'https://segurcel.app';
+                        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+                          targetUrl = 'https://apps.apple.com/app/id6742518291';
+                        }
                         try {
-                          FileHelper.openUrl('https://play.google.com/apps/testing/com.segurcel.segurcel');
+                          FileHelper.openUrl(targetUrl);
                         } catch (_) {
-                          Clipboard.setData(const ClipboardData(text: 'https://play.google.com/apps/testing/com.segurcel.segurcel'));
+                          Clipboard.setData(ClipboardData(text: targetUrl));
                         }
                       },
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    // Tema de la Aplicación
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.palette_outlined, color: Colors.cyanAccent, size: 20),
+                      title: Text(_loc.text('app_theme'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(
+                        _themeService.themeMode == ThemeMode.light
+                            ? _loc.text('theme_light')
+                            : _themeService.themeMode == ThemeMode.system
+                                ? _loc.text('theme_system')
+                                : _loc.text('theme_dark'),
+                        style: const TextStyle(color: Colors.cyanAccent, fontSize: 12),
+                      ),
+                      trailing: DropdownButton<ThemeMode>(
+                        dropdownColor: const Color(0xFF1E2538),
+                        value: _themeService.themeMode,
+                        underline: const SizedBox(),
+                        icon: const Icon(Icons.arrow_drop_down, color: Colors.white54),
+                        onChanged: (ThemeMode? mode) {
+                          if (mode != null) {
+                            _themeService.changeTheme(mode);
+                            setState(() {});
+                          }
+                        },
+                        items: [
+                          DropdownMenuItem(
+                            value: ThemeMode.dark,
+                            child: Text(_loc.text('theme_dark'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                          DropdownMenuItem(
+                            value: ThemeMode.light,
+                            child: Text(_loc.text('theme_light'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                          DropdownMenuItem(
+                            value: ThemeMode.system,
+                            child: Text(_loc.text('theme_system'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    // Auto-bloqueo por Inactividad
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.timer_outlined, color: Colors.amberAccent, size: 20),
+                      title: Text(_loc.text('autolock_timer'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(
+                        _autoLockMinutes == 0
+                            ? _loc.text('autolock_never')
+                            : '$_autoLockMinutes ${_loc.text("autolock_5m").contains("Minut") ? "Min" : "m"}',
+                        style: const TextStyle(color: Colors.amberAccent, fontSize: 12),
+                      ),
+                      trailing: DropdownButton<int>(
+                        dropdownColor: const Color(0xFF1E2538),
+                        value: _autoLockMinutes,
+                        underline: const SizedBox(),
+                        icon: const Icon(Icons.arrow_drop_down, color: Colors.white54),
+                        onChanged: (int? mins) {
+                          if (mins != null) {
+                            _setAutoLockMinutes(mins);
+                          }
+                        },
+                        items: [
+                          DropdownMenuItem(
+                            value: 0,
+                            child: Text(_loc.text('autolock_never'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                          DropdownMenuItem(
+                            value: 1,
+                            child: Text(_loc.text('autolock_1m'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                          DropdownMenuItem(
+                            value: 5,
+                            child: Text(_loc.text('autolock_5m'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                          DropdownMenuItem(
+                            value: 15,
+                            child: Text(_loc.text('autolock_15m'), style: const TextStyle(color: Colors.white, fontSize: 12)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(color: Colors.white12, height: 8),
+                    // Guía / Tutorial de Bienvenida
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.auto_awesome, color: Color(0xFF00F0FF), size: 20),
+                      title: Text(_loc.text('view_tutorial'), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('view_tutorial_sub'), style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                      trailing: const Icon(Icons.chevron_right, color: Colors.white54, size: 20),
+                      onTap: () => OnboardingSheet.show(context, _loc),
                     ),
                     const Divider(color: Colors.white12, height: 8),
                     ListTile(

@@ -11,6 +11,7 @@ import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../widgets/home/about_app_sheet.dart';
 import '../widgets/home/add_edit_entry_sheet.dart';
+import '../widgets/home/onboarding_sheet.dart';
 import '../widgets/home/password_entry_tile.dart';
 import '../widgets/home/vault_health_audit_sheet.dart';
 import 'login_screen.dart';
@@ -39,10 +40,22 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadUserProfile();
+    _checkOnboarding();
     _selectedCategory = _loc.text('all_categories');
     _totpTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (mounted) setState(() {});
     });
+  }
+
+  Future<void> _checkOnboarding() async {
+    final shouldShow = await OnboardingSheet.shouldShow();
+    if (shouldShow && mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          OnboardingSheet.show(context, _loc);
+        }
+      });
+    }
   }
 
   Future<void> _loadUserProfile() async {

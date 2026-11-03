@@ -216,7 +216,7 @@
     - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
 - [x] Remove Secondary Store Button from CTA Banner Section
     - [x] Removed `btnCtaPlayStore` from CTA Banner in `web/landing.html` and `web/index.html`, leaving only `btnCtaVault` ("🚀 Acceder a SegurCel Web")
-    - [x] Synchronize `build/web/`, re-deploy 123 files to Firebase Hosting, and push to GitHub
+    - [x] Synchronize `build/web/`, re-deploy to Firebase Hosting, and push to GitHub
 - [x] Explain Google Play Closed Testing Opt-In Rules & Tester Registration Mechanics
     - [x] Explained that accounts must be added to Google Play Console tester list first
     - [x] Confirmed web invite link https://play.google.com/apps/testing/com.segurcel.segurcel is the official Google Opt-In page
@@ -373,7 +373,7 @@
     - [x] Confirmed that using 'Direct Add' in Google Groups adds users immediately without requiring individual user acceptance
     - [x] Reconfirmed that testers only tap the testing link once to enable Play Store download/rating access
 - [x] Evaluate User Decision to Remove Haptic Feedback Feature
-    - [x] Evaluated user proposal to remove HapticFeedback code: 100% endorsed as a pragmatic engineering decision to prevent release delays
+    - [x] Evaluated user proposal to remove HapticFeedback code: 100% endorsed as a pragmatic decision to prevent release delays
     - [x] Prepared cleanup of HapticFeedback references and AndroidManifest.xml VIBRATE permission
 - [x] Provide Structured Release Notes for Version 1.0.3+4
     - [x] Formulated professional release notes in Spanish and English for Google Play Console submission
@@ -396,3 +396,42 @@
     - [x] Updated Spanish release notes text to include Italian language (🇮🇹 Italiano) support
 - [x] Clarify Wednesday Version 1.0.4 Release Notes Roadmap
     - [x] Clarified that Italian language addition belongs to tomorrow's Version 1.0.4 release notes alongside Onboarding tutorial, Light/Dark/System theme, and Auto-lock timer
+- [x] Explain Apple Developer Account Activation and TestFlight Timeline
+    - [x] Explained 2 to 24h Apple payment verification timeline
+    - [x] Outlined App Store Connect record creation, iOS Distribution Certificate setup, and 1-click TestFlight submission
+- [x] Guide User Step-by-Step Through Apple Developer Registration (Step 1)
+    - [x] Instruct user to navigate to developer.apple.com/enroll and log in with Apple ID (with 2FA)
+- [x] Guide User Step-by-Step Through Apple Developer Registration (Step 2)
+    - [x] Analyze screenshot showing logged-in Apple ID
+    - [x] Instruct user to click 'Account' and then 'Enroll Today' / 'Join the Apple Developer Program'
+- [x] Answering Entity Type Choice and Providing Apple Registration Step 3
+    - [x] Explain that selecting 'Individual / Sole Proprietor' publishes under personal name (Alejandro Martínez Briao) and permits 100% feature access with official migration path to Organization/SAS later via 'Transfer Entity Type'
+- [x] Guide User Step-by-Step Through Apple Developer Registration (Step 4)
+    - [x] Analyze screenshot showing Apple Developer Program Enrollment summary (Enrollment ID: 3ZA7TX5CFA, US$99/yr)
+    - [x] Instruct user to click 'Continue to payment', enter payment details, and complete purchase
+- [x] Explain Apple Account Pending Status and Verification Completion Banner
+    - [x] Confirm that (Pendiente) is 100% normal while Apple/bank verifies US$99 transaction
+    - [x] Reassure user that App Store Connect activates upon approval email arrival
+- [x] Explain Apple App Store Payments, Commissions, and Banking Setup
+    - [x] Explain Apple Small Business Program (15% commission vs 30%)
+    - [x] Explain monthly payout schedule (33 days post fiscal month end, $150 USD threshold)
+    - [x] Detail setup steps in App Store Connect 'Agreements, Tax, and Banking' (Paid Apps Agreement, SWIFT bank, US W-8BEN tax form)
+- [x] Celebrate Instant Apple Account Activation & App Store Connect Verification
+    - [x] Confirm Alejandro Martínez active developer profile without 'Pendiente' badge
+    - [x] Provide exact steps to create App ID com.segurcel.segurcel and App Store Connect record
+- [x] Explaining App ID Capabilities Default In-App Purchase Activation
+    - [x] Explain that In-App Purchase is enabled by default by Apple on all App IDs
+    - [x] Confirm AutoFill Credential Provider is checked in screenshot
+- [x] Guiding User to Create App Record in App Store Connect
+    - [x] Verify screenshot showing registered App ID SegurCel Vault (com.segurcel.segurcel)
+    - [x] Instruct user to open appstoreconnect.apple.com/apps and create 'SegurCel - Bóveda & 2FA'
+- [x] Celebrating App Store Connect App Record Creation & Summarizing Day's Achievements
+    - [x] Verify screenshot showing 'SegurCel - Bóveda & 2FA' created with status '🟡 iOS 1.0 En preparation para el envío'
+    - [x] Summarize all accomplishments completed today across Android, Web, Extension, and iOS
+- [x] Formulating iOS Cloud Build and App Store Submission Plan Without Action
+    - [x] Detail step-by-step plan for App Store Connect API Key generation (.p8), GitHub Secrets configuration, automated iOS build via GitHub Actions, and App Store product metadata setup
+- [x] Answering Dynamic Target Platform Detection Strategy for Rate App Link
+    - [x] Explain how defaultTargetPlatform / Platform.isIOS / kIsWeb condition in SettingsScreen dynamically routes Android to Google Play, iOS to Apple App Store, and Web to segurcel.app
+- [x] Evaluating Advance Release Strategy for Milestone 2 Version 1.0.4 Without Action
+    - [x] Compare Option A (implementing Milestone 2 Version 1.0.4 today and submitting to both Google Play and App Store Connect) vs Option B (submitting 1.0.3 today and 1.0.4 tomorrow)
+    - [x] Endorse Option A as technically superior to gain 24-48h
