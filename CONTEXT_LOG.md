@@ -98,9 +98,16 @@ Este archivo contiene el contexto técnico y funcional completo de **SegurCel** 
 ---
 
 ## 8. 🗺️ HOJA DE RUTA (ROADMAP) Y PRÓXIMOS PASOS
-1. **[EN PROGRESO] Reclutamiento y Ejecución de Pruebas Cerradas (14 Días):**
-   - Cargar las direcciones Gmail de los testers (Brasil / LATAM) en la lista de probadores de Google Play Console.
-   - Compartir el enlace `https://segurcel.app/` o `https://play.google.com/apps/testing/com.segurcel.segurcel`.
-   - Completar el período obligatorio de 14 días consecutivos con al menos 20 testers activos.
-2. **[PRÓXIMO PASO] Promoción a Producción:**
-   - Promover la versión aprobada `1.0.1 (2)` a la pista de **Producción Pública** en Google Play Console.
+1. **[COMPLETADO] Configuración e Inscripción en Apple Developer Program (iOS):**
+   - Inscripción completada y pago de US$99/año procesado para la cuenta `amb.uy.dev@gmail.com` (Alejandro Martínez Briao).
+   - Carpeta `ios/Runner/Info.plist` 100% configurada: Nombre `SegurCel - Bóveda & 2FA`, `NSFaceIDUsageDescription`, `NSCameraUsageDescription`, y 11 idiomas declarados en `CFBundleLocalizations`.
+   - Flujo CI/CD automatizado creado en `.github/workflows/build_ios.yml` para compilación `.ipa` sin necesidad de Mac física.
+2. **[EN PROGRESO] Reclutamiento y Ejecución de Pruebas Cerradas (14 Días):**
+   - Cargar las direcciones Gmail de los testers en la lista de probadores / Grupos de Google (`segurcel-testers@googlegroups.com` y `testers-community@googlegroups.com`).
+   - Monitorear el período obligatorio de 14 días consecutivos (8 de 14 días completados con 12 testers activos).
+3. **[PRÓXIMO PASO] Hito #2 - Versión 1.0.4 (Miércoles):**
+   - Guía interactiva de onboarding de 3 pasos para nuevos usuarios.
+   - Selector de Tema Adaptativo (Oscuro / Claro / Sistema).
+   - Temporizador configurable de auto-bloqueo por inactividad.
+   - Lanzamiento oficial del 11º idioma: **Italiano (🇮🇹 Italiano)**.
+
