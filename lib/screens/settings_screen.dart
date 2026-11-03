@@ -436,6 +436,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _showFamilyCodesListDialog(String ownerUid, String ownerEmail) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
     await showDialog(
       context: context,
       builder: (ctx) {
@@ -455,16 +462,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             final count = docs.length;
 
             return AlertDialog(
-              backgroundColor: const Color(0xFF1E2538),
+              backgroundColor: dialogBg,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               title: Row(
                 children: [
-                  const Icon(Icons.family_restroom, color: Colors.amberAccent, size: 24),
+                  Icon(Icons.family_restroom, color: accentAmber, size: 24),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${_loc.text("family_codes_count")} ($count / 4)',
-                      style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -477,17 +484,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Text(
                       _loc.text('my_family_codes'),
-                      style: const TextStyle(color: Colors.white70, fontSize: 12),
+                      style: TextStyle(color: textSubColor, fontSize: 12),
                     ),
                     const SizedBox(height: 12),
                     if (snapshot.connectionState == ConnectionState.waiting)
-                      const Center(child: CircularProgressIndicator(color: Colors.amberAccent))
+                      Center(child: CircularProgressIndicator(color: accentAmber))
                     else if (docs.isEmpty)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: Text(
                           _loc.text('family_code_available'),
-                          style: const TextStyle(color: Colors.white38, fontSize: 12, fontStyle: FontStyle.italic),
+                          style: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontSize: 12, fontStyle: FontStyle.italic),
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -505,10 +512,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 margin: const EdgeInsets.only(bottom: 8),
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF10141D),
+                                  color: cardBg,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
-                                    color: used ? Colors.white12 : Colors.amberAccent.withAlpha(150),
+                                    color: used ? (isDark ? Colors.white12 : Colors.black12) : accentAmber,
                                   ),
                                 ),
                                 child: Row(
@@ -520,7 +527,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           SelectableText(
                                             code,
                                             style: TextStyle(
-                                              color: used ? Colors.white38 : Colors.amberAccent,
+                                              color: used ? (isDark ? Colors.white38 : Colors.black38) : accentAmber,
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'monospace',
@@ -530,7 +537,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           Text(
                                             used ? '${_loc.text("family_code_used")} $usedByEmail' : _loc.text('family_code_available'),
                                             style: TextStyle(
-                                              color: used ? Colors.grey : Colors.greenAccent,
+                                              color: used ? Colors.grey : (isDark ? Colors.greenAccent : const Color(0xFF137333)),
                                               fontSize: 11,
                                             ),
                                           ),
@@ -538,7 +545,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.copy, color: Colors.cyanAccent, size: 18),
+                                      icon: Icon(Icons.copy, color: isDark ? Colors.cyanAccent : const Color(0xFF00796B), size: 18),
                                       tooltip: _loc.text('copy'),
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(text: code));
@@ -562,14 +569,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(height: 12),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: count >= 4 ? Colors.grey : Colors.amberAccent,
+                        backgroundColor: count >= 4 ? Colors.grey : accentAmber,
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      icon: const Icon(Icons.add, color: Colors.black, size: 18),
+                      icon: const Icon(Icons.add, color: Colors.white, size: 18),
                       label: Text(
                         count >= 4 ? _loc.text('family_code_limit_reached') : '${_loc.text("generate_family_code")} ($count/4)',
-                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12),
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                       onPressed: count >= 4
                           ? null
@@ -598,7 +605,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               actions: [
                 TextButton(
-                  child: Text(_loc.text('cancel'), style: const TextStyle(color: Colors.white70)),
+                  child: Text(_loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white54 : const Color(0xFF10141D))),
                   onPressed: () => Navigator.pop(ctx),
                 ),
               ],
@@ -655,7 +662,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             Icon(
                               isPremium ? Icons.verified : Icons.info_outline,
-                              color: isPremium ? Colors.amberAccent : Colors.white70,
+                              color: isPremium ? (isDark ? Colors.amberAccent : const Color(0xFFD97706)) : textSubColor,
                               size: 24,
                             ),
                             const SizedBox(width: 10),
@@ -666,14 +673,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Text(
                                     isPremium ? _loc.text('premium_active') : _loc.text('free_plan'),
                                     style: TextStyle(
-                                      color: isPremium ? Colors.amberAccent : Colors.white,
+                                      color: isPremium ? (isDark ? Colors.amberAccent : const Color(0xFFD97706)) : textColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
                                   ),
                                   Text(
                                     isPremium ? _loc.text('unlimited_access') : _loc.text('free_limits'),
-                                    style: const TextStyle(color: Colors.white70, fontSize: 12),
+                                    style: TextStyle(color: textSubColor, fontSize: 12),
                                   ),
                                 ],
                               ),
@@ -708,11 +715,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               const SizedBox(width: 8),
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(color: Colors.cyanAccent),
+                                  side: BorderSide(color: isDark ? Colors.cyanAccent : const Color(0xFF00796B)),
                                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                 ),
-                                child: Text(_loc.text('restore_purchases'), style: const TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold, fontSize: 12)),
+                                child: Text(
+                                  _loc.text('restore_purchases'),
+                                  style: TextStyle(color: isDark ? Colors.cyanAccent : const Color(0xFF00796B), fontWeight: FontWeight.bold, fontSize: 12),
+                                ),
                                 onPressed: () async {
                                   await PurchaseService.restorePurchases();
                                   if (context.mounted) {
@@ -732,15 +742,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           const SizedBox(height: 12),
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF10141D),
-                              side: const BorderSide(color: Colors.amberAccent),
+                              backgroundColor: isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8),
+                              side: BorderSide(color: isDark ? Colors.amberAccent : const Color(0xFFD97706)),
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             ),
-                            icon: const Icon(Icons.family_restroom, color: Colors.amberAccent, size: 20),
+                            icon: Icon(Icons.family_restroom, color: isDark ? Colors.amberAccent : const Color(0xFFD97706), size: 20),
                             label: Text(
                               _loc.text('my_family_codes'),
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                              style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                             onPressed: () {
                               final user = _authService.currentUser;
@@ -763,26 +773,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _buildSectionCard(
                   title: _loc.text('admin_panel_title'),
                   icon: Icons.admin_panel_settings,
-                  iconColor: Colors.amberAccent,
+                  iconColor: isDark ? Colors.amberAccent : const Color(0xFFD97706),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
                         _loc.text('admin_panel_desc'),
-                        style: const TextStyle(color: Colors.white70, fontSize: 13),
+                        style: TextStyle(color: textSubColor, fontSize: 13),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF10141D),
-                          side: const BorderSide(color: Colors.amberAccent),
+                          backgroundColor: isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8),
+                          side: BorderSide(color: isDark ? Colors.amberAccent : const Color(0xFFD97706)),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
-                        icon: const Icon(Icons.flash_on, color: Colors.amberAccent, size: 20),
+                        icon: Icon(Icons.flash_on, color: isDark ? Colors.amberAccent : const Color(0xFFD97706), size: 20),
                         label: Text(
                           _loc.text('generate_gift_code'),
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                         onPressed: () async {
                           final newCode = PromoCodeHelper.generateRandomCode();
@@ -798,29 +808,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
-                                  backgroundColor: const Color(0xFF1E2538),
+                                  backgroundColor: isDark ? const Color(0xFF1E2538) : Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                                  title: const Row(
+                                  title: Row(
                                     children: [
-                                      Icon(Icons.card_giftcard, color: Colors.amberAccent),
-                                      SizedBox(width: 8),
-                                      Text('Código Módulo 10 Creado', style: TextStyle(color: Colors.white, fontSize: 16)),
+                                      Icon(Icons.card_giftcard, color: isDark ? Colors.amberAccent : const Color(0xFFD97706)),
+                                      const SizedBox(width: 8),
+                                      Text('Código Módulo 10 Creado', style: TextStyle(color: textColor, fontSize: 16)),
                                     ],
                                   ),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      const Text('Copia este código de único uso y envíaselo a tu familiar:', style: TextStyle(color: Colors.white70, fontSize: 13)),
+                                      Text('Copia este código de único uso y envíaselo a tu familiar:', style: TextStyle(color: textSubColor, fontSize: 13)),
                                       const SizedBox(height: 12),
                                       SelectableText(
                                         newCode,
-                                        style: const TextStyle(color: Colors.amberAccent, fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'monospace'),
+                                        style: TextStyle(color: isDark ? Colors.amberAccent : const Color(0xFFD97706), fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'monospace'),
                                       ),
                                     ],
                                   ),
                                   actions: [
                                     TextButton(
-                                      child: const Text('Copiar y Cerrar', style: TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold)),
+                                      child: Text('Copiar y Cerrar', style: TextStyle(color: isDark ? Colors.cyanAccent : const Color(0xFF00796B), fontWeight: FontWeight.bold)),
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(text: newCode));
                                         Navigator.pop(ctx);
