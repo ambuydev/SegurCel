@@ -82,7 +82,8 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
   }
 
   void _copyToClipboard(String text, String label) {
-    HapticFeedback.lightImpact();
+    HapticFeedback.mediumImpact();
+    HapticFeedback.vibrate();
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -186,7 +187,7 @@ class _PasswordGeneratorSheetState extends State<PasswordGeneratorSheet> {
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [12, 16, 24, 32].map((len) {
+              children: [8, 12, 16, 24, 32].map((len) {
                 final isSelected = _length.toInt() == len;
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),

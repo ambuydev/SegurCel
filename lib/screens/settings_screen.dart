@@ -1105,11 +1105,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       subtitle: Text(_loc.text('rate_app_sub'), style: const TextStyle(color: Colors.amberAccent, fontSize: 12)),
                       trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 18),
                       onTap: () {
-                        HapticFeedback.lightImpact();
+                        HapticFeedback.mediumImpact();
+                        HapticFeedback.vibrate();
                         try {
-                          FileHelper.openUrl('https://play.google.com/store/apps/details?id=com.segurcel.segurcel');
+                          FileHelper.openUrl('https://play.google.com/apps/testing/com.segurcel.segurcel');
                         } catch (_) {
-                          Clipboard.setData(const ClipboardData(text: 'https://play.google.com/store/apps/details?id=com.segurcel.segurcel'));
+                          Clipboard.setData(const ClipboardData(text: 'https://play.google.com/apps/testing/com.segurcel.segurcel'));
                         }
                       },
                     ),
@@ -1121,7 +1122,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       subtitle: Text(_loc.text('share_app_sub'), style: const TextStyle(color: Colors.white60, fontSize: 12)),
                       trailing: const Icon(Icons.send_rounded, color: Colors.white54, size: 18),
                       onTap: () {
-                        HapticFeedback.lightImpact();
+                        HapticFeedback.mediumImpact();
+                        HapticFeedback.vibrate();
                         // ignore: deprecated_member_use
                         Share.share(_loc.text('share_app_msg'));
                       },

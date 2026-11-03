@@ -342,3 +342,9 @@
     - [x] Recapped Monday v1.0.3 (Rate App, Share App, Haptic feedback, Generator chips)
     - [x] Recapped Wednesday v1.0.4 (Onboarding tutorial, Light/Dark/System theme, Auto-lock)
     - [x] Recapped Friday v1.0.5 + ASO (Encrypted backup .segurcel/.json, ASO description, Framed Play Store screenshots)
+- [x] Explain Phone Testing Options for Version 1.0.3+4
+    - [x] Outlined Option 1 (Direct Release APK compilation for instant sideloading)
+    - [x] Outlined Option 2 (Google Play Closed Testing Alpha track AAB submission for Play Store update)
+- [x] Compile Signed Production Release APK for Direct Phone Testing
+    - [x] Executed flutter build apk --release to generate app-release.apk (68.1 MB) at build/app/outputs/flutter-apk/app-release.apk
+    - [x] Provided step-by-step sideloading installation instructions
