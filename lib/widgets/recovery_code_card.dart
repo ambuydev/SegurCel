@@ -16,30 +16,36 @@ class RecoveryCodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final cardBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.warning_amber_rounded, size: 80, color: Colors.amber),
+        Icon(Icons.warning_amber_rounded, size: 80, color: accentAmber),
         const SizedBox(height: 16),
         Text(
           loc.text('save_recovery_code_title'),
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: textColor),
         ),
         const SizedBox(height: 12),
         Text(
           loc.text('save_recovery_code_subtitle'),
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.white70, fontSize: 14),
+          style: TextStyle(color: textSubColor, fontSize: 14),
         ),
         const SizedBox(height: 24),
 
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFF1E2538),
+            color: cardBg,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.amber.withAlpha(128)),
+            border: Border.all(color: accentAmber),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,16 +54,16 @@ class RecoveryCodeCard extends StatelessWidget {
                 child: Text(
                   recoveryCode,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2,
-                    color: Colors.amberAccent,
+                    color: accentAmber,
                   ),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.copy, color: Colors.white70),
+                icon: Icon(Icons.copy, color: isDark ? Colors.white70 : Colors.black54),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: recoveryCode));
                   ScaffoldMessenger.of(context).showSnackBar(

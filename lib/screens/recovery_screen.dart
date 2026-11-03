@@ -74,12 +74,19 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF1E2538) : Colors.white;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: textColor,
         elevation: 0,
-        title: Text(_loc.text('recover_access')),
+        title: Text(_loc.text('recover_access'), style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -93,29 +100,30 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
               Text(
                 _loc.text('forgot_pin'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
               ),
               const SizedBox(height: 8),
               Text(
                 _loc.text('save_recovery_code_subtitle'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
+                style: TextStyle(color: textSubColor, fontSize: 14),
               ),
               const SizedBox(height: 28),
 
               TextField(
                 controller: _codeController,
                 textCapitalization: TextCapitalization.characters,
-                style: const TextStyle(color: Colors.white, fontSize: 16, letterSpacing: 1.5),
+                style: TextStyle(color: textColor, fontSize: 16, letterSpacing: 1.5),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   labelText: _loc.text('recovery_code'),
                   hintText: 'ABCD-1234-EFGH-5678-...',
-                  hintStyle: const TextStyle(color: Colors.white30, letterSpacing: 0),
-                  labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+                  hintStyle: TextStyle(color: isDark ? Colors.white30 : Colors.black38, letterSpacing: 0),
+                  labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
                   filled: true,
-                  fillColor: const Color(0xFF1E2538),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  fillColor: inputFillColor,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
                 ),
               ),
 
@@ -126,14 +134,15 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 keyboardType: TextInputType.number,
                 obscureText: true,
                 maxLength: 4,
-                style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 6),
+                style: TextStyle(color: textColor, fontSize: 18, letterSpacing: 6),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   labelText: _loc.text('new_pin'),
-                  labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+                  labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
                   filled: true,
-                  fillColor: const Color(0xFF1E2538),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  fillColor: inputFillColor,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
                 ),
               ),
 
@@ -144,14 +153,15 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                 keyboardType: TextInputType.number,
                 obscureText: true,
                 maxLength: 4,
-                style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 6),
+                style: TextStyle(color: textColor, fontSize: 18, letterSpacing: 6),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   labelText: _loc.text('confirm_new_pin'),
-                  labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+                  labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
                   filled: true,
-                  fillColor: const Color(0xFF1E2538),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  fillColor: inputFillColor,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
                 ),
               ),
 

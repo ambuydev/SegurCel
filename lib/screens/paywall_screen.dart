@@ -269,12 +269,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final cardBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: textColor,
         elevation: 0,
-        title: Text(widget.isEmergency ? _loc.text('emergency_title') : _loc.text('pro_subscription')),
+        title: Text(widget.isEmergency ? _loc.text('emergency_title') : _loc.text('pro_subscription'), style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -287,7 +296,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.red.withAlpha(38),
+                    color: isDark ? Colors.red.withAlpha(38) : const Color(0xFFFFEBEE),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: Colors.redAccent, width: 1.5),
                   ),
@@ -298,28 +307,28 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       Text(
                         _loc.text('emergency_title'),
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         _loc.text('emergency_subtitle'),
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white70, fontSize: 13),
+                        style: TextStyle(color: textSubColor, fontSize: 13),
                       ),
                       const SizedBox(height: 16),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF10141D),
+                          color: cardBg,
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.amberAccent),
+                          border: Border.all(color: accentAmber),
                         ),
                         child: Text(
                           _formatCountdown(_remainingMillis),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.amberAccent,
+                            color: accentAmber,
                             letterSpacing: 2,
                           ),
                         ),
@@ -340,26 +349,26 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 Text(
                   _loc.text('pro_subscription'),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: textColor),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   _loc.text('login_subtitle'),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white70, fontSize: 14),
+                  style: TextStyle(color: textSubColor, fontSize: 14),
                 ),
                 const SizedBox(height: 24),
 
-                _buildBenefitRow(Icons.cloud_done_outlined, _loc.text('pro_benefits_1')),
-                _buildBenefitRow(Icons.security, _loc.text('pro_benefits_2')),
-                _buildBenefitRow(Icons.history, _loc.text('pro_benefits_3')),
-                _buildBenefitRow(Icons.language, _loc.text('pro_benefits_4')),
+                _buildBenefitRow(Icons.cloud_done_outlined, _loc.text('pro_benefits_1'), textSubColor),
+                _buildBenefitRow(Icons.security, _loc.text('pro_benefits_2'), textSubColor),
+                _buildBenefitRow(Icons.history, _loc.text('pro_benefits_3'), textSubColor),
+                _buildBenefitRow(Icons.language, _loc.text('pro_benefits_4'), textSubColor),
                 const SizedBox(height: 24),
               ],
 
               Text(
                 _loc.text('select_plan'),
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
               ),
               const SizedBox(height: 12),
 
@@ -371,6 +380,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   subtitle: _loc.text('emergency_title'),
                   badge: 'RESCUE',
                   badgeColor: Colors.amber,
+                  cardBg: cardBg,
+                  textColor: textColor,
+                  textSubColor: textSubColor,
+                  accentAmber: accentAmber,
+                  isDark: isDark,
                 )
               else ...[
                 _buildPlanTile(
@@ -379,7 +393,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   price: '\$10.99 USD ${_loc.text('per_year')}',
                   subtitle: '\$0.91 USD ${_loc.text('per_month')}',
                   badge: _loc.text('most_popular'),
-                  badgeColor: Colors.amberAccent,
+                  badgeColor: accentAmber,
+                  cardBg: cardBg,
+                  textColor: textColor,
+                  textSubColor: textSubColor,
+                  accentAmber: accentAmber,
+                  isDark: isDark,
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
@@ -387,6 +406,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   title: _loc.text('plan_monthly'),
                   price: '\$1.99 USD ${_loc.text('per_month')}',
                   subtitle: '',
+                  cardBg: cardBg,
+                  textColor: textColor,
+                  textSubColor: textSubColor,
+                  accentAmber: accentAmber,
+                  isDark: isDark,
                 ),
                 const SizedBox(height: 12),
                 _buildPlanTile(
@@ -395,7 +419,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   price: '\$24.99 USD ${_loc.text('per_year')}',
                   subtitle: '\$2.08 USD ${_loc.text('per_month')}',
                   badge: _loc.text('most_popular'),
-                  badgeColor: Colors.amberAccent,
+                  badgeColor: accentAmber,
+                  cardBg: cardBg,
+                  textColor: textColor,
+                  textSubColor: textSubColor,
+                  accentAmber: accentAmber,
+                  isDark: isDark,
                 ),
                 const SizedBox(height: 10),
                 _buildPlanTile(
@@ -403,6 +432,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   title: _loc.text('plan_family_monthly'),
                   price: '\$3.99 USD ${_loc.text('per_month')}',
                   subtitle: '',
+                  cardBg: cardBg,
+                  textColor: textColor,
+                  textSubColor: textSubColor,
+                  accentAmber: accentAmber,
+                  isDark: isDark,
                 ),
               ],
 
@@ -412,21 +446,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1E2538),
+                  color: cardBg,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: Colors.amberAccent.withAlpha(120)),
+                  border: Border.all(color: accentAmber.withAlpha(120)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.card_giftcard, color: Colors.amberAccent, size: 20),
+                        Icon(Icons.card_giftcard, color: accentAmber, size: 20),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             _loc.text('has_gift_code'),
-                            style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 13),
+                            style: TextStyle(color: accentAmber, fontWeight: FontWeight.bold, fontSize: 13),
                             softWrap: true,
                           ),
                         ),
@@ -438,13 +472,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         Expanded(
                           child: TextField(
                             controller: _promoCodeController,
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
                             textCapitalization: TextCapitalization.characters,
                             decoration: InputDecoration(
                               hintText: _loc.text('enter_code_hint'),
-                              hintStyle: const TextStyle(color: Colors.white38, fontSize: 12),
+                              hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontSize: 12),
                               filled: true,
-                              fillColor: const Color(0xFF10141D),
+                              fillColor: inputFillColor,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
                             ),
@@ -453,14 +487,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         const SizedBox(width: 10),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amberAccent,
+                            backgroundColor: accentAmber,
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
                           onPressed: _isRedeemingPromo ? null : _redeemPromoCode,
                           child: _isRedeemingPromo
-                              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black))
-                              : Text(_loc.text('redeem'), style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 12)),
+                              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                              : Text(_loc.text('redeem'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                         ),
                       ],
                     ),
@@ -491,7 +525,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
-  Widget _buildBenefitRow(IconData icon, String text) {
+  Widget _buildBenefitRow(IconData icon, String text, Color textSubColor) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -499,7 +533,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           Icon(icon, color: const Color(0xFF6C63FF), size: 20),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(text, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+            child: Text(text, style: TextStyle(color: textSubColor, fontSize: 13)),
           ),
         ],
       ),
@@ -513,6 +547,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
     required String subtitle,
     String? badge,
     Color? badgeColor,
+    required Color cardBg,
+    required Color textColor,
+    required Color textSubColor,
+    required Color accentAmber,
+    required bool isDark,
   }) {
     final isSelected = _selectedPlan == id;
 
@@ -521,10 +560,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF1E2538),
+          color: cardBg,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? const Color(0xFF6C63FF) : Colors.white12,
+            color: isSelected ? const Color(0xFF6C63FF) : (isDark ? Colors.white12 : Colors.black12),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -532,7 +571,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           children: [
             Icon(
               isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: isSelected ? const Color(0xFF6C63FF) : Colors.white38,
+              color: isSelected ? const Color(0xFF6C63FF) : (isDark ? Colors.white38 : Colors.black38),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -541,17 +580,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 14),
                     softWrap: true,
                   ),
                   const SizedBox(height: 4),
-                  Text(price, style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14)),
+                  Text(price, style: TextStyle(color: accentAmber, fontWeight: FontWeight.bold, fontSize: 14)),
                   if (subtitle.isNotEmpty || badge != null) ...[
                     const SizedBox(height: 3),
                     Row(
                       children: [
                         if (subtitle.isNotEmpty)
-                          Text(subtitle, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                          Text(subtitle, style: TextStyle(color: isDark ? Colors.white54 : Colors.black54, fontSize: 12)),
                         if (badge != null) ...[
                           if (subtitle.isNotEmpty) const SizedBox(width: 8),
                           Container(

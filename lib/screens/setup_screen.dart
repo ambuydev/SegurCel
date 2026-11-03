@@ -58,12 +58,17 @@ class _SetupScreenState extends State<SetupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: textColor,
         elevation: 0,
-        title: Text(_loc.text('welcome')),
+        title: Text(_loc.text('welcome'), style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: SafeArea(

@@ -16,14 +16,25 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
   @override
   Widget build(BuildContext context) {
     final user = AuthService().currentUser;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final appBarBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final buttonBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+    final accentGreen = isDark ? Colors.greenAccent : const Color(0xFF137333);
+    final accentCyan = isDark ? Colors.cyanAccent : const Color(0xFF00796B);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E2538),
+        backgroundColor: appBarBg,
+        foregroundColor: textColor,
         title: Text(
           _loc.text('my_devices_title'),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: textColor),
         ),
         centerTitle: true,
       ),
@@ -38,38 +49,38 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                 padding: const EdgeInsets.all(14),
                 margin: const EdgeInsets.only(bottom: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1E2538),
+                  color: cardBg,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: Colors.amberAccent.withAlpha(150)),
+                  border: Border.all(color: accentAmber),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.shield_outlined, color: Colors.amberAccent, size: 22),
+                        Icon(Icons.shield_outlined, color: accentAmber, size: 22),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             _loc.text('emergency_tracking_center'),
-                            style: const TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 14),
+                            style: TextStyle(color: accentAmber, fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 6),
-                    Text('Email: ${user?.email ?? "Sin Sesión (Modo Local)"}', style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
-                    Text('UID: ${user?.uid ?? "N/A"}', style: const TextStyle(color: Colors.white70, fontSize: 11)),
+                    Text('Email: ${user?.email ?? "Sin Sesión (Modo Local)"}', style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.bold)),
+                    Text('UID: ${user?.uid ?? "N/A"}', style: TextStyle(color: textSubColor, fontSize: 11)),
                   ],
                 ),
               ),
 
               // Tarjeta 1: Google Encontrar mi Dispositivo (Android)
               Card(
-                color: const Color(0xFF1E2538),
+                color: cardBg,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: Colors.greenAccent, width: 1.5),
+                  side: BorderSide(color: accentGreen, width: 1.5),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
@@ -78,7 +89,7 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.android, color: Colors.greenAccent, size: 28),
+                          Icon(Icons.android, color: accentGreen, size: 28),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
@@ -86,36 +97,36 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                               children: [
                                 Text(
                                   _loc.text('google_find_device'),
-                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
                                 Text(
                                   _loc.text('google_find_sub'),
-                                  style: const TextStyle(color: Colors.greenAccent, fontSize: 12, fontWeight: FontWeight.w600),
+                                  style: TextStyle(color: accentGreen, fontSize: 12, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      const Divider(color: Colors.white12, height: 24),
+                      Divider(color: isDark ? Colors.white12 : Colors.black12, height: 24),
                       Text(
                         _loc.text('google_find_desc'),
-                        style: const TextStyle(color: Colors.white70, fontSize: 13),
+                        style: TextStyle(color: textSubColor, fontSize: 13),
                       ),
                       const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF10141D),
-                            side: const BorderSide(color: Colors.greenAccent),
+                            backgroundColor: buttonBg,
+                            side: BorderSide(color: accentGreen),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
-                          icon: const Icon(Icons.open_in_new, color: Colors.greenAccent, size: 20),
+                          icon: Icon(Icons.open_in_new, color: accentGreen, size: 20),
                           label: Text(
                             _loc.text('open_google_find'),
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                           onPressed: () {
                             FileHelper.openUrl('https://google.com/android/find');
@@ -131,10 +142,10 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
 
               // Tarjeta 2: Apple Buscar mi iPhone (iOS / iCloud)
               Card(
-                color: const Color(0xFF1E2538),
+                color: cardBg,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: Colors.cyanAccent, width: 1.5),
+                  side: BorderSide(color: accentCyan, width: 1.5),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
@@ -143,7 +154,7 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.apple, color: Colors.cyanAccent, size: 28),
+                          Icon(Icons.apple, color: accentCyan, size: 28),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
@@ -151,36 +162,36 @@ class _MyDevicesScreenState extends State<MyDevicesScreen> {
                               children: [
                                 Text(
                                   _loc.text('apple_find_device'),
-                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
                                 Text(
                                   _loc.text('apple_find_sub'),
-                                  style: const TextStyle(color: Colors.cyanAccent, fontSize: 12, fontWeight: FontWeight.w600),
+                                  style: TextStyle(color: accentCyan, fontSize: 12, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      const Divider(color: Colors.white12, height: 24),
+                      Divider(color: isDark ? Colors.white12 : Colors.black12, height: 24),
                       Text(
                         _loc.text('apple_find_desc'),
-                        style: const TextStyle(color: Colors.white70, fontSize: 13),
+                        style: TextStyle(color: textSubColor, fontSize: 13),
                       ),
                       const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF10141D),
-                            side: const BorderSide(color: Colors.cyanAccent),
+                            backgroundColor: buttonBg,
+                            side: BorderSide(color: accentCyan),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
-                          icon: const Icon(Icons.open_in_new, color: Colors.cyanAccent, size: 20),
+                          icon: Icon(Icons.open_in_new, color: accentCyan, size: 20),
                           label: Text(
                             _loc.text('open_apple_find'),
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                           onPressed: () {
                             FileHelper.openUrl('https://icloud.com/find');

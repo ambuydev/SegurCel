@@ -181,6 +181,9 @@ class _PinScreenState extends State<PinScreen> {
   }
 
   Widget _buildLanguagePicker() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primaryIconColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
     final languages = [
       {'code': 'es', 'name': '🇪🇸 Español'},
       {'code': 'en', 'name': '🇺🇸 English'},
@@ -196,9 +199,9 @@ class _PinScreenState extends State<PinScreen> {
     ];
 
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.language, color: Colors.amberAccent, size: 26),
+      icon: Icon(Icons.language, color: primaryIconColor, size: 26),
       tooltip: _loc.text('language'),
-      color: const Color(0xFF1E2538),
+      color: isDark ? const Color(0xFF1E2538) : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       onSelected: (String code) async {
         await _loc.changeLanguage(code);
@@ -217,13 +220,13 @@ class _PinScreenState extends State<PinScreen> {
                 Text(
                   lang['name']!,
                   style: TextStyle(
-                    color: isSelected ? Colors.amberAccent : Colors.white,
+                    color: isSelected ? primaryIconColor : (isDark ? Colors.white : const Color(0xFF10141D)),
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                     fontSize: 14,
                   ),
                 ),
                 if (isSelected)
-                  const Icon(Icons.check, color: Colors.amberAccent, size: 18),
+                  Icon(Icons.check, color: primaryIconColor, size: 18),
               ],
             ),
           );
@@ -235,18 +238,23 @@ class _PinScreenState extends State<PinScreen> {
   @override
   Widget build(BuildContext context) {
     final remaining = widget.vaultService.remainingAttempts;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final amberAccentColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
 
     return KeyboardListener(
       focusNode: _focusNode,
       onKeyEvent: _handleKeyEvent,
       child: Scaffold(
-        backgroundColor: const Color(0xFF10141D),
+        backgroundColor: scaffoldBg,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: kIsWeb
               ? IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.amberAccent),
+                  icon: Icon(Icons.arrow_back, color: amberAccentColor),
                   tooltip: _loc.text('back_to_official_site'),
                   onPressed: () {
                     FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
@@ -255,10 +263,10 @@ class _PinScreenState extends State<PinScreen> {
               : null,
           title: kIsWeb
               ? TextButton.icon(
-                  icon: const Icon(Icons.home, color: Colors.amberAccent, size: 18),
+                  icon: Icon(Icons.home, color: amberAccentColor, size: 18),
                   label: Text(
                     _loc.text('back_to_official_site'),
-                    style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                    style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.w600),
                   ),
                   onPressed: () {
                     FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
@@ -288,12 +296,12 @@ class _PinScreenState extends State<PinScreen> {
                         const SizedBox(height: 10),
                         Text(
                           _loc.text('app_title'),
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           _loc.text('enter_pin'),
-                          style: const TextStyle(color: Colors.white70, fontSize: 14),
+                          style: TextStyle(color: textSubColor, fontSize: 14),
                         ),
                         const SizedBox(height: 24),
 
@@ -308,9 +316,9 @@ class _PinScreenState extends State<PinScreen> {
                               height: 16,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: isFilled ? const Color(0xFF6C63FF) : Colors.white24,
+                                color: isFilled ? const Color(0xFF6C63FF) : (isDark ? Colors.white24 : Colors.black12),
                                 border: Border.all(
-                                  color: isFilled ? const Color(0xFF6C63FF) : Colors.white38,
+                                  color: isFilled ? const Color(0xFF6C63FF) : (isDark ? Colors.white38 : Colors.black26),
                                 ),
                               ),
                             );
@@ -396,6 +404,10 @@ class _PinScreenState extends State<PinScreen> {
 
     const double btnSize = 56;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final btnBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final btnTextColor = isDark ? Colors.white : const Color(0xFF10141D);
+
     return Container(
       constraints: const BoxConstraints(maxWidth: 280),
       alignment: Alignment.center,
@@ -414,7 +426,7 @@ class _PinScreenState extends State<PinScreen> {
                     width: btnSize,
                     height: btnSize,
                     child: IconButton(
-                      icon: const Icon(Icons.backspace_outlined, color: Colors.white70, size: 22),
+                      icon: Icon(Icons.backspace_outlined, color: isDark ? Colors.white70 : const Color(0xFF10141D), size: 22),
                       onPressed: _onDelete,
                     ),
                   );
@@ -441,14 +453,15 @@ class _PinScreenState extends State<PinScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
-                      backgroundColor: const Color(0xFF1E2538),
-                      elevation: 2,
+                      backgroundColor: btnBg,
+                      elevation: isDark ? 2 : 1,
                       padding: EdgeInsets.zero,
+                      side: isDark ? null : const BorderSide(color: Colors.black12),
                     ),
                     onPressed: () => _onKeyPress(btn),
                     child: Text(
                       btn,
-                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: btnTextColor),
                     ),
                   ),
                 );

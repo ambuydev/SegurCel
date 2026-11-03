@@ -52,6 +52,10 @@ class _PinCreationFormState extends State<PinCreationForm> {
   @override
   Widget build(BuildContext context) {
     final displayError = widget.errorMessage ?? _localError;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF1E2538) : Colors.white;
 
     return SingleChildScrollView(
       child: Column(
@@ -62,13 +66,13 @@ class _PinCreationFormState extends State<PinCreationForm> {
           Text(
             widget.loc.text('welcome'),
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: textColor),
           ),
           const SizedBox(height: 10),
           Text(
             widget.loc.text('setup_subtitle'),
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white70, fontSize: 15),
+            style: TextStyle(color: textSubColor, fontSize: 15),
           ),
           const SizedBox(height: 30),
 
@@ -77,14 +81,15 @@ class _PinCreationFormState extends State<PinCreationForm> {
             keyboardType: TextInputType.number,
             obscureText: true,
             maxLength: 4,
-            style: const TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 8),
+            style: TextStyle(color: textColor, fontSize: 20, letterSpacing: 8),
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               labelText: widget.loc.text('new_pin'),
-              labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+              labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
               filled: true,
-              fillColor: const Color(0xFF1E2538),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              fillColor: inputFillColor,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
             ),
           ),
 
@@ -95,14 +100,15 @@ class _PinCreationFormState extends State<PinCreationForm> {
             keyboardType: TextInputType.number,
             obscureText: true,
             maxLength: 4,
-            style: const TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 8),
+            style: TextStyle(color: textColor, fontSize: 20, letterSpacing: 8),
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               labelText: widget.loc.text('confirm_new_pin'),
-              labelStyle: const TextStyle(color: Colors.white70, letterSpacing: 0),
+              labelStyle: TextStyle(color: textSubColor, letterSpacing: 0),
               filled: true,
-              fillColor: const Color(0xFF1E2538),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              fillColor: inputFillColor,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
             ),
           ),
 

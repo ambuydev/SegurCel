@@ -53,18 +53,23 @@ class _RecoveryConfirmationDialogState extends State<RecoveryConfirmationDialog>
   @override
   Widget build(BuildContext context) {
     final isTimerDone = _secondsLeft == 0;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
 
     return AlertDialog(
-      backgroundColor: const Color(0xFF1E2538),
+      backgroundColor: dialogBg,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded, color: Colors.amberAccent, size: 28),
+          Icon(Icons.warning_amber_rounded, color: accentAmber, size: 28),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               widget.loc.text('confirm_recovery_title'),
-              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -72,7 +77,7 @@ class _RecoveryConfirmationDialogState extends State<RecoveryConfirmationDialog>
       content: SingleChildScrollView(
         child: Text(
           widget.loc.text('confirm_recovery_desc'),
-          style: const TextStyle(color: Colors.white70, fontSize: 14, height: 1.4),
+          style: TextStyle(color: textSubColor, fontSize: 14, height: 1.4),
         ),
       ),
       actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -84,13 +89,13 @@ class _RecoveryConfirmationDialogState extends State<RecoveryConfirmationDialog>
           },
           child: Text(
             widget.loc.text('confirm_recovery_back'),
-            style: const TextStyle(color: Colors.white54, fontSize: 13),
+            style: TextStyle(color: isDark ? Colors.white54 : Colors.black54, fontSize: 13),
           ),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: isTimerDone ? const Color(0xFF6C63FF) : Colors.white12,
-            foregroundColor: isTimerDone ? Colors.white : Colors.white38,
+            backgroundColor: isTimerDone ? const Color(0xFF6C63FF) : (isDark ? Colors.white12 : Colors.black12),
+            foregroundColor: isTimerDone ? Colors.white : Colors.black38,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           ),
@@ -114,7 +119,7 @@ class _RecoveryConfirmationDialogState extends State<RecoveryConfirmationDialog>
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 13,
-              color: isTimerDone ? Colors.white : Colors.white38,
+              color: isTimerDone ? Colors.white : Colors.black38,
             ),
           ),
         ),

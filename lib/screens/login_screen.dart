@@ -197,10 +197,13 @@ class _LoginScreenState extends State<LoginScreen> {
       {'code': 'it', 'name': '🇮🇹 Italiano'},
     ];
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primaryIconColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.language, color: Colors.amberAccent, size: 26),
+      icon: Icon(Icons.language, color: primaryIconColor, size: 26),
       tooltip: _loc.text('language'),
-      color: const Color(0xFF1E2538),
+      color: isDark ? const Color(0xFF1E2538) : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       onSelected: (String code) async {
         await _loc.changeLanguage(code);
@@ -219,13 +222,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   lang['name']!,
                   style: TextStyle(
-                    color: isSelected ? Colors.amberAccent : Colors.white,
+                    color: isSelected ? primaryIconColor : (isDark ? Colors.white : const Color(0xFF10141D)),
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                     fontSize: 14,
                   ),
                 ),
                 if (isSelected)
-                  const Icon(Icons.check, color: Colors.amberAccent, size: 18),
+                  Icon(Icons.check, color: primaryIconColor, size: 18),
               ],
             ),
           );
@@ -236,14 +239,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final scaffoldBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final amberAccentColor = isDark ? Colors.amberAccent : const Color(0xFFD97706);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF10141D),
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: textColor,
         elevation: 0,
         leading: kIsWeb
             ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.amberAccent),
+                icon: Icon(Icons.arrow_back, color: amberAccentColor),
                 tooltip: _loc.text('back_to_official_site'),
                 onPressed: () {
                   FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
@@ -252,10 +263,10 @@ class _LoginScreenState extends State<LoginScreen> {
             : null,
         title: kIsWeb
             ? TextButton.icon(
-                icon: const Icon(Icons.home, color: Colors.amberAccent, size: 18),
+                icon: Icon(Icons.home, color: amberAccentColor, size: 18),
                 label: Text(
                   _loc.text('back_to_official_site'),
-                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.w600),
                 ),
                 onPressed: () {
                   FileHelper.openUrl('https://segurcel.app/?lang=${_loc.currentLanguage}');
@@ -285,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 _loc.text('login_title'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textColor),
               ),
               const SizedBox(height: 8),
               Text(
@@ -293,22 +304,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     ? _loc.text('login_subtitle')
                     : _loc.text('register_subtitle'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
+                style: TextStyle(color: textSubColor, fontSize: 14),
               ),
               const SizedBox(height: 32),
 
               TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: textColor),
                 onSubmitted: (_) => _submit(),
                 decoration: InputDecoration(
                   labelText: _loc.text('email_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
+                  labelStyle: TextStyle(color: textSubColor),
                   prefixIcon: const Icon(Icons.email_outlined, color: Color(0xFF6C63FF)),
                   filled: true,
-                  fillColor: const Color(0xFF1E2538),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  fillColor: inputFillColor,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
                 ),
               ),
 
@@ -317,16 +329,16 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 obscureText: _obscurePassword,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: textColor),
                 onSubmitted: (_) => _submit(),
                 decoration: InputDecoration(
                   labelText: _loc.text('account_pass_label'),
-                  labelStyle: const TextStyle(color: Colors.white70),
+                  labelStyle: TextStyle(color: textSubColor),
                   prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF6C63FF)),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                      color: Colors.white54,
+                      color: isDark ? Colors.white54 : Colors.black54,
                     ),
                     onPressed: () {
                       setState(() {
@@ -335,8 +347,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   filled: true,
-                  fillColor: const Color(0xFF1E2538),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  fillColor: inputFillColor,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12)),
                 ),
               ),
 

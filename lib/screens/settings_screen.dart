@@ -171,6 +171,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final passwordController = TextEditingController();
     bool isDeleting = false;
     String? errorMessage;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final accentAmber = isDark ? Colors.amberAccent : const Color(0xFFD97706);
 
     await showDialog(
       context: context,
@@ -178,7 +184,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              backgroundColor: const Color(0xFF1E2538),
+              backgroundColor: dialogBg,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               title: const Row(
                 children: [
@@ -197,9 +203,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Esta acción destruirá tu cuenta, tu bóveda cifrada en la Nube y todos los datos guardados en este dispositivo de forma permanente. Esta acción NO se puede deshacer.',
-                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                      style: TextStyle(color: textSubColor, fontSize: 13),
                     ),
                     const SizedBox(height: 14),
 
@@ -207,40 +213,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.amber.withAlpha(30),
+                          color: isDark ? Colors.amber.withAlpha(30) : const Color(0xFFFFF8E1),
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.amberAccent),
+                          border: Border.all(color: accentAmber),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Row(
+                            Row(
                               children: [
-                                Icon(Icons.info_outline, color: Colors.amberAccent, size: 18),
-                                SizedBox(width: 6),
+                                Icon(Icons.info_outline, color: accentAmber, size: 18),
+                                const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     'AVISO DE SUSCRIPCIÓN PREMIUM:',
-                                    style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                                    style: TextStyle(color: accentAmber, fontWeight: FontWeight.bold, fontSize: 12),
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 6),
-                            const Text(
+                            Text(
                               'Si compraste tu suscripción en Google Play Store, recuerda cancelar la renovación automática desde la tienda para evitar cobros futuros.',
-                              style: TextStyle(color: Colors.white70, fontSize: 11),
+                              style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF5D4037), fontSize: 11),
                             ),
                             const SizedBox(height: 8),
                             OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: Colors.amberAccent),
+                                side: BorderSide(color: accentAmber),
                                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                               ),
-                              icon: const Icon(Icons.open_in_new, color: Colors.amberAccent, size: 14),
-                              label: const Text(
+                              icon: Icon(Icons.open_in_new, color: accentAmber, size: 14),
+                              label: Text(
                                 '1. Abrir Suscripciones en Google Play',
-                                style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                                style: TextStyle(color: textColor, fontSize: 11, fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
                                 FileHelper.openUrl('https://play.google.com/store/account/subscriptions');
@@ -252,22 +258,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 14),
                     ],
 
-                    const Text(
+                    Text(
                       'Ingresa tu Contraseña de SegurCel para confirmar:',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                      style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: passwordController,
                       obscureText: true,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: textColor),
+                      decoration: InputDecoration(
                         hintText: 'Contraseña de tu cuenta',
-                        hintStyle: TextStyle(color: Colors.white38, fontSize: 12),
+                        hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontSize: 12),
                         filled: true,
-                        fillColor: Color(0xFF10141D),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                        fillColor: inputFillColor,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
                       ),
                     ),
                     if (errorMessage != null) ...[
@@ -282,7 +288,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               actions: [
                 TextButton(
-                  child: const Text('Cancelar', style: TextStyle(color: Colors.white54)),
+                  child: Text('Cancelar', style: TextStyle(color: isDark ? Colors.white54 : Colors.black54)),
                   onPressed: () => Navigator.pop(ctx),
                 ),
                 ElevatedButton(
@@ -1343,12 +1349,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         children: [
                           Text(
                             _loc.text('delete_account_warning'),
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFFB71C1C), fontSize: 12),
                           ),
                           const SizedBox(height: 12),
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF10141D),
+                              backgroundColor: isDark ? const Color(0xFF10141D) : const Color(0xFFFFEBEE),
                               side: const BorderSide(color: Colors.redAccent),
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
