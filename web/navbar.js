@@ -13,12 +13,13 @@ const FLAGS_MAP = {
   de: "https://flagcdn.com/20x15/de.png",
   ja: "https://flagcdn.com/20x15/jp.png",
   ko: "https://flagcdn.com/20x15/kr.png",
-  ru: "https://flagcdn.com/20x15/ru.png"
+  ru: "https://flagcdn.com/20x15/ru.png",
+  it: "https://flagcdn.com/20x15/it.png"
 };
 
 const NAMES_MAP = {
   es: "Español", en: "English", pt: "Português", zh: "中文", fr: "Français",
-  hi: "हिन्दी", de: "Deutsch", ja: "日本語", ko: "한국어", ru: "Русский"
+  hi: "हिन्दी", de: "Deutsch", ja: "日本語", ko: "한국어", ru: "Русский", it: "Italiano"
 };
 
 const NAV_DICT = {
@@ -31,7 +32,8 @@ const NAV_DICT = {
   de: { btnBack: "← Zurück zur offiziellen Website", headerVault: "Tresor öffnen", headerGuide: "📘 Benutzerhandbuch" },
   ja: { btnBack: "← 公式サイトに戻る", headerVault: "保管庫に入る", headerGuide: "📘 ユーザーガイド" },
   ko: { btnBack: "← 공식 사이트로 돌아가기", headerVault: "보관함 접속", headerGuide: "📘 사용자 설명서" },
-  ru: { btnBack: "← Вернуться на официальный сайт", headerVault: "Войти в хранилище", headerGuide: "📘 Руководство" }
+  ru: { btnBack: "← Вернуться на официальный сайт", headerVault: "Войти в хранилище", headerGuide: "📘 Руководство" },
+  it: { btnBack: "← Torna al Sito Ufficiale", headerVault: "Accedi alla Bóveda", headerGuide: "📘 Guida Utente" }
 };
 
 const FOOTER_DICT = {
@@ -44,7 +46,8 @@ const FOOTER_DICT = {
   de: { copyright: "© 2026 SegurCel. Alle Rechte vorbehalten.", guide: "📘 Schnellstartanleitung", privacy: "Datenschutzerklärung", official: "Offizielle Website", github: "⭐ GitHub (Prüfbarer Code)" },
   ja: { copyright: "© 2026 SegurCel. 全著作権所有。", guide: "📘 クイックユーザーガイド", privacy: "プライバシーポリシー", official: "公式サイト", github: "⭐ GitHub (監査可能コード)" },
   ko: { copyright: "© 2026 SegurCel. 모든 권리 보유.", guide: "📘 빠른 사용자 설명서", privacy: "개인정보 처리방침", official: "공식 사이트", github: "⭐ GitHub (감사 가능 코드)" },
-  ru: { copyright: "© 2026 SegurCel. Все права защищены.", guide: "📘 Краткое руководство", privacy: "Политика конфиденциальности", official: "Официальный сайт", github: "⭐ GitHub (Проверяемый код)" }
+  ru: { copyright: "© 2026 SegurCel. Все права защищены.", guide: "📘 Краткое руководство", privacy: "Политика конфиденциальности", official: "Официальный сайт", github: "⭐ GitHub (Проверяемый код)" },
+  it: { copyright: "© 2026 SegurCel. Tutti i diritti riservati.", guide: "📘 Guida Rapida Utente", privacy: "Informativa sulla Privacy", official: "Sito Ufficiale", github: "⭐ GitHub (Codice Ispezionabile)" }
 };
 
 window.SegurCelNav = {

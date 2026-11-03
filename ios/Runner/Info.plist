@@ -66,5 +66,27 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<!-- Permisos de Privacidad de Apple App Store -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>SegurCel requiere Face ID / Touch ID para desbloquear tu bóveda de contraseñas de forma segura.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>SegurCel requiere acceso a la cámara para escanear códigos QR de autenticación 2FA TOTP.</string>
+
+	<!-- Idiomas Soportados en iOS -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>es</string>
+		<string>en</string>
+		<string>pt</string>
+		<string>zh</string>
+		<string>fr</string>
+		<string>hi</string>
+		<string>de</string>
+		<string>ja</string>
+		<string>ko</string>
+		<string>ru</string>
+		<string>it</string>
+	</array>
 </dict>
 </plist>

@@ -375,3 +375,20 @@
 - [x] Evaluate User Decision to Remove Haptic Feedback Feature
     - [x] Evaluated user proposal to remove HapticFeedback code: 100% endorsed as a pragmatic engineering decision to prevent release delays
     - [x] Prepared cleanup of HapticFeedback references and AndroidManifest.xml VIBRATE permission
+- [x] Provide Structured Release Notes for Version 1.0.3+4
+    - [x] Formulated professional release notes in Spanish and English for Google Play Console submission
+- [x] Provide Unformatted Plain Text Release Notes
+    - [x] Provided Spanish release notes as simple unformatted plain text for 1-click long-press selection
+- [x] Analyze Publishing Overview Screenshot (Managed Publishing & Pending Review)
+    - [x] Confirmed version 4 (1.0.3) is currently 'En proceso de revisión' with 'Publicación administrada' active
+    - [x] Explained why Play Store downloads freeze during active Google review and identified the 'Publicar cambios' manual release button
+- [x] Verify Google Group Integration in Play Console Screenshots
+    - [x] Confirmed segurcel-testers@googlegroups.com and testers-community@googlegroups.com are 100% active and linked
+    - [x] Confirmed 178 countries are enabled and Version 4 (1.0.3) is actively in Google review
+- [x] Respond to Active Check and Confirm Availability
+    - [x] Confirmed active presence and readiness to assist with next steps
+- [/] Plan iOS App Store Deployment and Project Configuration
+    - [x] Formulate iOS deployment roadmap (Apple Developer Account, App Store Connect, TestFlight)
+    - [ ] Add Italian ('it') as 11th official language in `lib/services/localization_service.dart`, `HomeScreen`, and Web
+    - [ ] Configure `ios/Runner/Info.plist` with Privacy Descriptions (NSFaceIDUsageDescription, NSCameraUsageDescription, CFBundleLocalizations)
+    - [ ] Align Bundle Identifier `com.segurcel.segurcel` in `ios/Runner.xcodeproj`
