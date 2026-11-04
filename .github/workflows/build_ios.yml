@@ -54,13 +54,14 @@ jobs:
             echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision
           fi
 
-          # 3. Fetch/Generate Distribution Certificate into keychain
+          # 3. Fetch/Generate fresh Distribution Certificate AND Private Key into keychain
           fastlane run get_certificates \
             api_key_path:"$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8" \
             key_id:"$APP_STORE_CONNECT_KEY_ID" \
             issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
             keychain_path:"build.keychain" \
-            keychain_password:"segurcelpass" || echo "Certificates step completed!"
+            keychain_password:"segurcelpass" \
+            force:"true" || echo "Certificates step completed!"
 
           # 4. Fetch Provisioning Profile
           fastlane run get_provisioning_profile \
