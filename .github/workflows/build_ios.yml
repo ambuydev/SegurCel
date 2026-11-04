@@ -34,23 +34,24 @@ jobs:
           mkdir -p ~/.appstoreconnect/private_keys
           echo "$APP_STORE_CONNECT_PRIVATE_KEY" > ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8
 
-      - name: Install Apple Certificate & Provisioning Profile in Default Login Keychain
+      - name: Install Apple Certificate & Provisioning Profile in Keychain
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
         run: |
-          # 1. Prepare default login keychain
-          KEYCHAIN_PATH=~/Library/Keychains/login.keychain-db
-          security default-keychain -s "$KEYCHAIN_PATH" || security create-keychain -p "" "$KEYCHAIN_PATH"
-          security unlock-keychain -p "" "$KEYCHAIN_PATH" || true
+          # 1. Prepare keychain
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          security create-keychain -p "segurcelpass" "$KEYCHAIN_PATH" || true
+          security default-keychain -s "$KEYCHAIN_PATH"
+          security unlock-keychain -p "segurcelpass" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
 
-          # 2. Import .p12 certificate into default login keychain
+          # 2. Import .p12 certificate into keychain
           if [ -n "$BUILD_CERTIFICATE_BASE64" ]; then
             echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > certificate.p12
             security import certificate.p12 -P "segurcelpass" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
-            security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "" "$KEYCHAIN_PATH"
-            echo "Installed .p12 certificate into default login.keychain-db!"
+            security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "segurcelpass" "$KEYCHAIN_PATH"
+            echo "Installed .p12 certificate into keychain!"
           fi
 
           # 3. Install provisioning profile
