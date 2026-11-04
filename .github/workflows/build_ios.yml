@@ -63,12 +63,12 @@ jobs:
 
           security find-identity -v -p codesigning "$KEYCHAIN_PATH"
 
-      - name: Build iOS Archive with Flutter
-        run: flutter build ipa --no-codesign
-
       - name: Install CocoaPods Dependencies
         run: |
           cd ios && pod install
+
+      - name: Build iOS Archive with Flutter
+        run: flutter build ipa --no-codesign
 
       - name: Build and Deploy to TestFlight via Fastlane
         env:
