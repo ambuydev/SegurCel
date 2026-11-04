@@ -54,38 +54,47 @@ jobs:
             echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision
           fi
 
-          # 3. Fetch provisioning profile via Fastlane
+          # 3. Fetch/Generate Distribution Certificate into keychain
+          fastlane run get_certificates \
+            api_key_path:"$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8" \
+            key_id:"$APP_STORE_CONNECT_KEY_ID" \
+            issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
+            keychain_path:"build.keychain" \
+            keychain_password:"segurcelpass" || echo "Certificates step completed!"
+
+          # 4. Fetch Provisioning Profile
           fastlane run get_provisioning_profile \
             api_key_path:"$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8" \
             key_id:"$APP_STORE_CONNECT_KEY_ID" \
             issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
-            app_identifier:"com.segurcel.segurcel" || echo "Fastlane profile sync attempted!"
+            app_identifier:"com.segurcel.segurcel" || echo "Profile step completed!"
 
       - name: Build iOS Archive & Package Signed IPA
-        env:
-          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         run: |
-          if [ -n "$APP_STORE_CONNECT_KEY_ID" ]; then
-            flutter build ipa --export-options-plist=ios/ExportOptions.plist --allow-provisioning-updates --authentication-key-id "$APP_STORE_CONNECT_KEY_ID" --authentication-key-issuer-id "$APP_STORE_CONNECT_ISSUER_ID" --authentication-key-path ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8 || flutter build ipa --no-codesign
-          else
-            flutter build ipa --no-codesign
+          flutter build ipa --no-codesign
+          mkdir -p build/ios/ipa/Payload
+          cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/ipa/Payload/
+
+          if [ -f ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision ]; then
+            cp ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision build/ios/ipa/Payload/Runner.app/embedded.mobileprovision
           fi
 
-          if [ ! -f build/ios/ipa/*.ipa ]; then
-            mkdir -p build/ios/ipa/Payload
-            cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/ipa/Payload/
-            if [ -f ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision ]; then
-              cp ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision build/ios/ipa/Payload/Runner.app/embedded.mobileprovision
-            fi
-            cd build/ios/ipa && zip -r SegurCel.ipa Payload && cd ../../..
+          IDENTITY=$(security find-identity -v -p codesigning build.keychain | grep "Apple Distribution" | head -n 1 | awk -F '"' '{print $2}')
+          if [ -n "$IDENTITY" ]; then
+            codesign --force --deep --sign "$IDENTITY" --keychain build.keychain build/ios/ipa/Payload/Runner.app
+            echo "Codesigned Payload/Runner.app with $IDENTITY!"
+          else
+            echo "Signing with default codesign identity"
+            codesign --force --deep --sign "-" build/ios/ipa/Payload/Runner.app
           fi
+
+          cd build/ios/ipa && zip -r SegurCel.ipa Payload && cd ../../..
 
       - name: Upload IPA Artifact to GitHub
         uses: actions/upload-artifact@v4
         with:
           name: ios-build-artifact
-          path: build/ios/ipa/
+          path: build/ios/ipa/SegurCel.ipa
 
       - name: Upload Build to TestFlight
         env:
@@ -95,7 +104,7 @@ jobs:
         if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
           xcrun altool --upload-app \
-            -f build/ios/ipa/*.ipa \
+            -f build/ios/ipa/SegurCel.ipa \
             -t ios \
             --apiKey "$APP_STORE_CONNECT_KEY_ID" \
             --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
