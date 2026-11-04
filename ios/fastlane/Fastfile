@@ -12,16 +12,22 @@ platform :ios do
     get_certificates(
       api_key: api_key,
       development: false
-    ) rescue puts "Certificates fetched or skipped"
+    )
 
     get_provisioning_profile(
       api_key: api_key,
       app_identifier: "com.segurcel.segurcel"
-    ) rescue puts "Profile fetched or skipped"
+    )
+
+    # Embed downloaded provisioning profile into IPA payload
+    profile_path = lane_context[SharedValues::SIGH_PROFILE_PATH]
+    if profile_path && File.exist?(profile_path)
+      sh("mkdir -p ../build/ios/ipa/Payload && cp -r ../build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app ../build/ios/ipa/Payload/ && cp '#{profile_path}' ../build/ios/ipa/Payload/Runner.app/embedded.mobileprovision && cd ../build/ios/ipa && zip -r -q SegurCel.ipa Payload")
+    end
 
     upload_to_testflight(
       api_key: api_key,
-      ipa: "../build/ios/ipa/SegurCel.ipa",
+      ipa: "build/ios/ipa/SegurCel.ipa",
       skip_waiting_for_build_processing: true
     )
   end
