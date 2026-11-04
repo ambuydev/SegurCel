@@ -19,16 +19,14 @@ platform :ios do
       app_identifier: "com.segurcel.segurcel"
     ) rescue puts "Provisioning profile fetched or existing"
 
-    # Embed provisioning profile and codesign
-    profile_path = lane_context[SharedValues::SIGH_PROFILE_PATH] || File.expand_path("~/Library/MobileDevice/Provisioning Profiles/SegurCel.mobileprovision")
-    if File.exist?(profile_path)
-      sh("mkdir -p ../build/ios/ipa/Payload && cp -r ../build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app ../build/ios/ipa/Payload/ && cp '#{profile_path}' ../build/ios/ipa/Payload/Runner.app/embedded.mobileprovision")
-
-      # Codesign with installed Apple Distribution certificate
-      sh("IDENTITY=$(security find-identity -v -p codesigning | grep 'Apple Distribution' | head -n 1 | awk -F '\"' '{print $2}') && if [ -n \"$IDENTITY\" ]; then codesign --force --deep --sign \"$IDENTITY\" ../build/ios/ipa/Payload/Runner.app; else codesign --force --deep --sign '-' ../build/ios/ipa/Payload/Runner.app; fi")
-
-      sh("cd ../build/ios/ipa && zip -r -q SegurCel.ipa Payload")
-    end
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
+      output_directory: "../build/ios/ipa",
+      output_name: "SegurCel.ipa",
+      clean: true
+    )
 
     upload_to_testflight(
       api_key: api_key,

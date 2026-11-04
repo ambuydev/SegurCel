@@ -62,9 +62,6 @@ jobs:
 
           security list-keychains -s "$KEYCHAIN_PATH" $(security list-keychains | xargs)
 
-      - name: Build iOS Archive with Flutter
-        run: flutter build ipa --no-codesign
-
       - name: Build and Deploy to TestFlight via Fastlane
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
