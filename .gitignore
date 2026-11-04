@@ -22,3 +22,8 @@ out/
 # OS generated
 .DS_Store
 Thumbs.db
+*.mobileprovision
+*.cer
+*.p12
+*.certSigningRequest
+BUILD_PROVISION_PROFILE_BASE64.txt
