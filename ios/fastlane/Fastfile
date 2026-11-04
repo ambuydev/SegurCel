@@ -26,7 +26,8 @@ platform :ios do
       output_directory: "../build/ios/ipa",
       output_name: "SegurCel.ipa",
       clean: true,
-      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA"
+      export_xcargs: "-allowProvisioningUpdates",
+      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Automatic -allowProvisioningUpdates"
     )
 
     upload_to_testflight(
