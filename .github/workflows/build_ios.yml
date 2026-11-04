@@ -47,6 +47,12 @@ jobs:
           flutter build ipa --no-codesign
           mkdir -p build/ios/ipa/Payload
           cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/ipa/Payload/
+
+          if [ -f ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision ]; then
+            cp ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision build/ios/ipa/Payload/Runner.app/embedded.mobileprovision
+            echo "Successfully embedded SegurCel.mobileprovision into Payload/Runner.app/embedded.mobileprovision!"
+          fi
+
           cd build/ios/ipa && zip -r SegurCel.ipa Payload && cd ../../..
 
       - name: Upload IPA Artifact to GitHub
