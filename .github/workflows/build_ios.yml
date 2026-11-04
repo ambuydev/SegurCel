@@ -62,6 +62,10 @@ jobs:
 
           security list-keychains -s "$KEYCHAIN_PATH" $(security list-keychains | xargs)
 
+      - name: Install CocoaPods Dependencies
+        run: |
+          cd ios && pod install
+
       - name: Build and Deploy to TestFlight via Fastlane
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}

@@ -19,6 +19,11 @@ platform :ios do
       app_identifier: "com.segurcel.segurcel"
     ) rescue puts "Provisioning profile fetched or existing"
 
+    cocoapods(
+      clean_if_needed: false,
+      podfile: "./Podfile"
+    ) rescue puts "Cocoapods step finished"
+
     profile_name = lane_context[SharedValues::SIGH_NAME] || "com.segurcel.segurcel AppStore"
 
     build_app(
