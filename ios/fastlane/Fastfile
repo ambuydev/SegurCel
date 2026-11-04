@@ -12,21 +12,18 @@ platform :ios do
     get_certificates(
       api_key: api_key,
       development: false
-    )
+    ) rescue puts "Certificates fetched or existing"
 
     get_provisioning_profile(
       api_key: api_key,
       app_identifier: "com.segurcel.segurcel"
-    )
+    ) rescue puts "Provisioning profile fetched or existing"
 
-    build_app(
-      workspace: "Runner.xcworkspace",
-      scheme: "Runner",
-      export_method: "app-store",
-      output_directory: "../build/ios/ipa",
-      output_name: "SegurCel.ipa",
-      clean: true
-    )
+    # Embed provisioning profile into IPA Payload
+    profile_path = lane_context[SharedValues::SIGH_PROFILE_PATH] || File.expand_path("~/Library/MobileDevice/Provisioning Profiles/SegurCel.mobileprovision")
+    if File.exist?(profile_path)
+      sh("mkdir -p ../build/ios/ipa/Payload && cp -r ../build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app ../build/ios/ipa/Payload/ && cp '#{profile_path}' ../build/ios/ipa/Payload/Runner.app/embedded.mobileprovision && cd ../build/ios/ipa && zip -r -q SegurCel.ipa Payload")
+    end
 
     upload_to_testflight(
       api_key: api_key,
