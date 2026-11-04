@@ -25,15 +25,6 @@ jobs:
       - name: Get Dependencies
         run: flutter pub get
 
-      - name: Build iOS Archive
-        run: flutter build ipa --no-codesign
-
-      - name: Upload IPA Artifact to GitHub
-        uses: actions/upload-artifact@v4
-        with:
-          name: ios-build-artifact
-          path: build/ios/archive/Runner.xcarchive
-
       - name: Prepare App Store Connect Auth Key
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
@@ -43,6 +34,32 @@ jobs:
           mkdir -p ~/.appstoreconnect/private_keys
           echo "$APP_STORE_CONNECT_PRIVATE_KEY" > ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8
 
+      - name: Install Mobile Provisioning Profile
+        env:
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+        if: ${{ env.BUILD_PROVISION_PROFILE_BASE64 != '' }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision
+
+      - name: Build iOS Archive & IPA
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          if [ -n "$APP_STORE_CONNECT_KEY_ID" ]; then
+            flutter build ipa --export-method app-store --allow-provisioning-updates --authentication-key-id "$APP_STORE_CONNECT_KEY_ID" --authentication-key-issuer-id "$APP_STORE_CONNECT_ISSUER_ID" --authentication-key-path ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8 || flutter build ipa --no-codesign
+          else
+            flutter build ipa --no-codesign
+          fi
+
+      - name: Upload IPA Artifact to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build-artifact
+          path: build/ios/
+          if-no-files-found: ignore
+
       - name: Upload Build to TestFlight
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
@@ -51,7 +68,7 @@ jobs:
         if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
           xcrun altool --upload-app \
-            -f build/ios/archive/Runner.xcarchive \
+            -f build/ios/ipa/*.ipa \
             -t ios \
             --apiKey "$APP_STORE_CONNECT_KEY_ID" \
             --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" || echo "Archive uploaded to App Store Connect!"
