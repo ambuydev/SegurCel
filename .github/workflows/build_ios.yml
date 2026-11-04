@@ -25,70 +25,11 @@ jobs:
       - name: Get Dependencies
         run: flutter pub get
 
-      - name: Prepare App Store Connect Auth Key
-        env:
-          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
-          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-        if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
-        run: |
-          mkdir -p ~/.appstoreconnect/private_keys
-          echo "$APP_STORE_CONNECT_PRIVATE_KEY" > ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8
-
-      - name: Fetch and Install Apple Certificates & Profiles via Fastlane
-        env:
-          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
-          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-        if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
-        run: |
-          # 1. Setup temporary keychain
-          security create-keychain -p "segurcelpass" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "segurcelpass" build.keychain
-          security set-keychain-settings -lut 3600 build.keychain
-
-          # 2. Install decoded provisioning profile if provided
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          if [ -n "$BUILD_PROVISION_PROFILE_BASE64" ]; then
-            echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision
-          fi
-
-          # 3. Fetch/Generate fresh Distribution Certificate AND Private Key into keychain
-          fastlane run get_certificates \
-            api_key_path:"$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8" \
-            key_id:"$APP_STORE_CONNECT_KEY_ID" \
-            issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
-            keychain_path:"build.keychain" \
-            keychain_password:"segurcelpass" \
-            force:"true" || echo "Certificates step completed!"
-
-          # 4. Fetch Provisioning Profile
-          fastlane run get_provisioning_profile \
-            api_key_path:"$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8" \
-            key_id:"$APP_STORE_CONNECT_KEY_ID" \
-            issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
-            app_identifier:"com.segurcel.segurcel" || echo "Profile step completed!"
-
-      - name: Build iOS Archive & Package Signed IPA
+      - name: Build iOS Archive & Package IPA
         run: |
           flutter build ipa --no-codesign
           mkdir -p build/ios/ipa/Payload
           cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/ipa/Payload/
-
-          if [ -f ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision ]; then
-            cp ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision build/ios/ipa/Payload/Runner.app/embedded.mobileprovision
-          fi
-
-          IDENTITY=$(security find-identity -v -p codesigning build.keychain | grep "Apple Distribution" | head -n 1 | awk -F '"' '{print $2}')
-          if [ -n "$IDENTITY" ]; then
-            codesign --force --deep --sign "$IDENTITY" --keychain build.keychain build/ios/ipa/Payload/Runner.app
-            echo "Codesigned Payload/Runner.app with $IDENTITY!"
-          else
-            echo "Signing with default codesign identity"
-            codesign --force --deep --sign "-" build/ios/ipa/Payload/Runner.app
-          fi
-
           cd build/ios/ipa && zip -r SegurCel.ipa Payload && cd ../../..
 
       - name: Upload IPA Artifact to GitHub
@@ -97,15 +38,11 @@ jobs:
           name: ios-build-artifact
           path: build/ios/ipa/SegurCel.ipa
 
-      - name: Upload Build to TestFlight
+      - name: Upload Build to TestFlight via Fastlane
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
-          xcrun altool --upload-app \
-            -f build/ios/ipa/SegurCel.ipa \
-            -t ios \
-            --apiKey "$APP_STORE_CONNECT_KEY_ID" \
-            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
+          cd ios && fastlane beta
