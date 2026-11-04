@@ -42,23 +42,18 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/SegurCel.mobileprovision
 
-      - name: Build iOS Archive & IPA
-        env:
-          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      - name: Build iOS Archive & Package IPA
         run: |
-          if [ -n "$APP_STORE_CONNECT_KEY_ID" ]; then
-            flutter build ipa --export-method app-store --allow-provisioning-updates --authentication-key-id "$APP_STORE_CONNECT_KEY_ID" --authentication-key-issuer-id "$APP_STORE_CONNECT_ISSUER_ID" --authentication-key-path ~/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8 || flutter build ipa --no-codesign
-          else
-            flutter build ipa --no-codesign
-          fi
+          flutter build ipa --no-codesign
+          mkdir -p build/ios/ipa/Payload
+          cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/ipa/Payload/
+          cd build/ios/ipa && zip -r SegurCel.ipa Payload && cd ../../..
 
       - name: Upload IPA Artifact to GitHub
         uses: actions/upload-artifact@v4
         with:
           name: ios-build-artifact
-          path: build/ios/
-          if-no-files-found: ignore
+          path: build/ios/ipa/SegurCel.ipa
 
       - name: Upload Build to TestFlight
         env:
@@ -68,7 +63,7 @@ jobs:
         if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
           xcrun altool --upload-app \
-            -f build/ios/ipa/*.ipa \
+            -f build/ios/ipa/SegurCel.ipa \
             -t ios \
             --apiKey "$APP_STORE_CONNECT_KEY_ID" \
-            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" || echo "Archive uploaded to App Store Connect!"
+            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
