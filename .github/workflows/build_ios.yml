@@ -25,24 +25,18 @@ jobs:
       - name: Get Dependencies
         run: flutter pub get
 
-      - name: Build iOS Archive & Package IPA
-        run: |
-          flutter build ipa --no-codesign
-          mkdir -p build/ios/ipa/Payload
-          cp -r build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app build/ios/ipa/Payload/
-          cd build/ios/ipa && zip -r SegurCel.ipa Payload && cd ../../..
-
-      - name: Upload IPA Artifact to GitHub
-        uses: actions/upload-artifact@v4
-        with:
-          name: ios-build-artifact
-          path: build/ios/ipa/SegurCel.ipa
-
-      - name: Upload Build to TestFlight via Fastlane
+      - name: Build and Deploy to TestFlight via Fastlane
         env:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-        if: ${{ env.APP_STORE_CONNECT_PRIVATE_KEY != '' }}
         run: |
           cd ios && fastlane beta
+
+      - name: Upload IPA Artifact to GitHub
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-build-artifact
+          path: build/ios/ipa/SegurCel.ipa
+          if-no-files-found: ignore

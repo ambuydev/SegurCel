@@ -9,30 +9,28 @@ platform :ios do
       key_content: ENV["APP_STORE_CONNECT_PRIVATE_KEY"]
     )
 
-    begin
-      get_certificates(api_key: api_key)
-    rescue => e
-      puts "Certificates notice: #{e.message}"
-    end
+    get_certificates(
+      api_key: api_key,
+      development: false
+    )
 
-    begin
-      get_provisioning_profile(
-        api_key: api_key,
-        app_identifier: "com.segurcel.segurcel"
-      )
-    rescue => e
-      puts "Profile notice: #{e.message}"
-    end
+    get_provisioning_profile(
+      api_key: api_key,
+      app_identifier: "com.segurcel.segurcel"
+    )
 
-    # Embed provisioning profile if downloaded
-    profile_path = lane_context[SharedValues::SIGH_PROFILE_PATH]
-    if profile_path && File.exist?(profile_path)
-      sh("mkdir -p ../build/ios/ipa/Payload && cp -r ../build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app ../build/ios/ipa/Payload/ && cp '#{profile_path}' ../build/ios/ipa/Payload/Runner.app/embedded.mobileprovision && cd ../build/ios/ipa && zip -r -q SegurCel.ipa Payload")
-    end
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
+      output_directory: "../build/ios/ipa",
+      output_name: "SegurCel.ipa",
+      clean: true
+    )
 
     upload_to_testflight(
       api_key: api_key,
-      ipa: "build/ios/ipa/SegurCel.ipa",
+      ipa: "../build/ios/ipa/SegurCel.ipa",
       skip_waiting_for_build_processing: true
     )
   end
