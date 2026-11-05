@@ -26,30 +26,30 @@ const NAMES_MAP = {
 };
 
 const NAV_DICT = {
-  es: { btnBack: "← Volver al Sitio Oficial", headerVault: "Acceder a la Bóveda", headerGuide: "📘 Guía de Uso" },
-  en: { btnBack: "← Back to Official Site", headerVault: "Access Vault", headerGuide: "📘 User Guide" },
-  pt: { btnBack: "← Voltar ao Site Oficial", headerVault: "Acessar Cofre", headerGuide: "📘 Guia do Usuário" },
-  zh: { btnBack: "← 返回官方网站", headerVault: "进入保险库", headerGuide: "📘 使用指南" },
-  zh_HK: { btnBack: "← 返回官方網站", headerVault: "進入保險庫", headerGuide: "📘 使用指南" },
-  fr: { btnBack: "← Retour au Site Officiel", headerVault: "Accéder au Coffre", headerGuide: "📘 Guide Utilisateur" },
-  hi: { btnBack: "← आधिकारिक साइट पर वापस जाएं", headerVault: "वॉल्ट एक्सेस करें", headerGuide: "📘 उपयोग निर्देशिका" },
-  de: { btnBack: "← Zurück zur offiziellen Website", headerVault: "Tresor öffnen", headerGuide: "📘 Benutzerhandbuch" },
-  ja: { btnBack: "← 公式サイトに戻る", headerVault: "保管庫に入る", headerGuide: "📘 ユーザーガイド" },
-  ko: { btnBack: "← 공식 사이트로 돌아가기", headerVault: "보관함 접속", headerGuide: "📘 사용자 설명서" },
-  ru: { btnBack: "← Вернуться на официальный сайт", headerVault: "Войти в хранилище", headerGuide: "📘 Руководство" },
-  it: { btnBack: "← Torna al Sito Ufficiale", headerVault: "Accedi alla Bóveda", headerGuide: "📘 Guida Utente" },
-  ar: { btnBack: "← العودة إلى الموقع الرسمي", headerVault: "الوصول إلى الخزنة", headerGuide: "📘 دليل الاستخدام" },
-  id: { btnBack: "← Kembali ke Situs Resmi", headerVault: "Akses Brankas", headerGuide: "📘 Panduan Pengguna" }
+  es: { btnBack: "← Volver al Sitio Oficial", headerVault: "Acceder a la Bóveda", headerGuide: "Guía de Uso" },
+  en: { btnBack: "← Back to Official Site", headerVault: "Access Vault", headerGuide: "User Guide" },
+  pt: { btnBack: "← Voltar ao Site Oficial", headerVault: "Acessar Cofre", headerGuide: "Guia do Usuário" },
+  zh: { btnBack: "← 返回官方网站", headerVault: "进入保险库", headerGuide: "使用指南" },
+  zh_HK: { btnBack: "← 返回官方網站", headerVault: "進入保險庫", headerGuide: "使用指南" },
+  fr: { btnBack: "← Retour au Site Officiel", headerVault: "Accéder au Coffre", headerGuide: "Guide Utilisateur" },
+  hi: { btnBack: "← आधिकारिक साइट पर वापस जाएं", headerVault: "वॉल्ट एक्सेस करें", headerGuide: "उपयोग निर्देशिका" },
+  de: { btnBack: "← Zurück zur offiziellen Website", headerVault: "Tresor öffnen", headerGuide: "Benutzerhandbuch" },
+  ja: { btnBack: "← 公式サイトに戻る", headerVault: "保管庫に入る", headerGuide: "ユーザーガイド" },
+  ko: { btnBack: "← 공식 사이트로 돌아가기", headerVault: "보관함 접속", headerGuide: "사용자 설명서" },
+  ru: { btnBack: "← Вернуться на официальный сайт", headerVault: "Войти в хранилище", headerGuide: "Руководство" },
+  it: { btnBack: "← Torna al Sito Ufficiale", headerVault: "Accedi alla Bóveda", headerGuide: "Guida Utente" },
+  ar: { btnBack: "← العودة إلى الموقع الرسمي", headerVault: "الوصول إلى الخزنة", headerGuide: "دليل الاستخدام" },
+  id: { btnBack: "← Kembali ke Situs Resmi", headerVault: "Akses Brankas", headerGuide: "Panduan Pengguna" }
 };
 
 const FOOTER_DICT = {
   es: {
     copyright: "© 2026 SegurCel. Todos los derechos reservados.",
     dev: "Desarrollado por Alejandro Martínez Briao",
-    guide: "📘 Guía Rápida de Uso",
-    privacy: "🔒 Política de Privacidad",
-    support: "✉️ Contacto: soporte@segurcel.app",
-    github: "⭐ GitHub (Código Auditable)",
+    guide: "Guía Rápida de Uso",
+    privacy: "Política de Privacidad",
+    support: "Contacto: soporte@segurcel.app",
+    github: "GitHub (Código Auditable)",
     android: "Unirse a la Prueba en Google Play",
     ios: "Probar Beta en TestFlight (iOS)",
     ext: "Extensión PC/Mac (.zip)"
@@ -57,10 +57,10 @@ const FOOTER_DICT = {
   en: {
     copyright: "© 2026 SegurCel. All rights reserved.",
     dev: "Developed by Alejandro Martínez Briao",
-    guide: "📘 Quick User Guide",
-    privacy: "🔒 Privacy Policy",
-    support: "✉️ Support: soporte@segurcel.app",
-    github: "⭐ GitHub (Auditable Code)",
+    guide: "Quick User Guide",
+    privacy: "Privacy Policy",
+    support: "Contact: soporte@segurcel.app",
+    github: "GitHub (Auditable Code)",
     android: "Join Beta Test on Google Play",
     ios: "Test Beta on TestFlight (iOS)",
     ext: "PC/Mac Extension (.zip)"
@@ -68,10 +68,10 @@ const FOOTER_DICT = {
   pt: {
     copyright: "© 2026 SegurCel. Todos os direitos reservados.",
     dev: "Desenvolvido por Alejandro Martínez Briao",
-    guide: "📘 Guia Rápido do Usuário",
-    privacy: "🔒 Política de Privacidade",
-    support: "✉️ Contato: soporte@segurcel.app",
-    github: "⭐ GitHub (Código Auditável)",
+    guide: "Guia Rápido do Usuário",
+    privacy: "Política de Privacidade",
+    support: "Contato: soporte@segurcel.app",
+    github: "GitHub (Código Auditável)",
     android: "Participar do Teste no Google Play",
     ios: "Testar Beta no TestFlight (iOS)",
     ext: "Extensão PC/Mac (.zip)"
@@ -79,10 +79,10 @@ const FOOTER_DICT = {
   zh: {
     copyright: "© 2026 SegurCel。保留所有权利。",
     dev: "由 Alejandro Martínez Briao 开发",
-    guide: "📘 快速使用指南",
-    privacy: "🔒 隐私政策",
-    support: "✉️ 联系支持: soporte@segurcel.app",
-    github: "⭐ GitHub (可审计源码)",
+    guide: "快速使用指南",
+    privacy: "隐私政策",
+    support: "联系支持: soporte@segurcel.app",
+    github: "GitHub (可审计源码)",
     android: "加入 Google Play 测试",
     ios: "在 TestFlight 上测试 iOS Beta",
     ext: "PC/Mac 浏览器扩展 (.zip)"
@@ -90,10 +90,10 @@ const FOOTER_DICT = {
   zh_HK: {
     copyright: "© 2026 SegurCel。保留所有權利。",
     dev: "由 Alejandro Martínez Briao 開發",
-    guide: "📘 快速使用指南",
-    privacy: "🔒 私隱政策",
-    support: "✉️ 聯絡支援: soporte@segurcel.app",
-    github: "⭐ GitHub (可審計源碼)",
+    guide: "快速使用指南",
+    privacy: "私隱政策",
+    support: "聯絡支援: soporte@segurcel.app",
+    github: "GitHub (可審計源碼)",
     android: "加入 Google Play 測試",
     ios: "在 TestFlight 上測試 iOS Beta",
     ext: "PC/Mac 瀏覽器擴充功能 (.zip)"
@@ -101,10 +101,10 @@ const FOOTER_DICT = {
   fr: {
     copyright: "© 2026 SegurCel. Tous droits réservés.",
     dev: "Développé par Alejandro Martínez Briao",
-    guide: "📘 Guide Rapide d'Utilisation",
-    privacy: "🔒 Politique de Confidentialité",
-    support: "✉️ Contact : soporte@segurcel.app",
-    github: "⭐ GitHub (Code Auditable)",
+    guide: "Guide Rapide d'Utilisation",
+    privacy: "Politique de Confidentialité",
+    support: "Contact : soporte@segurcel.app",
+    github: "GitHub (Code Auditable)",
     android: "Rejoindre le Test sur Google Play",
     ios: "Tester la Bêta sur TestFlight (iOS)",
     ext: "Extension PC/Mac (.zip)"
@@ -112,10 +112,10 @@ const FOOTER_DICT = {
   hi: {
     copyright: "© 2026 SegurCel. सर्वाधिकार सुरक्षित।",
     dev: "Alejandro Martínez Briao द्वारा विकसित",
-    guide: "📘 त्वरित उपयोग निर्देशिका",
-    privacy: "🔒 गोपनीयता नीति",
-    support: "✉️ सहायता: soporte@segurcel.app",
-    github: "⭐ GitHub (ऑडिट योग्य कोड)",
+    guide: "त्वरित उपयोग निर्देशिका",
+    privacy: "गोपनीयता नीति",
+    support: "संपर्क: soporte@segurcel.app",
+    github: "GitHub (ऑडिट योग्य कोड)",
     android: "Google Play पर बीटा टेस्ट में शामिल हों",
     ios: "TestFlight पर iOS बीटा टेस्ट करें",
     ext: "PC/Mac एक्सटेंशन (.zip)"
@@ -123,10 +123,10 @@ const FOOTER_DICT = {
   de: {
     copyright: "© 2026 SegurCel. Alle Rechte vorbehalten.",
     dev: "Entwickelt von Alejandro Martínez Briao",
-    guide: "📘 Schnellstartanleitung",
-    privacy: "🔒 Datenschutzerklärung",
-    support: "✉️ Support: soporte@segurcel.app",
-    github: "⭐ GitHub (Prüfbarer Code)",
+    guide: "Schnellstartanleitung",
+    privacy: "Datenschutzerklärung",
+    support: "Kontakt: soporte@segurcel.app",
+    github: "GitHub (Prüfbarer Code)",
     android: "Beta-Test auf Google Play beitreten",
     ios: "Beta auf TestFlight testen (iOS)",
     ext: "PC/Mac-Erweiterung herunterladen (.zip)"
@@ -134,10 +134,10 @@ const FOOTER_DICT = {
   ja: {
     copyright: "© 2026 SegurCel. All rights reserved.",
     dev: "Alejandro Martínez Briao によって開発",
-    guide: "📘 クイックユーザーガイド",
-    privacy: "🔒 プライバシーポリシー",
-    support: "✉️ サポート: soporte@segurcel.app",
-    github: "⭐ GitHub (監査可能コード)",
+    guide: "クイックユーザーガイド",
+    privacy: "プライバシーポリシー",
+    support: "お問い合わせ: soporte@segurcel.app",
+    github: "GitHub (監査可能コード)",
     android: "Google Play ベータテストに参加",
     ios: "TestFlight で iOS ベータをテスト",
     ext: "PC/Mac 拡張機能をダウンロード (.zip)"
@@ -145,10 +145,10 @@ const FOOTER_DICT = {
   ko: {
     copyright: "© 2026 SegurCel. All rights reserved.",
     dev: "Alejandro Martínez Briao 개발",
-    guide: "📘 빠른 사용자 설명서",
-    privacy: "🔒 개인정보 처리방침",
-    support: "✉️ 지원: soporte@segurcel.app",
-    github: "⭐ GitHub (감사 가능 코드)",
+    guide: "빠른 사용자 설명서",
+    privacy: "개인정보 처리방침",
+    support: "문의: soporte@segurcel.app",
+    github: "GitHub (감사 가능 코드)",
     android: "Google Play 베타 테스트 참여",
     ios: "TestFlight에서 iOS 베타 테스트",
     ext: "PC/Mac 확장 프로그램 (.zip)"
@@ -156,10 +156,10 @@ const FOOTER_DICT = {
   ru: {
     copyright: "© 2026 SegurCel. Все права защищены.",
     dev: "Разработано Алехандро Мартинес Бриао",
-    guide: "📘 Краткое руководство",
-    privacy: "🔒 Политика конфиденциальности",
-    support: "✉️ Поддержка: soporte@segurcel.app",
-    github: "⭐ GitHub (Проверяемый код)",
+    guide: "Краткое руководство",
+    privacy: "Политика конфиденциальности",
+    support: "Контакты: soporte@segurcel.app",
+    github: "GitHub (Проверяемый код)",
     android: "Присоединиться к тесту в Google Play",
     ios: "Бета-тест в TestFlight (iOS)",
     ext: "Расширение ПК/Mac (.zip)"
@@ -167,10 +167,10 @@ const FOOTER_DICT = {
   it: {
     copyright: "© 2026 SegurCel. Tutti i diritti riservati.",
     dev: "Sviluppato da Alejandro Martínez Briao",
-    guide: "📘 Guida Rapida Utente",
-    privacy: "🔒 Informativa sulla Privacy",
-    support: "✉️ Contatto: soporte@segurcel.app",
-    github: "⭐ GitHub (Codice Ispezionabile)",
+    guide: "Guida Rapida Utente",
+    privacy: "Informativa sulla Privacy",
+    support: "Contatto: soporte@segurcel.app",
+    github: "GitHub (Codice Ispezionabile)",
     android: "Partecipa al Test su Google Play",
     ios: "Prova la Beta su TestFlight (iOS)",
     ext: "Estensione PC/Mac (.zip)"
@@ -178,10 +178,10 @@ const FOOTER_DICT = {
   ar: {
     copyright: "© 2026 SegurCel. جميع الحقوق محفوظة.",
     dev: "تطوير أليخاندرو مارتينيز برياو",
-    guide: "📘 دليل الاستخدام السريع",
-    privacy: "🔒 سياسة الخصوصية",
-    support: "✉️ الدعم: soporte@segurcel.app",
-    github: "⭐ GitHub (كود قابل للتدقيق)",
+    guide: "دليل الاستخدام السريع",
+    privacy: "سياسة الخصوصية",
+    support: "التواصل: soporte@segurcel.app",
+    github: "GitHub (كود قابل للتدقيق)",
     android: "الانضمام للاختبار على Google Play",
     ios: "اختبار البيتا على TestFlight (iOS)",
     ext: "إضافة الكمبيوتر (.zip)"
@@ -189,10 +189,10 @@ const FOOTER_DICT = {
   id: {
     copyright: "© 2026 SegurCel. Hak cipta dilindungi undang-undang.",
     dev: "Dikembangkan oleh Alejandro Martínez Briao",
-    guide: "📘 Panduan Pengguna Cepat",
-    privacy: "🔒 Kebijakan Privasi",
-    support: "✉️ Kontak: soporte@segurcel.app",
-    github: "⭐ GitHub (Kode Dapat Diaudit)",
+    guide: "Panduan Pengguna Cepat",
+    privacy: "Kebijakan Privasi",
+    support: "Kontak: soporte@segurcel.app",
+    github: "GitHub (Kode Dapat Diaudit)",
     android: "Bergabung dengan Uji Coba Google Play",
     ios: "Uji Beta di TestFlight (iOS)",
     ext: "Ekstensi PC/Mac (.zip)"
@@ -320,13 +320,13 @@ window.SegurCelNav = {
           <div class="footer-links-row">
             <a href="/guide?lang=${lang}" id="linkFooterGuide">${data.guide}</a>
             <a href="/privacy?lang=${lang}" id="linkFooterPrivacy">${data.privacy}</a>
-            <a href="mailto:soporte@segurcel.app">${data.support}</a>
+            <a href="mailto:soporte@segurcel.app" id="linkFooterSupport">${data.support}</a>
             <a href="https://github.com/ambuydev/SegurCel" target="_blank" id="linkFooterGithub">${data.github}</a>
           </div>
           <div class="footer-links-row footer-download-row">
-            <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank">${data.android}</a>
-            <a href="https://testflight.apple.com/join/3Dvcxj1E" target="_blank">${data.ios}</a>
-            <a href="/segurcel-extension.zip" target="_blank">${data.ext}</a>
+            <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank" id="linkFooterAndroid">${data.android}</a>
+            <a href="https://testflight.apple.com/join/3Dvcxj1E" target="_blank" id="linkFooterIos">${data.ios}</a>
+            <a href="/segurcel-extension.zip" target="_blank" id="linkFooterExt">${data.ext}</a>
           </div>
           <div class="footer-copy-row">
             <p id="footerCopyright">${data.copyright} <span class="dev-credit">${data.dev}</span></p>
