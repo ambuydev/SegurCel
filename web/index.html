@@ -200,9 +200,22 @@
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: nowrap;
             margin-bottom: 40px;
+        }
+
+        .hero-buttons .btn-primary, .hero-buttons .btn-secondary {
+            padding: 12px 18px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 980px) {
+            .hero-buttons {
+                flex-wrap: wrap;
+            }
         }
 
         .btn-primary {
@@ -1214,8 +1227,25 @@
         </div>
     </section>
 
-    <!-- Footer Dynamic Container -->
-    <footer></footer>
+    <!-- Footer Static & Dynamic Container -->
+    <footer>
+        <div class="footer-simple-container">
+            <div class="footer-links-row">
+                <a href="/guide" id="linkFooterGuide">📘 Guía Rápida de Uso</a>
+                <a href="/privacy" id="linkFooterPrivacy">🔒 Política de Privacidad</a>
+                <a href="mailto:soporte@segurcel.app" id="linkFooterSupport">✉️ Contacto: soporte@segurcel.app</a>
+                <a href="https://github.com/ambuydev/SegurCel" target="_blank" id="linkFooterGithub">⭐ GitHub (Código Auditable)</a>
+            </div>
+            <div class="footer-links-row footer-download-row">
+                <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank" id="linkFooterAndroid">Unirse a la Prueba en Google Play</a>
+                <a href="https://testflight.apple.com/join/3Dvcxj1E" target="_blank" id="linkFooterIos">Probar Beta en TestFlight (iOS)</a>
+                <a href="/segurcel-extension.zip" target="_blank" id="linkFooterExt">Extensión PC/Mac (.zip)</a>
+            </div>
+            <div class="footer-copy-row">
+                <p id="footerCopyright">© 2026 SegurCel. Todos los derechos reservados. <span class="dev-credit" id="footerDev">Desarrollado por Alejandro Martínez Briao</span></p>
+            </div>
+        </div>
+    </footer>
 
     <script src="navbar.js"></script>
 
@@ -1691,63 +1721,83 @@
             hi: "हिन्दी", de: "Deutsch", ja: "日本語", ko: "한국어", ru: "Русский"
         };
 
+        function setTxt(id, text) {
+            if (!text) return;
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function setHtml(id, html) {
+            if (!html) return;
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
+        function setHref(id, href) {
+            if (!href) return;
+            const el = document.getElementById(id);
+            if (el) el.href = href;
+        }
+
         function changeLanguage(lang) {
             let currentLang = lang || 'es';
             const data = dict[currentLang] || dict.es;
 
-            document.getElementById("heroBadge").innerText = data.badge;
-            document.getElementById("heroTitle").innerHTML = data.title;
-            document.getElementById("heroSubtitle").innerText = data.sub;
-            document.getElementById("lblBtnVault").innerText = data.btnVault;
-            if (document.getElementById("lblBtnExt") && data.btnExt) document.getElementById("lblBtnExt").innerText = data.btnExt;
-            if (document.getElementById("lblBtnPlay") && data.btnPlay) document.getElementById("lblBtnPlay").innerText = data.btnPlay;
-            if (document.getElementById("lblBtnIos") && data.btnIos) document.getElementById("lblBtnIos").innerText = data.btnIos;
-            if (document.getElementById("btnCtaPlayStore") && data.btnApk) document.getElementById("btnCtaPlayStore").innerText = data.btnApk;
-            if (document.getElementById("btnCtaTestFlight") && data.btnIos) document.getElementById("btnCtaTestFlight").innerText = data.btnIos;
-            document.getElementById("btnHeaderVault").innerText = data.btnHeader;
+            setTxt("heroBadge", data.badge);
+            setHtml("heroTitle", data.title);
+            setTxt("heroSubtitle", data.sub);
+            setTxt("lblBtnPlay", data.btnPlay);
+            setTxt("lblBtnIos", data.btnIos);
+            setTxt("lblBtnExt", data.btnExt);
 
-            const guideText = guideTextMap[currentLang] || "📘 Guía de Uso";
-            if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").innerText = guideText;
-            if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").innerText = guideText;
+            setTxt("btnCtaPlayStore", data.btnPlay);
+            setTxt("btnCtaTestFlight", data.btnIos);
+            setTxt("btnHeaderVault", data.btnHeader);
 
-            document.getElementById("zkTitle").innerText = data.zkT;
-            document.getElementById("zkDesc1").innerHTML = data.zkD1;
-            document.getElementById("zkDesc2").innerHTML = data.zkD2;
-            document.getElementById("secTitleFeatures").innerText = data.secTitleF;
-            document.getElementById("secSubFeatures").innerText = data.secSubF;
-            document.getElementById("f1_title").innerText = data.f1_t; document.getElementById("f1_desc").innerText = data.f1_d;
-            document.getElementById("f2_title").innerText = data.f2_t; document.getElementById("f2_desc").innerText = data.f2_d;
-            document.getElementById("f3_title").innerText = data.f3_t; document.getElementById("f3_desc").innerText = data.f3_d;
-            document.getElementById("f4_title").innerText = data.f4_t; document.getElementById("f4_desc").innerText = data.f4_d;
-            document.getElementById("f5_title").innerText = data.f5_t; document.getElementById("f5_desc").innerText = data.f5_d;
-            document.getElementById("f6_title").innerText = data.f6_t; document.getElementById("f6_desc").innerText = data.f6_d;
-            if (document.getElementById("f7_title") && data.f7_t) document.getElementById("f7_title").innerText = data.f7_t;
-            if (document.getElementById("f7_desc") && data.f7_d) document.getElementById("f7_desc").innerText = data.f7_d;
-            if (document.getElementById("f8_title") && data.f8_t) document.getElementById("f8_title").innerText = data.f8_t;
-            if (document.getElementById("f8_desc") && data.f8_d) document.getElementById("f8_desc").innerText = data.f8_d;
+            const guideText = data.guide || "📘 Guía Rápida de Uso";
+            setTxt("linkHeaderGuide", guideText);
+            setTxt("linkFooterGuide", guideText);
+            setTxt("linkFooterPrivacy", data.priv || "🔒 Política de Privacidad");
+            setTxt("linkFooterSupport", data.support || "✉️ Contacto: soporte@segurcel.app");
+            setTxt("linkFooterGithub", data.github || "⭐ GitHub (Código Auditable)");
+            setTxt("linkFooterAndroid", data.btnPlay || "Unirse a la Prueba en Google Play");
+            setTxt("linkFooterIos", data.btnIos || "Probar Beta en TestFlight (iOS)");
+            setTxt("linkFooterExt", data.btnExt || "Extensión PC/Mac (.zip)");
+            setTxt("footerCopyright", data.copyright ? `${data.copyright} ${data.dev}` : "© 2026 SegurCel. Todos los derechos reservados.");
 
-            document.getElementById("proTitle").innerText = data.proT;
-            document.getElementById("proSub").innerText = data.proS;
-            document.getElementById("badgeFreemium").innerText = data.proB;
-            document.getElementById("lblVentajasPro").innerText = data.proV;
-            document.getElementById("proItem1").innerText = data.pi1;
-            document.getElementById("proItem2").innerText = data.pi2;
-            document.getElementById("proItem3").innerText = data.pi3;
-            document.getElementById("proItem4").innerText = data.pi4;
-            document.getElementById("proItem5").innerText = data.pi5;
-            document.getElementById("ctaTitle").innerText = data.ctaT;
-            document.getElementById("ctaSub").innerText = data.ctaS;
-            if (document.getElementById("btnCtaVault")) document.getElementById("btnCtaVault").innerText = data.btnVault;
-            if (document.getElementById("btnCtaApk")) document.getElementById("btnCtaApk").innerText = data.btnPlay;
-            document.getElementById("linkFooterPrivacy").innerText = data.priv;
+            setTxt("zkTitle", data.zkT);
+            setHtml("zkDesc1", data.zkD1);
+            setHtml("zkDesc2", data.zkD2);
+            setTxt("secTitleFeatures", data.secTitleF);
+            setTxt("secSubFeatures", data.secSubF);
+            setTxt("f1_title", data.f1_t); setTxt("f1_desc", data.f1_d);
+            setTxt("f2_title", data.f2_t); setTxt("f2_desc", data.f2_d);
+            setTxt("f3_title", data.f3_t); setTxt("f3_desc", data.f3_d);
+            setTxt("f4_title", data.f4_t); setTxt("f4_desc", data.f4_d);
+            setTxt("f5_title", data.f5_t); setTxt("f5_desc", data.f5_d);
+            setTxt("f6_title", data.f6_t); setTxt("f6_desc", data.f6_d);
+            setTxt("f7_title", data.f7_t); setTxt("f7_desc", data.f7_d);
+            setTxt("f8_title", data.f8_t); setTxt("f8_desc", data.f8_d);
+
+            setTxt("proTitle", data.proT);
+            setTxt("proSub", data.proS);
+            setTxt("badgeFreemium", data.proB);
+            setTxt("lblVentajasPro", data.proV);
+            setTxt("proItem1", data.pi1);
+            setTxt("proItem2", data.pi2);
+            setTxt("proItem3", data.pi3);
+            setTxt("proItem4", data.pi4);
+            setTxt("proItem5", data.pi5);
+            setTxt("ctaTitle", data.ctaT);
+            setTxt("ctaSub", data.ctaS);
 
             // Actualizar enlaces de destino conservando el idioma seleccionado
-            document.getElementById("btnHeaderVault").href = "/vault?lang=" + currentLang;
-            document.getElementById("btnHeroVault").href = "/vault?lang=" + currentLang;
-            document.getElementById("btnCtaVault").href = "/vault?lang=" + currentLang;
-            if (document.getElementById("linkHeaderGuide")) document.getElementById("linkHeaderGuide").href = "/guide?lang=" + currentLang;
-            if (document.getElementById("linkFooterGuide")) document.getElementById("linkFooterGuide").href = "/guide?lang=" + currentLang;
-            if (window.SegurCelNav) window.SegurCelNav.updateFooter(currentLang);
+            setHref("btnHeaderVault", "/vault?lang=" + currentLang);
+            setHref("linkHeaderGuide", "/guide?lang=" + currentLang);
+            setHref("linkFooterGuide", "/guide?lang=" + currentLang);
+            setHref("linkFooterPrivacy", "/privacy?lang=" + currentLang);
+
+            if (window.SegurCelNav) window.SegurCelNav.updateNav(currentLang);
         }
 
         function toggleLangMenu(event) {
