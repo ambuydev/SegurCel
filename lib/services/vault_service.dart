@@ -4,19 +4,18 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/password_entry.dart';
 import '../models/user_profile.dart';
+import '../utils/secure_storage_helper.dart';
 import 'auth_service.dart';
 import 'crypto_service.dart';
 
 class VaultService {
   static const int maxAttempts = 3;
 
-  final _secureStorage = const FlutterSecureStorage();
   final _localAuth = LocalAuthentication();
 
   int _failedAttempts = 0;
@@ -89,7 +88,7 @@ class VaultService {
       final key = _webVaultStorageKey;
       if (_webVaultCacheKey == key && _webVaultCache != null) return _webVaultCache;
       _webVaultCacheKey = key;
-      _webVaultCache = await _secureStorage.read(key: key);
+      _webVaultCache = await SecureStorageHelper.safeRead(key);
       return _webVaultCache;
     } else {
       final fileName = await _getVaultFileName();
@@ -108,7 +107,7 @@ class VaultService {
       final key = _webVaultStorageKey;
       _webVaultCacheKey = key;
       _webVaultCache = jsonStr;
-      await _secureStorage.write(key: key, value: jsonStr);
+      await SecureStorageHelper.safeWrite(key, jsonStr);
     } else {
       final fileName = await _getVaultFileName();
       final dir = await getApplicationDocumentsDirectory();
@@ -129,7 +128,7 @@ class VaultService {
       final key = _webVaultStorageKey;
       _webVaultCache = null;
       _webVaultCacheKey = null;
-      await _secureStorage.delete(key: key);
+      await SecureStorageHelper.safeDelete(key);
     } else {
       final fileName = await _getVaultFileName();
       final dir = await getApplicationDocumentsDirectory();
@@ -451,8 +450,8 @@ class VaultService {
     try {
       final canCheck = await _localAuth.canCheckBiometrics;
       final isSupported = await _localAuth.isDeviceSupported();
-      final hasSavedKey = await _secureStorage.containsKey(key: _biometricKeyStorageName);
-      return (canCheck || isSupported) && hasSavedKey;
+      final savedKey = await SecureStorageHelper.safeRead(_biometricKeyStorageName);
+      return (canCheck || isSupported) && (savedKey != null && savedKey.isNotEmpty);
     } catch (_) {
       return false;
     }
@@ -468,7 +467,7 @@ class VaultService {
 
       if (!authenticated) return false;
 
-      final savedKeyBase64 = await _secureStorage.read(key: _biometricKeyStorageName);
+      final savedKeyBase64 = await SecureStorageHelper.safeRead(_biometricKeyStorageName);
       if (savedKeyBase64 == null) return false;
 
       final masterKeyBytes = base64Decode(savedKeyBase64);
@@ -555,7 +554,7 @@ class VaultService {
 
     await _deleteLocalVault();
     try {
-      await _secureStorage.delete(key: _biometricKeyStorageName);
+      await SecureStorageHelper.safeDelete(_biometricKeyStorageName);
     } catch (_) {}
 
     await AuthService().deleteAccount(password);
@@ -566,7 +565,7 @@ class VaultService {
   /// Elimina por completo los archivos y claves locales (Autodestrucción local y periodo de gracia 48h en la nube).
   Future<void> selfDestruct() async {
     await _deleteLocalVault();
-    await _secureStorage.delete(key: _biometricKeyStorageName);
+    await SecureStorageHelper.safeDelete(_biometricKeyStorageName);
 
     try {
       final user = AuthService().currentUser;
@@ -593,9 +592,9 @@ class VaultService {
 
   Future<void> _saveBiometricMasterKey(Uint8List masterKeyBytes) async {
     try {
-      await _secureStorage.write(
-        key: _biometricKeyStorageName,
-        value: base64Encode(masterKeyBytes),
+      await SecureStorageHelper.safeWrite(
+        _biometricKeyStorageName,
+        base64Encode(masterKeyBytes),
       );
     } catch (_) {}
   }

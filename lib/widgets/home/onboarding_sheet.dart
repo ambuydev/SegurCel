@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../services/localization_service.dart';
+import '../../utils/secure_storage_helper.dart';
 
 class OnboardingSheet extends StatefulWidget {
   final LocalizationService loc;
@@ -18,14 +18,12 @@ class OnboardingSheet extends StatefulWidget {
   }
 
   static Future<bool> shouldShow() async {
-    const storage = FlutterSecureStorage();
-    final seen = await storage.read(key: 'segurcel_has_seen_onboarding');
+    final seen = await SecureStorageHelper.safeRead('segurcel_has_seen_onboarding');
     return seen != 'true';
   }
 
   static Future<void> setSeen() async {
-    const storage = FlutterSecureStorage();
-    await storage.write(key: 'segurcel_has_seen_onboarding', value: 'true');
+    await SecureStorageHelper.safeWrite('segurcel_has_seen_onboarding', 'true');
   }
 
   @override

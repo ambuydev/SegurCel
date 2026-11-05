@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../utils/secure_storage_helper.dart';
 
 class ThemeService extends ChangeNotifier {
   static final ThemeService _instance = ThemeService._internal();
@@ -7,7 +7,6 @@ class ThemeService extends ChangeNotifier {
   ThemeService._internal();
 
   static const String _storageKey = 'segurcel_app_theme';
-  final _secureStorage = const FlutterSecureStorage();
 
   ThemeMode _themeMode = ThemeMode.dark;
 
@@ -15,7 +14,7 @@ class ThemeService extends ChangeNotifier {
 
   Future<void> initTheme() async {
     try {
-      final savedTheme = await _secureStorage.read(key: _storageKey);
+      final savedTheme = await SecureStorageHelper.safeRead(_storageKey);
       if (savedTheme != null) {
         if (savedTheme == 'light') {
           _themeMode = ThemeMode.light;
@@ -40,6 +39,6 @@ class ThemeService extends ChangeNotifier {
     } else if (mode == ThemeMode.system) {
       val = 'system';
     }
-    await _secureStorage.write(key: _storageKey, value: val);
+    await SecureStorageHelper.safeWrite(_storageKey, val);
   }
 }

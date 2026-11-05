@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../utils/secure_storage_helper.dart';
 
 class LocalizationService extends ChangeNotifier {
   static final LocalizationService _instance = LocalizationService._internal();
@@ -8,11 +8,11 @@ class LocalizationService extends ChangeNotifier {
   LocalizationService._internal();
 
   static const String _storageKey = 'segurcel_app_language';
-  final _secureStorage = const FlutterSecureStorage();
 
-  String _currentLanguage = 'es'; // 'es', 'en', 'pt', 'zh', 'fr', 'hi', 'de', 'ja', 'ko', 'ru'
+  String _currentLanguage = 'es'; // 'es', 'en', 'pt', 'zh', 'fr', 'hi', 'de', 'ja', 'ko', 'ru', 'it', 'ar', 'id', 'zh_HK'
 
   String get currentLanguage => _currentLanguage;
+  bool get isRtl => _currentLanguage == 'ar';
 
   Future<void> initLanguage() async {
     try {
@@ -20,13 +20,13 @@ class LocalizationService extends ChangeNotifier {
         final queryLang = Uri.base.queryParameters['lang'];
         if (queryLang != null && _translations.containsKey(queryLang)) {
           _currentLanguage = queryLang;
-          await _secureStorage.write(key: _storageKey, value: queryLang);
+          await SecureStorageHelper.safeWrite(_storageKey, queryLang);
           notifyListeners();
           return;
         }
       }
 
-      final savedLang = await _secureStorage.read(key: _storageKey);
+      final savedLang = await SecureStorageHelper.safeRead(_storageKey);
       if (savedLang != null && _translations.containsKey(savedLang)) {
         _currentLanguage = savedLang;
       } else {
@@ -46,7 +46,7 @@ class LocalizationService extends ChangeNotifier {
   Future<void> changeLanguage(String langCode) async {
     if (_translations.containsKey(langCode)) {
       _currentLanguage = langCode;
-      await _secureStorage.write(key: _storageKey, value: langCode);
+      await SecureStorageHelper.safeWrite(_storageKey, langCode);
       notifyListeners();
     }
   }

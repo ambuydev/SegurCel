@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/password_entry.dart';
 import '../models/user_profile.dart';
 import '../services/auth_service.dart';
@@ -12,6 +11,7 @@ import '../services/theme_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../utils/promo_code_helper.dart';
+import '../utils/secure_storage_helper.dart';
 import 'login_screen.dart';
 import 'paywall_screen.dart';
 
@@ -38,16 +38,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _loadAutoLockMinutes() async {
-    const storage = FlutterSecureStorage();
-    final val = await storage.read(key: 'segurcel_autolock_minutes');
+    final val = await SecureStorageHelper.safeRead('segurcel_autolock_minutes');
     if (val != null && mounted) {
       setState(() => _autoLockMinutes = int.tryParse(val) ?? 0);
     }
   }
 
   Future<void> _setAutoLockMinutes(int mins) async {
-    const storage = FlutterSecureStorage();
-    await storage.write(key: 'segurcel_autolock_minutes', value: mins.toString());
+    await SecureStorageHelper.safeWrite('segurcel_autolock_minutes', mins.toString());
     if (mounted) {
       setState(() => _autoLockMinutes = mins);
     }
