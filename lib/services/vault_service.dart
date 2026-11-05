@@ -22,6 +22,7 @@ class VaultService {
   int _failedAttempts = 0;
   bool _isInitialized = false;
   bool _isUnlocked = false;
+  bool isPickingFile = false;
 
   SecretKey? _currentMasterKey;
   List<PasswordEntry> _entries = [];

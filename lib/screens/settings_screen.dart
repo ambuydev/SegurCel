@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:share_plus/share_plus.dart';
 import '../models/password_entry.dart';
 import '../models/user_profile.dart';
 import '../services/auth_service.dart';
@@ -14,8 +12,6 @@ import '../services/theme_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../utils/promo_code_helper.dart';
-import '../widgets/home/about_app_sheet.dart';
-import '../widgets/home/onboarding_sheet.dart';
 import 'login_screen.dart';
 import 'paywall_screen.dart';
 
@@ -347,6 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _importPasswords() async {
     try {
+      widget.vaultService.isPickingFile = true;
       final rawContent = await ImportExportService.pickRawFileContent();
       if (rawContent == null || rawContent.trim().isEmpty) return;
 
@@ -393,11 +390,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
           await widget.vaultService.saveEntries(currentList);
 
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${_loc.text("import_success_toast")} (${importedEntries.length})'),
-                backgroundColor: Colors.green,
-                behavior: SnackBarBehavior.floating,
+            await showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                backgroundColor: dialogBg,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                title: Row(
+                  children: [
+                    const Icon(Icons.check_circle_outline, color: Colors.greenAccent, size: 28),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Restauración Exitosa',
+                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+                content: Text(
+                  '✅ ¡Bóveda restaurada con éxito!\n\nSe importaron ${importedEntries.length} registros y contraseñas a tu bóveda.',
+                  style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF4A5568), fontSize: 13, height: 1.4),
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    onPressed: () => Navigator.pop(ctx),
+                    child: const Text('Entendido', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
             );
           }
@@ -413,6 +433,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         );
       }
+    } finally {
+      widget.vaultService.isPickingFile = false;
     }
   }
 
@@ -526,6 +548,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _exportPasswords(String format) async {
     try {
+      widget.vaultService.isPickingFile = true;
       final entries = widget.vaultService.entries;
       if (entries.isEmpty) return;
 
@@ -550,15 +573,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
       await FileHelper.saveFile(content, fileName);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              format == 'segurcel'
-                  ? _loc.text('backup_success')
-                  : '${_loc.text("copied_toast")}: $fileName',
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+        final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+
+        await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            backgroundColor: dialogBg,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            title: Row(
+              children: [
+                const Icon(Icons.check_circle_outline, color: Colors.greenAccent, size: 28),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Respaldo Creado',
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                ),
+              ],
             ),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
+            content: Text(
+              '✅ ¡Respaldo generado con éxito!\n\nEl archivo "$fileName" fue guardado en la carpeta de descargas / documentos de tu dispositivo.',
+              style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF4A5568), fontSize: 13, height: 1.4),
+            ),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Aceptar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+            ],
           ),
         );
       }
@@ -572,6 +618,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         );
       }
+    } finally {
+      widget.vaultService.isPickingFile = false;
     }
   }
 
@@ -1387,77 +1435,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               const SizedBox(height: 20),
 
-              // Sección 3: Soporte y Contacto Oficial
+              // Sección 3: Preferencias de la Aplicación
               _buildSectionCard(
-                title: _loc.text('support_contact'),
-                icon: Icons.contact_support_outlined,
+                title: _loc.text('app_preferences'),
+                icon: Icons.tune,
                 iconColor: Colors.amberAccent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.language, color: Colors.cyan, size: 20),
-                      title: Text(_loc.text('official_website'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text('https://segurcel.app', style: TextStyle(color: isDark ? Colors.cyanAccent : Colors.cyan.shade800, fontSize: 12)),
-                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                      onTap: () {
-                        try {
-                          FileHelper.openUrl('https://segurcel.app');
-                        } catch (_) {
-                          Clipboard.setData(const ClipboardData(text: 'https://segurcel.app'));
-                        }
-                      },
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.email_outlined, color: Colors.amber, size: 20),
-                      title: Text(_loc.text('support_email'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text('soporte@segurcel.app', style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12)),
-                      trailing: Icon(Icons.copy, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                      onTap: () {
-                        Clipboard.setData(const ClipboardData(text: 'soporte@segurcel.app'));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('${_loc.text("support_email")} ${_loc.text("copied_toast")}'),
-                            duration: const Duration(seconds: 2),
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        );
-                      },
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.info_outline, color: Color(0xFF6C63FF), size: 20),
-                      title: Text(_loc.text('about_app'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('app_version'), style: TextStyle(color: textSubColor, fontSize: 12)),
-                      trailing: Icon(Icons.arrow_forward_ios, color: isDark ? Colors.white54 : Colors.black54, size: 16),
-                      onTap: () => AboutAppSheet.show(context, _loc),
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.star_rate_rounded, color: Colors.amber, size: 20),
-                      title: Text(_loc.text('rate_app'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('rate_app_sub'), style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12)),
-                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                      onTap: () {
-                        String targetUrl = 'https://play.google.com/apps/testing/com.segurcel.segurcel';
-                        if (kIsWeb) {
-                          targetUrl = 'https://segurcel.app';
-                        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-                          targetUrl = 'https://apps.apple.com/app/id6742518291';
-                        }
-                        try {
-                          FileHelper.openUrl(targetUrl);
-                        } catch (_) {
-                          Clipboard.setData(ClipboardData(text: targetUrl));
-                        }
-                      },
-                    ),
-                    Divider(color: dividerColor, height: 8),
                     // Tema de la Aplicación
                     ListTile(
                       contentPadding: EdgeInsets.zero,
@@ -1539,58 +1524,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ],
                       ),
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    // Guía / Tutorial de Bienvenida
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.auto_awesome, color: Color(0xFF00F0FF), size: 20),
-                      title: Text(_loc.text('view_tutorial'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('view_tutorial_sub'), style: TextStyle(color: textSubColor, fontSize: 12)),
-                      trailing: Icon(Icons.chevron_right, color: isDark ? Colors.white54 : Colors.black54, size: 20),
-                      onTap: () => OnboardingSheet.show(context, _loc),
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.share_rounded, color: Color(0xFF6C63FF), size: 20),
-                      title: Text(_loc.text('share_app'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text(_loc.text('share_app_sub'), style: TextStyle(color: textSubColor, fontSize: 12)),
-                      trailing: Icon(Icons.send_rounded, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                      onTap: () {
-                        // ignore: deprecated_member_use
-                        Share.share(_loc.text('share_app_msg'));
-                      },
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.menu_book_outlined, color: Colors.teal, size: 20),
-                      title: Text(_loc.text('user_guide'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text('https://segurcel.app/guide.html', style: TextStyle(color: textSubColor, fontSize: 12)),
-                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                      onTap: () {
-                        try {
-                          FileHelper.openUrl('https://segurcel.app/guide.html');
-                        } catch (_) {
-                          Clipboard.setData(const ClipboardData(text: 'https://segurcel.app/guide.html'));
-                        }
-                      },
-                    ),
-                    Divider(color: dividerColor, height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF), size: 20),
-                      title: Text(_loc.text('privacy_policy'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text('https://segurcel.app/privacy.html', style: TextStyle(color: textSubColor, fontSize: 12)),
-                      trailing: Icon(Icons.open_in_new, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                      onTap: () {
-                        try {
-                          FileHelper.openUrl('https://segurcel.app/privacy.html');
-                        } catch (_) {
-                          Clipboard.setData(const ClipboardData(text: 'https://segurcel.app/privacy.html'));
-                        }
-                      },
                     ),
                   ],
                 ),

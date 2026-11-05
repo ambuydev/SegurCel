@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../services/localization_service.dart';
 import '../../utils/file_helper.dart';
-import 'package:flutter/services.dart';
+import 'onboarding_sheet.dart';
 
 class AboutAppSheet extends StatelessWidget {
   final LocalizationService loc;
@@ -52,13 +55,35 @@ class AboutAppSheet extends StatelessWidget {
     );
   }
 
+  Widget _buildListOptionTile(
+    BuildContext context, {
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(icon, color: iconColor, size: 20),
+      title: Text(title, style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+      subtitle: Text(subtitle, style: TextStyle(color: textSubColor, fontSize: 12)),
+      trailing: Icon(Icons.arrow_forward_ios, color: isDark ? Colors.white38 : Colors.black38, size: 14),
+      onTap: onTap,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final backgroundColor = isDark ? const Color(0xFF1E2538) : Colors.white;
     final textColor = isDark ? Colors.white : const Color(0xFF10141D);
     final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
-    final buttonBg = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+    final dividerColor = isDark ? Colors.white12 : Colors.black12;
 
     return Container(
       decoration: BoxDecoration(
@@ -86,7 +111,7 @@ class AboutAppSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
               Center(
                 child: Column(
@@ -143,75 +168,95 @@ class AboutAppSheet extends StatelessWidget {
               _buildSpecBullet(context, Icons.verified_user_outlined, loc.text('spec_5')),
 
               const SizedBox(height: 20),
+              Divider(color: dividerColor),
 
-              // Botones de acción (Sitio Web, Privacidad, Soporte)
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonBg,
-                        side: const BorderSide(color: Color(0xFF6C63FF)),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      ),
-                      icon: const Icon(Icons.language, color: Color(0xFF6C63FF), size: 18),
-                      label: Text(
-                        'Sitio Web',
-                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
-                      ),
-                      onPressed: () {
-                        FileHelper.openUrl('https://segurcel.app');
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonBg,
-                        side: const BorderSide(color: Color(0xFF6C63FF)),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      ),
-                      icon: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF), size: 18),
-                      label: Text(
-                        loc.text('privacy_policy'),
-                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
-                      ),
-                      onPressed: () {
-                        try {
-                          FileHelper.openUrl('https://segurcel.app/privacy.html');
-                        } catch (_) {
-                          _copyToClipboard(context, 'https://segurcel.app/privacy.html', loc.text('privacy_policy'));
-                        }
-                      },
-                    ),
-                  ),
-                ],
+              // Opciones de Soporte y Contacto Oficial
+              _buildListOptionTile(
+                context,
+                icon: Icons.language,
+                iconColor: Colors.cyan,
+                title: loc.text('official_website'),
+                subtitle: 'https://segurcel.app',
+                onTap: () => FileHelper.openUrl('https://segurcel.app'),
               ),
+              Divider(color: dividerColor, height: 1),
 
-              const SizedBox(height: 8),
-
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonBg,
-                  side: BorderSide(color: isDark ? Colors.amberAccent : const Color(0xFFD97706)),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                icon: Icon(Icons.mail_outline, color: isDark ? Colors.amberAccent : const Color(0xFFD97706), size: 18),
-                label: Text(
-                  'Soporte Oficial (soporte@segurcel.app)',
-                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
-                ),
-                onPressed: () {
+              _buildListOptionTile(
+                context,
+                icon: Icons.email_outlined,
+                iconColor: Colors.amber,
+                title: loc.text('support_email'),
+                subtitle: 'soporte@segurcel.app',
+                onTap: () {
                   try {
                     FileHelper.openUrl('mailto:soporte@segurcel.app');
                   } catch (_) {
-                    _copyToClipboard(context, 'soporte@segurcel.app', 'Soporte Oficial');
+                    _copyToClipboard(context, 'soporte@segurcel.app', loc.text('support_email'));
                   }
                 },
+              ),
+              Divider(color: dividerColor, height: 1),
+
+              _buildListOptionTile(
+                context,
+                icon: Icons.star_rate_rounded,
+                iconColor: Colors.amberAccent,
+                title: loc.text('rate_app'),
+                subtitle: loc.text('rate_app_sub'),
+                onTap: () {
+                  if (defaultTargetPlatform == TargetPlatform.iOS) {
+                    FileHelper.openUrl('https://apps.apple.com/app/segurcel/id1793766361');
+                  } else {
+                    FileHelper.openUrl('https://play.google.com/store/apps/details?id=com.segurcel.segurcel');
+                  }
+                },
+              ),
+              Divider(color: dividerColor, height: 1),
+
+              _buildListOptionTile(
+                context,
+                icon: Icons.auto_awesome,
+                iconColor: const Color(0xFF6C63FF),
+                title: loc.text('view_welcome_guide'),
+                subtitle: loc.text('welcome_guide_sub'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  OnboardingSheet.show(context, loc);
+                },
+              ),
+              Divider(color: dividerColor, height: 1),
+
+              _buildListOptionTile(
+                context,
+                icon: Icons.share_outlined,
+                iconColor: Colors.lightBlueAccent,
+                title: loc.text('share_app'),
+                subtitle: loc.text('share_app_sub'),
+                onTap: () {
+                  Share.share(
+                    '🛡️ Descubre SegurCel - Tu bóveda segura de contraseñas y 2FA en https://segurcel.app',
+                  );
+                },
+              ),
+              Divider(color: dividerColor, height: 1),
+
+              _buildListOptionTile(
+                context,
+                icon: Icons.menu_book_outlined,
+                iconColor: Colors.tealAccent,
+                title: loc.text('user_guide'),
+                subtitle: 'https://segurcel.app/guide.html',
+                onTap: () => FileHelper.openUrl('https://segurcel.app/guide.html'),
+              ),
+              Divider(color: dividerColor, height: 1),
+
+              _buildListOptionTile(
+                context,
+                icon: Icons.privacy_tip_outlined,
+                iconColor: Colors.purpleAccent,
+                title: loc.text('privacy_policy'),
+                subtitle: 'https://segurcel.app/privacy.html',
+                onTap: () => FileHelper.openUrl('https://segurcel.app/privacy.html'),
               ),
             ],
           ),

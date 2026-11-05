@@ -73,6 +73,8 @@ class _SegurCelAppState extends State<SegurCelApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (widget.vaultService.isPickingFile) return;
+
     // Si la aplicación se minimiza, pasa a segundo plano o se bloquea la pantalla
     if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive || state == AppLifecycleState.hidden) {
       if (widget.vaultService.isUnlocked) {
