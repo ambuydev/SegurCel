@@ -7,7 +7,7 @@ class FileHelperImpl {
   static Future<String?> pickFileContent() async {
     final Completer<String?> completer = Completer();
     final html.FileUploadInputElement uploadInput = html.FileUploadInputElement()
-      ..accept = '.csv,.json,.segurcel,.txt';
+      ..accept = '*/*,.segurcel,.json,.csv,.txt';
 
     uploadInput.click();
 

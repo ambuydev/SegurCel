@@ -6,8 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class FileHelperImpl {
   static Future<String?> pickFileContent() async {
     final result = await FilePicker.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['csv', 'json', 'segurcel', 'txt'],
+      type: FileType.any,
     );
 
     if (result.isEmpty) {

@@ -67,7 +67,7 @@ class AboutAppSheet extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -105,7 +105,17 @@ class AboutAppSheet extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       loc.text('app_version'),
-                      style: TextStyle(color: textSubColor, fontSize: 13),
+                      style: TextStyle(color: textSubColor, fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Desarrollado por Alejandro Martínez Briao',
+                      style: TextStyle(color: isDark ? Colors.amberAccent : const Color(0xFFD97706), fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '© 2026 SegurCel. Todos los derechos reservados.',
+                      style: TextStyle(color: isDark ? Colors.white38 : Colors.black45, fontSize: 11),
                     ),
                   ],
                 ),
@@ -132,25 +142,74 @@ class AboutAppSheet extends StatelessWidget {
               _buildSpecBullet(context, Icons.cloud_done_outlined, loc.text('spec_4')),
               _buildSpecBullet(context, Icons.verified_user_outlined, loc.text('spec_5')),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+
+              // Botones de acción (Sitio Web, Privacidad, Soporte)
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: buttonBg,
+                        side: const BorderSide(color: Color(0xFF6C63FF)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      icon: const Icon(Icons.language, color: Color(0xFF6C63FF), size: 18),
+                      label: Text(
+                        'Sitio Web',
+                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
+                      ),
+                      onPressed: () {
+                        FileHelper.openUrl('https://segurcel.app');
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: buttonBg,
+                        side: const BorderSide(color: Color(0xFF6C63FF)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      icon: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF), size: 18),
+                      label: Text(
+                        loc.text('privacy_policy'),
+                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
+                      ),
+                      onPressed: () {
+                        try {
+                          FileHelper.openUrl('https://segurcel.app/privacy.html');
+                        } catch (_) {
+                          _copyToClipboard(context, 'https://segurcel.app/privacy.html', loc.text('privacy_policy'));
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
 
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: buttonBg,
-                  side: const BorderSide(color: Color(0xFF6C63FF)),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  side: BorderSide(color: isDark ? Colors.amberAccent : const Color(0xFFD97706)),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
-                icon: const Icon(Icons.privacy_tip_outlined, color: Color(0xFF6C63FF)),
+                icon: Icon(Icons.mail_outline, color: isDark ? Colors.amberAccent : const Color(0xFFD97706), size: 18),
                 label: Text(
-                  loc.text('privacy_policy'),
-                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+                  'Soporte Oficial (soporte@segurcel.app)',
+                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
                 ),
                 onPressed: () {
                   try {
-                    FileHelper.openUrl('https://segurcel.app/privacy');
+                    FileHelper.openUrl('mailto:soporte@segurcel.app');
                   } catch (_) {
-                    _copyToClipboard(context, 'https://segurcel.app/privacy', loc.text('privacy_policy'));
+                    _copyToClipboard(context, 'soporte@segurcel.app', 'Soporte Oficial');
                   }
                 },
               ),

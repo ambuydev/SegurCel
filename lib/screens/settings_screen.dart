@@ -14,6 +14,7 @@ import '../services/theme_service.dart';
 import '../services/vault_service.dart';
 import '../utils/file_helper.dart';
 import '../utils/promo_code_helper.dart';
+import '../widgets/home/about_app_sheet.dart';
 import '../widgets/home/onboarding_sheet.dart';
 import 'login_screen.dart';
 import 'paywall_screen.dart';
@@ -1413,17 +1414,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.email_outlined, color: Colors.amber, size: 20),
                       title: Text(_loc.text('support_email'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
-                      subtitle: Text('support.segurcel@gmail.com', style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12)),
+                      subtitle: Text('soporte@segurcel.app', style: TextStyle(color: isDark ? Colors.amberAccent : Colors.amber.shade900, fontSize: 12)),
                       trailing: Icon(Icons.copy, color: isDark ? Colors.white54 : Colors.black54, size: 18),
                       onTap: () {
-                        Clipboard.setData(const ClipboardData(text: 'support.segurcel@gmail.com'));
+                        Clipboard.setData(const ClipboardData(text: 'soporte@segurcel.app'));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('${_loc.text("support_email")} ${_loc.text("copied_toast")}'),
                             duration: const Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
                           ),
                         );
                       },
+                    ),
+                    Divider(color: dividerColor, height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.info_outline, color: Color(0xFF6C63FF), size: 20),
+                      title: Text(_loc.text('about_app'), style: TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.bold)),
+                      subtitle: Text(_loc.text('app_version'), style: TextStyle(color: textSubColor, fontSize: 12)),
+                      trailing: Icon(Icons.arrow_forward_ios, color: isDark ? Colors.white54 : Colors.black54, size: 16),
+                      onTap: () => AboutAppSheet.show(context, _loc),
                     ),
                     Divider(color: dividerColor, height: 8),
                     ListTile(
