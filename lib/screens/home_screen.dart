@@ -8,7 +8,6 @@ import '../services/auth_service.dart';
 import '../services/localization_service.dart';
 import '../services/password_health_service.dart';
 import '../services/vault_service.dart';
-import '../utils/file_helper.dart';
 import '../widgets/home/about_app_sheet.dart';
 import '../widgets/home/add_edit_entry_sheet.dart';
 import '../widgets/home/onboarding_sheet.dart';
@@ -291,10 +290,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.info_outline, color: amberAccentColor, size: 22),
-            tooltip: _loc.text('user_guide'),
-            onPressed: () {
-              FileHelper.openUrl('https://segurcel.app/guide.html');
-            },
+            tooltip: _loc.text('about_app'),
+            onPressed: () => AboutAppSheet.show(context, _loc),
           ),
           _buildLanguagePicker(),
           if (kIsWeb)
