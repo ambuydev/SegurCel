@@ -216,4 +216,6 @@ final Map<String, String> arTranslation = {
   'spec_3': 'تدمير ذاتي محلي بعد 3 محاولات خاطئة لرمز PIN',
   'spec_4': 'مزامنة سحابية مشفرة في الوقت الفعلي (Firebase)',
   'spec_5': 'تدقيق سلامة الخزنة، الاستيراد/التصدير ومصرّح 2FA TOTP',
+  'developed_by': 'تطوير أليخاندرو مارتينيز برياو',
+  'all_rights_reserved': '© 2026 SegurCel. جميع الحقوق محفوظة.',
 };

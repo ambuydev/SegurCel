@@ -176,6 +176,8 @@ final Map<String, String> zhTranslation = {
   'spec_3': '连续 3 次 PIN 码错误触发本地数据自毁',
   'spec_4': '实时云端加密同步 (Firebase)',
   'spec_5': '保险库健康审计、导入/导出与 2FA TOTP 生成器',
+  'developed_by': '由 Alejandro Martínez Briao 开发',
+  'all_rights_reserved': '© 2026 SegurCel. 保留所有权利。',
   'support_contact': '支持与联系',
   'official_website': '官方网站',
   'support_email': '支持邮箱',

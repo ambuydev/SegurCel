@@ -176,6 +176,8 @@ final Map<String, String> hiTranslation = {
   'spec_3': '3 गलत पिन प्रयासों के बाद स्थानीय डेटा स्वतः नष्ट',
   'spec_4': 'रीयल-टाइम एन्क्रिप्टेड क्लाउड सिंक (Firebase)',
   'spec_5': 'वॉल्ट स्वास्थ्य लेखापरीक्षा, आयात/निर्यात और 2FA TOTP',
+  'developed_by': 'Alejandro Martínez Briao द्वारा विकसित',
+  'all_rights_reserved': '© 2026 SegurCel. सर्वाधिकार सुरक्षित।',
   'support_contact': 'सहायता और संपर्क',
   'official_website': 'आधिकारिक वेबसाइट',
   'support_email': 'सहायता ईमेल',

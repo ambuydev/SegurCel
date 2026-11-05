@@ -134,12 +134,12 @@ class AboutAppSheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Desarrollado por Alejandro Martínez Briao',
+                      loc.text('developed_by'),
                       style: TextStyle(color: isDark ? Colors.amberAccent : const Color(0xFFD97706), fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '© 2026 SegurCel. Todos los derechos reservados.',
+                      loc.text('all_rights_reserved'),
                       style: TextStyle(color: isDark ? Colors.white38 : Colors.black45, fontSize: 11),
                     ),
                   ],
@@ -234,7 +234,7 @@ class AboutAppSheet extends StatelessWidget {
                 subtitle: loc.text('share_app_sub'),
                 onTap: () {
                   Share.share(
-                    '🛡️ Descubre SegurCel - Tu bóveda segura de contraseñas y 2FA en https://segurcel.app',
+                    loc.text('share_app_msg'),
                   );
                 },
               ),

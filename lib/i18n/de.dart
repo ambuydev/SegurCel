@@ -176,6 +176,8 @@ final Map<String, String> deTranslation = {
   'spec_3': 'Lokale Selbstzerstörung nach 3 fehlerhaften PIN-Versuchen',
   'spec_4': 'Echtzeit-Verschlüsselte Cloud-Synchronisation (Firebase)',
   'spec_5': 'Tresor-Audit, Import/Export & 2FA TOTP Generator',
+  'developed_by': 'Entwickelt von Alejandro Martínez Briao',
+  'all_rights_reserved': '© 2026 SegurCel. Alle Rechte vorbehalten.',
   'support_contact': 'Support & Kontakt',
   'official_website': 'Offizielle Website',
   'support_email': 'Support-E-Mail',

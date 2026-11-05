@@ -176,6 +176,8 @@ final Map<String, String> ptTranslation = {
   'spec_3': 'Autodestruição local após 3 tentativas incorretas de PIN',
   'spec_4': 'Sincronização em Nuvem Criptografada em Tempo Real (Firebase)',
   'spec_5': 'Auditoria de Cofre, Importador/Exportador e 2FA TOTP',
+  'developed_by': 'Desenvolvido por Alejandro Martínez Briao',
+  'all_rights_reserved': '© 2026 SegurCel. Todos os direitos reservados.',
   'support_contact': 'Suporte e Contato',
   'official_website': 'Website Oficial',
   'support_email': 'E-mail de Suporte',

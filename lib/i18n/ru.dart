@@ -176,6 +176,8 @@ final Map<String, String> ruTranslation = {
   'spec_3': 'Локальное самоуничтожение после 3 неверных попыток ввода PIN',
   'spec_4': 'Облачная зашифрованная синхронизация в реальном времени (Firebase)',
   'spec_5': 'Аудит безопасности, Импорт/Экспорт и генератор 2FA TOTP',
+  'developed_by': 'Разработано Алехандро Мартинес Бриао',
+  'all_rights_reserved': '© 2026 SegurCel. Все права защищены.',
   'support_contact': 'Поддержка и контакты',
   'official_website': 'Официальный сайт',
   'support_email': 'Email поддержки',

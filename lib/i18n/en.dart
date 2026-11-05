@@ -176,6 +176,8 @@ final Map<String, String> enTranslation = {
   'spec_3': 'Local self-destruction after 3 failed PIN attempts',
   'spec_4': 'Real-Time Encrypted Cloud Sync (Firebase)',
   'spec_5': 'Vault Health Audit, Importer/Exporter & 2FA TOTP',
+  'developed_by': 'Developed by Alejandro Martínez Briao',
+  'all_rights_reserved': '© 2026 SegurCel. All rights reserved.',
   'support_contact': 'Support & Contact',
   'official_website': 'Official Website',
   'support_email': 'Support Email',

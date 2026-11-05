@@ -176,6 +176,8 @@ final Map<String, String> koTranslation = {
   'spec_3': 'PIN 3회 실패 시 로컬 데이터 자동 자가 파괴',
   'spec_4': '실시간 암호화 클라우드 동기화 (Firebase)',
   'spec_5': '보관함 감사, 가져오기/내보내기 및 2FA TOTP 생성기',
+  'developed_by': 'Alejandro Martínez Briao 개발',
+  'all_rights_reserved': '© 2026 SegurCel. All rights reserved.',
   'support_contact': '지원 및 문의',
   'official_website': '공식 웹사이트',
   'support_email': '지원 이메일',

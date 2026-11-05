@@ -215,4 +215,6 @@ final Map<String, String> zhHkTranslation = {
   'spec_3': 'PIN 碼錯誤 3 次後本地數據自毀',
   'spec_4': '即時加密雲端同步 (Firebase)',
   'spec_5': '保險庫健康審計、匯入/匯出及 2FA TOTP',
+  'developed_by': '由 Alejandro Martínez Briao 開發',
+  'all_rights_reserved': '© 2026 SegurCel. 保留所有權利。',
 };

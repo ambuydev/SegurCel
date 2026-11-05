@@ -176,6 +176,8 @@ final Map<String, String> jaTranslation = {
   'spec_3': 'PIN試行3回失敗でローカルデータを自動自己破壊',
   'spec_4': 'リアルタイム暗号化クラウド同期 (Firebase)',
   'spec_5': '保管庫監査、インポート/エクスポートおよび 2FA TOTP',
+  'developed_by': 'Alejandro Martínez Briao によって開発',
+  'all_rights_reserved': '© 2026 SegurCel. All rights reserved.',
   'support_contact': 'サポートと連絡先',
   'official_website': '公式ウェブサイト',
   'support_email': 'サポートメール',

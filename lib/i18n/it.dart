@@ -194,4 +194,6 @@ final Map<String, String> itTranslation = {
   'autolock_1m': '1 Minuto',
   'autolock_5m': '5 Minuti',
   'autolock_15m': '15 Minuti',
+  'developed_by': 'Sviluppato da Alejandro Martínez Briao',
+  'all_rights_reserved': '© 2026 SegurCel. Tutti i diritti riservati.',
 };

@@ -215,4 +215,6 @@ final Map<String, String> idTranslation = {
   'spec_3': 'Self-destruct lokal setelah 3 kali gagal PIN',
   'spec_4': 'Sinkronisasi cloud terenkripsi real-time (Firebase)',
   'spec_5': 'Audit Kesehatan Brankas, Impor/Ekspor & 2FA TOTP',
+  'developed_by': 'Dikembangkan oleh Alejandro Martínez Briao',
+  'all_rights_reserved': '© 2026 SegurCel. Hak cipta dilindungi undang-undang.',
 };
