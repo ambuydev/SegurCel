@@ -19,15 +19,20 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
+
+  try {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+    );
+  } catch (e) {
+    debugPrint("SystemChrome init error: $e");
+  }
 
   try {
     await Firebase.initializeApp(
@@ -37,9 +42,23 @@ void main() async {
     debugPrint("Firebase en modo local / sin configurar: $e");
   }
 
-  await LocalizationService().initLanguage();
-  await ThemeService().initTheme();
-  PurchaseService.initializePurchaseListener();
+  try {
+    await LocalizationService().initLanguage();
+  } catch (e) {
+    debugPrint("Localization init error: $e");
+  }
+
+  try {
+    await ThemeService().initTheme();
+  } catch (e) {
+    debugPrint("Theme init error: $e");
+  }
+
+  try {
+    PurchaseService.initializePurchaseListener();
+  } catch (e) {
+    debugPrint("Purchase init error: $e");
+  }
 
   final vaultService = VaultService();
 
