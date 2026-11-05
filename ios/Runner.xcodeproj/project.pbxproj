@@ -374,6 +374,7 @@
 				);
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 34KRUL35JA;
+				PROVISIONING_PROFILE_SPECIFIER = "com.segurcel.segurcel AppStore";
 				PRODUCT_BUNDLE_IDENTIFIER = com.segurcel.segurcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -555,6 +556,7 @@
 				);
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 34KRUL35JA;
+				PROVISIONING_PROFILE_SPECIFIER = "com.segurcel.segurcel AppStore";
 				PRODUCT_BUNDLE_IDENTIFIER = com.segurcel.segurcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -579,6 +581,7 @@
 				);
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 34KRUL35JA;
+				PROVISIONING_PROFILE_SPECIFIER = "com.segurcel.segurcel AppStore";
 				PRODUCT_BUNDLE_IDENTIFIER = com.segurcel.segurcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

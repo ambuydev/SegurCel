@@ -33,7 +33,7 @@ platform :ios do
           "com.segurcel.segurcel" => profile_name
         }
       },
-      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Manual"
+      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='#{profile_name}'"
     )
 
     upload_to_testflight(
