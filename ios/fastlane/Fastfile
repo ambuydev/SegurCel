@@ -19,11 +19,6 @@ platform :ios do
       app_identifier: "com.segurcel.segurcel"
     ) rescue puts "Provisioning profile fetched or existing"
 
-    cocoapods(
-      clean_if_needed: false,
-      podfile: "./Podfile"
-    ) rescue puts "Cocoapods step finished"
-
     profile_name = lane_context[SharedValues::SIGH_NAME] || "com.segurcel.segurcel AppStore"
 
     build_app(
@@ -33,7 +28,12 @@ platform :ios do
       output_directory: "../build/ios/ipa",
       output_name: "SegurCel.ipa",
       clean: true,
-      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY='Apple Distribution' PROVISIONING_PROFILE_SPECIFIER='#{profile_name}'"
+      export_options: {
+        provisioningProfiles: {
+          "com.segurcel.segurcel" => profile_name
+        }
+      },
+      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Automatic"
     )
 
     upload_to_testflight(
