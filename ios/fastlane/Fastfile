@@ -33,7 +33,7 @@ platform :ios do
           "com.segurcel.segurcel" => profile_name
         }
       },
-      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Automatic"
+      xcargs: "DEVELOPMENT_TEAM=34KRUL35JA CODE_SIGN_STYLE=Manual"
     )
 
     upload_to_testflight(

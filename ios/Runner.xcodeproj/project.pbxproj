@@ -372,7 +372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 34KRUL35JA;
 				PRODUCT_BUNDLE_IDENTIFIER = com.segurcel.segurcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -553,7 +553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 34KRUL35JA;
 				PRODUCT_BUNDLE_IDENTIFIER = com.segurcel.segurcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -577,7 +577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 34KRUL35JA;
 				PRODUCT_BUNDLE_IDENTIFIER = com.segurcel.segurcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
