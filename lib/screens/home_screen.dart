@@ -178,7 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
       {'code': 'es', 'name': '🇪🇸 Español'},
       {'code': 'en', 'name': '🇺🇸 English'},
       {'code': 'pt', 'name': '🇧🇷 Português'},
-      {'code': 'zh', 'name': '🇨🇳 中文'},
+      {'code': 'zh', 'name': '🇨🇳 中文 (简体)'},
+      {'code': 'zh_HK', 'name': '🇭🇰 繁體中文'},
       {'code': 'fr', 'name': '🇫🇷 Français'},
       {'code': 'hi', 'name': '🇮🇳 हिन्दी'},
       {'code': 'de', 'name': '🇩🇪 Deutsch'},
@@ -186,6 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
       {'code': 'ko', 'name': '🇰🇷 한국어'},
       {'code': 'ru', 'name': '🇷🇺 Русский'},
       {'code': 'it', 'name': '🇮🇹 Italiano'},
+      {'code': 'ar', 'name': '🇸🇦 العربية'},
+      {'code': 'id', 'name': '🇮🇩 Bahasa Indonesia'},
     ];
 
     return PopupMenuButton<String>(
