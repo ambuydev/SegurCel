@@ -956,6 +956,9 @@
             <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #00C853 0%, #009688 100%); color: #FFF;" id="btnPlayTesting">
                 <span id="lblBtnPlay">Unirse a la Prueba en Google Play</span>
             </a>
+            <a href="https://testflight.apple.com/join/3Dvcxj1E" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: #FFF;" id="btnTestFlightIos">
+                <span id="lblBtnIos">🍏 Probar Beta en TestFlight (iOS)</span>
+            </a>
             <a href="segurcel-extension.zip" class="btn-secondary" download id="btnDownloadExt">
                 <span id="lblBtnExt">Descargar Extensión PC/Mac (.zip)</span>
             </a>
@@ -1206,23 +1209,17 @@
     <section style="padding: 0 20px;">
         <div class="cta-banner">
             <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 12px;" id="ctaTitle">¿Listo para proteger tu vida digital?</h2>
-            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 24px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.</p>
+            <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto 24px;" id="ctaSub">Comienza a usar SegurCel hoy mismo desde cualquier navegador, Android o iPhone (iOS TestFlight).</p>
             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                <a href="/vault" class="btn-primary" id="btnCtaVault">Acceder a SegurCel Web</a>
+                <a href="/vault" class="btn-primary" id="btnCtaVault">Acceder a la Bóveda Web</a>
+                <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #00C853 0%, #009688 100%); color: #FFF;" id="btnCtaPlayStore">🤖 Google Play (Android)</a>
+                <a href="https://testflight.apple.com/join/3Dvcxj1E" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: #FFF;" id="btnCtaTestFlight">🍏 Apple TestFlight (iOS)</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p id="footerCopyright">&copy; 2026 SegurCel. Todos los derechos reservados.</p>
-        <p style="margin-top: 10px;">
-            <a href="/guide" id="linkFooterGuide">Guía Rápida de Uso</a> |
-            <a href="/privacy" id="linkFooterPrivacy">Política de Privacidad</a> |
-            <a href="https://github.com/ambuydev/SegurCel" target="_blank" id="linkFooterGithub">GitHub (Código Auditable)</a> |
-            <a href="mailto:support.segurcel@gmail.com">support.segurcel@gmail.com</a>
-        </p>
-    </footer>
+    <!-- Footer Dynamic Container -->
+    <footer></footer>
 
     <script src="navbar.js"></script>
 
@@ -1236,6 +1233,7 @@
                 btnVault: "Acceder a la Bóveda Web",
                 btnExt: "Descargar Extensión PC/Mac (.zip)",
                 btnPlay: "Unirse a la Prueba en Google Play",
+                btnIos: "🍏 Probar Beta en TestFlight (iOS)",
                 btnApk: "📲 Ver en Google Play Store",
                 btnHeader: "Acceder a la Bóveda",
                 zkT: "Seguridad Criptográfica Indescifrable",
@@ -1258,7 +1256,7 @@
                 pi3: "Historial completo de contraseñas anteriores.",
                 pi4: "Rescate de emergencia de bóveda (48 horas).",
                 pi5: "Planes flexibles: mensual, anual, plan familiar y rescate de emergencia (6 meses).",
-                ctaT: "¿Listo para proteger tu vida digital?", ctaS: "Comienza a usar SegurCel hoy mismo desde cualquier navegador o dispositivo Android.",
+                ctaT: "¿Listo para proteger tu vida digital?", ctaS: "Comienza a usar SegurCel hoy mismo desde cualquier navegador, Android o iPhone (iOS TestFlight).",
                 priv: "Política de Privacidad"
             },
             en: {
@@ -1707,7 +1705,9 @@
             document.getElementById("lblBtnVault").innerText = data.btnVault;
             if (document.getElementById("lblBtnExt") && data.btnExt) document.getElementById("lblBtnExt").innerText = data.btnExt;
             if (document.getElementById("lblBtnPlay") && data.btnPlay) document.getElementById("lblBtnPlay").innerText = data.btnPlay;
+            if (document.getElementById("lblBtnIos") && data.btnIos) document.getElementById("lblBtnIos").innerText = data.btnIos;
             if (document.getElementById("btnCtaPlayStore") && data.btnApk) document.getElementById("btnCtaPlayStore").innerText = data.btnApk;
+            if (document.getElementById("btnCtaTestFlight") && data.btnIos) document.getElementById("btnCtaTestFlight").innerText = data.btnIos;
             document.getElementById("btnHeaderVault").innerText = data.btnHeader;
 
             const guideText = guideTextMap[currentLang] || "📘 Guía de Uso";
