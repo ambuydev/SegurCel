@@ -1,8 +1,51 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:csv/csv.dart';
 import '../models/password_entry.dart';
 import '../utils/file_helper.dart';
+import 'crypto_service.dart';
 
 class ImportExportService {
+  /// Selecciona un archivo y devuelve el contenido en bruto.
+  static Future<String?> pickRawFileContent() async {
+    return await FileHelper.pickFileContent();
+  }
+
+  /// Verifica si el contenido pertenece a un Respaldo Cifrado de SegurCel (.segurcel).
+  static bool isEncryptedBackup(String content) {
+    final trimmed = content.trim();
+    return trimmed.contains('"format"') && trimmed.contains('segurcel_backup');
+  }
+
+  /// Descifra e importa un archivo .segurcel usando la contraseña de respaldo.
+  static Future<List<PasswordEntry>> importFromEncryptedBackup(
+    String content,
+    String backupPassword,
+  ) async {
+    final Map<String, dynamic> data = jsonDecode(content);
+    final String saltBase64 = data['salt'] as String;
+    final String payloadBase64 = data['data'] as String;
+
+    final Uint8List salt = base64Decode(saltBase64);
+    final Uint8List encryptedData = base64Decode(payloadBase64);
+
+    final key = await CryptoService.deriveKeyFromPassword(backupPassword, salt);
+    final decryptedBytes = await CryptoService.decrypt(encryptedData, key);
+    final jsonStr = utf8.decode(decryptedBytes);
+
+    return PasswordEntry.listFromJson(jsonStr);
+  }
+
+  /// Parsea contenido en texto plano (JSON o CSV).
+  static List<PasswordEntry> parsePlainContent(String content) {
+    final trimmed = content.trim();
+    if (trimmed.startsWith('[')) {
+      return PasswordEntry.listFromJson(trimmed);
+    } else {
+      return parseCsvPasswords(trimmed);
+    }
+  }
+
   /// Selecciona un archivo CSV o JSON y devuelve la lista de PasswordEntry parsedas.
   static Future<List<PasswordEntry>> importFromFile() async {
     final content = await FileHelper.pickFileContent();
@@ -10,11 +53,34 @@ class ImportExportService {
       return [];
     }
 
-    if (content.trim().startsWith('[')) {
-      return PasswordEntry.listFromJson(content);
-    } else {
-      return parseCsvPasswords(content);
+    if (isEncryptedBackup(content)) {
+      throw const FormatException('ENCRYPTED_BACKUP_REQUIRED');
     }
+
+    return parsePlainContent(content);
+  }
+
+  /// Genera un respaldo local cifrado (.segurcel) protegido con contraseña.
+  static Future<String> exportToEncryptedBackup(
+    List<PasswordEntry> entries,
+    String backupPassword,
+  ) async {
+    final salt = CryptoService.generateSalt();
+    final key = await CryptoService.deriveKeyFromPassword(backupPassword, salt);
+    final jsonStr = PasswordEntry.listToJson(entries);
+    final plainBytes = Uint8List.fromList(utf8.encode(jsonStr));
+
+    final encryptedBytes = await CryptoService.encrypt(plainBytes, key);
+
+    final Map<String, dynamic> payload = {
+      'format': 'segurcel_backup',
+      'version': 1,
+      'createdAt': DateTime.now().millisecondsSinceEpoch,
+      'salt': base64Encode(salt),
+      'data': base64Encode(encryptedBytes),
+    };
+
+    return const JsonEncoder.withIndent('  ').convert(payload);
   }
 
   /// Parsea contenido CSV de Chrome, Edge, Bitwarden, 1Password o genérico.

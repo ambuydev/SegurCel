@@ -346,25 +346,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _importPasswords() async {
     try {
-      final importedEntries = await ImportExportService.importFromFile();
+      final rawContent = await ImportExportService.pickRawFileContent();
+      if (rawContent == null || rawContent.trim().isEmpty) return;
+
+      List<PasswordEntry> importedEntries = [];
+
+      if (ImportExportService.isEncryptedBackup(rawContent)) {
+        final decryptedEntries = await _promptBackupPasswordForImport(rawContent);
+        if (decryptedEntries == null) return;
+        importedEntries = decryptedEntries;
+      } else {
+        importedEntries = ImportExportService.parsePlainContent(rawContent);
+      }
+
       if (importedEntries.isEmpty) return;
 
       if (mounted) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+        final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+
         final confirm = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            backgroundColor: const Color(0xFF1E2538),
-            title: Text(_loc.text('import_preview_title'), style: const TextStyle(color: Colors.white)),
-            content: Text('${_loc.text("import_found_count")} ${importedEntries.length}'),
+            backgroundColor: dialogBg,
+            title: Text(_loc.text('import_preview_title'), style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+            content: Text('${_loc.text("import_found_count")} ${importedEntries.length}', style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF4A5568))),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(false),
-                child: Text(_loc.text('cancel')),
+                child: Text(_loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white54 : Colors.black54)),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C63FF)),
                 onPressed: () => Navigator.of(ctx).pop(true),
-                child: Text(_loc.text('confirm_import'), style: const TextStyle(color: Colors.white)),
+                child: Text(_loc.text('confirm_import'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -380,6 +396,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SnackBar(
                 content: Text('${_loc.text("import_success_toast")} (${importedEntries.length})'),
                 backgroundColor: Colors.green,
+                behavior: SnackBarBehavior.floating,
               ),
             );
           }
@@ -390,11 +407,120 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al importar: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
           ),
         );
       }
     }
+  }
+
+  Future<List<PasswordEntry>?> _promptBackupPasswordForImport(String rawContent) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+
+    final passController = TextEditingController();
+    String? errorMessage;
+    bool isProcessing = false;
+
+    return await showDialog<List<PasswordEntry>?>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: dialogBg,
+              title: Row(
+                children: [
+                  const Icon(Icons.shield_outlined, color: Color(0xFF6C63FF)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _loc.text('restore_pass_dialog_title'),
+                      style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _loc.text('restore_pass_dialog_desc'),
+                      style: TextStyle(color: textSubColor, fontSize: 12),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: passController,
+                      obscureText: true,
+                      style: TextStyle(color: textColor),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('backup_pass_label'),
+                        labelStyle: TextStyle(color: textSubColor, fontSize: 12),
+                        filled: true,
+                        fillColor: inputFillColor,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                      ),
+                    ),
+                    if (errorMessage != null) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        errorMessage!,
+                        style: const TextStyle(color: Colors.redAccent, fontSize: 12),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isProcessing ? null : () => Navigator.pop(ctx, null),
+                  child: Text(_loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white54 : Colors.black54)),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C63FF)),
+                  onPressed: isProcessing
+                      ? null
+                      : () async {
+                          final pass = passController.text.trim();
+                          if (pass.isEmpty) {
+                            setDialogState(() => errorMessage = _loc.text('backup_pass_label'));
+                            return;
+                          }
+
+                          setDialogState(() {
+                            isProcessing = true;
+                            errorMessage = null;
+                          });
+
+                          try {
+                            final entries = await ImportExportService.importFromEncryptedBackup(rawContent, pass);
+                            if (context.mounted) {
+                              Navigator.pop(ctx, entries);
+                            }
+                          } catch (_) {
+                            setDialogState(() {
+                              isProcessing = false;
+                              errorMessage = _loc.text('invalid_backup_pass');
+                            });
+                          }
+                        },
+                  child: isProcessing
+                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                      : const Text('Descifrar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<void> _exportPasswords(String format) async {
@@ -405,7 +531,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final String content;
       final String fileName;
 
-      if (format == 'csv') {
+      if (format == 'segurcel') {
+        final backupPass = await _promptBackupPasswordForExport();
+        if (backupPass == null || backupPass.trim().isEmpty) return;
+
+        content = await ImportExportService.exportToEncryptedBackup(entries, backupPass);
+        final dateStr = DateTime.now().toString().split(' ')[0].replaceAll('-', '');
+        fileName = 'segurcel_backup_$dateStr.segurcel';
+      } else if (format == 'csv') {
         content = ImportExportService.exportToCsv(entries);
         fileName = 'segurcel_passwords.csv';
       } else {
@@ -418,8 +551,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${_loc.text("copied_toast")}: $fileName'),
+            content: Text(
+              format == 'segurcel'
+                  ? _loc.text('backup_success')
+                  : '${_loc.text("copied_toast")}: $fileName',
+            ),
             backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
           ),
         );
       }
@@ -428,11 +566,120 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al exportar: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
           ),
         );
       }
     }
+  }
+
+  Future<String?> _promptBackupPasswordForExport() async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dialogBg = isDark ? const Color(0xFF1E2538) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF10141D);
+    final textSubColor = isDark ? Colors.white70 : const Color(0xFF4A5568);
+    final inputFillColor = isDark ? const Color(0xFF10141D) : const Color(0xFFF0F4F8);
+
+    final passController = TextEditingController();
+    final confirmController = TextEditingController();
+    String? errorMessage;
+
+    return await showDialog<String?>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: dialogBg,
+              title: Row(
+                children: [
+                  const Icon(Icons.shield_outlined, color: Color(0xFF6C63FF)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _loc.text('backup_pass_dialog_title'),
+                      style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _loc.text('backup_pass_dialog_desc'),
+                      style: TextStyle(color: textSubColor, fontSize: 12),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: passController,
+                      obscureText: true,
+                      style: TextStyle(color: textColor),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('backup_pass_label'),
+                        labelStyle: TextStyle(color: textSubColor, fontSize: 12),
+                        filled: true,
+                        fillColor: inputFillColor,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: confirmController,
+                      obscureText: true,
+                      style: TextStyle(color: textColor),
+                      decoration: InputDecoration(
+                        labelText: _loc.text('confirm_backup_pass_label'),
+                        labelStyle: TextStyle(color: textSubColor, fontSize: 12),
+                        filled: true,
+                        fillColor: inputFillColor,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                      ),
+                    ),
+                    if (errorMessage != null) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        errorMessage!,
+                        style: const TextStyle(color: Colors.redAccent, fontSize: 12),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, null),
+                  child: Text(_loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white54 : Colors.black54)),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6C63FF)),
+                  onPressed: () {
+                    final pass = passController.text.trim();
+                    final confirm = confirmController.text.trim();
+
+                    if (pass.isEmpty) {
+                      setDialogState(() => errorMessage = _loc.text('backup_pass_label'));
+                      return;
+                    }
+                    if (pass != confirm) {
+                      setDialogState(() => errorMessage = _loc.text('passwords_dont_match'));
+                      return;
+                    }
+
+                    Navigator.pop(ctx, pass);
+                  },
+                  child: const Text('Crear Respaldo', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<void> _showFamilyCodesListDialog(String ownerUid, String ownerEmail) async {
@@ -895,6 +1142,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(color: textSubColor, fontSize: 13),
                     ),
                     const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isDark ? const Color(0xFF1E2538) : const Color(0xFFEEF2FF),
+                          side: BorderSide(color: isDark ? Colors.amberAccent : const Color(0xFFD97706), width: 1.5),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                        icon: Icon(Icons.shield_outlined, color: isDark ? Colors.amberAccent : const Color(0xFFD97706), size: 20),
+                        label: Text(
+                          _loc.text('export_segurcel_btn'),
+                          style: TextStyle(
+                            color: isDark ? Colors.white : const Color(0xFF10141D),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                        onPressed: () => _exportPasswords('segurcel'),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(

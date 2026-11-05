@@ -7,7 +7,7 @@ class FileHelperImpl {
   static Future<String?> pickFileContent() async {
     final result = await FilePicker.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['csv', 'json'],
+      allowedExtensions: ['csv', 'json', 'segurcel', 'txt'],
     );
 
     if (result.isEmpty) {
