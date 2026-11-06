@@ -239,18 +239,7 @@
                     <span id="selectedLangName">Español</span>
                     <span style="font-size: 10px; opacity: 0.7;">▼</span>
                 </button>
-                <div class="lang-dropdown-content" id="langMenu">
-                    <div onclick="SegurCelNav.selectLanguage('es', setLang)"><img src="https://flagcdn.com/20x15/es.png" alt="es"> Español</div>
-                    <div onclick="SegurCelNav.selectLanguage('en', setLang)"><img src="https://flagcdn.com/20x15/us.png" alt="en"> English</div>
-                    <div onclick="SegurCelNav.selectLanguage('pt', setLang)"><img src="https://flagcdn.com/20x15/br.png" alt="pt"> Português</div>
-                    <div onclick="SegurCelNav.selectLanguage('zh', setLang)"><img src="https://flagcdn.com/20x15/cn.png" alt="zh"> 中文</div>
-                    <div onclick="SegurCelNav.selectLanguage('fr', setLang)"><img src="https://flagcdn.com/20x15/fr.png" alt="fr"> Français</div>
-                    <div onclick="SegurCelNav.selectLanguage('hi', setLang)"><img src="https://flagcdn.com/20x15/in.png" alt="hi"> हिन्दी</div>
-                    <div onclick="SegurCelNav.selectLanguage('de', setLang)"><img src="https://flagcdn.com/20x15/de.png" alt="de"> Deutsch</div>
-                    <div onclick="SegurCelNav.selectLanguage('ja', setLang)"><img src="https://flagcdn.com/20x15/jp.png" alt="ja"> 日本語</div>
-                    <div onclick="SegurCelNav.selectLanguage('ko', setLang)"><img src="https://flagcdn.com/20x15/kr.png" alt="ko"> 한국어</div>
-                    <div onclick="SegurCelNav.selectLanguage('ru', setLang)"><img src="https://flagcdn.com/20x15/ru.png" alt="ru"> Русский</div>
-                </div>
+                <div class="lang-dropdown-content" id="langMenu"></div>
             </div>
         </div>
     </header>
@@ -304,7 +293,7 @@
             <p>Si tienes preguntas sobre nuestra Política de Privacidad o la arquitectura de seguridad de SegurCel, puedes contactarnos a través de nuestra web oficial <a href="https://segurcel.app">https://segurcel.app</a> o mediante soporte directo por correo electrónico a: <a href="mailto:support.segurcel@gmail.com">support.segurcel@gmail.com</a>.</p>
         </div>
 
-    <footer></footer>
+        <footer></footer>
     </div>
 
     <script src="navbar.js"></script>
@@ -365,6 +354,20 @@
                 content_4: "<p>为恪守<strong>零知识 (Zero-Knowledge)</strong> 安全原则并防止未经授权的账户劫持，SegurCel 不会通过未经身份验证的电子邮件处理账户删除请求。</p><p style='margin-top:8px;'>永久清除数据的仅有两条有效途径：</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. 自主删除：</strong>在移动应用或官方网页版保险库 (<a href='/vault'>https://segurcel.app/vault</a>) 中登录您的已验证会话并确认删除。</li><li><strong>2. 不活动自动清除（180天）：</strong>如果账户连续 180 天没有任何登录活动，将被标记为不活动状态。系统将向注册邮箱发送预警通知。若用户未在规定时间内登录确认活跃状态，该账户及云端所有加密数据将被永久自动清除。</li></ul><p style='margin-top:10px;'><strong>订阅与支付处理：</strong>应用内订阅支付完全由 <strong>Google Play Billing</strong> 处理。SegurCel 不会收集或存储任何银行卡信息。</p>",
                 h2_5: "5. 联系与支持",
                 content_5: "<p>可通过官方网站 <a href='https://segurcel.app'>https://segurcel.app</a> 或支持邮箱联系我们：<a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>。</p>"
+            },
+            zh_HK: {
+                subtitle: "私隱政策與零知識 (Zero-Knowledge) 安全架構",
+                summary: "<strong>私隱摘要：</strong>SegurCel 恪守<strong>零知識 (Zero-Knowledge)</strong> 原則。您的密碼、銀行卡和備忘在傳輸至雲端前，已在您的裝置上通過 <strong>AES-256-GCM</strong> 演算法完成加密。我們在任何情況下都無法解密或讀取您的數據。",
+                h2_1: "1. 我們收集的資料",
+                content_1: "<p>為了提供多裝置同步和安全身份驗證，我們僅收集極少的必要技術資料：</p><ul><li><strong>電郵地址：</strong>僅用於識別您的用戶帳戶並登入 SegurCel Cloud。</li><li><strong>加密保險庫數據：</strong>您的所有密碼、用戶名、卡號及備忘均以 AES-256 密文形式儲存。任何員工或伺服器均無法解密。</li></ul>",
+                h2_2: "2. 加密與安全架構",
+                content_2: "<p>SegurCel 採用業界領先的現代密碼學標準：</p><ul><li><strong>AES-256-GCM 對稱加密：</strong>加密金鑰通過 <strong>PBKDF2WithHmacSHA256</strong> 協定在本地匯出（65,536 次迭代）。</li><li><strong>PIN 碼與指紋保護：</strong>4 位 PIN 碼與指紋保護儲存在手機安全硬件中的解密金鑰。</li><li><strong>本地自毀協定：</strong>連續 3 次輸入錯誤 PIN 碼後，本地保險庫數據將被永久擦除。</li></ul>",
+                h2_3: "3. 數據使用與禁止商業化",
+                content_3: "<p>SegurCel <strong>絕不</strong>向第三方或廣告商出售、出租或共享用戶數據。</p>",
+                h2_4: "4. 因長期未登入導致的帳戶自動清除與安全政策",
+                content_4: "<p>為恪守<strong>零知識 (Zero-Knowledge)</strong> 安全原則並防止未經授權的帳戶劫持，SegurCel 不會透過未經身份驗證的電郵處理帳戶刪除請求。</p><p style='margin-top:8px;'>永久清除數據的僅有兩條有效途徑：</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. 自主刪除：</strong>在流動應用程式或官方網頁版保險庫 (<a href='/vault'>https://segurcel.app/vault</a>) 中登入您的已驗證會話並確認刪除。</li><li><strong>2. 不活動自動清除（180天）：</strong>若帳戶連續 180 天沒有任何登入活動，將被標記為不活動狀態。系統將向註冊電郵發送預警通知。若用戶未在規定時間內登入確認活躍狀態，該帳戶及雲端所有加密數據將被永久自動清除。</li></ul><p style='margin-top:10px;'><strong>訂閱與付款處理：</strong>應用程式內訂閱付款完全由 <strong>Google Play Billing</strong> 處理。SegurCel 不會收集或儲存任何銀行卡資料。</p>",
+                h2_5: "5. 聯絡與支援",
+                content_5: "<p>可透過官方網站 <a href='https://segurcel.app'>https://segurcel.app</a> 或支援電郵聯絡我們：<a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>。</p>"
             },
             fr: {
                 subtitle: "Politique de Confidentialité et Architecture de Sécurité Zero-Knowledge",
@@ -449,36 +452,107 @@
                 content_4: "<p>Для соблюдения принципа <strong>Zero-Knowledge</strong> и защиты от несанкционированного доступа SegurCel не обрабатывает запросы на удаление через неавторизованные письма.</p><p style='margin-top:8px;'>Единственные два действительных способа полного удаления данных:</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. Автономное удаление:</strong> Через авторизованный вход в мобильном приложении или Веб-хранилище (<a href='/vault'>https://segurcel.app/vault</a>).</li><li><strong>2. Автоматическая очистка по неактивности (180 дней):</strong> Если в аккаунте нет входов в течение 180 дней подряд, он признается неактивным. На email отправляется предупреждение. Если пользователь не подтверждает активность входом, аккаунт и все зашифрованные данные автоматически и навсегда удаляются.</li></ul><p style='margin-top:10px;'><strong>Платежи и подписки:</strong> Платежи обрабатываются исключительно через <strong>Google Play Billing</strong>.</p>",
                 h2_5: "5. Контакты и поддержка",
                 content_5: "<p>Наш сайт <a href='https://segurcel.app'>https://segurcel.app</a> или email: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
+            },
+            it: {
+                subtitle: "Informativa sulla Privacy e Architettura di Sicurezza Zero-Knowledge",
+                summary: "<strong>Riepilogo Privacy:</strong> In SegurCel applichiamo il principio di <strong>Zero-Knowledge (Conoscenza Zero)</strong>. Le tue password, carte e note sono crittografate sul tuo dispositivo utilizzando l'algoritmo <strong>AES-256-GCM</strong> prima di essere inviate al cloud.",
+                h2_1: "1. Informazioni che Raccogliamo",
+                content_1: "<p>Per fornire la sincronizzazione multidispositivo e l'autenticazione sicura, raccogliamo i seguenti dati tecnici minimi:</p><ul><li><strong>Indirizzo Email:</strong> Utilizzato unicamente per identificare il tuo account e accedere a SegurCel Cloud.</li><li><strong>Dati Cifrati della Cassaforte:</strong> Tutte le tue password, nomi utente, numeri di carta e note sono salvati sotto forma di testo cifrato AES-256.</li></ul>",
+                h2_2: "2. Architettura di Crittografia e Sicurezza",
+                content_2: "<p>SegurCel implementa i più alti standard di crittografia moderna:</p><ul><li><strong>Crittografia Simmetrica AES-256-GCM:</strong> Derivata localmente sul tuo dispositivo tramite <strong>PBKDF2WithHmacSHA256</strong> con 65.536 iterazioni.</li><li><strong>Protezione tramite PIN e Biometria:</strong> PIN a 4 cifre e impronta digitale proteggono la chiave nel chip sicuro.</li><li><strong>Protocollo di Autodistruzione Locale:</strong> Dopo 3 tentativi errati di PIN, i dati locali vengono eliminati permanentemente.</li></ul>",
+                h2_3: "3. Uso dei Dati e Non Commercializzazione",
+                content_3: "<p>SegurCel <strong>NON</strong> vende, affitta né condivide mai le informazioni degli utenti con terze parti o aziende pubblicitarie.</p>",
+                h2_4: "4. Eliminazione dell'Account per Inattività e Sicurezza Integrata",
+                content_4: "<p>Per garantire il principio di Conoscenza Zero (<strong>Zero-Knowledge</strong>), SegurCel non elabora richieste di eliminazione dell'account tramite e-mail o supporto non autenticato.</p><p style='margin-top:8px;'>I soli due meccanismi validi per eliminare definitivamente i tuoi dati sono:</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. Eliminazione Autonoma:</strong> Effettuando il login nell'applicazione mobile o nella Bóveda Web (<a href='/vault'>https://segurcel.app/vault</a>).</li><li><strong>2. Purga Automatica per Inattività (180 Giorni):</strong> Se un account non registra alcun accesso per 180 giorni consecutivi, verrà classificato come inattivo. Un avviso di notifica verrà inviato all'email registrata. Senza un login per confermare l'uso attivo, l'account e tutti i dati cifrati verranno eliminati automaticamente e in modo permanente.</li></ul><p style='margin-top:10px;'><strong>Elaborazione degli Abbonamenti e Pagamenti:</strong> I pagamenti sono gestiti esclusivamente tramite <strong>Google Play Billing</strong>.</p>",
+                h2_5: "5. Contatto e Supporto",
+                content_5: "<p>Se hai domande sulla nostra Informativa sulla Privacy, contattaci tramite il sito ufficiale <a href='https://segurcel.app'>https://segurcel.app</a> o via e-mail a: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
+            },
+            zh_HK: {
+                subtitle: "私隱政策與零知識 (Zero-Knowledge) 安全架構",
+                summary: "<strong>私隱摘要：</strong>SegurCel 恪守<strong>零知識 (Zero-Knowledge)</strong> 原則。您的密碼、銀行卡和備忘在傳輸至雲端前，已在您的裝置上通過 <strong>AES-256-GCM</strong> 演算法完成加密。",
+                h2_1: "1. 我們收集的資料",
+                content_1: "<p>為了提供多裝置同步和安全身份驗證，我們僅收集極少的必要技術資料：</p><ul><li><strong>電郵地址：</strong>僅用於識別您的用戶帳戶並登入 SegurCel Cloud。</li><li><strong>加密保險庫數據：</strong>您的所有密碼、用戶名、卡號及備忘均以 AES-256 密文形式儲存。</li></ul>",
+                h2_2: "2. 加密與安全架構",
+                content_2: "<p>SegurCel 採用業界領先的現代密碼學標準：</p><ul><li><strong>AES-256-GCM 對稱加密：</strong>加密金鑰通過 <strong>PBKDF2WithHmacSHA256</strong> 協定在本地匯出（65,536 次迭代）。</li><li><strong>PIN 碼與指紋保護：</strong>4 位 PIN 碼與指紋保護儲存在手機安全硬件中的解密金鑰。</li><li><strong>本地自毀協定：</strong>連續 3 次輸入錯誤 PIN 碼後，本地保險庫數據將被永久擦除。</li></ul>",
+                h2_3: "3. 數據使用與禁止商業化",
+                content_3: "<p>SegurCel <strong>絕不</strong>向第三方或廣告商出售、出租或共享用戶數據。</p>",
+                h2_4: "4. 因長期未登入導致的帳戶自動清除與安全政策",
+                content_4: "<p>為恪守<strong>零知識 (Zero-Knowledge)</strong> 安全原則，SegurCel 不會透過未經身份驗證的電郵處理帳戶刪除請求。</p><p style='margin-top:8px;'>永久清除數據的僅有兩條有效途徑：</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. 自主刪除：</strong>在流動應用程式或官方網頁版保險庫 (<a href='/vault'>https://segurcel.app/vault</a>) 中登入您的已驗證會話並確認刪除。</li><li><strong>2. 不活動自動清除（180天）：</strong>若帳戶連續 180 天沒有任何登入活動，將被標記為不活動狀態。系統將向註冊電郵發送預警通知。若用戶未在規定時間內登入確認活躍狀態，該帳戶及雲端所有加密數據將被永久自動清除。</li></ul><p style='margin-top:10px;'><strong>訂閱與付款處理：</strong>應用程式內訂閱付款完全由 <strong>Google Play Billing</strong> 處理。</p>",
+                h2_5: "5. 聯絡與支援",
+                content_5: "<p>可透過官方網站 <a href='https://segurcel.app'>https://segurcel.app</a> 或支援電郵聯絡我們：<a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>。</p>"
+            },
+            ar: {
+                subtitle: "سياسة الخصوصية وبنية أمان Zero-Knowledge",
+                summary: "<strong>ملخص الخصوصية:</strong> في SegurCel نطبق مبدأ <strong>Zero-Knowledge (المعرفة الصفرية)</strong>. يتم تشفير كلمات المرور والبطاقات والملاحظات الخاصة بك على جهازك باستخدام خوارزمية <strong>AES-256-GCM</strong> قبل إرسالها للسحابة.",
+                h2_1: "1. المعلومات التي نجمعها",
+                content_1: "<p>لتوفير المزامنة عبر الأجهزة والمصادقة الآمنة، نجمع أدنى قدر من البيانات الفنية:</p><ul><li><strong>عنوان البريد الإلكتروني:</strong> يُستخدم فقط للتعرف على حساب المستخدم وتسجيل الدخول إلى SegurCel Cloud.</li><li><strong>بيانات الخزنة المشفرة:</strong> تُخزن جميع كلمات المرور وأسماء المستخدمين وأرقام البطاقات بنصوص مشفرة بـ AES-256.</li></ul>",
+                h2_2: "2. تشفير وبنية الأمان",
+                content_2: "<p>تطبق SegurCel أعلى معايير التشفير الحديثة:</p><ul><li><strong>التشفير المتماثل AES-256-GCM:</strong> يُشتق المفتاح محلياً عبر <strong>PBKDF2WithHmacSHA256</strong> بـ 65,536 تكراراً.</li><li><strong>حماية PIN والبصمة:</strong> يحمي رمز PIN المكون من 4 أرقام وبصمة الأصبع مفتاح فك التشفير في الأجهزة الآمنة.</li><li><strong>بروتوكول التدمير الذاتي المحلي:</strong> بعد 3 محاولات خاطئة متتالية لرمز PIN، يتم مسح البيانات المحلية نهائياً.</li></ul>",
+                h2_3: "3. استخدام البيانات وعدم التسويق",
+                content_3: "<p>SegurCel <strong>لا تبيع</strong> أو تؤجر أو تشارك بيانات المستخدمين مع أطراف ثالثة أو معلنين بأي شكل.</p>",
+                h2_4: "4. حذف الحساب عند عدم النشاط والأمان المدمج",
+                content_4: "<p>لضمان مبدأ <strong>Zero-Knowledge</strong> وحماية خزنتك من الوصول غير المصرح به، لا تعالج SegurCel طلبات حذف الحساب عبر البريد الإلكتروني غير المصادق عليه.</p><p style='margin-top:8px;'>الوسيلتان الوحيدتان الصالحتان لحذف بياناتك نهائياً هما:</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. الحذف الذاتي:</strong> بتسجيل الدخول بأمان داخل التطبيق أو الخزنة السحابية (<a href='/vault'>https://segurcel.app/vault</a>).</li><li><strong>2. التطهير التلقائي عند عدم النشاط (180 يوماً):</strong> إذا لم يسجل الحساب أي دخول لمدة 180 يوماً متتالية، سيتم تصنيفه كغير نشط وإرسال إشعار تحذيري. بدون تسجيل دخول لتأكيد الاستخدام، يتم حذف الحساب وكافة البيانات المشفرة تلقائياً.</li></ul><p style='margin-top:10px;'><strong>معالجة الاشتراكات والدفع:</strong> تُدار عمليات الدفع حصرياً عبر <strong>Google Play Billing</strong>.</p>",
+                h2_5: "5. التواصل والدعم",
+                content_5: "<p>إذا كان لديك أسئلة حول سياسة الخصوصية، اتصل بنا عبر الموقع الرسمي <a href='https://segurcel.app'>https://segurcel.app</a> أو البريد الإلكتروني: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
+            },
+            id: {
+                subtitle: "Kebijakan Privasi & Arsitektur Keamanan Zero-Knowledge",
+                summary: "<strong>Ringkasan Privasi:</strong> Di SegurCel kami menerapkan prinsip <strong>Zero-Knowledge</strong>. Kata sandi, kartu, dan catatan Anda dienkripsi di perangkat Anda sendiri menggunakan <strong>AES-256-GCM</strong> sebelum dikirim ke cloud.",
+                h2_1: "1. Informasi yang Kami Kumpulkan",
+                content_1: "<p>Untuk menyediakan sinkronisasi antar perangkat dan autentikasi aman, kami mengumpulkan data teknis minimal:</p><ul><li><strong>Alamat Email:</strong> Digunakan semata-mata untuk mengidentifikasi akun Anda dan masuk ke SegurCel Cloud.</li><li><strong>Data Brankas Terenkripsi:</strong> Semua kata sandi, nama pengguna, nomor kartu, dan catatan disimpan dalam bentuk teks terenkripsi AES-256.</li></ul>",
+                h2_2: "2. Arsitektur Enkripsi & Keamanan",
+                content_2: "<p>SegurCel menerapkan standar kriptografi modern terkemuka:</p><ul><li><strong>Enkripsi Simetris AES-256-GCM:</strong> Diturunkan secara lokal di perangkat Anda melalui <strong>PBKDF2WithHmacSHA256</strong> dengan 65.536 iterasi.</li><li><strong>Perlindungan PIN & Sidik Jari:</strong> PIN 4 digit dan sidik jari melindungi kunci dekripsi di dalam perangkat keras yang aman.</li><li><strong>Protokol Self-Destruct Lokal:</strong> Setelah 3 kali percobaan PIN yang salah secara berturut-turut, data brankas lokal akan dihapus secara permanen.</li></ul>",
+                h2_3: "3. Penggunaan Data & Tanpa Komersialisasi",
+                content_3: "<p>SegurCel <strong>TIDAK PERNAH</strong> menjual, menyewakan, atau membagikan data pengguna kepada pihak ketiga atau pengiklan.</p>",
+                h2_4: "4. Penghapusan Akun karena Inaktivitas & Kebijakan Keamanan",
+                content_4: "<p>Untuk menegakkan prinsip keamanan <strong>Zero-Knowledge</strong>, SegurCel tidak memproses permintaan penghapusan akun melalui email dukungan yang tidak terautentikasi.</p><p style='margin-top:8px;'>Dua satu-satunya mekanisme sah untuk menghapus data Anda secara permanen adalah:</p><ul style='margin-left:20px; margin-top:8px;'><li style='margin-bottom:6px;'><strong>1. Penghapusan Mandiri:</strong> Masuk ke sesi terautentikasi di aplikasi seluler atau Brankas Web (<a href='/vault'>https://segurcel.app/vault</a>) dan konfirmasi penghapusan.</li><li><strong>2. Pembersihan Otomatis Inaktivitas (180 Hari):</strong> Jika akun tidak mencatat aktivitas masuk selama 180 hari berturut-turut, akun diklasifikasikan sebagai tidak aktif. Pemberitahuan peringatan dikirim ke email terdaftar. Tanpa login untuk mengonfirmasi penggunaan aktif, akun dan semua data terenkripsi dihapus secara otomatis dan permanen.</li></ul><p style='margin-top:10px;'><strong>Langganan & Pembayaran:</strong> Pembayaran langganan dikelola secara eksklusif melalui <strong>Google Play Billing</strong>.</p>",
+                h2_5: "5. Kontak & Dukungan",
+                content_5: "<p>Jika Anda memiliki pertanyaan mengenai Kebijakan Privasi kami, hubungi kami melalui situs web <a href='https://segurcel.app'>https://segurcel.app</a> atau email dukungan di: <a href='mailto:support.segurcel@gmail.com'>support.segurcel@gmail.com</a>.</p>"
             }
         };
 
+        function setHtml(id, html) {
+            if (!html) return;
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
         function setLang(lang) {
-            const data = texts[lang] || texts.es;
-            document.getElementById('subtitle').innerHTML = data.subtitle;
-            document.getElementById('summary').innerHTML = data.summary;
-            document.getElementById('h2_1').innerHTML = data.h2_1;
-            document.getElementById('content_1').innerHTML = data.content_1;
-            document.getElementById('h2_2').innerHTML = data.h2_2;
-            document.getElementById('content_2').innerHTML = data.content_2;
-            document.getElementById('h2_3').innerHTML = data.h2_3;
-            document.getElementById('content_3').innerHTML = data.content_3;
-            document.getElementById('h2_4').innerHTML = data.h2_4;
-            document.getElementById('content_4').innerHTML = data.content_4;
-            document.getElementById('h2_5').innerHTML = data.h2_5;
-            document.getElementById('content_5').innerHTML = data.content_5;
+            let currentLang = lang || 'es';
+            const data = texts[currentLang] || texts.es;
+
+            // Actualizar dirección del documento para soporte RTL (Árabe)
+            document.documentElement.dir = (currentLang === 'ar') ? 'rtl' : 'ltr';
+
+            setHtml('subtitle', data.subtitle);
+            setHtml('summary', data.summary);
+            setHtml('h2_1', data.h2_1);
+            setHtml('content_1', data.content_1);
+            setHtml('h2_2', data.h2_2);
+            setHtml('content_2', data.content_2);
+            setHtml('h2_3', data.h2_3);
+            setHtml('content_3', data.content_3);
+            setHtml('h2_4', data.h2_4);
+            setHtml('content_4', data.content_4);
+            setHtml('h2_5', data.h2_5);
+            setHtml('content_5', data.content_5);
 
             if (window.SegurCelNav) {
-                window.SegurCelNav.updateNav(lang);
+                window.SegurCelNav.updateNav(currentLang);
             }
 
             const btnBack = document.getElementById('btnBack');
             if (btnBack && window.SegurCelNav) {
-                const navData = window.SegurCelNav.getNavData(lang);
+                const navData = window.SegurCelNav.getNavData(currentLang);
                 if (navData) {
                     btnBack.innerText = navData.btnBack;
-                    btnBack.href = "/?lang=" + lang;
+                    btnBack.href = "/?lang=" + currentLang;
                 }
             }
+        }
+
+        function selectLanguage(lang) {
+            SegurCelNav.selectLanguage(lang, (l) => setLang(l));
         }
 
         window.onload = function() {
