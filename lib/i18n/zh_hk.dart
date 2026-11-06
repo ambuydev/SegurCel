@@ -67,7 +67,7 @@ final Map<String, String> zhHkTranslation = {
   'about_desc': 'SegurCel 是您的密碼保險庫和 2FA 身份驗證器，採用零知識架構和本地 AES-256-GCM 加密。您的數據保持 100% 加密與安全。',
   'view_welcome_guide': '歡迎指南',
   'welcome_guide_sub': '回顧安全架構與核心功能',
-  'app_version': '版本 1.0.5 (Build 6)',
+  'app_version': '版本 1.0.5 (Build 7)',
   'tech_specs': '技術規格與安全',
   'privacy_policy': '私隱政策',
   'support_contact': '官方支援與聯絡',

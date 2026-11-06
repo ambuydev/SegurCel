@@ -167,7 +167,7 @@ final Map<String, String> koTranslation = {
   'about_desc': 'SegurCel은 Zero-Knowledge 아키텍처와 로컬 AES-256-GCM 암호화를 갖춘 암호 보관함 및 2FA 인증기입니다.',
   'view_welcome_guide': '환영 가이드',
   'welcome_guide_sub': '보안 아키텍처 및 주요 기능을 확인하세요',
-  'app_version': '버전 1.0.5 (Build 6)',
+  'app_version': '버전 1.0.5 (Build 7)',
   'tech_specs': '기술 사양 및 보안',
   'privacy_policy': '개인정보 처리방침',
   'user_guide': '빠른 사용 설명서',

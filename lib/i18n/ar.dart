@@ -67,7 +67,7 @@ final Map<String, String> arTranslation = {
   'about_desc': 'SegurCel هي خزنة كلمات المرور ومصرّح 2FA مع بنية المعرفة الصفرية وتشفير محلي AES-256-GCM. تبقى بياناتك مشفرة بنسبة 100٪.',
   'view_welcome_guide': 'دليل الترحيب',
   'welcome_guide_sub': 'مراجعة بنية الأمان والميزات الرئيسية',
-  'app_version': 'الإصدار 1.0.5 (Build 6)',
+  'app_version': 'الإصدار 1.0.5 (Build 7)',
   'tech_specs': 'المواصفات الفنية والأمان',
   'privacy_policy': 'سياسة الخصوصية',
   'support_contact': 'الدعم والاتصال الرسمي',

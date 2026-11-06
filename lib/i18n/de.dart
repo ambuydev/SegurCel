@@ -167,7 +167,7 @@ final Map<String, String> deTranslation = {
   'about_desc': 'SegurCel ist Ihr Passwort-Tresor und 2FA-Authentifikator mit Zero-Knowledge-Architektur und lokaler AES-256-GCM-Verschlüsselung.',
   'view_welcome_guide': 'Willkommensanleitung',
   'welcome_guide_sub': 'Überprüfen Sie die Sicherheitsarchitektur und Hauptfunktionen',
-  'app_version': 'Version 1.0.5 (Build 6)',
+  'app_version': 'Version 1.0.5 (Build 7)',
   'tech_specs': 'Technische Daten & Sicherheit',
   'privacy_policy': 'Datenschutzerklärung',
   'user_guide': 'Kurzanleitung',

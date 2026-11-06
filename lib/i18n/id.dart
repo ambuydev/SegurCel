@@ -67,7 +67,7 @@ final Map<String, String> idTranslation = {
   'about_desc': 'SegurCel adalah brankas kata sandi dan otentikator 2FA Anda dengan arsitektur Zero-Knowledge dan enkripsi lokal AES-256-GCM. Data Anda tetap 100% terenkripsi.',
   'view_welcome_guide': 'Panduan Selamat Datang',
   'welcome_guide_sub': 'Tinjau arsitektur keamanan dan fitur utama',
-  'app_version': 'Versi 1.0.5 (Build 6)',
+  'app_version': 'Versi 1.0.5 (Build 7)',
   'tech_specs': 'Spesifikasi Teknis & Keamanan',
   'privacy_policy': 'Kebijakan Privasi',
   'support_contact': 'Dukungan & Kontak Resmi',
