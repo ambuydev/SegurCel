@@ -383,9 +383,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
 
         if (confirm == true) {
-          final currentList = List<PasswordEntry>.from(widget.vaultService.entries)
-            ..addAll(importedEntries);
-          await widget.vaultService.saveEntries(currentList);
+          final mergedList = VaultService.mergeAndDeduplicate(widget.vaultService.entries, importedEntries);
+          await widget.vaultService.saveEntries(mergedList);
 
           if (mounted) {
             await showDialog(

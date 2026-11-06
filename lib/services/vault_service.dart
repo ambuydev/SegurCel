@@ -333,6 +333,8 @@ class VaultService {
         await _saveBiometricMasterKey(masterKeyBytes);
       }
 
+      await deduplicateCurrentEntries();
+
       _syncToCloud(map);
 
       _isUnlocked = true;
@@ -395,6 +397,8 @@ class VaultService {
       if (!kIsWeb) {
         await _saveBiometricMasterKey(masterKeyBytes);
       }
+
+      await deduplicateCurrentEntries();
 
       _isUnlocked = true;
       return true;
@@ -487,11 +491,70 @@ class VaultService {
       map['failedAttempts'] = 0;
       await _writeVaultJson(jsonEncode(map));
 
+      await deduplicateCurrentEntries();
+
       _isUnlocked = true;
       return true;
     } catch (e) {
       throw Exception('Falló la autenticación biométrica: $e');
     }
+  }
+
+  /// Genera una clave única de identidad para un registro de contraseña.
+  static String getEntryIdentityKey(PasswordEntry e) {
+    final title = e.title.trim().toLowerCase();
+    final user = e.username.trim().toLowerCase();
+    final cat = e.category.trim().toLowerCase();
+    return '$title::$user::$cat';
+  }
+
+  /// Fusiona y desduplica listas de PasswordEntry asegurando que no existan registros duplicados por Título/Usuario/Categoría.
+  static List<PasswordEntry> mergeAndDeduplicate(
+    List<PasswordEntry> existing,
+    List<PasswordEntry> incoming,
+  ) {
+    final Map<String, PasswordEntry> map = {};
+
+    void addOrUpdate(PasswordEntry entry) {
+      final key = getEntryIdentityKey(entry);
+      if (map.containsKey(key)) {
+        final current = map[key]!;
+        if (entry.updatedAt >= current.updatedAt) {
+          map[key] = entry.copyWith(
+            id: current.id.isNotEmpty ? current.id : entry.id,
+            isFavorite: entry.isFavorite || current.isFavorite,
+          );
+        } else {
+          map[key] = current.copyWith(
+            isFavorite: current.isFavorite || entry.isFavorite,
+          );
+        }
+      } else {
+        map[key] = entry;
+      }
+    }
+
+    for (final e in existing) {
+      addOrUpdate(e);
+    }
+    for (final e in incoming) {
+      addOrUpdate(e);
+    }
+
+    return map.values.toList();
+  }
+
+  /// Desduplica automáticamente las entradas actuales en memoria y persiste los cambios si se encontraron duplicados.
+  Future<bool> deduplicateCurrentEntries() async {
+    if (_entries.isEmpty || _currentMasterKey == null) return false;
+
+    final deduplicated = mergeAndDeduplicate([], _entries);
+    if (deduplicated.length < _entries.length) {
+      debugPrint("[SegurCel Auto-Deduplication] ¡Se eliminaron ${_entries.length - deduplicated.length} registros duplicados!");
+      await saveEntries(deduplicated);
+      return true;
+    }
+    return false;
   }
 
   /// Guarda nuevas contraseñas o actualiza las existentes.
