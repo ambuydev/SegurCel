@@ -186,12 +186,12 @@ class AboutAppSheet extends StatelessWidget {
                 icon: Icons.email_outlined,
                 iconColor: Colors.amber,
                 title: loc.text('support_email'),
-                subtitle: 'soporte@segurcel.app',
+                subtitle: 'support.segurcel@gmail.com',
                 onTap: () {
                   try {
-                    FileHelper.openUrl('mailto:soporte@segurcel.app');
+                    FileHelper.openUrl('mailto:support.segurcel@gmail.com');
                   } catch (_) {
-                    _copyToClipboard(context, 'soporte@segurcel.app', loc.text('support_email'));
+                    _copyToClipboard(context, 'support.segurcel@gmail.com', loc.text('support_email'));
                   }
                 },
               ),
