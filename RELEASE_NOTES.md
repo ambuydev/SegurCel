@@ -4,13 +4,22 @@ Este documento registra el historial público y técnico de las notas de lanzami
 
 ---
 
-## 🚀 Versión 1.0.5 (Build 7) - Actualización Actual
+## 🚀 Versión 1.0.6 (Build 8) - Actualización Actual
+* **Traducción 100% Completa en 14 Idiomas:** Pantallas de inicio de sesión, registro, suscripciones PRO y eliminación de cuenta totalmente traducidas en los 14 idiomas globales.
+* **Privacidad del Desarrollador (A.M.B.):** Créditos públicos del desarrollador actualizados a iniciales sobrias.
+* **Respaldo Cifrado Local (.segurcel):** Crea y restaura respaldos locales cifrados con PBKDF2 y AES-256-GCM.
+* **Restauración Inteligente:** Prevención y desduplicación automática de contraseñas.
+* **Selección Universal de Archivos:** Compatibilidad total para seleccionar archivos `*.segurcel` en Android e iOS sin bloqueos por inactividad.
+* **Almacenamiento Seguro Resiliente:** Actualizaciones sin fallos ni cierres inesperados.
+* **Canal Oficial de Soporte:** Unificado en `support.segurcel@gmail.com`.
+
+---
+
+## 📦 Versión 1.0.5 (Build 7)
 * **Respaldo cifrado (.segurcel):** Crea y restaura respaldos con cifrado PBKDF2 y AES-256.
 * **Restauración inteligente:** Evita registros duplicados al restaurar.
 * **Selección de archivos mejorada:** Soporte total para archivos `*.segurcel` sin bloqueos por inactividad.
 * **14 Idiomas globales:** Chino Tradicional, Árabe (con maquetación RTL) e Indonesio.
-* **Actualizaciones seguras:** Almacenamiento seguro sin fallos.
-* **Diseño optimizado:** Apartados de "Ajustes y Seguridad" e "Información" optimizados.
 
 ---
 
@@ -19,7 +28,6 @@ Este documento registra el historial público y técnico de las notas de lanzami
 * **Selector de temas:** Personaliza la app entre Modo Oscuro, Modo Claro o Tema del Sistema.
 * **Temporizador de auto-bloqueo:** Configuración de bloqueo automático por inactividad (1 min, 5 min, 15 min o Nunca).
 * **Nuevo idioma global:** Incorporación oficial de Italiano (🇮🇹).
-* **Detección inteligente de tienda:** Redirección automática a Google Play Store o App Store según el dispositivo.
 
 ---
 
