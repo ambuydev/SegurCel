@@ -329,7 +329,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                   child: isDeleting
                       ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : const Text('2. Confirmar y Eliminar Cuenta', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      : Text(_loc.text('confirm_delete_account_btn'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ],
             );
@@ -412,7 +412,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                     onPressed: () => Navigator.pop(ctx),
-                    child: const Text('Entendido', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: Text(_loc.text('understood_btn'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
@@ -533,7 +533,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                   child: isProcessing
                       ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : const Text('Descifrar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      : Text(_loc.text('decrypt_btn'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ],
             );
@@ -599,7 +599,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () => Navigator.pop(ctx),
-                child: const Text('Aceptar', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: Text(_loc.text('accept_btn'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -718,7 +718,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                     Navigator.pop(ctx, pass);
                   },
-                  child: const Text('Crear Respaldo', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: Text(_loc.text('create_backup_btn'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ],
             );

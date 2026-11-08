@@ -249,4 +249,9 @@ final Map<String, String> frTranslation = {
   'pin_updated_toast': 'Le code PIN de votre coffre a été mis à jour avec succès !',
   'pass_updated_toast': 'Mot de passe du compte mis à jour avec succès !',
   'inapp_sync_toast': '🔄 Achats intégrés synchronisés avec Google Play.',
+  'understood_btn': 'Compris',
+  'decrypt_btn': 'Déchiffrer',
+  'accept_btn': 'Accepter',
+  'create_backup_btn': 'Créer une Sauvegarde',
+  'renew_btn': 'Renouveler',
 };

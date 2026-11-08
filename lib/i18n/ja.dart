@@ -249,4 +249,9 @@ final Map<String, String> jaTranslation = {
   'pin_updated_toast': '保管庫の PIN が正常に更新されました！',
   'pass_updated_toast': 'アカウントパスワードが正常に更新されました！',
   'inapp_sync_toast': '🔄 アプリ内購入が Google Play と同期されました。',
+  'understood_btn': '了解',
+  'decrypt_btn': '解読',
+  'accept_btn': 'OK',
+  'create_backup_btn': 'バックアップ作成',
+  'renew_btn': '更新',
 };

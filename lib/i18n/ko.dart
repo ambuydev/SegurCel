@@ -249,4 +249,9 @@ final Map<String, String> koTranslation = {
   'pin_updated_toast': '보관함 PIN이 성공적으로 업데이트되었습니다!',
   'pass_updated_toast': '계정 비밀번호가 성공적으로 업데이트되었습니다!',
   'inapp_sync_toast': '🔄 인앱 구매가 Google Play와 동기화되었습니다.',
+  'understood_btn': '확인',
+  'decrypt_btn': '복호화',
+  'accept_btn': '확인',
+  'create_backup_btn': '백업 생성',
+  'renew_btn': '갱신',
 };

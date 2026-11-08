@@ -282,4 +282,9 @@ final Map<String, String> arTranslation = {
   'pin_updated_toast': 'تم تحديث رمز PIN الخزنة بنجاح!',
   'pass_updated_toast': 'تم تحديث كلمة مرور الحساب بنجاح!',
   'inapp_sync_toast': '🔄 تم مزامنة المشتريات داخل التطبيق مع Google Play.',
+  'understood_btn': 'مفهوم',
+  'decrypt_btn': 'فك التشفير',
+  'accept_btn': 'موافق',
+  'create_backup_btn': 'إنشاء نسخة احتياطية',
+  'renew_btn': 'تجديد',
 };

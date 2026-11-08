@@ -282,4 +282,9 @@ final Map<String, String> zhHkTranslation = {
   'pin_updated_toast': '您的保險庫 PIN 碼已成功更新！',
   'pass_updated_toast': '帳戶密碼已成功更新！',
   'inapp_sync_toast': '🔄 應用程式內購買已與 Google Play 同步。',
+  'understood_btn': '明白',
+  'decrypt_btn': '解密',
+  'accept_btn': '確定',
+  'create_backup_btn': '建立備份',
+  'renew_btn': '續訂',
 };

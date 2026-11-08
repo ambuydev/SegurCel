@@ -249,4 +249,9 @@ final Map<String, String> ruTranslation = {
   'pin_updated_toast': 'PIN-код хранилища успешно обновлен!',
   'pass_updated_toast': 'Пароль аккаунта успешно обновлен!',
   'inapp_sync_toast': '🔄 Покупки в приложении синхронизированы с Google Play.',
+  'understood_btn': 'Понятно',
+  'decrypt_btn': 'Расшифровать',
+  'accept_btn': 'Принять',
+  'create_backup_btn': 'Создать бэкап',
+  'renew_btn': 'Обновить',
 };

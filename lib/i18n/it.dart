@@ -285,4 +285,9 @@ final Map<String, String> itTranslation = {
   'pin_updated_toast': 'Il PIN della cassaforte è stato aggiornato con successo!',
   'pass_updated_toast': 'Password dell account aggiornata con successo!',
   'inapp_sync_toast': '🔄 Acquisti In-App sincronizzati con Google Play.',
+  'understood_btn': 'Ho capito',
+  'decrypt_btn': 'Decifra',
+  'accept_btn': 'Accetta',
+  'create_backup_btn': 'Crea Backup',
+  'renew_btn': 'Rinnova',
 };

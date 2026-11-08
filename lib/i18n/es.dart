@@ -249,4 +249,9 @@ final Map<String, String> esTranslation = {
   'pin_updated_toast': '¡El PIN de tu bóveda ha sido actualizado con éxito!',
   'pass_updated_toast': '¡Contraseña de cuenta actualizada con éxito!',
   'inapp_sync_toast': '🔄 Compras In-App sincronizadas con Google Play.',
+  'understood_btn': 'Entendido',
+  'decrypt_btn': 'Descifrar',
+  'accept_btn': 'Aceptar',
+  'create_backup_btn': 'Crear Respaldo',
+  'renew_btn': 'Renovar',
 };

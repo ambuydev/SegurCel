@@ -249,4 +249,9 @@ final Map<String, String> ptTranslation = {
   'pin_updated_toast': 'O PIN do seu cofre foi atualizado com sucesso!',
   'pass_updated_toast': 'Senha da conta atualizada com sucesso!',
   'inapp_sync_toast': '🔄 Compras no aplicativo sincronizadas com o Google Play.',
+  'understood_btn': 'Entendido',
+  'decrypt_btn': 'Descriptografar',
+  'accept_btn': 'Aceitar',
+  'create_backup_btn': 'Criar Backup',
+  'renew_btn': 'Renovar',
 };

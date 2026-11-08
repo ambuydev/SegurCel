@@ -249,4 +249,9 @@ final Map<String, String> deTranslation = {
   'pin_updated_toast': 'Ihr Tresor-PIN wurde erfolgreich aktualisiert!',
   'pass_updated_toast': 'Kontopasswort erfolgreich aktualisiert!',
   'inapp_sync_toast': '🔄 In-App-Käufe mit Google Play synchronisiert.',
+  'understood_btn': 'Verstanden',
+  'decrypt_btn': 'Entschlüsseln',
+  'accept_btn': 'Akzeptieren',
+  'create_backup_btn': 'Backup erstellen',
+  'renew_btn': 'Erneuern',
 };

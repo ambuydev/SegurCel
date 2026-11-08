@@ -249,4 +249,9 @@ final Map<String, String> hiTranslation = {
   'pin_updated_toast': 'आपका वॉल्ट पिन सफलतापूर्वक अपडेट हो गया!',
   'pass_updated_toast': 'खाता पासवर्ड सफलतापूर्वक अपडेट हो गया!',
   'inapp_sync_toast': '🔄 इन-ऐप खरीदारी Google Play के साथ सिंक हो गई।',
+  'understood_btn': 'समझ गया',
+  'decrypt_btn': 'डिक्रिप्ट करें',
+  'accept_btn': 'स्वीकार करें',
+  'create_backup_btn': 'बैकअप बनाएं',
+  'renew_btn': 'नवीनीकृत करें',
 };

@@ -249,4 +249,9 @@ final Map<String, String> enTranslation = {
   'pin_updated_toast': 'Your vault PIN was successfully updated!',
   'pass_updated_toast': 'Account password successfully updated!',
   'inapp_sync_toast': '🔄 In-App purchases synchronized with Google Play.',
+  'understood_btn': 'Understood',
+  'decrypt_btn': 'Decrypt',
+  'accept_btn': 'OK',
+  'create_backup_btn': 'Create Backup',
+  'renew_btn': 'Renew',
 };
