@@ -45,7 +45,7 @@ const NAV_DICT = {
 const FOOTER_DICT = {
   es: {
     copyright: "© 2026 SegurCel. Todos los derechos reservados.",
-    dev: "Desarrollado por Alejandro Martínez Briao",
+    dev: "Desarrollado por A.M.B.",
     guide: "Guía Rápida de Uso",
     privacy: "Política de Privacidad",
     support: "Contacto: support.segurcel@gmail.com",
@@ -56,7 +56,7 @@ const FOOTER_DICT = {
   },
   en: {
     copyright: "© 2026 SegurCel. All rights reserved.",
-    dev: "Developed by Alejandro Martínez Briao",
+    dev: "Developed by A.M.B.",
     guide: "Quick User Guide",
     privacy: "Privacy Policy",
     support: "Contact: support.segurcel@gmail.com",
@@ -67,7 +67,7 @@ const FOOTER_DICT = {
   },
   pt: {
     copyright: "© 2026 SegurCel. Todos os direitos reservados.",
-    dev: "Desenvolvido por Alejandro Martínez Briao",
+    dev: "Desenvolvido por A.M.B.",
     guide: "Guia Rápido do Usuário",
     privacy: "Política de Privacidade",
     support: "Contato: support.segurcel@gmail.com",
@@ -78,7 +78,7 @@ const FOOTER_DICT = {
   },
   zh: {
     copyright: "© 2026 SegurCel。保留所有权利。",
-    dev: "由 Alejandro Martínez Briao 开发",
+    dev: "由 A.M.B. 开发",
     guide: "快速使用指南",
     privacy: "隐私政策",
     support: "联系支持: support.segurcel@gmail.com",
@@ -89,7 +89,7 @@ const FOOTER_DICT = {
   },
   zh_HK: {
     copyright: "© 2026 SegurCel。保留所有權利。",
-    dev: "由 Alejandro Martínez Briao 開發",
+    dev: "由 A.M.B. 開發",
     guide: "快速使用指南",
     privacy: "私隱政策",
     support: "聯絡支援: support.segurcel@gmail.com",
@@ -100,7 +100,7 @@ const FOOTER_DICT = {
   },
   fr: {
     copyright: "© 2026 SegurCel. Tous droits réservés.",
-    dev: "Développé par Alejandro Martínez Briao",
+    dev: "Développé par A.M.B.",
     guide: "Guide Rapide d'Utilisation",
     privacy: "Politique de Confidentialité",
     support: "Contact : support.segurcel@gmail.com",
@@ -111,7 +111,7 @@ const FOOTER_DICT = {
   },
   hi: {
     copyright: "© 2026 SegurCel. सर्वाधिकार सुरक्षित।",
-    dev: "Alejandro Martínez Briao द्वारा विकसित",
+    dev: "A.M.B. द्वारा विकसित",
     guide: "त्वरित उपयोग निर्देशिका",
     privacy: "गोपनीयता नीति",
     support: "संपर्क: support.segurcel@gmail.com",
@@ -122,7 +122,7 @@ const FOOTER_DICT = {
   },
   de: {
     copyright: "© 2026 SegurCel. Alle Rechte vorbehalten.",
-    dev: "Entwickelt von Alejandro Martínez Briao",
+    dev: "Entwickelt von A.M.B.",
     guide: "Schnellstartanleitung",
     privacy: "Datenschutzerklärung",
     support: "Kontakt: support.segurcel@gmail.com",
@@ -133,7 +133,7 @@ const FOOTER_DICT = {
   },
   ja: {
     copyright: "© 2026 SegurCel. All rights reserved.",
-    dev: "Alejandro Martínez Briao によって開発",
+    dev: "A.M.B. によって開発",
     guide: "クイックユーザーガイド",
     privacy: "プライバシーポリシー",
     support: "お問い合わせ: support.segurcel@gmail.com",
@@ -144,7 +144,7 @@ const FOOTER_DICT = {
   },
   ko: {
     copyright: "© 2026 SegurCel. All rights reserved.",
-    dev: "Alejandro Martínez Briao 개발",
+    dev: "A.M.B. 개발",
     guide: "빠른 사용자 설명서",
     privacy: "개인정보 처리방침",
     support: "문의: support.segurcel@gmail.com",
@@ -155,7 +155,7 @@ const FOOTER_DICT = {
   },
   ru: {
     copyright: "© 2026 SegurCel. Все права защищены.",
-    dev: "Разработано Алехандро Мартинес Бриао",
+    dev: "Разработано A.M.B.",
     guide: "Краткое руководство",
     privacy: "Политика конфиденциальности",
     support: "Контакты: support.segurcel@gmail.com",
@@ -166,7 +166,7 @@ const FOOTER_DICT = {
   },
   it: {
     copyright: "© 2026 SegurCel. Tutti i diritti riservati.",
-    dev: "Sviluppato da Alejandro Martínez Briao",
+    dev: "Sviluppato da A.M.B.",
     guide: "Guida Rapida Utente",
     privacy: "Informativa sulla Privacy",
     support: "Contatto: support.segurcel@gmail.com",
@@ -177,7 +177,7 @@ const FOOTER_DICT = {
   },
   ar: {
     copyright: "© 2026 SegurCel. جميع الحقوق محفوظة.",
-    dev: "تطوير أليخاندرو مارتينيز برياو",
+    dev: "تطوير A.M.B.",
     guide: "دليل الاستخدام السريع",
     privacy: "سياسة الخصوصية",
     support: "التواصل: support.segurcel@gmail.com",
@@ -188,7 +188,7 @@ const FOOTER_DICT = {
   },
   id: {
     copyright: "© 2026 SegurCel. Hak cipta dilindungi undang-undang.",
-    dev: "Dikembangkan oleh Alejandro Martínez Briao",
+    dev: "Dikembangkan oleh A.M.B.",
     guide: "Panduan Pengguna Cepat",
     privacy: "Kebijakan Privasi",
     support: "Kontak: support.segurcel@gmail.com",
