@@ -100,8 +100,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _newPinController.clear();
         _confirmPinController.clear();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('¡El PIN de tu bóveda ha sido actualizado con éxito!'),
+          SnackBar(
+            content: Text(_loc.text('pin_updated_toast')),
             backgroundColor: Colors.green,
           ),
         );
@@ -147,8 +147,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _newPasswordController.clear();
         _confirmPasswordController.clear();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('¡Contraseña de cuenta actualizada con éxito!'),
+          SnackBar(
+            content: Text(_loc.text('pass_updated_toast')),
             backgroundColor: Colors.green,
           ),
         );
@@ -181,14 +181,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             return AlertDialog(
               backgroundColor: dialogBg,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              title: const Row(
+              title: Row(
                 children: [
-                  Icon(Icons.warning_amber_rounded, color: Colors.redAccent, size: 26),
-                  SizedBox(width: 8),
+                  const Icon(Icons.warning_amber_rounded, color: Colors.redAccent, size: 26),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Eliminar Cuenta Permanentemente',
-                      style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 16),
+                      _loc.text('delete_account_perm_title'),
+                      style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                 ],
@@ -199,7 +199,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Esta acción destruirá tu cuenta, tu bóveda cifrada en la Nube y todos los datos guardados en este dispositivo de forma permanente. Esta acción NO se puede deshacer.',
+                      _loc.text('delete_account_perm_desc'),
                       style: TextStyle(color: textSubColor, fontSize: 13),
                     ),
                     const SizedBox(height: 14),
@@ -221,7 +221,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
-                                    'AVISO DE SUSCRIPCIÓN PREMIUM:',
+                                    _loc.text('premium_sub_notice_title'),
                                     style: TextStyle(color: accentAmber, fontWeight: FontWeight.bold, fontSize: 12),
                                   ),
                                 ),
@@ -229,7 +229,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              'Si compraste tu suscripción en Google Play Store, recuerda cancelar la renovación automática desde la tienda para evitar cobros futuros.',
+                              _loc.text('premium_sub_notice_desc'),
                               style: TextStyle(color: isDark ? Colors.white70 : const Color(0xFF5D4037), fontSize: 11),
                             ),
                             const SizedBox(height: 8),
@@ -240,7 +240,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                               icon: Icon(Icons.open_in_new, color: accentAmber, size: 14),
                               label: Text(
-                                '1. Abrir Suscripciones en Google Play',
+                                _loc.text('open_google_subscriptions'),
                                 style: TextStyle(color: textColor, fontSize: 11, fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
@@ -254,7 +254,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
 
                     Text(
-                      'Ingresa tu Contraseña de SegurCel para confirmar:',
+                      _loc.text('enter_pass_confirm_label'),
                       style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),
                     ),
                     const SizedBox(height: 8),
@@ -263,7 +263,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       obscureText: true,
                       style: TextStyle(color: textColor),
                       decoration: InputDecoration(
-                        hintText: 'Contraseña de tu cuenta',
+                        hintText: _loc.text('pass_account_hint'),
                         hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontSize: 12),
                         filled: true,
                         fillColor: inputFillColor,
@@ -283,7 +283,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               actions: [
                 TextButton(
-                  child: Text('Cancelar', style: TextStyle(color: isDark ? Colors.white54 : Colors.black54)),
+                  child: Text(_loc.text('cancel'), style: TextStyle(color: isDark ? Colors.white54 : Colors.black54)),
                   onPressed: () => Navigator.pop(ctx),
                 ),
                 ElevatedButton(
@@ -293,7 +293,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       : () async {
                           final pass = passwordController.text.trim();
                           if (pass.isEmpty) {
-                            setDialogState(() => errorMessage = 'Por favor ingresa tu contraseña.');
+                            setDialogState(() => errorMessage = _loc.text('enter_pass_prompt'));
                             return;
                           }
 
@@ -306,8 +306,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             if (mounted) {
                               Navigator.pop(ctx);
                               ScaffoldMessenger.of(rootContext).showSnackBar(
-                                const SnackBar(
-                                  content: Text('🗑️ Tu cuenta y tus datos fueron eliminados permanentemente.'),
+                                SnackBar(
+                                  content: Text(_loc.text('account_deleted_toast')),
                                   backgroundColor: Colors.redAccent,
                                   behavior: SnackBarBehavior.floating,
                                 ),

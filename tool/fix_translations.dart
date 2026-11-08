@@ -18,6 +18,11 @@ import 'package:segurcel/i18n/zh_hk.dart';
 void main() {
   print('=== REPAIRING AND COMPLETING ALL 14 LOCALIZATION FILES ===');
 
+  // Fix include_symbols and app_version in es map
+  esTranslation['include_symbols'] = r'Símbolos (!@#\$)';
+  esTranslation['developed_by'] = 'Desarrollado por A.M.B.';
+  esTranslation['app_version'] = 'Versión 1.0.6 (Build 8)';
+
   // New keys to ensure exist in ES
   final newEsKeys = {
     'delete_account_perm_title': 'Eliminar Cuenta Permanentemente',
@@ -40,6 +45,9 @@ void main() {
   // Translations dictionary for missing keys
   final Map<String, Map<String, String>> newTranslations = {
     'en': {
+      'app_version': 'Version 1.0.6 (Build 8)',
+      'developed_by': 'Developed by A.M.B.',
+      'include_symbols': r'Symbols (!@#\$)',
       'export_segurcel_btn': '🛡️ Encrypted Backup (.segurcel)',
       'export_segurcel_subtitle': 'Encrypt your entire vault with your own backup password for safe local storage.',
       'backup_pass_dialog_title': 'Create Encrypted Backup',
@@ -66,6 +74,9 @@ void main() {
       'inapp_sync_toast': '🔄 In-App purchases synchronized with Google Play.',
     },
     'pt': {
+      'app_version': 'Versão 1.0.6 (Build 8)',
+      'developed_by': 'Desenvolvido por A.M.B.',
+      'include_symbols': r'Símbolos (!@#\$)',
       'export_segurcel_btn': '🛡️ Backup Criptografado (.segurcel)',
       'export_segurcel_subtitle': 'Criptografe todo o seu cofre com uma senha própria para armazenamento local seguro.',
       'backup_pass_dialog_title': 'Criar Backup Criptografado',
@@ -92,6 +103,9 @@ void main() {
       'inapp_sync_toast': '🔄 Compras no aplicativo sincronizadas com o Google Play.',
     },
     'zh': {
+      'app_version': '版本 1.0.6 (Build 8)',
+      'developed_by': '由 A.M.B. 开发',
+      'include_symbols': r'符号 (!@#\$)',
       'export_segurcel_btn': '🛡️ 加密备份 (.segurcel)',
       'export_segurcel_subtitle': '使用您自己的备份密码加密整个保险库，以便安全本地存储。',
       'backup_pass_dialog_title': '创建加密备份',
@@ -118,6 +132,9 @@ void main() {
       'inapp_sync_toast': '🔄 应用内购买已与 Google Play 同步。',
     },
     'zh_HK': {
+      'app_version': '版本 1.0.6 (Build 8)',
+      'developed_by': '由 A.M.B. 開發',
+      'include_symbols': r'符號 (!@#\$)',
       'back_to_official_site': '← 返回官方網站',
       'pin_error': 'PIN 碼不正確。',
       'recover_access': '復原存取權限',
@@ -196,6 +213,9 @@ void main() {
       'inapp_sync_toast': '🔄 應用程式內購買已與 Google Play 同步。',
     },
     'fr': {
+      'app_version': 'Version 1.0.6 (Build 8)',
+      'developed_by': 'Développé par A.M.B.',
+      'include_symbols': r'Symboles (!@#\$)',
       'export_segurcel_btn': '🛡️ Sauvegarde Chiffrée (.segurcel)',
       'export_segurcel_subtitle': 'Chiffrez tout votre coffre avec votre propre mot de passe pour un stockage local sécurisé.',
       'backup_pass_dialog_title': 'Créer une Sauvegarde Chiffrée',
@@ -222,6 +242,9 @@ void main() {
       'inapp_sync_toast': '🔄 Achats intégrés synchronisés avec Google Play.',
     },
     'hi': {
+      'app_version': 'संस्करण 1.0.6 (Build 8)',
+      'developed_by': 'A.M.B. द्वारा विकसित',
+      'include_symbols': r'प्रतीक (!@#\$)',
       'export_segurcel_btn': '🛡️ एन्क्रिप्टेड बैकअप (.segurcel)',
       'export_segurcel_subtitle': 'सुरक्षित स्थानीय भंडारण के लिए अपने स्वयं के पासवर्ड से अपने पूरे वॉल्ट को एन्क्रिप्ट करें।',
       'backup_pass_dialog_title': 'एन्क्रिप्टेड बैकअप बनाएं',
@@ -248,6 +271,9 @@ void main() {
       'inapp_sync_toast': '🔄 इन-ऐप खरीदारी Google Play के साथ सिंक हो गई।',
     },
     'de': {
+      'app_version': 'Version 1.0.6 (Build 8)',
+      'developed_by': 'Entwickelt von A.M.B.',
+      'include_symbols': r'Symbole (!@#\$)',
       'export_segurcel_btn': '🛡️ Verschlüsseltes Backup (.segurcel)',
       'export_segurcel_subtitle': 'Verschlüsseln Sie Ihren gesamten Tresor mit einem eigenen Backup-Passwort für eine sichere lokale Speicherung.',
       'backup_pass_dialog_title': 'Verschlüsseltes Backup erstellen',
@@ -274,6 +300,9 @@ void main() {
       'inapp_sync_toast': '🔄 In-App-Käufe mit Google Play synchronisiert.',
     },
     'ja': {
+      'app_version': 'バージョン 1.0.6 (Build 8)',
+      'developed_by': 'A.M.B. 開発',
+      'include_symbols': r'記号 (!@#\$)',
       'export_segurcel_btn': '🛡️ 暗号化バックアップ (.segurcel)',
       'export_segurcel_subtitle': '独自バックアップパスワードで保管庫全体を暗号化し、安全にローカル保存。',
       'backup_pass_dialog_title': '暗号化バックアップの作成',
@@ -300,8 +329,11 @@ void main() {
       'inapp_sync_toast': '🔄 アプリ内購入が Google Play と同期されました。',
     },
     'ko': {
+      'app_version': '버전 1.0.6 (Build 8)',
+      'developed_by': 'A.M.B. 개발',
+      'include_symbols': r'기호 (!@#\$)',
       'export_segurcel_btn': '🛡️ 암호화 백업 (.segurcel)',
-      'export_segurcel_subtitle': '안전한 로컬 co-storage를 위해 자체 비밀번호로 전체 보관함을 암호화합니다.',
+      'export_segurcel_subtitle': '안전한 로컬 storage를 위해 자체 비밀번호로 전체 보관함을 암호화합니다.',
       'backup_pass_dialog_title': '암호화 백업 생성',
       'backup_pass_dialog_desc': '이 파일을 암호화할 비밀번호를 입력하세요. 복원할 때 동일한 비밀번호가 필요합니다.',
       'restore_pass_dialog_title': '백업 복호화 (.segurcel)',
@@ -310,7 +342,6 @@ void main() {
       'confirm_backup_pass_label': '비밀번호 확인',
       'passwords_dont_match': '백업 비밀번호가 일치하지 않습니다.',
       'invalid_backup_pass': '잘못된 백업 비밀번호이거나 파일이 변조되었습니다.',
-      'backup_success': '암호화 백업 (.segurcel)이 성공적으로 생성되었습니다.',
       'delete_account_perm_title': '계정 영구 삭제',
       'delete_account_perm_desc': '이 작업은 계정, 클라우드 암호화 보관함 및 이 기기의 모든 데이터를 영구적으로 파괴합니다. 이 작업은 취소할 수 없습니다.',
       'premium_sub_notice_title': '프리미엄 구독 안내:',
@@ -326,6 +357,9 @@ void main() {
       'inapp_sync_toast': '🔄 인앱 구매가 Google Play와 동기화되었습니다.',
     },
     'ru': {
+      'app_version': 'Версия 1.0.6 (Build 8)',
+      'developed_by': 'Разработано A.M.B.',
+      'include_symbols': r'Символы (!@#\$)',
       'export_segurcel_btn': '🛡️ Зашифрованная резервная копия (.segurcel)',
       'export_segurcel_subtitle': 'Зашифруйте свое хранилище собственным паролем для безопасного локального хранения.',
       'backup_pass_dialog_title': 'Создать зашифрованную копию',
@@ -352,6 +386,9 @@ void main() {
       'inapp_sync_toast': '🔄 Покупки в приложении синхронизированы с Google Play.',
     },
     'it': {
+      'app_version': 'Versione 1.0.6 (Build 8)',
+      'developed_by': 'Sviluppato da A.M.B.',
+      'include_symbols': r'Includi Simboli (!@#\$...)',
       'back_to_official_site': '← Torna al Sito Ufficiale',
       'pin_error': 'PIN errato.',
       'attempts_remaining': 'Tentativi rimasti',
@@ -443,6 +480,9 @@ void main() {
       'inapp_sync_toast': '🔄 Acquisti In-App sincronizzati con Google Play.',
     },
     'ar': {
+      'app_version': 'الإصدار 1.0.6 (Build 8)',
+      'developed_by': 'تطوير A.M.B.',
+      'include_symbols': r'رموز (!@#\$)',
       'back_to_official_site': '← العودة إلى الموقع الرسمي',
       'pin_error': 'رمز PIN غير صحيح.',
       'recover_access': 'استعادة الوصول',
@@ -520,6 +560,9 @@ void main() {
       'inapp_sync_toast': '🔄 تم مزامنة المشتريات داخل التطبيق مع Google Play.',
     },
     'id': {
+      'app_version': 'Versi 1.0.6 (Build 8)',
+      'developed_by': 'Dikembangkan oleh A.M.B.',
+      'include_symbols': r'Simbol (!@#\$)',
       'back_to_official_site': '← Kembali ke Situs Resmi',
       'pin_error': 'PIN salah.',
       'recover_access': 'Pulihkan Akses',
@@ -644,10 +687,16 @@ void main() {
 
 void _rewriteFile(String path, String varName, Map<String, String> map) {
   final sb = StringBuffer();
-  sb.writeln('final Map<String, String> $varName = {');
+  sb.writeln('final Map<String, String> ' + varName + ' = {');
   for (final entry in map.entries) {
-    final escapedVal = entry.value.replaceAll("'", "\\'").replaceAll('\n', '\\n');
-    sb.writeln("  '${entry.key}': '$escapedVal',");
+    var val = entry.value;
+    if (val.contains(r'$')) {
+      val = val.replaceAll("'", r"\'");
+      sb.writeln("  '" + entry.key + "': r'" + val + "',");
+    } else {
+      val = val.replaceAll("'", r"\'").replaceAll('\n', r'\n');
+      sb.writeln("  '" + entry.key + "': '" + val + "',");
+    }
   }
   sb.writeln('};');
 

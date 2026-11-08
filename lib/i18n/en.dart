@@ -167,7 +167,7 @@ final Map<String, String> enTranslation = {
   'about_desc': 'SegurCel is your password vault and 2FA authenticator with Zero-Knowledge architecture and local AES-256-GCM encryption. Your data stays 100% encrypted and safe.',
   'view_welcome_guide': 'Welcome Guide',
   'welcome_guide_sub': 'Review security architecture and key features',
-  'app_version': 'Version 1.0.5 (Build 7)',
+  'app_version': 'Version 1.0.6 (Build 8)',
   'tech_specs': 'Technical Specifications & Security',
   'privacy_policy': 'Privacy Policy',
   'user_guide': 'Quick User Guide',

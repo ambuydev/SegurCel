@@ -1,39 +1,61 @@
-import 'package:segurcel/services/localization_service.dart';
+import 'package:segurcel/i18n/ar.dart';
+import 'package:segurcel/i18n/de.dart';
+import 'package:segurcel/i18n/en.dart';
+import 'package:segurcel/i18n/es.dart';
+import 'package:segurcel/i18n/fr.dart';
+import 'package:segurcel/i18n/hi.dart';
+import 'package:segurcel/i18n/id.dart';
+import 'package:segurcel/i18n/it.dart';
+import 'package:segurcel/i18n/ja.dart';
+import 'package:segurcel/i18n/ko.dart';
+import 'package:segurcel/i18n/pt.dart';
+import 'package:segurcel/i18n/ru.dart';
+import 'package:segurcel/i18n/zh.dart';
+import 'package:segurcel/i18n/zh_hk.dart';
 
 void main() {
-  final loc = LocalizationService();
-  final languages = ['es', 'en', 'pt', 'zh', 'fr', 'hi', 'de', 'ja', 'ko', 'ru'];
-  
-  // Get all keys from 'es'
-  loc.changeLanguage('es');
-  
-  print('=== CHECKING ALL LOCALIZATION KEYS ACROSS 10 LANGUAGES ===');
-  
-  int missingCount = 0;
-  
-  // Test a comprehensive list of keys
-  final sampleKeys = [
-    'app_title', 'welcome', 'setup_subtitle', 'save_recovery_code_title',
-    'save_recovery_code_subtitle', 'confirm_recovery_title', 'confirm_recovery_desc',
-    'confirm_recovery_yes', 'confirm_recovery_back', 'understood_timer',
-    'enter_segurcel', 'free_limits', 'about_app', 'app_version', 'tech_specs',
-    'privacy_policy', 'delete_password', 'delete_confirm', 'cancel', 'delete'
-  ];
+  final Map<String, Map<String, String>> translations = {
+    'es': esTranslation,
+    'en': enTranslation,
+    'pt': ptTranslation,
+    'zh': zhTranslation,
+    'zh_HK': zhHkTranslation,
+    'fr': frTranslation,
+    'hi': hiTranslation,
+    'de': deTranslation,
+    'ja': jaTranslation,
+    'ko': koTranslation,
+    'ru': ruTranslation,
+    'it': itTranslation,
+    'ar': arTranslation,
+    'id': idTranslation,
+  };
 
-  for (final lang in languages) {
-    loc.changeLanguage(lang);
-    for (final key in sampleKeys) {
-      final val = loc.text(key);
-      if (val == key) {
-        print('MISSING KEY! Lang: $lang | Key: $key');
-        missingCount++;
+  print('=== AUDITING ALL 175 LOCALIZATION KEYS ACROSS ALL 14 LANGUAGES ===');
+
+  final esKeys = esTranslation.keys.toSet();
+  int totalMissing = 0;
+
+  for (final lang in translations.keys) {
+    if (lang == 'es') continue;
+    final map = translations[lang]!;
+    final missing = esKeys.difference(map.keys.toSet());
+
+    if (missing.isNotEmpty) {
+      print('\n❌ LANGUAGE [$lang] IS MISSING ${missing.length} KEYS:');
+      for (final k in missing) {
+        print('   - $k');
       }
+      totalMissing += missing.length;
+    } else {
+      print('✅ [$lang] Has ALL ${esKeys.length} keys!');
     }
   }
 
-  if (missingCount == 0) {
-    print('ALL CHECKED KEYS ARE PRESENT IN ALL 10 LANGUAGES!');
+  print('\n----------------------------------------');
+  if (totalMissing == 0) {
+    print('🎉 PERFECT! 100% OF LOCALIZATION KEYS ARE PRESENT ACROSS ALL 14 LANGUAGES!');
   } else {
-    print('FOUND $missingCount MISSING KEYS!');
+    print('⚠️ TOTAL MISSING KEYS ACROSS ALL LANGUAGES: $totalMissing');
   }
 }
