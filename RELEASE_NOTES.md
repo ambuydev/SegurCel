@@ -5,13 +5,8 @@ Este documento registra el historial público y técnico de las notas de lanzami
 ---
 
 ## 🚀 Versión 1.0.6 (Build 8) - Actualización Actual
-* **Traducción 100% Completa en 14 Idiomas:** Pantallas de inicio de sesión, registro, suscripciones PRO y eliminación de cuenta totalmente traducidas en los 14 idiomas globales.
-* **Privacidad del Desarrollador (A.M.B.):** Créditos públicos del desarrollador actualizados a iniciales sobrias.
-* **Respaldo Cifrado Local (.segurcel):** Crea y restaura respaldos locales cifrados con PBKDF2 y AES-256-GCM.
-* **Restauración Inteligente:** Prevención y desduplicación automática de contraseñas.
-* **Selección Universal de Archivos:** Compatibilidad total para seleccionar archivos `*.segurcel` en Android e iOS sin bloqueos por inactividad.
-* **Almacenamiento Seguro Resiliente:** Actualizaciones sin fallos ni cierres inesperados.
-* **Canal Oficial de Soporte:** Unificado en `support.segurcel@gmail.com`.
+* **Traducción Completa en 14 Idiomas:** Internacionalización total de todos los botones de diálogo, pantallas de inicio de sesión, registro, gestión de suscripciones y confirmación de eliminación de cuenta.
+* **Mejoras de Estabilidad e Interfaz:** Optimizaciones visuales y correcciones en la experiencia de usuario multilenguaje.
 
 ---
 
