@@ -167,7 +167,7 @@ final Map<String, String> ptTranslation = {
   'about_desc': 'SegurCel é seu cofre de senhas e autenticador 2FA com arquitetura Zero-Knowledge e criptografia local AES-256-GCM. Seus dados permanecem 100% criptografados.',
   'view_welcome_guide': 'Guia de Boas-Vindas',
   'welcome_guide_sub': 'Revise a arquitetura de segurança e recursos principais',
-  'app_version': 'Versão 1.0.6 (Build 8)',
+  'app_version': 'Versão 1.1.0 (Build 9)',
   'tech_specs': 'Especificações Técnicas e Segurança',
   'privacy_policy': 'Política de Privacidade',
   'user_guide': 'Guia Rápido de Uso',

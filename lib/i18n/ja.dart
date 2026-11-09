@@ -167,7 +167,7 @@ final Map<String, String> jaTranslation = {
   'about_desc': 'SegurCelは、Zero-KnowledgeアーキテクチャとローカルAES-256-GCM暗号化を備えたパスワード保管庫および2FA認証アプリです。',
   'view_welcome_guide': 'ウェルカムガイド',
   'welcome_guide_sub': 'セキュリティアーキテクチャと主な機能を確認する',
-  'app_version': 'バージョン 1.0.6 (Build 8)',
+  'app_version': 'バージョン 1.1.0 (Build 9)',
   'tech_specs': '技術仕様とセキュリティ',
   'privacy_policy': 'プライバシーポリシー',
   'user_guide': 'クイックユーザーガイド',

@@ -178,7 +178,7 @@ final Map<String, String> esTranslation = {
   'about_desc': 'SegurCel es tu bóveda de contraseñas y autenticador 2FA con arquitectura Zero-Knowledge y cifrado local AES-256-GCM. Tus datos permanecen 100% cifrados y protegidos.',
   'view_welcome_guide': 'Guía de Bienvenida',
   'welcome_guide_sub': 'Repasa la arquitectura de seguridad y funciones clave',
-  'app_version': 'Versión 1.0.6 (Build 8)',
+  'app_version': 'Versión 1.1.0 (Build 9)',
   'tech_specs': 'Especificaciones Técnicas y Seguridad',
   'privacy_policy': 'Política de Privacidad',
   'user_guide': 'Guía Rápida de Uso',

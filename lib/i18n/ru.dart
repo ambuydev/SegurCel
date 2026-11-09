@@ -167,7 +167,7 @@ final Map<String, String> ruTranslation = {
   'about_desc': 'SegurCel — это ваше хранилище паролей и 2FA-аутентификатор с архитектурой Zero-Knowledge и локальным шифрованием AES-256-GCM.',
   'view_welcome_guide': 'Руководство по приветствию',
   'welcome_guide_sub': 'Ознакомьтесь с архитектурой безопасности и ключевыми функциями',
-  'app_version': 'Версия 1.0.6 (Build 8)',
+  'app_version': 'Версия 1.1.0 (Build 9)',
   'tech_specs': 'Технические характеристики и безопасность',
   'privacy_policy': 'Политика конфиденциальности',
   'user_guide': 'Краткое руководство пользователя',

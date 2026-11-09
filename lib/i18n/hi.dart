@@ -167,7 +167,7 @@ final Map<String, String> hiTranslation = {
   'about_desc': 'SegurCel आपका पासवर्ड वॉल्ट और 2FA ऑथेंटिकेटर है जो Zero-Knowledge आर्किटेक्चर और स्थानीय AES-256-GCM एन्क्रिप्शन के साथ आता है।',
   'view_welcome_guide': 'स्वागत गाइड',
   'welcome_guide_sub': 'सुरक्षा आर्किटेक्चर और मुख्य सुविधाओं की समीक्षा करें',
-  'app_version': 'संस्करण 1.0.6 (Build 8)',
+  'app_version': 'संस्करण 1.1.0 (Build 9)',
   'tech_specs': 'तकनीकी विनिर्देश और सुरक्षा',
   'privacy_policy': 'गोपनीयता नीति',
   'user_guide': 'त्वरित उपयोग गाइड',

@@ -70,7 +70,7 @@ final Map<String, String> itTranslation = {
   'about_desc': 'SegurCel è il tuo caveau di password e autenticatore 2FA con architettura Zero-Knowledge e crittografia locale AES-256-GCM. I tuoi dati rimangono crittografati al 100%.',
   'view_welcome_guide': 'Guida di Benvenuto',
   'welcome_guide_sub': 'Rivedi l’architettura di sicurezza e le funzioni chiave',
-  'app_version': 'Versione 1.0.6 (Build 8)',
+  'app_version': 'Versione 1.1.0 (Build 9)',
   'tech_specs': 'Specifiche Tecniche',
   'spec_1': 'Crittografia AES-256-GCM locale sul dispositivo',
   'spec_2': 'Derivazione della chiave con PBKDF2 (65.536 iterazioni)',
