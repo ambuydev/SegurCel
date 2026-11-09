@@ -4,9 +4,16 @@ Este documento registra el historial público y técnico de las notas de lanzami
 
 ---
 
-## 🚀 Versión 1.0.6 (Build 8) - Actualización Actual
+## 🚀 Versión 1.1.0 (Build 9) - Actualización Mayor Actual
+* **Parche de Seguridad de Google Firebase:** Implementación del parche de seguridad TLS oficial de Google Firebase para cifrado y conexiones de datos.
 * **Traducción Completa en 14 Idiomas:** Internacionalización total de todos los botones de diálogo, pantallas de inicio de sesión, registro, gestión de suscripciones y confirmación de eliminación de cuenta.
-* **Mejoras de Estabilidad e Interfaz:** Optimizaciones visuales y correcciones en la experiencia de usuario multilenguaje.
+* **Mejoras de Rendimiento:** Optimizaciones en la sincronización en la nube y estabilidad de la bóveda.
+
+---
+
+## 📦 Versión 1.0.6 (Build 8)
+* **Traducción de Cuadros de Diálogo:** Internacionalización de botones de diálogo en los 14 idiomas.
+* **Privacidad de Desarrollador:** Créditos de desarrollador actualizados a A.M.B.
 
 ---
 
