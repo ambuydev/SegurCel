@@ -757,15 +757,15 @@ void main() {
 
 void _rewriteFile(String path, String varName, Map<String, String> map) {
   final sb = StringBuffer();
-  sb.writeln('final Map<String, String> ' + varName + ' = {');
+  sb.writeln('final Map<String, String> $varName = {');
   for (final entry in map.entries) {
     var val = entry.value;
     if (val.contains(r'$')) {
       val = val.replaceAll("'", r"\'");
-      sb.writeln("  '" + entry.key + "': r'" + val + "',");
+      sb.writeln("  '${entry.key}': r'$val',");
     } else {
       val = val.replaceAll("'", r"\'").replaceAll('\n', r'\n');
-      sb.writeln("  '" + entry.key + "': '" + val + "',");
+      sb.writeln("  '${entry.key}': '$val',");
     }
   }
   sb.writeln('};');
