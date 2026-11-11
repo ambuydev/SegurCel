@@ -12,7 +12,7 @@ class PurchaseService {
   static const String yearlyID = 'segurcel_pro_yearly';
   static const String familyMonthlyID = 'segurcel_family_monthly';
   static const String familyYearlyID = 'segurcel_family_yearly';
-  static const String rescue6mID = 'segurcel_emergency_6m';
+  static const String rescue6mID = 'segurcel_pro_rescue_6m';
 
   static const Set<String> productIDs = {
     monthlyID,
