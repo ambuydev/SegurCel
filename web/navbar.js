@@ -50,7 +50,7 @@ const FOOTER_DICT = {
     privacy: "Política de Privacidad",
     support: "Contacto: support.segurcel@gmail.com",
     github: "GitHub (Código Auditable)",
-    android: "Unirse a la Prueba en Google Play",
+    android: "Descargar en Google Play",
     ios: "Probar Beta en TestFlight (iOS)",
     ext: "Extensión PC/Mac (.zip)"
   },
@@ -61,7 +61,7 @@ const FOOTER_DICT = {
     privacy: "Privacy Policy",
     support: "Contact: support.segurcel@gmail.com",
     github: "GitHub (Auditable Code)",
-    android: "Join Beta Test on Google Play",
+    android: "Get it on Google Play",
     ios: "Test Beta on TestFlight (iOS)",
     ext: "PC/Mac Extension (.zip)"
   },
@@ -72,7 +72,7 @@ const FOOTER_DICT = {
     privacy: "Política de Privacidade",
     support: "Contato: support.segurcel@gmail.com",
     github: "GitHub (Código Auditável)",
-    android: "Participar do Teste no Google Play",
+    android: "Baixar no Google Play",
     ios: "Testar Beta no TestFlight (iOS)",
     ext: "Extensão PC/Mac (.zip)"
   },
@@ -83,7 +83,7 @@ const FOOTER_DICT = {
     privacy: "隐私政策",
     support: "联系支持: support.segurcel@gmail.com",
     github: "GitHub (可审计源码)",
-    android: "加入 Google Play 测试",
+    android: "在 Google Play 上下载",
     ios: "在 TestFlight 上测试 iOS Beta",
     ext: "PC/Mac 浏览器扩展 (.zip)"
   },
@@ -94,7 +94,7 @@ const FOOTER_DICT = {
     privacy: "私隱政策",
     support: "聯絡支援: support.segurcel@gmail.com",
     github: "GitHub (可審計源碼)",
-    android: "加入 Google Play 測試",
+    android: "在 Google Play 上下載",
     ios: "在 TestFlight 上測試 iOS Beta",
     ext: "PC/Mac 瀏覽器擴充功能 (.zip)"
   },
@@ -105,7 +105,7 @@ const FOOTER_DICT = {
     privacy: "Politique de Confidentialité",
     support: "Contact : support.segurcel@gmail.com",
     github: "GitHub (Code Auditable)",
-    android: "Rejoindre le Test sur Google Play",
+    android: "Télécharger sur Google Play",
     ios: "Tester la Bêta sur TestFlight (iOS)",
     ext: "Extension PC/Mac (.zip)"
   },
@@ -116,7 +116,7 @@ const FOOTER_DICT = {
     privacy: "गोपनीयता नीति",
     support: "संपर्क: support.segurcel@gmail.com",
     github: "GitHub (ऑडिट योग्य कोड)",
-    android: "Google Play पर बीटा टेस्ट में शामिल हों",
+    android: "Google Play से डाउनलोड करें",
     ios: "TestFlight पर iOS बीटा टेस्ट करें",
     ext: "PC/Mac एक्सटेंशन (.zip)"
   },
@@ -127,7 +127,7 @@ const FOOTER_DICT = {
     privacy: "Datenschutzerklärung",
     support: "Kontakt: support.segurcel@gmail.com",
     github: "GitHub (Prüfbarer Code)",
-    android: "Beta-Test auf Google Play beitreten",
+    android: "Auf Google Play herunterladen",
     ios: "Beta auf TestFlight testen (iOS)",
     ext: "PC/Mac-Erweiterung herunterladen (.zip)"
   },
@@ -138,7 +138,7 @@ const FOOTER_DICT = {
     privacy: "プライバシーポリシー",
     support: "お問い合わせ: support.segurcel@gmail.com",
     github: "GitHub (監査可能コード)",
-    android: "Google Play ベータテストに参加",
+    android: "Google Play でダウンロード",
     ios: "TestFlight で iOS ベータをテスト",
     ext: "PC/Mac 拡張機能をダウンロード (.zip)"
   },
@@ -149,7 +149,7 @@ const FOOTER_DICT = {
     privacy: "개인정보 처리방침",
     support: "문의: support.segurcel@gmail.com",
     github: "GitHub (감사 가능 코드)",
-    android: "Google Play 베타 테스트 참여",
+    android: "Google Play에서 다운로드",
     ios: "TestFlight에서 iOS 베타 테스트",
     ext: "PC/Mac 확장 프로그램 (.zip)"
   },
@@ -160,7 +160,7 @@ const FOOTER_DICT = {
     privacy: "Политика конфиденциальности",
     support: "Контакты: support.segurcel@gmail.com",
     github: "GitHub (Проверяемый код)",
-    android: "Присоединиться к тесту в Google Play",
+    android: "Скачать в Google Play",
     ios: "Бета-тест в TestFlight (iOS)",
     ext: "Расширение ПК/Mac (.zip)"
   },
@@ -171,7 +171,7 @@ const FOOTER_DICT = {
     privacy: "Informativa sulla Privacy",
     support: "Contatto: support.segurcel@gmail.com",
     github: "GitHub (Codice Ispezionabile)",
-    android: "Partecipa al Test su Google Play",
+    android: "Scarica su Google Play",
     ios: "Prova la Beta su TestFlight (iOS)",
     ext: "Estensione PC/Mac (.zip)"
   },
@@ -182,7 +182,7 @@ const FOOTER_DICT = {
     privacy: "سياسة الخصوصية",
     support: "التواصل: support.segurcel@gmail.com",
     github: "GitHub (كود قابل للتدقيق)",
-    android: "الانضمام للاختبار على Google Play",
+    android: "التنزيل من Google Play",
     ios: "اختبار البيتا على TestFlight (iOS)",
     ext: "إضافة الكمبيوتر (.zip)"
   },
@@ -193,7 +193,7 @@ const FOOTER_DICT = {
     privacy: "Kebijakan Privasi",
     support: "Kontak: support.segurcel@gmail.com",
     github: "GitHub (Kode Dapat Diaudit)",
-    android: "Bergabung dengan Uji Coba Google Play",
+    android: "Unduh di Google Play",
     ios: "Uji Beta di TestFlight (iOS)",
     ext: "Ekstensi PC/Mac (.zip)"
   }
@@ -324,7 +324,7 @@ window.SegurCelNav = {
             <a href="https://github.com/ambuydev/SegurCel" target="_blank" id="linkFooterGithub">${data.github}</a>
           </div>
           <div class="footer-links-row footer-download-row">
-            <a href="https://play.google.com/apps/testing/com.segurcel.segurcel" target="_blank" id="linkFooterAndroid">${data.android}</a>
+            <a href="https://play.google.com/store/apps/details?id=com.segurcel.segurcel" target="_blank" id="linkFooterAndroid">${data.android}</a>
             <a href="https://testflight.apple.com/join/3Dvcxj1E" target="_blank" id="linkFooterIos">${data.ios}</a>
             <a href="/segurcel-extension.zip" target="_blank" id="linkFooterExt">${data.ext}</a>
           </div>
